@@ -1,0 +1,62 @@
+/**
+ * 
+ */
+package objRepository.Admin;
+
+import org.openqa.selenium.By;
+
+
+public class Admin_ManageApp {
+	/*
+	 * 
+	 * Objects In Admin_Manage App  Page.
+	 * 
+	 *
+	 */
+	public static final By manageApp=By.xpath("//a[@data-infor-translate='manage_applications']");
+	public static final By drillBack=By.xpath("//a[text()='Manage Drillbacks']");
+	public static final By upload_DrillBacks=By.xpath("//label[@data-infor-translate='upload_drillback_xml']");
+	public static final By addApp=By.xpath("//button[@class='add-app add-btn']");
+	public static final By appType_NonProvisioned=By.xpath("//input[@data-ng-change='onNewInforNonProvisioned()']");
+	public static final By appType_NonInfor=By.xpath("//input[@data-ng-change='onNewNonInfor()']");//input[@data-ng-change='onNewNonInfor()']");
+	public static final By appType_InforProvisioned=By.xpath("//input[@data-ng-change='onNewInforProvisioned()']");
+	public static final By appType_NonProvisioned_OP=By.xpath("//label[@data-infor-translate='infor_application']");
+	public static final By appType_NonInfor_OP=By.xpath("//label[@data-infor-translate='non_infor_application']");
+	public static final By nonProvisoned_AppName=By.xpath("//select[@name='application_name']");
+	public static final By nonProvisionedDisplayName=By.xpath("//input[@name='display_name']");
+	public static final By nonProvisioned_ChooseIcon=By.xpath("//button[@value='Choose Icon']");
+	public static final By nonProvisioned_SelectIcon=By.xpath("//button[@data-ng-click='onCancelChooseIcon()']/../../descendant::td/img");
+	public static final By nonProvisioned_ChooseIcon_Done=By.xpath("//button[@data-ng-click='onSaveChooseIcon()']");
+	public static final By nonProvisioned_Host=By.xpath("//input[@name='host_name']");
+	public static final By nonProvisoned_LogicalID=By.xpath("//input[@data-ng-model='UI.newApplication.LogicalIdSuffix']");
+	public static final By nonProvisoned_context=By.xpath("//input[@name='context']");
+	public static final By nonProvisoned_Tenant=By.xpath("//input[@name='default_tenant']");
+	public static final By nonProvisioned_PermisssionsTab=By.xpath("//span[@data-infor-translate='permissions']");
+	public static final By nonProvisoned_Permsiions_AddUser=By.xpath("//button[@data-infor-translate='add_user_ifs_role']");
+	public static final By nonProvisoned_enterUserName=By.xpath("//input[@data-ng-enter='doNothing()']");
+	public static final By nonProvisoned_selectUser=By.xpath("//div[text()='QAAuto Test1']/../../descendant::label");
+	public static final By nonProvisioned_ContextTab=By.xpath("//span[@data-infor-translate='context_utility_apps']");
+	public static final By nonProvisioned_AddRemove=By.xpath("//span[@data-infor-translate='add_remove_context_utility_app']");
+	
+	public static final By nonProvisioned_selectAvailable=By.xpath("//label[text()='Available:']/following::a/div");
+	public static final By nonProvisioned_rightArrow=By.xpath("//div[@class='field admin-util-app-arrowbox']/descendant::a");
+	//public static final By nonProvisioned_rightArrow=By.xpath("//a[@class='enable-arrow']");
+	public static final By nonProvisioned_customParamteres=By.xpath("//span[@data-infor-translate='custom_parameters']");
+	public static final By nonProvisioned_AddcustomParamteres=By.xpath("//button[@data-infor-translate='add_parameter']");
+	public static final By nonProvisioned_ParameterName=By.xpath("//input[@data-ng-model='UI.custPara.nameToAdd']");
+	public static final By nonProvisioned_ParameterValue=By.xpath("//input[@data-ng-model='UI.custPara.valueToAdd']");
+	public static final By nonProvisioned_logicalIDTab=By.xpath("//span[@data-infor-translate='logical_id_fallback']");
+	public static final By nonProvisioned_logicalID_Add=By.xpath("//button[@data-infor-translate='add_id']");
+	public static final By nonProvisioned_logicalID=By.xpath("//input[@data-ng-model='UI.fallback.fallbackToAdd']");
+	public static final By delete_App=By.xpath("//span[@data-ng-click='onDeleteApplication()']");
+	
+	public static final By nonInfor_AppName=By.xpath("//input[@data-ng-model='UI.newApplication.NameVersion']");
+	public static final By nonInfor_AppRUL=By.xpath("//input[@data-ng-model='UI.newApplication.URL']");
+	public static final By nonInfor_SubIcon=By.xpath("//button[@data-ng-click='onCancelChooseIcon()']/../../descendant::td/img/following::tr/descendant::img");
+	public static final By inforProvisioned_AppName=By.xpath("//select[@data-infor-validator='application_name']");
+	
+	public static final By landmarkActoridReq_Detailstab=By.xpath("//label[@for='txtActorId' and @class='label required']");
+	
+	
+	
+}

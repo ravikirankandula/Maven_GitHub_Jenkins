@@ -1,0 +1,89 @@
+package scripts.ShellHeader;
+
+import org.testng.annotations.AfterClass;
+import org.testng.annotations.BeforeClass;
+import org.testng.annotations.Test;
+
+import actions.Actions;
+import objRepository.Global;
+import objRepository.Admin.Admin_ManageApp;
+import objRepository.Social.ShellHeader;
+import reusableMethods.RM_Social;
+import reusableMethods.RM_BookMarks;
+import reusableMethods.RM_IFS_Trial10;
+import reusableMethods.RM_Streams;
+import utility.Utility;
+
+
+public class Ts_CreateBookmarkForStreamsPage_13231 {
+	
+	
+	private Utility utl;
+	//ExtentTest logger;
+
+		@BeforeClass
+		public void setUp()
+		{
+			 utl=new Utility();
+			 //logger=
+			 utl.initTest(this.getClass().getName().substring(this.getClass().getName().lastIndexOf(".")+1).trim());
+			 new Actions();
+		
+		}
+		@AfterClass
+		public void tearDown() throws Exception
+		{
+			/*Utility.report.endTest(logger);
+			//Actions.driverClose();
+			Utility.report.flush();*/
+			Actions.logOutAndBrowserClose();
+			
+		}
+		
+		@Test
+		public void createBookmarkForStreamsPage()
+		{
+			try {
+				Global.login(Utility.getConfigData().get("USER1"), Utility.getConfigData().get("PASSWORD"));
+				//Actions.pause(3);
+				RM_Social.navigateToActivityPage();
+				
+				// Bookmark for the streams
+				RM_Streams.navigateToStreams();
+				//Actions.pause(3);
+				Actions.switchToDefaultContent();
+				RM_BookMarks.createBookMark(Utility.getTestData().get("BOOKMARK_STREAMS"));
+				
+				// Bookmark for the Admin Settings
+				Actions.click(ShellHeader.userMenu, "Click ON User Menu");
+				Actions.click(ShellHeader.user_admin_settings, "Click On Admin Settings");
+				//Actions.switchtoFrame(Global.socialCLFrame, "Switch to Social Frame");
+				Actions.verify(Admin_ManageApp.manageApp, "Manage Applications");
+				RM_BookMarks.createBookMark(Utility.getTestData().get("BOOKMARK_ADMINSETTINGS"));
+				
+				// Bookmark for the User Settings
+				Actions.click(ShellHeader.userMenu, "Click ON User Menu");
+				Actions.click(ShellHeader.userMenu_UserSettings, "Click On User Settings");
+				//Actions.switchtoFrame(Global.socialCLFrame, "Switch to Social Frame");
+				Actions.verify(ShellHeader.userMenu_UserSettings_ProfileInformationHeading, "Personal Info");
+				RM_BookMarks.createBookMark(Utility.getTestData().get("BOOKMARK_USERSETTINGS"));
+				
+				// Bookmark for the User Management
+				RM_IFS_Trial10.navigateToMenu("User Management");
+				RM_BookMarks.createBookMark(Utility.getTestData().get("BOOKMARK_IFS_USERMANAGEMENT"));
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}finally
+			{
+				rb();
+			}
+		}
+		
+
+		public void rb()
+		{
+			RM_BookMarks.deleBookMarks();
+		}
+}
+

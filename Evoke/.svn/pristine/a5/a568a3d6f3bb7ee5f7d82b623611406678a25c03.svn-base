@@ -1,0 +1,84 @@
+package reusableMethods;
+
+import org.openqa.selenium.By;
+
+import actions.Actions;
+import objRepository.Global;
+import objRepository.Social.ManageBookMarks;
+import objRepository.Social.ShellHeader;
+
+public class RM_BookMarks {
+	// Useful to Verify the Book marked Page Name in ShellHeader
+	public static void verifyBookMarksNameInSH(String bkmName)
+	{
+		By by=By.xpath("//a[text()='"+bkmName+"']");
+		Actions.verifyElement(by, bkmName);
+		
+	}
+	// Useful to Verify Book marked PAge NAmes in Manage Bookmarks Page
+	public static void verifyBookMarksNameInMbkm(String bkmName)
+	{
+		By by=By.xpath("//span[text()='"+bkmName+"']");
+		Actions.verifyElement(by, bkmName);
+		
+	}
+	public static void navigateToManageBookMarks()
+	{
+		Actions.click(ShellHeader.bookMarks, "Click On 'Book Marks'");
+		Actions.click(ShellHeader.bookmarks_manageBookMarks, "Click on 'Manage Book Marks'");
+		Actions.verifyElement(ManageBookMarks.bookMarkstitle, "'Book Marks'");
+	}
+	public static void createBookMark(String bkmName)
+	{
+		Actions.switchToDefaultContent();
+		Actions.click(ShellHeader.bookMarks, "Click On 'Book Marks'");
+		Actions.click(ShellHeader.bookmarks_bookMarkThisPage, "Click On 'Book mark This Page'");
+		Actions.click(ShellHeader.bookMarks_Save, "Click On 'Save'");
+		verifyBookMarksNameInSH(bkmName);
+		Actions.click(ShellHeader.bookMarks, "Click On 'Book Marks'");
+		
+	}
+	
+	public static void editBookmarks(String srcBkmName, String newName)
+	{
+		By by=By.xpath("//div[@class='mng-bmark-main ng-scope']/descendant::span[@title='"+srcBkmName+"']");
+		By by1=By.xpath("//div[@class='mng-bmark-main ng-scope']/descendant::span[@title='"+srcBkmName+"']/following-sibling::button[@class='edit-icn']");
+		By by2=By.xpath("//div[@class='mng-bmark-main ng-scope']/descendant::span[@title='"+srcBkmName+"']/../descendant::input[@data-ng-show='displayEdit']");
+		navigateToManageBookMarks();
+		Actions.pause(2);
+		Actions.click(by, "Hover Over(click) "+srcBkmName);
+		//Actions.pause(2);
+		Actions.click_JS(by1, "Click On 'Edit' Icon");
+		//Actions.pause(3);
+		Actions.clearText(by2, "Clear the Value in TextBox");
+		Actions.type(by2, newName, "Edit Bookmarks Name");
+		Actions.click(ManageBookMarks.outSideEdit, "Click On Out Side to Save Book Mark Name");
+		Actions.verifyElementPresent(Global.MinglePageLoading_BookMarks, "Waiting for complete Loading");
+		verifyBookMarksNameInMbkm(newName);
+	}
+	
+	public static void deleBookMarks()
+	{
+		Actions.switchToDefaultContent();
+		navigateToManageBookMarks();
+		
+				final int count=Actions.findElements(ManageBookMarks.deleteIcon).size();
+				Actions.log4j.info("Total Number of BookMarks Found: "+count);
+				//Actions.logger.log(LogStatus.INFO, "Total Number of Posts Which have the Delete links : "+count);
+				//Actions.verifyElementPresent(ManageBookMarks.deleteIcon, "Looking to delete BookMarks")
+				for(int i=1;Actions.findElements(ManageBookMarks.deleteIcon).size()>0;i++)
+				{
+					Actions.click(ManageBookMarks.hoverOverBookmarks, "Click on desired Bookmarks");
+					//Actions.pause(1);
+					Actions.click(ManageBookMarks.deleteIcon, "Click on Delete Icon : "+i);
+					Global.minglePageLoad_BookMarks();
+					//Actions.pause(2);
+					
+				}
+		
+	}
+	
+	
+	
+
+}

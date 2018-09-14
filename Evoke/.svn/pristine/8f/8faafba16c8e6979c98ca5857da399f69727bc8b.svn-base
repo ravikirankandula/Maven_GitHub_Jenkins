@@ -1,0 +1,74 @@
+package scripts.ActivityFeed;
+
+import org.testng.annotations.AfterClass;
+import org.testng.annotations.BeforeClass;
+import org.testng.annotations.Test;
+
+import com.relevantcodes.extentreports.ExtentTest;
+
+import actions.Actions;
+import objRepository.Global;
+import objRepository.Social.ActivityFeed;
+import objRepository.Social.Directory;
+import reusableMethods.RM_BookMarks;
+import reusableMethods.RM_Social;
+import utility.Utility;
+
+
+public class DisconnectUser_U17_13242 {
+	
+	private Utility utl;
+	ExtentTest logger;
+
+		
+	public static String className;
+	@BeforeClass
+	public void setUp()
+	{
+		utl=new Utility();
+		utl.initTest(this.getClass().getName().substring(this.getClass().getName().lastIndexOf(".")+1).trim());
+		className=this.getClass().getName().toString();
+		new Actions();
+	}
+		@AfterClass
+		public void tearDown() 
+		{
+			/*Utility.report.endTest(logger);
+			//Actions.driverClose();
+			Utility.report.flush();*/
+			Actions.logOutAndBrowserClose();
+			
+			
+		}
+	
+	@Test(priority=999999)
+	public void disConnectUser_OneTime()
+	{
+		try{
+
+			//Login to the application
+			Global.login(Utility.getConfigData().get("USER17"),Utility.getConfigData().get("PASSWORD"));
+			RM_Social.navigateToActivityPage();
+			try{
+			RM_Social.deleteAll(ActivityFeed.Delete_Post);
+			}catch(Exception e)
+			{
+				
+			}
+			try{
+				Actions.switchToDefaultContent();
+				RM_BookMarks.deleBookMarks();
+				}catch(Exception e)
+				{
+					
+				}
+			Actions.pause(3);
+			RM_Social.navigateToActivityPage();
+			RM_Social.disConnectUser(Directory.filterByConnected,Directory.sortByFirstName,'Q',"QAAuto Test18");
+		}catch (Exception e) {
+			Utility.addClass(className);
+		}
+		
+	}
+
+}

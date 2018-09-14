@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Users>
+<User>
+<PersonId>11549252-fdeb-4a45-90e6-d56670cdf2e9</PersonId>
+<FirstName>import</FirstName>
+<LastName>update</LastName>
+<EmailId>importupdate@gmail.com</EmailId>
+<Title>title</Title>
+<FederatedId></FederatedId>
+<UserName>importupdate@gmail.com</UserName>
+<UserGuid>11549252-fdeb-4a45-90e6-d56670cdf2e9</UserGuid>
+<Status>Active</Status>
+<CreatedDate>4/13/2017 9:41:42 AM</CreatedDate><LastLogin></LastLogin><UserAlias>IMPUPD19</UserAlias>
+<CommonName>import update</CommonName>
+<UPN>importupdate@gmail.com</UPN>
+<Department>QA</Department>
+<Manager>mingleqatest1@gmail.com</Manager>
+<AlternativeManager>mingleqatest1@gmail.com</AlternativeManager>
+<GenericProperties>
+</GenericProperties>
+<SecurityRoles>
+<SecurityRole Name="Activ+" Description="Desc">Activ+</SecurityRole>
+<SecurityRole Name="Infor-SuiteUser" Description="">Infor-SuiteUser</SecurityRole>
+<SecurityRole Name="NSR" Description="NSR">NSR</SecurityRole>
+</SecurityRoles>
+</User>
+</Users>

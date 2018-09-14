@@ -1,0 +1,71 @@
+package scripts.ActivityFeed;
+
+import org.apache.commons.lang3.RandomStringUtils;
+import org.testng.annotations.AfterClass;
+import org.testng.annotations.AfterMethod;
+import org.testng.annotations.BeforeClass;
+import org.testng.annotations.Test;
+
+import actions.Actions;
+import objRepository.Global;
+import objRepository.Social.ActivityFeed;
+import reusableMethods.RM_Social;
+import utility.Utility;
+
+public class Ts_ShowPostDetailsFromActivityFeedPage_13266 {
+	
+	private Utility utl;
+	//ExtentTest logger;
+
+		
+	public static String className;
+	@BeforeClass
+	public void setUp()
+	{
+		utl=new Utility();
+		utl.initTest(this.getClass().getName().substring(this.getClass().getName().lastIndexOf(".")+1).trim());
+		className=this.getClass().getName().toString();
+		new Actions();
+	}
+		@AfterMethod
+		public void logOutAndBrowserClose()
+		{
+			Actions.logOutAndBrowserCloseMU();
+		}
+		@AfterClass
+		public void endReport() 
+		{
+			Actions.endScriptReportMU();
+			
+			
+		}
+		String time=RandomStringUtils.randomNumeric(4);
+		@Test
+		public void postMsg()
+		{
+		
+			try {
+				Global.login(Utility.getConfigData().get("USER20"), Utility.getConfigData().get("PASSWORD"));
+				//Actions.pause(3);
+				RM_Social.navigateToActivityPage();
+				Actions.click(ActivityFeed.privacyLink, "Open Privacy List");
+				RM_Social.selectPrivacyInAFP(Utility.getTestData().get("PRIVACY_CONNECTEDUSERS"));
+				RM_Social.typeMessageInAFP(Utility.getTestData().get("POSTMSG")+time);
+				RM_Social.clickOnPostBtnInAFP();
+				RM_Social.clickOnActivityFeed();
+				//Actions.switchtoFrame(Global.socialCLFrame, "Switch to Social Frame");
+				//Actions.verify(ActivityFeed.msgContainer, Utility.getTestData().get("POSTMSG")+time);
+				RM_Social.verifyMessage(Utility.getTestData().get("POSTMSG")+time);
+				Actions.click(ActivityFeed.showdetailsBtn, "Click on Show Details button");
+				Global.minglePageLoad_Social();
+				Actions.verifyElement(ActivityFeed.showDetailsOverlay_PostHeading, "Verify Post Heading");
+				Actions.verifyString(Actions.getText(ActivityFeed.showDetailsOverlay_MsgContainer), Utility.getTestData().get("POSTMSG")+time);
+				Actions.click(ActivityFeed.showDetailsOverlay_CloseIcon, "Click on Close icon on Show Details Overlay");
+			} catch (Exception e) {
+				Utility.addClass(className);
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+
+}

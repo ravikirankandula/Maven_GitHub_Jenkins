@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+<suite name="suite1">
+<!-- <listeners>
+		<listener class-name="utility.RetryListener" />
+	</listeners> -->
+	<test name="chrome">
+	<parameter name="Browser" value="chrome" />
+		<classes>
+		
+	  
+			 <class name="utility.Utility" />
+			 
+			<!-- <class name="scripts.Streams.TS_ResetActionForCompletedStreams_14018" />
+			<class name="scripts.Streams.TS_RoleBased_12741" />
+			<class name="scripts.Streams.TS_Stream_TemplateCreation_Steps_12734" />  
+			<class name="scripts.Streams.TS_Export_Import_12743"/>
+		 	<class name="scripts.Streams.TS_InheritStreamParticipantInStepLevel_14772" /> -->
+			<class name="scripts.Streams.TS_RestartingStreamShouldOnlyResetStepsDueDates_notTheStatus_14778" />
+		</classes>
+	
+	
+	</test>
+
+
+  
+
+
+</suite>

@@ -1,0 +1,113 @@
+package scripts.ActivityFeed;
+
+import org.testng.annotations.AfterClass;
+import org.testng.annotations.AfterMethod;
+import org.testng.annotations.BeforeClass;
+import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Test;
+
+import com.relevantcodes.extentreports.ExtentTest;
+
+import actions.Actions;
+import objRepository.Global;
+import objRepository.Social.ActivityFeed;
+import objRepository.Social.Directory;
+import reusableMethods.RM_Social;
+import utility.Utility;
+//Ts_MakeConReqAndAcceptConnectionRequest_13238
+
+public class Ts_MakeConReqAndAcceptConnectionRequest_13238 {
+	
+	
+	private Utility utl;
+	ExtentTest logger;
+
+	static boolean rerun=false;
+	public static String className;
+	@BeforeClass
+	public void setUp()
+	{
+		utl=new Utility();
+		utl.initTest(this.getClass().getName().substring(this.getClass().getName().lastIndexOf(".")+1).trim());
+		className=this.getClass().getName().toString();
+		new Actions();
+	}
+		@AfterMethod
+		public void tearDown() 
+		{
+			/*Utility.report.endTest(logger);
+			//Actions.driverClose();
+			Utility.report.flush();
+			//Actions.logOutAndBrowserClose();
+*/			
+				if(rerun)
+				{
+					Utility.addClass(className);
+				}
+			Actions.endScriptReportMU();
+		}
+		
+		@Test(priority=0)
+		public void sendConnectionRequest_OneTime(){
+			try {
+				
+				//Login to the application
+				Global.login(Utility.getConfigData().get("USER7"),Utility.getConfigData().get("PASSWORD"));
+				//Make Connection request
+				Actions.pause(3);
+				RM_Social.makeConnectionRequest(Directory.filterByNotConnected, Directory.sortByFirstName, 'Q',"QAAuto Test12");
+				//Navigate to Activity Feed
+				RM_Social.clickOnActivityFeed();
+				//Verify Connection request message
+				//Actions.verify(ActivityFeed.msgContainer, Utility.getTestData().get("CONREQMSG_12"));
+				RM_Social.verifyMessage(Utility.getTestData().get("CONREQMSG_12"));
+				
+			} catch (Exception e) {
+				rerun=true;
+				
+			}finally
+			{
+				try{
+					Global.logOut();
+				}catch(Exception e)
+				{
+					e.printStackTrace();
+				}
+				Utility.report.flush();
+				Actions.driverClose();
+				acceptConnectionRequest_OneTime();
+			}
+		}
+		
+		//Accept Connection request for One time Activity
+		public void acceptConnectionRequest_OneTime()
+		{
+			try {
+				
+				//Login to the application
+				Global.login(Utility.getConfigData().get("USER12"),Utility.getConfigData().get("PASSWORD"));
+				
+				//Accept Connection request
+				RM_Social.acceptConnectionRequest();
+				Actions.pause(5);
+				//Actions.verify(ActivityFeed.msgContainer, Utility.getTestData().get("ACCEPTCONREQMSG"));
+				RM_Social.verifyMessage(Utility.getTestData().get("ACCEPTCONREQMSG"));
+				
+			} catch (Exception e) {
+				rerun=true;
+			}
+			finally
+			{
+				try{
+					Global.logOut();
+				}catch(Exception e)
+				{
+					e.printStackTrace();
+				}
+				Utility.report.flush();
+				Actions.driverClose();
+				
+			}
+		}
+
+}

@@ -1,0 +1,94 @@
+package scripts.ION;
+
+import java.util.HashMap;
+
+import org.openqa.selenium.By;
+import org.sikuli.script.FindFailed;
+import org.sikuli.script.Pattern;
+import org.sikuli.script.Screen;
+import org.testng.annotations.AfterClass;
+import org.testng.annotations.BeforeClass;
+
+import com.relevantcodes.extentreports.ExtentTest;
+
+import actions.Actions;
+import objRepository.Global;
+import objRepository.IONDesk.WorkFlow;
+import reusableMethods.RM_IONDESK;
+import utility.Utility;
+
+public class WF1_WorkflowOne 
+
+{
+	ExtentTest logger;
+	private Utility utl;
+	HashMap<String, String> testData=Utility.getTestData();
+	HashMap<String, String> configData=Utility.getConfigData();
+
+	//TESTDATA
+	String userName=configData.get("USER2");
+	String pwd=configData.get("PASSWORD");
+	String multitaskwf=testData.get("WORKFLOW_NAME1");
+	String multitaskdesc=testData.get("WORKFLOW_DESC1");
+	String message=testData.get("WORKFLOW_MSG");
+	String message1=testData.get("WORKFLOW_MSG1");
+	String message2=testData.get("WORKFLOW_MSG2");
+	String user=configData.get("USER2");
+	String user1=configData.get("USER3");
+	String user2=configData.get("USER4");
+	boolean condition=true;
+
+	@BeforeClass
+	public void setUp()
+	{
+		utl=new Utility();
+		logger=utl.initTest(this.getClass().getName().substring(this.getClass().getName().lastIndexOf(".")+1).trim());
+		new Actions();
+
+	}
+	@AfterClass
+	public void tearDown()
+	{
+		Utility.report.endTest(logger);
+		//Actions.driverClose();
+
+	}
+
+
+
+	@org.testng.annotations.Test(priority=1)
+	public void create_2tasks1Notif()
+	{
+		try {
+
+			//login
+			Global.login(userName,pwd);
+			RM_IONDESK.navigate_WorkFlow();
+			Actions.switchtoFrame(WorkFlow.workflowdeskCLFrame, "Switch to workflow frame");
+			Actions.pause(1);
+
+			if(Actions.verifyElementPresent(By.xpath("//div[@title='"+multitaskwf+"']"),"Workflow present"))
+			{
+				System.out.println("Req WF is present");
+				condition=false;
+			}
+			else{
+
+				System.out.println("Rq WF not present");
+			}
+			if(condition){
+				RM_IONDESK.add_NewWorkFlow(multitaskwf,multitaskdesc);
+				RM_IONDESK.create_2tasks1Notif();
+				RM_IONDESK.create2tasks1Notif_WF(multitaskwf,multitaskdesc,message,message1,message2,user1,user2,user);
+			}
+
+		} catch (Exception e) {
+
+		}finally
+		{
+			Global.logOut();
+			Actions.driverClose();
+		}
+
+	}
+}

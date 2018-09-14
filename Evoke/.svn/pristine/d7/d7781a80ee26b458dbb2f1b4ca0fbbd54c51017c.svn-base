@@ -1,0 +1,70 @@
+package scripts.Admin;
+
+import java.util.HashMap;
+
+import org.testng.annotations.AfterClass;
+import org.testng.annotations.BeforeClass;
+import org.testng.annotations.Test;
+
+import com.relevantcodes.extentreports.ExtentTest;
+
+import actions.Actions;
+import objRepository.Global;
+import reusableMethods.RM_Admin;
+import utility.Utility;
+
+public class TS_ManageDrillBacks_12768 {
+	ExtentTest logger;
+	private Utility utl;
+	 HashMap<String, String> testData=Utility.getTestData();
+		
+	 HashMap<String, String> configData=Utility.getConfigData();
+		
+		//TESTDATA
+		 String userName=configData.get("USER1");	
+		 String pwd=configData.get("PASSWORD");
+		
+			
+	
+	@BeforeClass
+	public void setUp()
+	{
+		 utl=new Utility();
+		 logger=utl.initTest(this.getClass().getName().substring(this.getClass().getName().lastIndexOf(".")+1).trim());
+		 new Actions();
+	
+	}
+	@AfterClass
+	public void tearDown()
+	{
+		Utility.report.endTest(logger);
+		//Actions.driverClose();
+		Utility.report.flush();
+	}
+	
+	
+
+	@Test
+	public void manage_DrillBacks(){
+		try {
+			
+			//LOGIN
+			Global.login(userName,pwd);
+			RM_Admin.manage_DrillBacks();
+			
+			//Global.logOut();
+		} catch (Exception e) {
+			
+		}finally
+		{
+			
+			try{
+				Global.logOut();
+				}catch (Exception e) {
+					// TODO: handle exception
+				}//Global.logOut();
+			Actions.driverClose();
+		}
+	}
+
+}

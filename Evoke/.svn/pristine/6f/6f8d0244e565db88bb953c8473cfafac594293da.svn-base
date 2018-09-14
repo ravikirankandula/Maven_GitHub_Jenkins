@@ -1,0 +1,100 @@
+package scripts.Streams;
+
+import java.util.HashMap;
+
+import org.apache.commons.lang3.RandomStringUtils;
+import org.openqa.selenium.WebDriver;
+import org.testng.annotations.AfterClass;
+import org.testng.annotations.BeforeClass;
+
+import com.relevantcodes.extentreports.ExtentTest;
+
+import actions.Actions;
+import objRepository.Global;
+import objRepository.IONDesk.WorkFlow;
+import objRepository.Streams.Streams;
+import reusableMethods.RM_Admin;
+import reusableMethods.RM_IONDESK;
+import reusableMethods.RM_Social;
+import reusableMethods.RM_Streams;
+import utility.Utility;
+
+public class TS_LogTemplate {
+	WebDriver driver;
+	ExtentTest logger;
+	Global global;
+	
+	private Utility utl;
+	
+	@BeforeClass
+	public void setup()
+	{
+		 utl=new Utility();
+		 logger=utl.initTest(this.getClass().getName().substring(this.getClass().getName().lastIndexOf(".")+1).trim());
+		 new Actions();
+		 System.out.println("**********"+System.getProperty("environment")+"*********************");
+		 System.out.println("**********"+System.getProperty("browser")+"*********************");
+	
+	}
+	@AfterClass
+	public void tearDown() throws Exception
+	{
+	
+	Utility.report.endTest(logger);
+	Utility.report.flush();
+	}
+	
+	
+	HashMap<String, String> configData=Utility.getConfigData();
+	 HashMap<String, String> testData=Utility.getTestData();
+		
+		//TESTDATA
+	 String userName=configData.get("USER2");
+	 String pwd=configData.get("PASSWORD");
+	 String templateName=testData.get("TEMPLATENAME");
+	 String templateDesc=testData.get("TEMPLAEDESC");
+	 String tag1=testData.get("TAG1");
+	 String tag2=testData.get("TAG2");
+	 String streamOwner=testData.get("STREAMOWNER");
+	 String internalParticipant=testData.get("STREAMPARTICIPANT");
+	 String stepName=testData.get("STEPNAME");
+	 String stepDesc=testData.get("STEPDESC");
+	 String tempName=templateName+RandomStringUtils.randomNumeric(3);
+	 
+	@org.testng.annotations.Test
+	public void test() throws InterruptedException{
+		 
+	try{	
+		//LOGIN
+		Global.login(userName,pwd);
+		//VERIFY STREAMS
+		//RM_Social.navigateToActivityPage();
+		Actions.switchtoFrame(Global.socialCLFrame, "Switch to the Frame");
+		for(int i=0;i<=1000;i++){
+		     
+				Actions.click(Streams.streamsHeader, "Click On Streams Header");  
+				Actions.click(WorkFlow.streamsworkFlows, "click on Workflows");
+				Actions.click(Streams.streamsHeader, "Click On Streams Header"); 
+				Actions.click(WorkFlow.activityFeedHeader, "click on activity feed");
+		}
+	}
+	catch (Exception e) {
+		// TODO: handle exception
+	}
+	finally{
+		try{
+			
+		//LOGOUT
+		Global.logOut();
+		
+		}
+		catch (Exception e) {
+			// TODO: handle exception
+		}
+		finally{
+		//DRIVER CLOSE
+		Actions.driverClose();
+		}
+	}
+	}
+}

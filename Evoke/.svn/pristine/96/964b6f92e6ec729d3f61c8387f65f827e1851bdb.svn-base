@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite guice-stage="DEVELOPMENT" name="Failed suite [suite1]">
+  <parameter name="Browser" value="chrome"/>
+  <test name="chrome(failed)">
+    <parameter name="Browser" value="chrome"/>
+    <classes>
+      <class name="scripts.ShellHeader.Ts_ShareMsgToPublicUsersFromShellShare_13234">
+        <methods>
+          <include name="verifyShareMsgByConUser"/>
+          <include name="setUp"/>
+          <include name="logOutAndBrowserClose"/>
+          <include name="shareMsgToPublicUsersFromShellShare"/>
+          <include name="endReport"/>
+          <include name="verifyShareMsgByPublicUser"/>
+        </methods>
+      </class> <!-- scripts.ShellHeader.Ts_ShareMsgToPublicUsersFromShellShare_13234 -->
+      <class name="utility.Utility">
+        <methods>
+          <include name="endReport"/>
+          <include name="startReport"/>
+          <include name="setUpBrowser"/>
+        </methods>
+      </class> <!-- utility.Utility -->
+    </classes>
+  </test> <!-- chrome(failed) -->
+</suite> <!-- Failed suite [suite1] -->

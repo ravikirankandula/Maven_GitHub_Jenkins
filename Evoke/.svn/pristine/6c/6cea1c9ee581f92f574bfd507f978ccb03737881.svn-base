@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+<suite name="suite1">
+<!-- <listeners>
+		<listener class-name="utility.RetryListener" />
+	</listeners>
+	 --><test name="firefox">
+	<parameter name="Browser" value="firefox" />
+		<classes>
+			<class name="utility.Utility" />
+			<class name="scripts.IFS.TS_Contact_12697" />
+			 <class name="scripts.IFS.Ts_ContactGroup_12699" /> 
+			
+		<class name="scripts.IFS.Ts_ActiveColumn_14735" /> 
+			<class name="scripts.IFS.TS_Downloadidpproperties_14731" /> 			
+	 		<class name="scripts.IFS.TS_ServiceAccount_12693" />
+			<class name="scripts.IFS.TS_DistributionGroup_12701" />
+			<class name="scripts.IFS.TS_DocumentAuthorizations_12706" />
+			<class name="scripts.IFS.Ts_DomainSecurity_12713" />
+			<class name="scripts.IFS.TS_EMailSettings_12721" />
+			<class name="scripts.IFS.TS_ExternalUser_12690" />
+			<class name="scripts.IFS.TS_AccountCreationStatus_13971" />
+			<class name="scripts.IFS.TS_InforSuiteUser_14110" />
+			<class name="scripts.IFS.TS_ManageFeatures_13790" /> 
+			<class name="scripts.IFS.TS_SCIIMOptions_12715" />
+			<class name="scripts.IFS.TS_SecurityRole_12704" />
+			<class name="scripts.IFS.TS_ImportUser_12724" /> 
+			<class name="scripts.IFS.TS_AddUser_12684" /> 
+			<class name="scripts.IFS.Ts_AllowedDomainempty_14745" />
+			<class name="scripts.IFS.TS_UserDetails_12689" />
+			<class name="scripts.IFS.TS_Metadata_14061" />
+			<class name="scripts.IFS.TS_ActionMenu_12686" /> 
+		</classes>
+	</test>
+</suite>

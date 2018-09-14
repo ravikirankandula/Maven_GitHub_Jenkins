@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<suite name="RerunSuite">
+      <test name="RerunTest">
+            <classes>
+                  <class name="utility.Utility"/>
+            </classes>
+      </test>
+</suite>

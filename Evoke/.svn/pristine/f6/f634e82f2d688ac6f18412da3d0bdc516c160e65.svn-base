@@ -1,0 +1,166 @@
+package scripts.ActivityFeed;
+
+import java.util.HashMap;
+
+import org.apache.commons.lang3.RandomStringUtils;
+
+import org.openqa.selenium.By;
+import org.testng.annotations.AfterClass;
+import org.testng.annotations.AfterMethod;
+import org.testng.annotations.BeforeClass;
+import org.testng.annotations.Test;
+
+import com.relevantcodes.extentreports.ExtentTest;
+
+import actions.Actions;
+import objRepository.Global;
+import objRepository.Social.Directory;
+import objRepository.Social.ShellHeader;
+import reusableMethods.RM_Admin;
+import reusableMethods.RM_Social;
+import utility.Utility;
+
+
+public class Ts_PromptOnOFF_AcceptGroupReq_12760_2 {
+
+	ExtentTest logger;
+	Utility utl;
+	HashMap<String, String> testData=Utility.getTestData();
+	HashMap<String, String> configData=Utility.getConfigData();
+	String time=RandomStringUtils.randomNumeric(4);
+	private String groupName=Utility.getTestData().get("GROUP_NAME")+time;
+	//TESTDATA
+	/*String userName=configData.get("USER6");
+		 String pwd=configData.get("PASSWORD");*/
+
+	@BeforeClass
+	public void setUp()
+	{
+		utl=new Utility();
+		utl.initTest(this.getClass().getName().substring(this.getClass().getName().lastIndexOf(".")+1).trim());
+		new Actions();
+
+	}
+	@AfterMethod
+	public void tearDown() throws Exception
+	{
+		Actions.logOutAndBrowserCloseMU();
+	}
+	@AfterClass
+	public void endReport() throws Exception
+	{
+		Actions.endScriptReportMU();
+		
+		
+	}
+
+	@Test
+	public void createGroup(){
+		Global.login(Utility.getConfigData().get("USER26"), Utility.getConfigData().get("PASSWORD"));
+		//Actions.pause(3);
+		RM_Social.createGroup(groupName);
+		//Actions.pause(3);
+		//RM_Social.inviteToGroup(Utility.getTestData().get("FULLNAME_USER16"));
+
+	}
+
+	@Test(dependsOnMethods={"createGroup"})
+	public void acceptreq() throws InterruptedException
+	{
+		try{
+			//LOGIN INTO THE APPLICATION
+			Global.login(Utility.getConfigData().get("USER16"),Utility.getConfigData().get("PASSWORD"));
+			RM_Social.navigateToActivityPage();
+			//RM_Streams.navigateToStreams();
+			Actions.switchToDefaultContent();
+			RM_Admin.navigateToMenu("User Settings");
+			Actions.verifyElement(ShellHeader.userMenu_UserSettings_ProfileInformationHeading, "Profile Information");
+			Actions.pause(3);
+			Actions.click(By.xpath("//span[text()='Notifications and Prompts Settings']"),"Click on Notifications&Prompt Settings");
+			Actions.scrollToElement(ShellHeader.GroupConnection_Switch_LabelTag);
+			System.out.println("@@@@@@@@@@@@@@@@ "+Actions.isChecked(ShellHeader.GroupConnection_Switch_InputTag)+" @@@@@@@@@@@@@@@@@@@");
+			// Code to Make Post Prompt ON on First attempt
+			if(!Actions.isChecked(ShellHeader.GroupConnection_Switch_InputTag))
+			{
+				Actions.scrollToElement(ShellHeader.GroupConnection_Switch_LabelTag);
+				Actions.pause(2);
+				Actions.click(ShellHeader.GroupConnection_Switch_LabelTag, "Turn ON the Delete Post Prompt Switch");
+				Actions.scrollToElement(ShellHeader.userMenu_UserSettings_SaveBtn);
+				Actions.click(ShellHeader.userMenu_UserSettings_SaveBtn, "Click on Save button");
+				Actions.click(ShellHeader.userMenu_UserSettings_OK_Prompt, "Click On OK in Prompt");
+			}
+			// Code to Verify Prompt is Displayed
+
+			Actions.switchToDefaultContent();
+			RM_Social.navigateToActivityPage();
+			RM_Social.navigateToDirectoryPage();
+			Actions.click(Directory.groupsTab, "Click on 'Groups' tab");
+			Actions.pause(1);
+			Actions.click(Directory.filterByNotConnected, "Click on 'Not Connected' tab");
+			RM_Social.filterByAlphabet('N');
+			RM_Social.connectToGroup(groupName);
+			Actions.verifyElementPresent(Global.yes, "Confirmatiom PopUp");
+			Global.declineConfirmation();
+			Global.minglePageLoad_Social();
+
+			//Code to Turn OFF Prompt Switch
+			Actions.switchToDefaultContent();
+			RM_Admin.navigateToMenu("User Settings");
+			Actions.verifyElement(ShellHeader.userMenu_UserSettings_ProfileInformationHeading, "Profile Information");
+			Actions.pause(3);
+			Actions.click(By.xpath("//span[text()='Notifications and Prompts Settings']"),"Click on Notifications&Prompt Settings");
+			Actions.scrollToElement(ShellHeader.GroupConnection_Switch_LabelTag);
+			System.out.println("@@@@@@@@@@@@@@@@ "+Actions.isChecked(ShellHeader.GroupConnection_Switch_InputTag)+" @@@@@@@@@@@@@@@@@@@");
+			// Code to Make Post Prompt ON on First attempt
+			if(Actions.isChecked(ShellHeader.GroupConnection_Switch_InputTag))
+			{
+				Actions.scrollToElement(ShellHeader.GroupConnection_Switch_LabelTag);
+				Actions.pause(2);
+				Actions.click(ShellHeader.GroupConnection_Switch_LabelTag, "Turn ON the Delete Post Prompt Switch");
+				Actions.scrollToElement(ShellHeader.userMenu_UserSettings_SaveBtn);
+				Actions.click(ShellHeader.userMenu_UserSettings_SaveBtn, "Click on Save button");
+				Actions.click(ShellHeader.userMenu_UserSettings_OK_Prompt, "Click On OK in Prompt");
+			}
+			System.out.println(Actions.isChecked(ShellHeader.GroupConnection_Switch_LabelTag));
+
+			Actions.switchToDefaultContent();
+			RM_Social.navigateToActivityPage();
+			RM_Social.navigateToDirectoryPage();
+			Actions.click(Directory.groupsTab, "Click on 'Groups' tab");
+			Actions.pause(1);
+			Actions.click(Directory.filterByNotConnected, "Click on 'Not Connected' tab");
+			RM_Social.filterByAlphabet('N');
+			RM_Social.connectToGroup(groupName);
+			Actions.verifyElementNotPresent(Global.yes, "Confirmatiom PopUp");
+			
+			//Code to Turn ON Prompt Switch
+			Actions.switchToDefaultContent();
+			RM_Admin.navigateToMenu("User Settings");
+			Actions.verifyElement(ShellHeader.userMenu_UserSettings_ProfileInformationHeading, "Profile Information");
+			Actions.pause(3);
+			Actions.click(By.xpath("//span[text()='Notifications and Prompts Settings']"),"Click on Notifications&Prompt Settings");
+			Actions.scrollToElement(ShellHeader.GroupConnection_Switch_LabelTag);
+			System.out.println("@@@@@@@@@@@@@@@@ "+Actions.isChecked(ShellHeader.GroupConnection_Switch_InputTag)+" @@@@@@@@@@@@@@@@@@@");
+			// Code to Make Post Prompt ON on First attempt
+			if(!Actions.isChecked(ShellHeader.GroupConnection_Switch_InputTag))
+			{
+				Actions.scrollToElement(ShellHeader.GroupConnection_Switch_LabelTag);
+				Actions.pause(2);
+				Actions.click(ShellHeader.GroupConnection_Switch_LabelTag, "Turn ON the Delete Post Prompt Switch");
+				Actions.scrollToElement(ShellHeader.userMenu_UserSettings_SaveBtn);
+				Actions.click(ShellHeader.userMenu_UserSettings_SaveBtn, "Click on Save button");
+				Actions.click(ShellHeader.userMenu_UserSettings_OK_Prompt, "Click On OK in Prompt");
+			}
+			System.out.println(Actions.isChecked(ShellHeader.GroupConnection_Switch_InputTag));
+		} catch (Exception e) {
+
+
+		}
+		finally{
+
+
+
+		}
+
+	}
+}

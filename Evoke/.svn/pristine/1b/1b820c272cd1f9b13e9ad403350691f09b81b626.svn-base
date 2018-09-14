@@ -1,0 +1,31 @@
+/**
+ * 
+ */
+package objRepository.Social;
+
+import org.openqa.selenium.By;
+
+public class Groups 
+{
+	
+	public static final By groupName=By.id("groupProfileTxtName");
+	public static final By department=By.id("groupProfileTxtDepartment");
+	public static final By relatedSkill=By.id("groupProfileTxtRelatedSkills");
+	public static final By description=By.id("groupProfileTxtAreaDescription");
+	public static final By saveButton=By.xpath("//*[@class='m-btn1 save']");
+	public static final By retrive_GroupName=By.xpath("//*[@class='m-txt-h7 m-ellipsis']");
+	//public static final By connections_AddBtn=By.xpath("//div[@class='infor-social-plusIcon']");
+	//public static final By groupsTab=By.id("groupsTab");
+	//public static final By administer=By.xpath("//span[@class='infor-mingle-admingroupspan']");
+	//public static final By Group_DeleteBtn=By.id("GroupDeleteBtn");
+	//public static final By alphabet_Grp=By.xpath("//*[@id='groupingAlphabets']/a[text()='O']");
+	public static final By inviteMem_Btn=By.id("infor-group-invite-members");
+	//public static final By inviteTo=By.id("defaultFieldName");
+	public static final By sendInvite_Btn=By.xpath("//button[normalize-space(text())='Send']");//By.xpath("//*[@class='m-btn1 infor-send-invite']");
+	//public static final By acceptinvi_Btn=By.id("acceptNotificationRequest");
+	public static final By saveSuccessToolTip=By.xpath("//div[@class='infor-save-success-tooltip']");
+	public static final By inviteTextBox=By.id("defaultFieldName");//xpath("//div[@data-bind-id='sendto-wrpr']");
+	//public static final By grp_Settings=By.xpath("//div[contains(text(), '"+gname+"')]/following::div[2]/div[@class='infor-mingle-Group-EditAdminIcon inlineBlock icn_admin-settings admin_user_edit_Icon']");
+	public static final By inviteGroupSuccessToolTip=By.xpath("//div[contains(normalize-space(text()),'Your group invitation message was sent successfully')]");
+}
+

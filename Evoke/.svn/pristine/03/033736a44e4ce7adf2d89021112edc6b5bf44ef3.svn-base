@@ -1,0 +1,14 @@
+package objRepository.IFS;
+
+import org.openqa.selenium.By;
+
+public class SCIIMAccounts {
+public static final By readOnly=By.className("is-readonly");
+public static final By moveTopassword=By.xpath("//div[@id='ScimDataGrid']/descendant::table/descendant::td[3]/descendant::div");
+public static final By password=By.xpath("//div[@id='ScimDataGrid']/descendant::table/descendant::td[3]/descendant::div/input");
+public static final By moveToconfirmPassword=By.xpath("//div[@id='ScimDataGrid']/descendant::table/descendant::td[4]/descendant::div");
+public static final By confirmPassword=By.xpath("//div[@id='ScimDataGrid']/descendant::table/descendant::td[4]/descendant::div/input");
+public static final By saveScimOPtions=By.id("saveScimOptions");
+public static final By deleteScimOPtions=By.id("btnDeleteScimOptions");
+public static final By addScimOPtions=By.id("btnAddScimOptions");
+}

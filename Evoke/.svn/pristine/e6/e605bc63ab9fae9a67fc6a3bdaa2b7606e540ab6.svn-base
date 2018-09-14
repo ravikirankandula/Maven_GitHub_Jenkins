@@ -1,0 +1,56 @@
+package objRepository.IONDesk;
+
+import org.openqa.selenium.By;
+
+public class Alerts {
+	
+	public static final By appMenu=By.xpath("//button[@title='App Menu']");
+	public static final By loading=By.xpath("//div[@class='busy-indicator']");
+	public static final By busyindicator=By.xpath("//div[contains(@class,'busy-indicator')]");
+	public static final By myAlerts=By.xpath("//div[@title='My Alerts']");
+	public static final By monitors=By.xpath("//div[@title='Monitors']");
+	public static final By add_NewMonitor=By.xpath("//div[@title='Add new monitor']");
+	public static final By monitorName=By.xpath("//div[text()='Name ']/following::input");
+	public static final By monitorDesc=By.xpath("//div[text()='Description ']/following::tr/td[1]/textarea");
+	public static final By collapsename=By.xpath("//div[text()='Name ']/../../../../../../../div/descendant::button[2]");
+	public static final By add=By.xpath("//button[text()='Add']");
+	public static final By monitorsFrame=By.xpath("//iframe[@id='monitoringdesk']");//iframe[@id='MonitoringUI']
+	public static final By filter=By.xpath("//input[@placeholder='Specify name as a keyword.']");
+	public static final By ok_Btn=By.xpath("//button[text()='OK']");
+	
+	
+	public static final By attributes=By.xpath("//div[text()='Attributes']");
+	public static final By conditions=By.xpath("//div[text()='Conditions']");
+	public static final By Rule=By.xpath("//div[text()='Rule']");
+	public static final By alertSettings=By.xpath("//div[text()='Alert Settings']");
+	public static final By workflow_Settings=By.xpath("//div[text()='Workflow Settings']");
+	
+	
+	
+	public static final By selectAttributes=By.xpath("//div[text()='Select Attributes']");
+	public static final By add_Attributes=By.xpath("//span[@title='Path']/ancestor::table/../../../../../descendant::button[text()='Add']");
+	public static final By tree1=By.xpath("//div[text()='SecurityUserMaster BOD']/../../../../../../descendant::img");
+	public static final By tree2=By.xpath("//div[text()='SecurityUserMaster']/../../../../../../descendant::img");
+	public static final By tree3_IDS=By.xpath("//div[text()='IDs']/../../../../../../descendant::img");
+	public static final By ID=By.xpath("//a[text()='ID']");
+	public static final By add_Condition=By.xpath("//span[@title='Expression']/ancestor::table/../../../../../descendant::button[text()='Add']");
+	public static final By condition_Name=By.xpath("//div[text()='Name']/following::input");
+	public static final By condition_Attribute=By.xpath("//div[text()='Attribute']/following::div");
+	public static final By condition_operator=By.xpath("//div[text()='Operator']/following::div");
+	public static final By Attribute_dropdownID=By.xpath("//td[text()='ID']");
+	public static final By condition_lessgreater=By.xpath("//td[text()='<>']");
+	public static final By rule_condition=By.xpath("//td[text()='---']/following::div");
+	public static final By alertSettings_msg=By.xpath("//input[contains(@title,'Message')]");
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+
+}

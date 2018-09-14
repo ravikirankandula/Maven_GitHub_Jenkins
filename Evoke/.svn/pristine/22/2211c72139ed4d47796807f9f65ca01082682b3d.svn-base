@@ -1,0 +1,210 @@
+package scripts.ActivityFeed;
+
+import java.util.Iterator;
+import java.util.List;
+
+import org.apache.commons.lang3.RandomStringUtils;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
+import org.testng.annotations.AfterClass;
+import org.testng.annotations.BeforeClass;
+import org.testng.annotations.Test;
+
+import actions.Actions;
+import objRepository.Global;
+import objRepository.Social.ActivityFeed;
+import objRepository.Social.ShellHeader;
+import objRepository.Social.ShellHeaderShareOverlay;
+import reusableMethods.RM_Social;
+import utility.Utility;
+
+public class Ts_PredictiveTargeting_TaggedUser_12731 {
+	private Utility utl;
+	//ExtentTest logger;
+
+	static boolean rerun=false;
+	public static String className;
+	@BeforeClass
+	public void setUp()
+	{
+		utl=new Utility();
+		utl.initTest(this.getClass().getName().substring(this.getClass().getName().lastIndexOf(".")+1).trim());
+		className=this.getClass().getName().toString();
+		new Actions();
+	}
+		
+		@AfterClass
+		public void endReport()
+		{
+			if(rerun)
+			{
+				Utility.addClass(className);
+			}
+			try {
+				RM_Social.deleteAll(ActivityFeed.Delete_Post);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			try {
+				Actions.logOutAndBrowserClose();
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+		}
+		static String time=RandomStringUtils.randomNumeric(4);
+		static String user1=Utility.getTestData().get("FULLNAME_USER8");
+		static String user2=Utility.getTestData().get("FULLNAME_USER9");
+		static String group1=Utility.getTestData().get("GROUP_NAME")+"4";
+		static String group2=Utility.getTestData().get("GROUP_NAME")+"5";
+		static String postMsg=Utility.getTestData().get("POSTMSG")+time;
+		//String verifyMsg="QAAuto Test9QAAuto Test10"+Utility.getTestData().get("POSTMSG")+time;
+		@Test
+		public void predectiveTargetTaggedUser()
+		{
+			
+			try {
+				Global.login(Utility.getConfigData().get("USER10"), Utility.getConfigData().get("PASSWORD"));
+				//Actions.pause(3);
+				RM_Social.navigateToActivityPage();
+				for(int i=0;i<=2;i++)
+				{
+					postMsg=postMsg.concat(Integer.toString(i));
+					Actions.click(ActivityFeed.privacyLink, "Open Privacy dropdown");
+					RM_Social.selectPrivacyInAFP(Utility.getTestData().get("PRIVACY_TAGGEDUSERSANDGROUPS"));
+					RM_Social.tagUserInAFP(user1);
+					Actions.pause(2);
+					RM_Social.tagUserInAFP(user2);
+					RM_Social.typeMessageInAFP(postMsg);
+					RM_Social.clickOnPostBtnInAFP();
+					RM_Social.verifyMessage(postMsg, user1, user2);
+				}
+				// Verify in In Postpage
+				RM_Social.typeMessageInAFP("@");
+				Actions.pause(1);
+				Actions.verifyElement(ActivityFeed.predictiveUsersList, "PredictiveUsers List");
+				List<WebElement> li=Actions.findElements(ActivityFeed.predictiveUsersList);
+				verifyList(li,user1,user2);
+				
+				// Verify in AFP Share
+				
+				
+				Actions.click(ActivityFeed.shareLink,"Click On Share in Feed Page Post");
+				Actions.switchToDefaultContent();
+				Actions.explicitWait_InVisibilityOfElement();
+				Actions.clearText(ShellHeaderShareOverlay.textArea, "ClearContent in Text Box");
+				RM_Social.typeMessageInShellHeaderShareOverlay("@");
+				Actions.explicitWait_InVisibilityOfElement();
+				Actions.verifyElement(ActivityFeed.predictiveUsersList_SahreOvaerlay, "PredictiveUsers List");
+				List<WebElement> afpShLi=Actions.findElements(ActivityFeed.predictiveUsersList_SahreOvaerlay);
+				verifyList(afpShLi,user1,user2);
+				
+				// Verify In ShellHeader Share Overlay
+				
+				Actions.switchToDefaultContent();
+				Actions.click(ShellHeader.shareLink, "Click on Share Link");
+				Actions.explicitWait_InVisibilityOfElement();
+				Actions.clearText(ShellHeaderShareOverlay.textArea, "ClearContent in Text Box");
+				RM_Social.typeMessageInShellHeaderShareOverlay("@");
+				Actions.explicitWait_InVisibilityOfElement();
+				Actions.verifyElement(ActivityFeed.predictiveUsersList_SahreOvaerlay, "PredictiveUsers List");
+				List<WebElement> shLi=Actions.findElements(ActivityFeed.predictiveUsersList_SahreOvaerlay);
+				verifyList(shLi,user1,user2);
+				Actions.click(ShellHeaderShareOverlay.cancelBtn, "Click on Cancel in Share Overlay");	
+				//Switch to Social Frame
+				Actions.switchtoFrame(Global.socialCLFrame, "Switch to Social Frame");
+			} catch (Exception e) {
+				rerun=true;
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}finally{
+				predectiveTargetTaggedGroup();
+			}
+	}
+		
+		public void predectiveTargetTaggedGroup()
+		{
+			
+			try {
+				//Global.login(Utility.getConfigData().get("USER7"), Utility.getConfigData().get("PASSWORD"));
+				//Actions.pause(3);
+				//Actions.switchToDefaultContent();
+				RM_Social.createGroup(group1);
+				//Actions.switchToDefaultContent();
+				RM_Social.createGroup(group2);
+				RM_Social.clickOnActivityFeed();
+				for(int i=0;i<=4;i++)
+				{
+					postMsg=postMsg.concat(Integer.toString(i));
+					Actions.click(ActivityFeed.privacyLink, "Open Privacy dropdown");
+					RM_Social.selectPrivacyInAFP(Utility.getTestData().get("PRIVACY_TAGGEDUSERSANDGROUPS"));
+					RM_Social.tagUserInAFP(group1);
+					Actions.pause(2);
+					RM_Social.tagUserInAFP(group2);
+					RM_Social.typeMessageInAFP(postMsg);
+					RM_Social.clickOnPostBtnInAFP();
+					RM_Social.verifyMessage(postMsg, group1, group2);
+				}
+				// Verify in In Postpage
+				RM_Social.typeMessageInAFP("@");
+				Actions.pause(1);
+				Actions.verifyElement(ActivityFeed.predictiveUsersList, "PredictiveUsers List");
+				List<WebElement> li=Actions.findElements(ActivityFeed.predictiveUsersList);
+				verifyList(li,group1,group2);
+				
+				// Verify in AFP Share
+				
+				
+				Actions.click(ActivityFeed.shareLink,"Click On Share in Feed Page Post");
+				Actions.switchToDefaultContent();
+				Actions.explicitWait_InVisibilityOfElement();
+				Actions.clearText(ShellHeaderShareOverlay.textArea, "ClearContent in Text Box");
+				RM_Social.typeMessageInShellHeaderShareOverlay("@");
+				Actions.explicitWait_InVisibilityOfElement();
+				Actions.verifyElement(ActivityFeed.predictiveUsersList_SahreOvaerlay, "PredictiveUsers List");
+				List<WebElement> afpShLi=Actions.findElements(ActivityFeed.predictiveUsersList_SahreOvaerlay);
+				verifyList(afpShLi,group1,group2);
+				
+				// Verify In ShellHeader Share Overlay
+				
+				Actions.switchToDefaultContent();
+				Actions.click(ShellHeader.shareLink, "Click on Share Link");
+				Actions.explicitWait_InVisibilityOfElement();
+				Actions.clearText(ShellHeaderShareOverlay.textArea, "ClearContent in Text Box");
+				RM_Social.typeMessageInShellHeaderShareOverlay("@");
+				Actions.explicitWait_InVisibilityOfElement();
+				Actions.verifyElement(ActivityFeed.predictiveUsersList_SahreOvaerlay, "PredictiveUsers List");
+				List<WebElement> shLi=Actions.findElements(ActivityFeed.predictiveUsersList_SahreOvaerlay);
+				verifyList(shLi,group1,group2);
+				Actions.click(ShellHeaderShareOverlay.cancelBtn, "Click on Cancel in Share Overlay");	
+				//Switch to Social Frame
+				Actions.switchtoFrame(Global.socialCLFrame, "Switch to Social Frame");
+			} catch (Exception e) {
+				rerun=true;
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+	}
+		public static void verifyList(List li, String tag1,String tag2)
+		{
+			try {
+				Iterator it=li.iterator();
+				String user[]=new String[10];
+				for(int i=0;it.hasNext();i++)
+				{
+					WebElement we=(WebElement) it.next();
+					user[i]=Actions.getText(we);
+					System.out.println("List Values : "+user[i]);
+				}
+				Actions.verifyString(user[0], tag1);
+				Actions.verifyString(user[1], tag2);
+			} catch (Exception e) {
+				rerun=true;
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+	
+		}
+}

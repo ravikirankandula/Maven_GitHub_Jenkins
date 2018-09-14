@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+<suite name="suite1">
+	<!-- <listeners> <listener class-name="utility.RetryListener" /> </listeners> -->
+	<test name="chrome">
+		<parameter name="Browser" value="chrome" />
+		<classes>
+
+
+			<class name="utility.Utility" />
+			
+			
+		<class name="scripts.Admin.TS_AddUsersToApp_12768" />
+		
+<class name="scripts.Admin.TS_NonProvisionedApp_12745_12759" />
+<class name="scripts.ShellHeader.Ts_VerifyUserMenu_13226" /> 
+<class name="scripts.ActivityFeed.Ts_PromptOnOff_AcceptConnectionReq_12760_1" />
+
+<class name="scripts.IONAPI.TS_InforNonProvisioned_12782_12784_12786_12788_12789" />
+	<class name="scripts.IONAPI.TS_IOSApp_12801_12808" />
+			
+		</classes>
+
+
+	</test>
+
+
+
+
+
+</suite>

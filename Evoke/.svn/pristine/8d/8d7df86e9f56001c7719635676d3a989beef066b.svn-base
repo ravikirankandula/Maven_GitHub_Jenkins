@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+<suite name="suite1">
+<!-- <listeners>
+		<listener class-name="utility.RetryListener" />
+	</listeners>
+	 --><test name="chrome">
+	<parameter name="Browser" value="chrome" />
+		<classes>
+		  <class name="utility.Utility" />
+		<class name="scripts.Admin.TS_AddRolesToApp_12768" />
+			<class name="scripts.Admin.TS_ContextApp_12757" />
+			<class name="scripts.Admin.Ts_MenuOptionsForInforSysAdminRole_12771_1" />
+			<class name="scripts.Admin.Ts_MenuOptionsForMingleAdminRole__12771_2" />
+			<class name="scripts.Admin.Ts_MenuOptionsForMingleEnterpriseRole_12771_3" />
+			<class name="scripts.Admin.Ts_MenuOptionsForMingleIONEnabledRole_12771_4" />
+			<class name="scripts.Admin.TS_MultipleNonInfor_12749" />
+			<class name="scripts.Admin.TS_NonInforAppEditDelete_12753_14103" />
+			<class name="scripts.Admin.Ts_UserMenuOption_AdminSettings_MingleAdmin_12771_5" />
+			<class name="scripts.Admin.TS_ManageDrillBacks_12768" />
+			<class name="scripts.Admin.TS_HttpContentContextApp_14559" />
+			<class name="scripts.Admin.TS_HttpContentApp_14558" />
+			<class name="scripts.Admin.TS_SupportMultipleContext_14031" />
+			<class name="scripts.Admin.TS_NonProvisionedApp_12745_12759" />
+			<class name="scripts.Admin.Ts_ActorIDwhenLandmarkorLSFAppisadded_14720" />
+			<class name="scripts.Admin.Ts_Accessalldefaultapplications_14105" />
+			<!-- <class name="scripts.IONAPI.TS_AndroidApp_12800_12807" />
+			<class name="scripts.IONAPI.TS_AvailableMobileApps_14111" />
+			<class name="scripts.IONAPI.TS_BackendService_12805_12812" />
+			<class name="scripts.IONAPI.TS_CloneFeatures_14119_14131" />
+			<class name="scripts.IONAPI.TS_InforNonProvisioned_12782_12784_12786_12788_12789" />
+			<class name="scripts.IONAPI.TS_IOSApp_12801_12808" />
+			<class name="scripts.IONAPI.TS_NonInfor_12783_12798_12793_12794" />
+			<class name="scripts.IONAPI.TS_OthersApp_12803_12810" />
+			<class name="scripts.IONAPI.TS_ProvisionedSuiteSwagger_13960" />
+			<class name="scripts.IONAPI.TS_WebApp_12804_12811" />
+			<class name="scripts.IONAPI.TS_WindowsApp_12802_12809" />
+			<class name="scripts.IONAPI.TS_APIMetaData_14113" />
+			<class name="scripts.IONAPI.TS_IssueRefreshToken_14132" /> 
+			<class name="scripts.IONAPI.TS_ImportExportNonInforSuites_14401" /> 
+			<class name="scripts.IONAPI.Ts_IONAPIGeneralSettings_14766" /> 
+			<class name="scripts.IONAPI.Ts_IONAPIImport_14771" /> 
+			<class name="scripts.IONAPI.Ts_IONAPIExport_14770" />   -->
+			
+			
+		<class name="scripts.IONAPI_V_13.TS_AndroidApp_12800_12807" />
+			<class name="scripts.IONAPI_V_13.TS_BackendService_12805_12812" />
+			<class name="scripts.IONAPI_V_13.TS_IOSApp_12801_12808" />
+			<class name="scripts.IONAPI_V_13.TS_OthersApp_12803_12810" />
+			<class name="scripts.IONAPI_V_13.TS_WebApp_12804_12811" />
+			<class name="scripts.IONAPI_V_13.TS_WindowsApp_12802_12809" />
+			<class name="scripts.IONAPI_V_13.Ts_IONAPIGeneralSettings_14766" />
+			<class name="scripts.IONAPI_V_13.TS_ProvisionedSuiteSwagger_13960" />
+			<class name="scripts.IONAPI_V_13.TS_IssueRefreshToken_14132" />
+			<class name="scripts.IONAPI_V_13.TS_CloneFeatures_14119_14131" /> 
+			
+			
+		
+		</classes>
+	</test>
+
+
+  
+
+
+</suite>

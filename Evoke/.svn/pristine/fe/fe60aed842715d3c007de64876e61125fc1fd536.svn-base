@@ -1,0 +1,161 @@
+package scripts.ActivityFeed;
+
+import org.apache.commons.lang3.RandomStringUtils;
+import org.openqa.selenium.By;
+import org.testng.annotations.AfterClass;
+import org.testng.annotations.AfterMethod;
+import org.testng.annotations.BeforeClass;
+import org.testng.annotations.Test;
+
+import actions.Actions;
+import objRepository.Global;
+import objRepository.Social.ActivityFeed;
+import objRepository.Social.Directory;
+import objRepository.Social.ShellHeader;
+import reusableMethods.RM_Admin;
+import reusableMethods.RM_Social;
+import utility.Utility;
+
+public class Ts_PromptOnOff_AcceptConnectionReq_12760_1 {
+	
+	
+	private Utility utl;
+	//ExtentTest logger;
+
+		@BeforeClass
+		public void setUp()
+		{
+			 utl=new Utility();
+			 //logger=
+			 utl.initTest(this.getClass().getName().substring(this.getClass().getName().lastIndexOf(".")+1).trim());
+			 new Actions();
+		
+		}
+		@AfterMethod
+		public void logOutAndBrowserClose()
+		{
+			Actions.logOutAndBrowserCloseMU();
+		}
+		@AfterClass
+		public void endReport() throws Exception
+		{
+			Actions.endScriptReportMU();
+			
+			
+		}
+		String time=RandomStringUtils.randomNumeric(4);
+		@Test
+		public void sendConreq()
+		{
+		
+			Global.login(Utility.getConfigData().get("USER17"), Utility.getConfigData().get("PASSWORD"));
+			//Actions.pause(3);
+			RM_Social.makeConnectionRequest(Directory.filterByNotConnected, Directory.sortByFirstName, 'Q', "QAAuto Test12");
+			RM_Social.clickOnActivityFeed();
+			//Actions.switchtoFrame(Global.socialCLFrame, "Switch to Social Frame");
+			//Actions.verify(ActivityFeed.msgContainer, Utility.getTestData().get("CONREQMSG_10"));
+			RM_Social.verifyMessage(Utility.getTestData().get("CONREQMSG_12"));
+			
+			
+		}
+		@Test(dependsOnMethods={"sendConreq"})
+		public void verifyPostMsg()
+		{
+			
+				
+				try {
+					Global.login(Utility.getConfigData().get("USER12"),Utility.getConfigData().get("PASSWORD"));
+					RM_Social.navigateToActivityPage();
+					Actions.switchToDefaultContent();
+					RM_Social.verifyNotification(Utility.getTestData().get("Gl_TD_VerfConnReqMsgBy_17"));
+					RM_Social.clickOnActivityFeed();
+					//Actions.verify(ActivityFeed.msgContainer, Utility.getTestData().get("Gl_TD_VerfConnReqMsgBy_17"));
+					RM_Social.verifyMessage(Utility.getTestData().get("Gl_TD_VerfConnReqMsgBy_17"));
+					Actions.verifyElement(ActivityFeed.accept, "Accept");
+					Actions.verifyElement(ActivityFeed.decline, "Decline");
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}finally
+				{
+					verifyPromptDisplay();
+				}
+				/*RM_Social.declineConnectionRequest();
+				Actions.pause(2);
+				//RM_Social.verifyMessage(msg);
+				//Actions.verifyString(Actions.getText(ActivityFeed.msgContainer),Utility.getTestData().get("Gl_TD_ConReqDeclineMsg_17"));
+				RM_Social.verifyMessage(Utility.getTestData().get("Gl_TD_ConReqDeclineMsg_17"));*/
+				
+		}
+		
+		public void verifyPromptDisplay()
+		{
+			Actions.switchToDefaultContent();
+			RM_Admin.navigateToMenu("User Settings");
+			Actions.verifyElement(ShellHeader.userMenu_UserSettings_ProfileInformationHeading, "Profile Information");
+			Actions.pause(3);
+			Actions.click(By.xpath("//span[text()='Notifications and Prompts Settings']"),"Click on Notifications&Prompt Settings");
+			Actions.scrollToElement(ShellHeader.userMenu_UserSettings_AcceptOrDenyRequest_LabelTag);
+			System.out.println("@@@@@@@@@@@@@@@@ "+Actions.isChecked(ShellHeader.userMenu_UserSettings_AcceptOrDenyRequest_InputTag)+" @@@@@@@@@@@@@@@@@@@");
+			// Code to Make Post Prompt ON on First attempt
+			if(!Actions.isChecked(ShellHeader.userMenu_UserSettings_AcceptOrDenyRequest_InputTag))
+			{
+				Actions.scrollToElement(ShellHeader.userMenu_UserSettings_AcceptOrDenyRequest_LabelTag);
+				Actions.pause(2);
+				Actions.click(ShellHeader.userMenu_UserSettings_AcceptOrDenyRequest_LabelTag, "Turn ON the Delete Post Prompt Switch");
+				Actions.scrollToElement(ShellHeader.userMenu_UserSettings_SaveBtn);
+				Actions.click(ShellHeader.userMenu_UserSettings_SaveBtn, "Click on Save button");
+				Actions.click(ShellHeader.userMenu_UserSettings_OK_Prompt, "Click On OK in Prompt");
+			}
+			// Code to Verify Prompt is Displayed
+			RM_Social.navigateToActivityPage();
+			Actions.click(ActivityFeed.accept, "Click On Accept Button");
+			Actions.verifyElement(Global.yes, "Confirmatiom PopUp");
+			Global.declineConfirmation();
+			Actions.pause(1);
+			//Code to Turn OFF Prompt Switch
+			Actions.switchToDefaultContent();
+			RM_Admin.navigateToMenu("User Settings");
+			Actions.verifyElement(ShellHeader.userMenu_UserSettings_ProfileInformationHeading, "Profile Information");
+			Actions.click(By.xpath("//span[text()='Notifications and Prompts Settings']"),"Click on Notifications&Prompt Settings");
+			Actions.scrollToElement(ShellHeader.userMenu_UserSettings_AcceptOrDenyRequest_LabelTag);
+			Actions.pause(10);
+		    System.out.println("@@@@@@@@@@@@@@@@ "+Actions.isChecked(ShellHeader.userMenu_UserSettings_AcceptOrDenyRequest_InputTag)+" @@@@@@@@@@@@@@@@@@@");
+		    if(Actions.isChecked(ShellHeader.userMenu_UserSettings_AcceptOrDenyRequest_InputTag))
+			{
+				Actions.pause(2);
+				Actions.click(ShellHeader.userMenu_UserSettings_AcceptOrDenyRequest_LabelTag, "Turn OFF the Delete Post Prompt Switch");
+				Actions.scrollToElement(ShellHeader.userMenu_UserSettings_SaveBtn);
+				Actions.click(ShellHeader.userMenu_UserSettings_SaveBtn, "Click on Save button");
+				Actions.click(ShellHeader.userMenu_UserSettings_OK_Prompt, "Click On OK in Prompt");
+				Global.minglePageLoad_Social();
+				
+			}
+			System.out.println(Actions.isChecked(ShellHeader.userMenu_UserSettings_AcceptOrDenyRequest_InputTag));
+			RM_Social.navigateToActivityPage();
+			Actions.click(ActivityFeed.decline, "Click On Decline Button");
+			Actions.verifyElementNotPresent(Global.yes, "Confirmatiom PopUp");
+			Actions.pause(1);
+			
+			//Code to Turn ON Prompt Switch
+			Actions.switchToDefaultContent();
+			RM_Admin.navigateToMenu("User Settings");
+			Actions.click(By.xpath("//span[text()='Notifications and Prompts Settings']"),"Click on Notifications&Prompt Settings");
+			Actions.scrollToElement(ShellHeader.userMenu_UserSettings_AcceptOrDenyRequest_LabelTag);
+			System.out.println("@@@@@@@@@@@@@@@@ "+Actions.isChecked(ShellHeader.userMenu_UserSettings_AcceptOrDenyRequest_InputTag)+" @@@@@@@@@@@@@@@@@@@");	
+			if(!Actions.isChecked(ShellHeader.userMenu_UserSettings_AcceptOrDenyRequest_InputTag))
+			{
+				Actions.pause(2);
+				Actions.click(ShellHeader.userMenu_UserSettings_AcceptOrDenyRequest_LabelTag, "Turn ON the Delete Post Prompt Switch");
+				Actions.scrollToElement(ShellHeader.userMenu_UserSettings_SaveBtn);
+				Actions.click(ShellHeader.userMenu_UserSettings_SaveBtn, "Click on Save button");
+				Actions.click(ShellHeader.userMenu_UserSettings_OK_Prompt, "Click On OK in Prompt");
+			}
+			System.out.println(Actions.isChecked(ShellHeader.userMenu_UserSettings_AcceptOrDenyRequest_InputTag));
+			
+		}
+}
+
+		
+
+

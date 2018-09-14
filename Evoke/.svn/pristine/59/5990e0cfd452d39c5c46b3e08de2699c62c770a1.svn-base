@@ -1,0 +1,120 @@
+package objRepository.IFS;
+
+import org.openqa.selenium.By;
+
+public class IFSUSERS_Trial10 {
+	/*
+	 * 
+	 * Objects In IFS Page.
+	 * 
+	 *
+	 */
+	public static final By user_Management=By.xpath("//span[text()='User Management']");
+	public static final By propertyDrpoDown=By.id("ddlProperties-shdo");
+	public static final By selectEmailAddressFromProperty=By.xpath("//a[contains(text(),'Email Address')]");
+	public static final By enterEmailAddress=By.id("txtSelectSearchUser");
+	public static final By enterEmailAddress_Auto=By.id("ddlProperties-shdo");
+	public static final By saveIFS=By.id("saveIFSItems");
+	public static final By addSecurityButton=By.id("btnAddSecurityRoles");
+	public static final By enterSecurityRole=By.id("txtSelectSecurityRolesSearch");
+	public static final By saveSecurityRole=By.id("btnSaveSecurityRoles");
+	public static final By saveRole=By.id("btnSearchSelectSecurityRoles");
+	public static final By deleteSecurityRole=By.id("btnDeleteSecurityRoles");
+	public static final By selectUsers=By.xpath("//span[text()='Full Name']/ancestor::tr/descendant::span[2]");
+	public static final By importUsers=By.id("importIFSItems");
+	public static final By exportUsers=By.id("exportIFSItems");
+	public static final By closeExport=By.xpath("//h1[text()='Export Users']/following::button[@class='btn-modal']");
+	public static final By closeImport=By.xpath("//div[@class='modal-buttonset']/button[@id='cancelButton']");
+	public static final By headerMenuIcon=By.id("appHeaderMenuIcon");
+	public static final By addIFSItem=By.id("addIFSItem");
+	public static final By selectExport=By.xpath("//label[@for='xmlOption']");
+	public static final By clickExport=By.xpath("//button[text()='Export']");
+	public static final By deleteIFSItem=By.id("deleteIFSItem");
+	public static final By yesButton=By.xpath("//button[contains(text(),'Yes')]");
+	public static final By department=By.id("txtDepartment");
+	public static final By saveMsg=By.xpath("//span[@class='toast-title']");
+	public static final By updateMsg=By.xpath("//span[@class='toast-message']");
+	public static final By activityTab=By.xpath("//ul[@class='tab-list']/li/a[text()='Activity']");
+	public static final By activity_info=By.xpath("//div[@id='inforActivityDataGrid']/descendant::table/descendant::div[7]");
+	public static final By activity_timeStamp=By.xpath("//div[@id='inforActivityDataGrid']/descendant::table/descendant::div[8]");
+	public static final By activity_performedby=By.xpath("//div[@id='inforActivityDataGrid']/descendant::table/descendant::div[9]");
+	
+	public static final By securityAdmiinistration=By.xpath("//a[text()='Security Administration']/../descendant::button");
+	public static final By domainSecurity=By.xpath("//a[text()='Domain Security']");
+	public static final By domains_DropDown=By.xpath("//input[@id='ddlDomainRestrictions-shdo']");
+	public static final By allowedDomains=By.xpath("//a[text()='Allowed Domains']");
+	public static final By blockedDomains=By.xpath("//a[text()='Blocked Domains']");
+	public static final By domain_Name=By.xpath("//input[@name='txtDomain']");
+	public static final By saveDomain=By.id("addDomain");
+	public static final By saveDomainSecurity=By.id("saveDomainSecurity");
+
+	public static final By alloweddomain_Errormsg=By.xpath("//span[contains(text(),'domain security')]");
+	public static final By domain_Errormsg=By.xpath("//span[contains(text(),'Clear the active check box')]");
+	//public static final By domain_Errormsg1=By.xpath("//span[contains(text(),'You can activate user(s) only after the required user properties are provided. Clear the active check box to create use')]");
+
+	public static final By login_Errormsg=By.xpath("//div[@id='divError']");
+	public static final By domains_list=By.xpath("//li[@class='item']");
+	public static final By cancel=By.xpath("//button[@id='close-btn']");
+	
+	//public static final By domain_Errormsg=By.xpath("//span[@class='errorText']");
+	public static final By acountCreateinDraftStatus=By.id("ancCreateUsersinDraftStatus");
+	public static final By applicationSpecificSetting=By.id("ancApplicationSpecificSettings");
+	public static final By checkDraftStatus=By.id("chkCreateUsersinDraftStatus");
+	public static final By checkServiceAcc=By.id("chkEnableSerAcc");
+	public static final By checkAppSetting=By.id("chkApplicationSpecificSettings");
+	public static final By saveAccCreation=By.id("btnSaveAccountCreation");
+	public static final By saveAccCreation_OP=By.id("btnSaveAccountCreationOnP");
+	public static final By saveSpecificSetting=By.id("btnApplicationSpecificSettings");
+	public static final By saveExtFeatures=By.id("btnSaveIdentityProviders");
+	public static final By action=By.xpath("//button[@id='menuButton']");
+	public static final By disable=By.xpath("//a[text()='Disable']");
+	public static final By activateDraftUser=By.xpath("//a[text()='Activate Draft User']");
+	public static final By unlockUser=By.xpath("//a[text()='UnlockAccount");
+	public static final By deleteuser=By.xpath("//a[text()='Delete']");
+	public static final By checkEnableExt=By.id("chkAllowAppExt");
+	public static final By checkcomnaccess=By.id("chkEnableCommAcess");
+	public static final By checkEnableAccess=By.xpath("//label[@for='chkEnableComm']");
+	public static final By activateCompleted=By.id("h1-title");
+	public static final By btnactivateCompleted=By.id("btnActivateSuccess");
+	public static final By resendInvitation=By.id("ResendInvitation");
+	public static final By passwordManagement=By.id("txtAccountLockedAttempt");
+	public static final By passwordSave=By.id("savePasswordManagement");
+	public static final By unlockAcc=By.id("UnlockAccount");
+	public static final By checkEmailMingle=By.id("chkEmailMingle");
+	public static final By manageFeatures=By.id("ancIdentity_Providers");
+	public static final By emailSettings=By.xpath("//span[text()='Email Settings']");
+	public static final By saveEmail=By.id("btnSaveEmail");
+	public static final By checkSendInvitation=By.xpath("//span[@aria-label='Send Invitation']");
+	public static final By importUsersOK=By.id("btnOkImportUser");
+	public static final By importUsers_FileButton=By.xpath("//input[@id='fileimportifsUsers']/following-sibling::span");
+	public static final By checkEnableServiceAccounts=By.id("chkEnableSerAcc");
+	public static final By checkEnableScimServices=By.id("chkEnableSCIMService");
+	public static final By select_AllSecurityRoles=By.xpath("//span[text()='Security Role']/ancestor::Tr/descendant::span[2]");
+	public static final By moveerpID_UnderUser=By.xpath("//div[@id='inforDataGridERPPersonIds']/descendant::td[2]/div");
+	public static final By entererpID_UnderUser=By.xpath("//div[@id='inforDataGridERPPersonIds']/descendant::td[2]/div/input");
+	public static final By moveerpAcc_UnderUser=By.xpath("//div[@id='inforDataGridERPPersonIds']/descendant::td[3]/div");
+	public static final By entererpAcc_UnderUser=By.xpath("//div[@id='inforDataGridERPPersonIds']/descendant::td[3]/div/input");
+	public static final By save_ERp=By.id("btnSaveERPPersonIds");
+	public static final By select_ServiceProvider=By.xpath("//div[@id='dgServiceProvider']/descendant::tr[2]/descendant::button[@class='btn-icon small datagrid-edit']");
+	public static final By view=By.id("btnViewServiceProvider");
+	public static final By download_File=By.id("DownloadButton");
+	
+	
+	/*********************locators to verify user data*****************************/
+
+	public static final By updateexsistUsers_Check=By.xpath("//label[@for='chkUpdateUsers']");
+	public static final By activateDelUsers_Check=By.xpath("//label[@for='chkActivateDeletedUsers']");
+	public static final By firstname=By.xpath("//input[@id='txtFirstName']");
+	public static final By laststname=By.xpath("//input[@id='txtLastName']");
+	public static final By emailAddress=By.xpath("//input[@id='txtEmailAddress']");
+	public static final By title=By.xpath("//input[@id='txtTitle']");
+	public static final By userdepartment=By.xpath("//input[@id='txtDepartment']");
+	public static final By manager=By.xpath("//input[@id='lookupManager']");
+	public static final By alternate_manager=By.xpath("//input[@id='lookupAlternativeManager']");
+
+	public static final By select_ContactGroup=By.xpath("//span[text()='Name']/../ancestor::Tr/descendant::span[2]");
+	public static final By select_Contact=By.xpath("//span[text()='Contact ID']/../ancestor::Tr/descendant::span[2]");
+	public static final By paginator=By.xpath("//div[@class='btn-group']/button[@class='btn-menu']");
+	public static final By saveExternalUser=By.id("saveExternalUsers");
+}
+

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+<suite name="suite1">
+<!-- <listeners>
+		<listener class-name="utility.RetryListener" />
+	</listeners> -->
+	<test name="SFTaggedUsers">
+		<classes>
+		
+	  
+			   <class name="utility.Utility" />
+			   
+			  <!--  <class name="scripts.ActivityFeed.Ts_PredictiveTargeting_TaggedUser_12731" /> -->
+			    <class name="scripts.ActivityFeed.Ts_VerifyNotificationOnTaggedUsersNotificationPage_13259" />
+			   <class name="scripts.ShellHeader.Ts_SharePostToTaggedUsers_13235" /> 
+			   <class name="scripts.ActivityFeed.Ts_PostToTagUserFromFeedPage_13261" />
+			   <class name="scripts.ActivityFeed.Ts_SharePostToTaggedUsersFromFeedPage_13269" />
+			   
+			    
+			   
+			   			    
+			   
+		</classes>
+	
+	
+	</test>
+
+
+  
+
+
+</suite>

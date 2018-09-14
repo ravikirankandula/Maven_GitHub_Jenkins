@@ -1,0 +1,121 @@
+package scripts.ActivityFeed;
+
+import org.apache.commons.lang3.RandomStringUtils;
+import org.testng.annotations.AfterClass;
+import org.testng.annotations.AfterMethod;
+import org.testng.annotations.BeforeClass;
+import org.testng.annotations.Test;
+
+import actions.Actions;
+import objRepository.Global;
+import objRepository.Social.ActivityFeed;
+import reusableMethods.RM_Social;
+import utility.Utility;
+
+public class Ts_SharePostFromFeedPageToTaggedGroup_13271 {
+	private Utility utl;
+	//ExtentTest logger;
+
+		@BeforeClass
+		public void setUp()
+		{
+			 utl=new Utility();
+			 //logger=
+			 utl.initTest(this.getClass().getName().substring(this.getClass().getName().lastIndexOf(".")+1).trim());
+			 new Actions();
+		
+		}
+		@AfterMethod
+		public void logOutAndBrowserClose()
+		{
+			Actions.logOutAndBrowserCloseMU();
+		}
+		@AfterClass
+		public void endReport() throws Exception
+		{
+			Actions.endScriptReportMU();
+			
+			
+		}
+		String time=RandomStringUtils.randomNumeric(4);
+		private String groupName=Utility.getTestData().get("GROUP_NAME")+time;
+		//private  String verifyMsg=groupName+Utility.getTestData().get("AFP_ShareMsg")+time;
+		@Test
+		public void createGroup(){
+			try {
+				Global.login(Utility.getConfigData().get("USER26"), Utility.getConfigData().get("PASSWORD"));
+				//Actions.pause(3);
+				RM_Social.createGroup(groupName);
+				Actions.pause(3);
+				RM_Social.inviteToGroup(Utility.getTestData().get("FULLNAME_USER16"));
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+		}
+		@Test(dependsOnMethods={"createGroup"})
+		public void acceptGroupInviteRequest()
+		{
+			try {
+				Global.login(Utility.getConfigData().get("USER16"), Utility.getConfigData().get("PASSWORD"));
+				//Actions.pause(3);
+				RM_Social.acceptConnectionRequest(groupName);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+		}
+		@Test(dependsOnMethods={"acceptGroupInviteRequest"})
+		public void postMessage()
+		{
+			try {
+				Global.login(Utility.getConfigData().get("USER26"), Utility.getConfigData().get("PASSWORD"));
+				//Actions.pause(3);
+				RM_Social.navigateToActivityPage();
+				Actions.click(ActivityFeed.privacyLink, "Open Privacy List");
+				RM_Social.selectPrivacyInAFP(Utility.getTestData().get("PRIVACY_CONNECTEDUSERS"));
+				RM_Social.typeMessageInAFP(Utility.getTestData().get("POSTMSG")+time);
+				RM_Social.clickOnPostBtnInAFP();
+				RM_Social.clickOnActivityFeed();
+				//Actions.verify(ActivityFeed.msgContainer,Utility.getTestData().get("POSTMSG")+time);
+				RM_Social.verifyMessage(Utility.getTestData().get("POSTMSG")+time);
+				// Code to Share Message
+				RM_Social.clickOnShareInAFP();
+				Actions.click(ActivityFeed.afp_ShareOvaerlay_PrivacyLink, "Open Privacy List");
+				RM_Social.selectPrivacyInAFP_ShareOverlay(Utility.getTestData().get("PRIVACY_TAGGEDUSERSANDGROUPS"));
+				Actions.click(ActivityFeed.afp_ShareOverlay_textArea, "Click On Text Area");
+				Actions.clearText(ActivityFeed.afp_ShareOverlay_textArea, "Clear Message");
+				RM_Social.tagUserInAFP_ShareOverlay(groupName);
+				RM_Social.typeMessageInAFP_ShareOverlay(Utility.getTestData().get("AFP_ShareMsg")+time);
+				RM_Social.clickOnShareBtnInAFP_ShareOverlay();
+				Actions.switchtoFrame(Global.socialCLFrame, "Switch to Social Frame");
+				RM_Social.clickOnActivityFeed();
+				//Actions.verify(ActivityFeed.msgContainer, verifyMsg);
+				RM_Social.verifyMessage(Utility.getTestData().get("AFP_ShareMsg")+time,groupName);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		@Test(dependsOnMethods={"postMessage"})
+		public void verifyMessage()
+		{
+			
+				
+			try {
+				Global.login(Utility.getConfigData().get("USER16"), Utility.getConfigData().get("PASSWORD"));
+				RM_Social.navigateToActivityPage();
+				Actions.pause(2);
+				//Actions.verify(ActivityFeed.msgContainer, verifyMsg);
+				RM_Social.verifyMessage(Utility.getTestData().get("AFP_ShareMsg")+time,groupName);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+		
+		}
+
+}

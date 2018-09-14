@@ -1,0 +1,106 @@
+package scripts.IONAPI;
+
+import java.util.HashMap;
+
+import org.apache.commons.lang3.RandomStringUtils;
+import org.testng.annotations.AfterClass;
+import org.testng.annotations.BeforeClass;
+
+import com.relevantcodes.extentreports.ExtentTest;
+
+import actions.Actions;
+import objRepository.Global;
+import reusableMethods.RM_IONAPI;
+import utility.Utility;
+
+public class TS_WebApp_12804_12811 {
+	ExtentTest logger;
+	private Utility utl;
+	 HashMap<String, String> testData=Utility.getTestData();
+	 HashMap<String, String> configData=Utility.getConfigData();
+		
+		//TESTDATA
+		 String userName=configData.get("USER14");	
+		 String pwd=configData.get("PASSWORD");
+		 String appName=testData.get("IONAPI_APPNAME");
+		 String desc=testData.get("IONAPI_APPDESC");
+		 String redirectURL=testData.get("IONAPI_REDIRECTURL");
+		 String javascriptOrigin=testData.get("IONAPI_JAVASCRIPTORIGIN");
+		
+		 String status=testData.get("IONAPI_STATUS");
+		 String editApp=testData.get("IONAPI_ANDROIDEDIT");
+		 
+		
+		 String applicationName=appName+RandomStringUtils.randomNumeric(3);
+		 @BeforeClass
+	public void setUp()
+	{
+		 utl=new Utility();
+		 logger=utl.initTest(this.getClass().getName().substring(this.getClass().getName().lastIndexOf(".")+1).trim());
+		 new Actions();
+	
+	}
+	@AfterClass
+	public void tearDown()
+	{
+		Utility.report.endTest(logger);
+		//Actions.driverClose();
+		Utility.report.flush();
+	}
+	
+	
+
+
+	@org.testng.annotations.Test(priority =1)
+	public void create_WebApp(){
+		try {
+			
+			//LOGIN
+			Global.login(userName,pwd);
+			System.out.println(javascriptOrigin);
+		RM_IONAPI.create_WebApp(applicationName, desc, redirectURL,javascriptOrigin, status,editApp);	
+			
+		
+			
+			
+		} catch (Exception e) {
+			
+		}finally
+		{
+			try{
+			Global.logOut();
+			}
+			catch (Exception e) {
+				// TODO: handle exception
+			}
+			finally{
+			Actions.driverClose();
+			rb_DeleteApp();
+			}
+		}
+	}
+	//@org.testng.annotations.Test(priority =2, dependsOnMethods ="create_AndroidApp")
+	public void rb_DeleteApp()
+	{
+		try {
+			Global.login(userName,pwd);
+			RM_IONAPI.delete_App(applicationName);
+			//Global.logOut();
+		} catch (Exception e) {
+			
+		}
+		finally
+		{
+			try{
+			Global.logOut();
+			}
+			catch (Exception e) {
+				// TODO: handle exception
+			}
+			finally {
+				Actions.driverClose();
+			}
+			
+		}
+	}
+}

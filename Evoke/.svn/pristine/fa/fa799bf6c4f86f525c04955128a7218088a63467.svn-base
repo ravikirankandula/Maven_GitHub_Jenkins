@@ -1,0 +1,76 @@
+/**
+ * 
+ */
+package objRepository.IONAPI;
+
+import org.openqa.selenium.By;
+
+
+public class AddNewAPISuite {
+	/*
+	 * 
+	 * Objects In AddNewAPISuite Page.
+	 *
+	 * 
+	 */
+	public static final By infor_NonProvisionedSuite=By.xpath("//span[@data-infor-translate='infor_non_provisioned']/../input");
+	public static final By infor_NonInforSuite=By.xpath("//label[@data-infor-translate='non_infor']/../descendant::input[2]");
+	public static final By infor_NonProvisionedSelectApplicationName=By.xpath("//select[@data-ng-model='UI.newAPISuite.ProductName']");
+	public static final By infor_NonProvisionedSelectVersion=By.xpath("//label[@data-infor-translate='version']/following::select");
+	public static final By infor_NonProvisionedSelectSuite=By.xpath("//label[@data-infor-translate='suite_name']/following::select");
+	public static final By infor_NonProvisionedHostName=By.xpath("//input[@data-ng-model='UI.newAPISuite.HostName']");
+	public static final By infor_NonProvisionedAccessKey=By.xpath("//input[@data-ng-model='UI.newAPISuite.ConsumerKey']");
+	public static final By infor_NonProvisionedSecretKey=By.xpath("//input[@data-ng-model='UI.newAPISuite.ConsumerSecret']");
+	public static final By infor_NonProvisionedAddDeployment=By.xpath("//button[@data-infor-translate='add_deployment']");
+	public static final By infor_NonProvisionedAddDeploymentName=By.xpath("//input[@name='deployment_name']");
+	public static final By infor_NonProvisionedAddDeploymentHostName=By.xpath("//input[@name='host_name']");
+	public static final By infor_NonProvisionedAddDeploymentPort=By.xpath("//input[@name='port']");
+	public static final By infor_NonProvisionedAddDeploymentContext=By.xpath("//input[@data-ng-model='deploymentDetails.Context']");
+	public static final By infor_NonProvisionedAddDeploymentTenant=By.xpath("//input[@data-ng-model='deploymentDetails.DefaultTenantId']");
+	public static final By infor_NonProvisionedAddDeploymentEndPointAccessKey=By.xpath("//input[@data-ng-model='deploymentDetails.ConsumerKey']");
+	public static final By infor_NonProvisionedAddDeploymentEndPointSecreteKey=By.xpath("//input[@data-ng-model='deploymentDetails.ConsumerSecret']");
+	public static final By infor_NonProvisionedAssociateEndPointsButton=By.xpath("//button[@data-infor-translate='associate_endpoints']");
+	public static final By infor_NonProvisionedSelectAssociateEndPoints=By.xpath("//table[@class='datagrid modalgrid']/descendant::input[2]");
+	public static final By infor_NonProvisionedEditDeploymentInstance=By.xpath("//button[@data-infor-translate='edit']");
+	public static final By infor_NonProvisionedDeleteAPISuite=By.xpath("//button[@data-infor-translate='delete_api_suite']");
+	public static final By infor_NonProvisionedEdit=By.xpath("//button[@data-infor-translate='associate_endpoints']/../button");
+	public static final By infor_RetrieveNonProvisionedSuite=By.xpath("//input[@data-ng-model='UI.newAPISuite.APIContext']");
+	
+	
+	
+	
+	
+	
+	
+	
+	public static final By noninfor_ApplicationName=By.xpath("//input[@data-ng-model='UI.newAPISuite.NameVersion']");
+	public static final By noninfor_SuiteName=By.xpath("//input[@data-ng-model='UI.newAPISuite.SuiteName']");
+	public static final By noninfor_APIContext=By.xpath("//input[@data-ng-model='UI.newAPISuite.APIContext']");
+	public static final By noninfor_Description=By.xpath("//textarea[@data-ng-model='UI.newAPISuite.Description']");
+	public static final By noninfor_TargetEndPointURL=By.xpath("//input[@data-ng-model='UI.newAPISuite.TargetEndpointURL']");
+	public static final By noninfor_ProxytEndPointURL=By.xpath("//input[@data-ng-model='UI.newAPISuite.ProxyEndpointURL']");
+	public static final By noninfor_TargetEndPointAcessKey=By.xpath("//input[@data-ng-model='UI.newAPISuite.ConsumerKey']");
+	public static final By noninfor_TargetEndPointSecretKey=By.xpath("//input[@data-ng-model='UI.newAPISuite.ConsumerSecret']");
+	public static final By noninfor_AddEndPoint=By.xpath("//button[@data-infor-translate='add_endpoint']");
+	public static final By noninfor_AddEndPoint_Targeturl=By.xpath("//input[@data-ng-model='endPointDetails.TargetEndPointURL']");
+	public static final By noninfor_AddEndPoint_ConsumerKey=By.xpath("//input[@data-ng-model='endPointDetails.ConsumerKey']");
+	public static final By noninfor_AddEndPoint_SecretKey=By.xpath("//input[@data-ng-model='endPointDetails.ConsumerSecret']");
+	public static final By noninfor_AddEndPoint_proxyEndPointURL=By.xpath("//input[@data-ng-model='endPointDetails.ProxyEndPointURL']");
+	public static final By noninfor_Documentation=By.xpath("//button[@data-ng-click='onDocumentation(item)']");
+	public static final By noninfor_AddDocumentation=By.xpath("//button[@data-ng-click='onAddDocumentation()']");
+	public static final By noninfor_DocName=By.xpath("//input[@data-ng-model='documentation.Name']");
+	public static final By noninfor_DocLocation=By.xpath("//input[@data-ng-model='documentation.DocumentationLink']");
+	public static final By noninfor_Resources=By.xpath("//button[@data-ng-click='onNonInforResources(item)']");
+	public static final By noninfor_AddResources=By.xpath("//button[@data-ng-click='onAddResource()']");
+	public static final By noninfor_ResourcePath=By.xpath("//input[@data-ng-model='resourceDetails.Resource.ResourceUrl']");
+	public static final By noninfor_Delete=By.xpath("//button[@data-infor-translate='delete']");
+	public static final By noninfor_ChooseIcon=By.xpath("//input[@value='Choose Icon']");
+	
+	public static final By noninfor_EditResource=By.xpath("//button[@data-ng-click='onEditResource(item)']");
+	public static final By noninfor_EditSuite=By.xpath("//span[@data-ng-click='onEditSuite()']");
+	public static final By noninfor_EditSuiteName=By.xpath("//input[@data-ng-model='UI.selectedSuite.SuiteName']");
+	public static final By noninfor_EditSuiteDesc=By.xpath("//textarea[@data-ng-model='UI.selectedSuite.SuiteDescription']");
+	
+	
+	
+}

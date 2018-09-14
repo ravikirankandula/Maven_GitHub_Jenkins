@@ -1,0 +1,68 @@
+/**
+ * 
+ */
+package scripts.Admin;
+
+import java.util.HashMap;
+
+import org.testng.annotations.AfterClass;
+import org.testng.annotations.BeforeClass;
+import org.testng.annotations.Test;
+
+import com.relevantcodes.extentreports.ExtentTest;
+
+import actions.Actions;
+import objRepository.Global;
+import reusableMethods.RM_Admin;
+import utility.Utility;
+
+
+public class Ts_MenuOptionsForMingleEnterpriseRole_12771_3 {
+	ExtentTest logger;
+	private Utility utl;
+	 HashMap<String, String> testData=Utility.getTestData();
+	 HashMap<String, String> configData=Utility.getConfigData();
+		
+		//TESTDATA
+		 String userName=configData.get("USER1");	
+		 String pwd=configData.get("PASSWORD");
+		
+			
+	
+	@BeforeClass
+	public void setUp()
+	{
+		 utl=new Utility();
+		 logger=utl.initTest(this.getClass().getName().substring(this.getClass().getName().lastIndexOf(".")+1).trim());
+		 new Actions();
+	
+	}
+	@AfterClass
+	public void tearDown()
+	{
+		Utility.report.endTest(logger);
+		//Actions.driverClose();
+		Utility.report.flush();
+	}
+	
+	
+
+	@Test
+	public void verify_MingleRole(){
+		try {
+			
+			//LOGIN
+			Global.login(userName,pwd);
+			RM_Admin.verify_MingleEnterprise();
+			
+			//Global.logOut();
+		} catch (Exception e) {
+			
+		}finally
+		{
+			
+			Actions.driverClose();
+		}
+	}
+
+}

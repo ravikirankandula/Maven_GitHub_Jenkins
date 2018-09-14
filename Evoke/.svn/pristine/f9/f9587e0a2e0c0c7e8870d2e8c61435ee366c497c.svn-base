@@ -1,0 +1,107 @@
+package scripts.Admin;
+
+import java.util.HashMap;
+
+import org.openqa.selenium.By;
+import org.testng.annotations.AfterClass;
+import org.testng.annotations.BeforeClass;
+
+import com.relevantcodes.extentreports.ExtentTest;
+
+import actions.Actions;
+import objRepository.Global;
+import reusableMethods.RM_Admin;
+import utility.Utility;
+
+public class Ts_Accessalldefaultapplications_14105 {
+	ExtentTest logger;
+	private Utility utl;
+	 HashMap<String, String> testData=Utility.getTestData();
+	 HashMap<String, String> configData=Utility.getConfigData();
+		
+		//TESTDATA
+		 String userName=configData.get("USER1");
+		 String pwd=configData.get("PASSWORD");
+	
+    public static String className;
+    static boolean rerun=false;
+	@BeforeClass
+	public void setUp()
+	{    
+		
+		 utl=new Utility();
+		 logger=utl.initTest(this.getClass().getName().substring(this.getClass().getName().lastIndexOf(".")+1).trim());
+		 className=this.getClass().getName().toString();
+		 new Actions();
+	}
+	@AfterClass
+	
+	public void tearDown()
+	{
+		if(rerun)
+		{
+			Utility.addClass(className);
+		}
+			
+		Utility.report.endTest(logger);
+		//Actions.driverClose();
+		Utility.report.flush();
+	}
+	
+
+
+	@org.testng.annotations.Test(priority =1)
+	public void verifyBlockedDomain(){
+		try {
+			
+			//LOGIN
+			Global.login(userName,pwd);
+			//for(int i=0;i<=1000;i++)
+			{
+				try{
+			RM_Admin.verify_AccessdefApps();
+				}
+				catch (Exception e) {
+					// TODO: handle exception
+				}
+			}
+		} catch (Exception e) {
+			rerun=true;
+			
+		}finally
+		{
+			try{
+			Global.logOut();
+			HashMap<String, String> testData=Utility.getConfigData();
+			String env=testData.get("ENVIRONMENT").toUpperCase();
+			System.out.println(env);
+			switch(env)
+			{
+
+			case "CLOUD":
+			{
+				Actions.pause(.5);
+				Actions.verifyElement(By.xpath("//b[@data-infor-translate='sign_out_successful']"), "Signout successfully");
+				break;
+			}
+			case "OP":
+			{
+				Actions.pause(.5);
+				Actions.verifyElement(By.id("instruction"), "Signout successfully");
+				break;
+			}
+			}	
+			
+			}
+			catch (Exception e) {
+				rerun=true;
+				// TODO: handle exception
+			}
+			finally {
+				Actions.driverClose();
+			}
+			
+		}
+	}
+	
+}

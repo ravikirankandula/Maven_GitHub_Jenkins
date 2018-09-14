@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+<suite name="suite1">
+	<!-- <listeners> <listener class-name="utility.RetryListener" /> </listeners> -->
+	<test name="chrome">
+		<parameter name="Browser" value="chrome" />
+		<classes>
+
+
+			<class name="utility.Utility" />
+
+ 
+ <!--  <class name="scripts.ION.StartWorkFlow_streams" />
+	<class name="scripts.ION.WF_statuses_WFdetailsPage" />
+	<class name="scripts.ION.Display_ActivityLocator" />
+	<class name="scripts.ION.SequentialFlow_12696" />
+	<class name="scripts.ION.Start_TaskWithAllParameters" />
+	<class name="scripts.ION.Verify_AssignOtheruser" />
+	<class name="scripts.ION.Ts_NotesinWorkflowView_14141" />
+	<class name="scripts.ION.Ts_PromptOnOFF_RemoveWF" />
+	<class name="scripts.ION.Task_functionality_12692" />
+	<class name="scripts.ION.AutoAssignTask" />
+	<class name="scripts.ION.Complete_allTasksin_Workflow" />
+	<class name="scripts.ION.CannotassignTask_OOOUser" />
+	<class name="scripts.ION.Tasksdelegated_fromOOOUser" />
+	<class name="scripts.ION.DateTimerange_OOOSettings" />
+	<class name="scripts.ION.MultipleRules_Task" />  --> 
+			
+	<!--  	<class name="scripts.ION.Sample" /> -->
+ <!--<class name="scripts.IFS.Ts_ImportUpdateProperties_14718" /> 
+<class name="scripts.IONAPI.Ts_IONAPIImport_14771" />
+<class name="scripts.IONAPI.Ts_IONAPIExport_14770" /> -->
+<class name="scripts.Streams.TS_LogTemplate" />
+
+			
+			
+		</classes>
+
+
+	</test>
+
+
+
+
+
+</suite>

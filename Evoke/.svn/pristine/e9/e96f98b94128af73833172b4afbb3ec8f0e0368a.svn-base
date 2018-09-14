@@ -1,0 +1,9 @@
+package objRepository.Admin;
+
+import org.openqa.selenium.By;
+
+
+public class UserSettings {
+	public static final By profileInformation=By.xpath("//h2[normalize-space(text())='Personal Info']");//By.xpath("//h2[@data-infor-translate='user_profile_personal_info']");
+
+}

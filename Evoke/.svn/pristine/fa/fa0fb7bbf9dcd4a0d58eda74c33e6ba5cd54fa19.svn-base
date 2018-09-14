@@ -1,0 +1,29 @@
+package objRepository.Admin;
+
+import org.openqa.selenium.By;
+
+public class Admin_Context {
+	/*
+	 * 
+	 * Objects In Admin_Context  Page.
+	 * 
+	 *
+	 */
+	public static final By manage_Context_UtitlityApp=By.xpath("//a[text()='Manage Context / Utility Apps']");//("//a[@data-infor-translate='manage_context_utility_apps']");
+	public static final By add_Context_UtitlityApp=By.xpath("//label[text()='Add Context/Utility App']");//("//label[contains(@infor-translate='add_context_utility_app')]");
+	public static final By add_Context_UtitlityApp_Type=By.xpath("//label[@class='custom-select']/descendant::option[text()='Choose Type']");//select[@data-ng-options='item.name for item in DM.contextAppTypes']");
+	public static final By add_Context_UtitlityApp_Name=By.xpath("//label[text()='Name']/following::input");//input[@name='name']");
+	public static final By add_Context_UtitlityApp_Desc=By.xpath("//label[text()='Description']/following::input");//input[@name='description']");
+	public static final By add_Context_UtitlityApp_URL=By.xpath("//label[text()='URL']/following::input");//input[@name='url']");
+	public static final By add_Context_UtitlityApp_HelpURL=By.xpath("//label[text()='Application Help URL']/following::input");//input[@name='help_link_url']");
+	public static final By add_Context_UtitlityApp_Save=By.xpath("//button[@data-ng-click='onSaveAddApp(addContextUtility)']");
+	public static final By ok=By.xpath("//button[text()='OK']");
+	public static final By save=By.xpath("//button[@data-ng-click='onSave(addApplication)']");
+	public static final By done=By.xpath("//button[text()='Done']");
+	public static final By select_UtilityApp=By.xpath("//label[text()='UtilityApp']");
+	public static final By delete_UtilityApp=By.xpath("//button[contains(text(),'Cancel')]/../button[contains(text(),'Delete')]");//button[@data-ng-click='onDelete()']
+	public static final By saveApp=By.xpath("//button[@class='btn-primary ng-scope']");
+	public static final By contextMessage=By.xpath("//span[text()='Context Message']");//span[@data-infor-translate='context_message']");
+	public static final By addMsg=By.xpath("//button[text()='Add Message']");//button[@data-ng-click='onAddMessage()']");
+	public static final By msgName=By.xpath("//label[text()='Message Name']/following::input");
+}

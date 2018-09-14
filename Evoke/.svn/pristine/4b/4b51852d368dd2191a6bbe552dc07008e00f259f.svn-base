@@ -1,0 +1,107 @@
+/**
+ * 
+ */
+package scripts.ActivityFeed;
+
+
+import org.testng.annotations.AfterClass;
+import org.testng.annotations.BeforeClass;
+
+import com.relevantcodes.extentreports.ExtentTest;
+
+import actions.Actions;
+import objRepository.Global;
+import objRepository.Social.ActivityFeed;
+import objRepository.Social.Directory;
+import reusableMethods.RM_Social;
+import utility.Utility;
+
+
+
+
+public class PostMessageToConnectedUser {
+	ExtentTest logger;
+	private Utility utl;
+	private static String time=Utility.time;
+	static boolean rerun=false;
+	
+	public static String className;
+	@BeforeClass
+	public void setUp()
+	{
+		utl=new Utility();
+		utl.initTest(this.getClass().getName().substring(this.getClass().getName().lastIndexOf(".")+1).trim());
+		className=this.getClass().getName().toString();
+		new Actions();
+	}
+	@AfterClass
+	public void tearDown()
+	{
+		if(rerun)
+		{
+			Utility.addClass(className);
+		}
+		//deleteMsgAndDisconnectUser();
+		Utility.report.endTest(logger);
+		//Actions.driverClose();
+		Utility.report.flush();
+	}
+	
+	
+
+
+	
+	@org.testng.annotations.Test(priority =1)
+	public void postMessgae()
+	{
+		
+		try {
+			Global.login(Utility.getConfigData().get("USER7"), Utility.getConfigData().get("PASSWORD"));
+			RM_Social.postMessageInFeadPage(Utility.getValuesFromPropertiesFile("TestData", "PRIVACY_CONNECTEDUSERS"), Utility.getValuesFromPropertiesFile("TestData", "POSTMSG")+time);
+			Actions.pause(2);
+			//Actions.verify(ActivityFeed.msgContainer, Utility.getValuesFromPropertiesFile("TestData", "POSTMSG")+time);
+			RM_Social.verifyMessage(Utility.getTestData().get("POSTMSG") + time);
+		} catch (Exception e) {
+			rerun=true;
+			
+		}finally
+		{
+			Global.logOut();
+			Actions.driverClose();
+		}
+		
+		
+		
+	}
+	@org.testng.annotations.Test(priority =2, dependsOnMethods ="postMessgae")
+	public void verifyMessgae()
+	{
+		try {
+			
+			Global.login(Utility.getValuesFromPropertiesFile("TestData", "USER12"),Utility.getValuesFromPropertiesFile("TestData", "PASSWORD"));
+			RM_Social.navigateToActivityPage();
+			Actions.pause(2);
+			Actions.verify(ActivityFeed.msgContainer, Utility.getValuesFromPropertiesFile("TestData", "POSTMSG")+time);
+			
+		} catch (Exception e) {
+			rerun=true;
+			
+		}finally
+		{
+			Global.logOut();
+			Actions.driverClose();
+		}
+		
+	}
+	
+	
+	
+
+	
+	
+
+	
+	
+	
+	
+}

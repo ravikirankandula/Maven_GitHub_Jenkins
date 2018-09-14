@@ -1,0 +1,146 @@
+package scripts.IFS;
+
+import java.util.HashMap;
+
+import org.testng.annotations.AfterClass;
+import org.testng.annotations.BeforeClass;
+
+import com.relevantcodes.extentreports.ExtentTest;
+
+import actions.Actions;
+import objRepository.Global;
+import objRepository.IFS.IFSUSERS_Trial10;
+import reusableMethods.RM_IFS_Trial10;
+import utility.Utility;
+
+public class Ts_DomainSecurity_12713 {
+	ExtentTest logger;
+	private Utility utl;
+	 HashMap<String, String> testData=Utility.getTestData();
+	 HashMap<String, String> configData=Utility.getConfigData();
+		
+		//TESTDATA
+		 String userName=configData.get("USER1");
+		 String yahooLogin=configData.get("YAHOOUSER");
+		 String pwd=configData.get("PASSWORD");
+		 String mail=testData.get("YAHOOMAIL");
+		 String yahoouser=testData.get("YAHOOUSER");
+		 String yahoodomain=testData.get("YAHOODOMAIN");
+	
+		 public static String className;
+		    static boolean rerun=false;
+			@BeforeClass
+			public void setUp()
+			{    
+				
+				 utl=new Utility();
+				 logger=utl.initTest(this.getClass().getName().substring(this.getClass().getName().lastIndexOf(".")+1).trim());
+				 className=this.getClass().getName().toString();
+				 new Actions();
+			}
+	@AfterClass
+	public void tearDown()
+	{
+		Utility.report.endTest(logger);
+		//Actions.driverClose();
+	
+	}
+	
+
+
+	@org.testng.annotations.Test(priority =1)
+	public void verifyBlockedDomain(){
+		try {
+			
+			//LOGIN
+			Global.login(userName,pwd);
+			RM_IFS_Trial10.blockedDomain(yahoodomain);
+			RM_IFS_Trial10.select_ItemFromManage("Manage","Users");
+			RM_IFS_Trial10.verify_blockedDomain(yahoouser,mail);
+			
+		} catch (Exception e) {
+			Utility.addClass(className);
+		}finally
+		{
+			try{
+			Global.logOut();
+			}
+			catch (Exception e) {
+				// TODO: handle exception
+			}
+			finally {
+				Actions.driverClose();
+			}
+			
+		}
+	}
+	
+	@org.testng.annotations.Test(priority =2)
+	public void verifyblockeddomainLogin()
+	{
+		try {
+			Global.login(yahooLogin,pwd);
+			String actual=Actions.getText(IFSUSERS_Trial10.login_Errormsg);
+			String expected="We didn't recognize the username or password you entered. Please try again.";
+			Actions.verifyString(actual,expected);
+		} catch (Exception e) {
+			
+		}
+		finally
+		{
+				Actions.driverClose();
+			}
+			
+	}
+	
+	
+	@org.testng.annotations.Test(priority =3)
+	public void rb_blockedDomain()
+	{
+		try {
+			Global.login(userName,pwd);
+			RM_IFS_Trial10.rb_blockedDomain(yahoodomain);
+			
+		} catch (Exception e) {
+			
+		}
+		finally
+		{
+			try{
+			Global.logOut();
+			}
+			catch (Exception e) {
+				// TODO: handle exception
+			}
+			finally {
+				Actions.driverClose();
+			}
+			
+		}
+			
+	}
+	
+	@org.testng.annotations.Test(priority =4)
+	public void login_unblockedDomain()
+	{
+		try {
+			Global.login(yahooLogin,pwd);
+			
+		} catch (Exception e) {
+			
+		}
+		finally
+		{
+			try{
+			//Global.logOut();
+			}
+			catch (Exception e) {
+				// TODO: handle exception
+			}
+			finally {
+				Actions.driverClose();
+			}
+			
+		}
+	}
+}

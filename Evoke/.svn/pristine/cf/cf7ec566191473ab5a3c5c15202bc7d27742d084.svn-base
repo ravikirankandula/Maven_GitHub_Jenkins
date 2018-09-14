@@ -1,0 +1,205 @@
+package scripts.ION;
+
+import java.awt.AWTException;
+import java.awt.Robot;
+import java.awt.event.InputEvent;
+import java.util.List;
+import java.util.concurrent.TimeUnit;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.Keys;
+import org.openqa.selenium.Point;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.interactions.Action;
+import org.openqa.selenium.interactions.Actions;
+import org.testng.annotations.Test;
+
+public class Sample {
+	static WebDriver d;
+	 public static final     By cloudIdentities=By.xpath("//div[@title='Cloud Identities']");
+	 @Test
+	public void main123() throws InterruptedException, AWTException{
+		System.setProperty("webdriver.chrome.driver",".\\lib\\chromedriver.exe");
+		d=new ChromeDriver();
+		
+		d.get("https://m12test-portal.auto.aws.infor.com/M12TEST_TST");
+		Thread.sleep(3000);
+		//d.findElement(By.xpath("//div[@tabindex='1']")).click();
+		//Thread.sleep(3000);
+		d.findElement(cloudIdentities).click();
+		d.manage().window().maximize();
+		d.findElement(By.id("name")).sendKeys("mingleqatest2@gmail.com");
+		d.findElement(By.id("password")).sendKeys("Password1!");
+		d.findElement(By.id("submit")).click();
+		Thread.sleep(5000);
+		d.findElement(By.xpath("//button[@title='App Menu']")).click();
+		Thread.sleep(8000);
+		d.findElement(By.xpath("//a[@title='ION Desk']")).click();
+		Thread.sleep(15000);
+		List<WebElement> frameList=d.findElements(By.tagName("iframe"));
+		System.out.println(frameList.size());
+	/*	WebElement iframe3=d.findElement(By.id("emptyFrame"));
+		d.switchTo().frame(iframe3);*/
+		 d.manage().timeouts().implicitlyWait(15, TimeUnit.SECONDS);
+		WebElement iframe1=d.findElement(By.name("iondesk_690892ab-a38d-44b1-94c6-1b535c639e5e"));
+		d.switchTo().frame(iframe1);
+		
+		
+	/*	
+
+		WebElement iframe4=d.findElement(By.id("NavigationUI"));
+		d.switchTo().frame(iframe4);*/
+	/*WebElement svgObject = d.findElement(By.cssSelector("svg"));
+		Actions builder = new Actions(d);
+		//builder.click(svgObject).build().perform();
+		 List<WebElement> gElements = svgObject.findElements(By.cssSelector("g"));  
+		   
+		 // Click on 'Me' Button  
+		 WebElement button = gElements.get(0).findElement(By.cssSelector("path"));  
+		 button.click();  */
+		//d.findElement(By.id("icon-menu")).click();
+		
+		String text=d.findElement(By.xpath("//div[@title='Status Overview']")).getText();
+		System.out.println(text+"Print hte value");
+		WebElement youButton = d.findElement(By.cssSelector("svg g[id='icon-menu']"));
+		// WebElement youButton1 = d.findElement(By.cssSelector("//*[local-name()='svg' and namespace-uri()='http://www.w3.org/2000/svg']//*[local-name()='g'][@id='icon-menu']")); 
+		// youButton.click();
+		// ((JavascriptExecutor) d).executeScript("arguments[0].click();", youButton);
+		 Actions builder = new Actions(d);
+			builder.moveToElement(youButton).click(youButton).build().perform();
+		Thread.sleep(1000);
+		d.findElement(By.xpath("//div[@title='Model']")).click();
+		Thread.sleep(1000);
+		d.findElement(By.xpath("//div[@title='Monitors & Workflows']")).click();
+		Thread.sleep(1000);
+		d.findElement(By.xpath("//div[text()='Workflows']")).click();
+		Thread.sleep(15000);
+		//d.switchTo().defaultContent();
+		WebElement iframe2=d.findElement(By.name("workflowdesk"));
+		d.switchTo().frame(iframe2);
+		d.findElement(By.xpath("//div[@title='Add new workflow']")).click();
+				Thread.sleep(4000);
+				WebElement expand=d.findElement(By.xpath("//button[contains(@class,'com-infor-ion-desk-workflow-ui-client-view-impl-ConfigureWorkflowDetailsViewImpl_ConfigureWorkflowDetailsViewImplUiBinderImpl_GenCss_style-expandcollapseVertical')]"));	
+				
+				expand.click();
+WebElement someElement=d.findElement(By.xpath("//div[text()='Task']/../img"));
+WebElement otherElement=d.findElement(By.xpath("//canvas[contains(@class,'com-infor-ion-desk-common-ui-client-widget-modeler-ModelerWidget_ModelerWidgetUiBinderImpl_GenCss_style-canvas')]"));
+WebElement someElement1=d.findElement(By.xpath("//div[text()='Notification']/../img"));
+
+//WebElement otherElement2=d.findElement(By.xpath("//img[@class='GMFKLANBKGB-com-infor-ion-desk-common-ui-client-widget-toolbox-ToolboxItemWidget_ToolboxItemUiBinderImpl_GenCss_style-icon dragdrop-handle']"));
+			/*	Action dragAndDrop = builder1
+				  
+				   .dragAndDrop(someElement,otherElement)
+				   .build();
+
+				dragAndDrop.perform();*/
+/*Actions act=new Actions(d);
+act.dragAndDrop(someElement, otherElement).release().build().perform();*/
+/*Action dragAndDrop = builder.clickAndHold(someElement)
+.moveToElement(otherElement)
+.release(otherElement).build();  // Get the action  
+
+dragAndDrop.perform(); */// Execute the Action
+Actions act=new Actions(d);
+//act.dragAndDrop(someElement, otherElement).release().build().perform();
+
+//builder.keyDown(Keys.CONTROL)
+//builder.keyDown(Keys.CONTROL).click(someElement).click(otherElement). keyUp(Keys.CONTROL).build().perform();
+
+act.clickAndHold(someElement).build().perform();
+act.moveToElement(otherElement).build().perform();
+act.release(otherElement).build().perform();
+Thread.sleep(4000);
+
+Point point = otherElement.getLocation();
+int xcord = point.getX();
+System.out.println("Element's Position from left side Is "+xcord +" pixels.");
+int ycord = point.getY();
+System.out.println("Element's Position from top side Is "+ycord +" pixels.");
+
+Thread.sleep(4000);
+//act.clickAndHold(someElement1).moveByOffset(-23,165).build().perform();;
+act.clickAndHold(someElement1).moveByOffset(-23,ycord-50).build().perform();;
+//(600,150)
+Thread.sleep(8000);
+act.click().build().perform();
+
+/*act.clickAndHold(someElement1).build().perform();
+Thread.sleep(4000);
+act.moveToElement(otherElement).build().perform();
+act.moveByOffset(xcord, ycord+50).build().perform();
+//act.clickAndHold(someElement1).moveByOffset(xcord,ycord).release().perform();
+act.release().build().perform();
+//act.dragAndDropBy(otherElement,10,-50)
+Thread.sleep(4000);*/
+/*
+int coordinates1 = someElement1.getLocation().getX();
+System.out.println(coordinates1+"************");
+int coordinates2 = otherElement.getLocation().getY();
+Action dragAndDrop1 =
+builder.clickAndHold(someElement1).moveToElement(otherElement, 80, 0).click(otherElement).release().build(); 
+dragAndDrop1.perform();*/
+ 
+
+Thread.sleep(2000);// Give some wait if required(e.g. here 2 sec wait)
+
+
+	}
+
+
+/*Actions slide = new Actions(d);
+WebElement text1=someElement.findElement(By.className("GMFKLANBIGB-com-infor-ion-desk-common-ui-client-widget-modeler-ModelerWidget_ModelerWidgetUiBinderImpl_GenCss_style-canvas"));
+        slide.build();
+        text1.click();
+        slide.dragAndDropBy(text1, 100, 4500);
+        slide.perform();
+        slide.release();
+        }*/
+		/*d.findElement(By.xpath("//button[@title='Bookmarks']")).click();
+	
+		Thread.sleep(3000);
+		d.findElement(By.xpath("//a[text()='Bookmark this page']")).click();
+		String s=d.findElement(By.xpath("//input[@title='Enter bookmark name']")).getAttribute("value");
+		System.out.println(s+"Print the s value");
+		
+		d.findElement(By.xpath("//button[@title='App Menu']")).click();
+		Thread.sleep(8000);
+		d.findElement(By.xpath("//a[@title='Infor Ming.le™ ']")).click();
+		Thread.sleep(5000);
+		d.switchTo().frame("social_8f80541c-c921-4d2a-8036-d8d7f425284c");
+		d.findElement(By.xpath("//li[@title='Activity Feed']")).click();
+		Thread.sleep(5000);
+	
+		d.findElement(By.id("streamMenu")).click();
+		Thread.sleep(1000);
+		d.findElement(By.xpath("//span[contains(text(),'Templates')]")).click();
+		Thread.sleep(1000);
+		
+		d.findElement(By.xpath("//span[@class='cursorPointer']")).click();
+		Thread.sleep(1000);
+		
+		d.findElement(By.id("templateName")).sendKeys("TestTemp");
+		Thread.sleep(1000);
+		d.findElement(By.id("templateDescription")).sendKeys("TempDesc");
+		Thread.sleep(1000);
+		d.findElement(By.id("saveTemplate")).click();
+		WebElement el=d.findElement(By.className("infor-mingle-create-stream-section-stream-status-text inlineBlock floatRight"));
+		String s11=el.getCssValue("color");
+		if(s11.equals("Red"))
+		Thread.sleep(1000);
+		try{
+		String s=d.findElement(By.xpath("//div[@class='infor-save-success-tooltip']")).getText();
+		System.out.println(s+"Print S Value");
+		}
+		catch (Exception e) {
+			// TODO: handle exception
+			String s1=d.findElement(By.xpath("//div[@class='infor-save-success-tooltip']")).getText();
+			System.out.println(s1+"Print S1 Value");
+		}*/
+}
+
+

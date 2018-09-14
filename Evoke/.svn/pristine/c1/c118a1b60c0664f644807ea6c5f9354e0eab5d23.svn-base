@@ -1,0 +1,110 @@
+package scripts.ION;
+
+import java.util.HashMap;
+
+import org.testng.annotations.AfterClass;
+import org.testng.annotations.BeforeClass;
+
+import com.relevantcodes.extentreports.ExtentTest;
+
+import actions.Actions;
+import objRepository.Global;
+import objRepository.IONDesk.WorkFlow;
+import objRepository.Social.ActivityFeed;
+import reusableMethods.RM_IFS_Trial10;
+import reusableMethods.RM_IONDESK;
+import utility.Utility;
+
+public class CompleteAlert_AlertsWindow
+{
+	ExtentTest logger;
+	private Utility utl;
+	 HashMap<String, String> testData=Utility.getTestData();
+	 HashMap<String, String> configData=Utility.getConfigData();
+		
+		//TESTDATA
+		 String userName=configData.get("USER2");
+		 String email=configData.get("USER2");
+		 String pwd=configData.get("PASSWORD");
+		 String Monitor=testData.get("MONITOR_NAME");
+		 String MonitorDesc=testData.get("MONITOR_DESC");
+		 String filter=testData.get("FILTER");
+		 String condition=testData.get("CONDITION");
+		 String message=testData.get("MONITOR_MSG");
+		 String user=testData.get("WORKFLOW_USER2");
+		 
+	@BeforeClass
+	public void setUp()
+	{
+		 utl=new Utility();
+		 logger=utl.initTest(this.getClass().getName().substring(this.getClass().getName().lastIndexOf(".")+1).trim());
+		 new Actions();
+	
+	}
+	@AfterClass
+	public void tearDown()
+	{
+		Utility.report.endTest(logger);
+		//Actions.driverClose();
+	
+	}
+	
+
+
+	@org.testng.annotations.Test(priority=181)
+	public void start_Alerts()
+	 {
+		try {
+			
+	    //login
+		Global.login(userName,pwd);
+		RM_IONDESK.create_Monitors(Monitor,MonitorDesc,filter,condition,message,user);
+		Actions.switchToDefaultContent();
+		RM_IFS_Trial10.navigateToMenu("User Management");
+		RM_IFS_Trial10.searchMailID(email);
+		HashMap<String, String> testData=Utility.getConfigData();
+		String env=testData.get("ENVIRONMENT").toUpperCase();
+		System.out.println(env);
+		switch(env)
+		{
+
+		case "CLOUD":
+		{
+			Actions.pause(.5);
+			String fullName=RM_IFS_Trial10.retrieve_FullName();
+
+			RM_IFS_Trial10.drillDownUser(fullName);
+			RM_IFS_Trial10.saveIFS();
+			Actions.pause(20);
+			break;
+		}
+		case "OP":
+		{
+			Actions.pause(.5);
+			RM_IFS_Trial10.drillDownUser(email);
+			RM_IFS_Trial10.saveIFS();
+			Actions.pause(20);
+			break;
+		}
+		}	
+		Actions.pause(1.5);
+		Actions.switchToDefaultContent();
+		RM_IONDESK.navigate_Alerts();
+		RM_IONDESK.verify_Alerts(message);
+		Actions.click(WorkFlow.activityFeedHeader, "click on activity feed");
+		Actions.verifyElementPresent(ActivityFeed.header_MyFeed,"Verify My Feed Header ");
+		Actions.click(WorkFlow.activityFeedHeader, "click on activity feed");
+		Actions.verifyElementPresent(ActivityFeed.header_MyFeed,"Verify My Feed Header ");
+		Actions.pause(2);
+		RM_IONDESK.verify_Alertsfeedpage(message);
+	
+         } catch (Exception e) {
+			
+		}finally
+		{
+			Global.logOut();
+			Actions.driverClose();
+		}
+		
+     }
+}

@@ -1,0 +1,341 @@
+package scripts.Streams;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+
+import org.apache.commons.lang3.RandomStringUtils;
+import org.openqa.selenium.By;
+import org.testng.annotations.AfterMethod;
+import org.testng.annotations.BeforeClass;
+import org.testng.annotations.Test;
+
+import actions.Actions;
+import objRepository.Global;
+import objRepository.Streams.Streams;
+import reusableMethods.RM_Streams;
+import utility.Utility;
+
+public class TS_RestartingStreamShouldOnlyResetStepsDueDates_notTheStatus_14778 {
+	private Utility utl;
+	// ExtentTest logger;
+
+	@BeforeClass
+	public void setUp() {
+		utl = new Utility();
+		// logger=
+		utl.initTest(this.getClass().getName().substring(this.getClass().getName().lastIndexOf(".")+1).trim());
+		new Actions();
+
+	}
+
+	@AfterMethod
+	public void logOutAndBrowserClose() {
+		try {
+			rb();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+
+		}
+		Actions.logOutAndBrowserClose();
+	}
+	String time=RandomStringUtils.randomNumeric(4);
+	String templateName = Utility.getTestData().get("TEMPLATENAME")+time;
+	String stepName1 = Utility.getTestData().get("STEPNAME")+"_1";
+	String stepName2 = Utility.getTestData().get("STEPNAME")+"_2";
+	String stepName3 = Utility.getTestData().get("STEPNAME")+"_3";
+	@Test
+	public void createStream() throws InterruptedException {
+		//String time = Utility.getTime();
+		try {
+			String templateDesc = Utility.getTestData().get("TEMPLAEDESC");
+			String tag1 = Utility.getTestData().get("TAG1");
+			String tag2 = Utility.getTestData().get("TAG2");
+			String streamOwner = Utility.getTestData().get("STREAMOWNER");
+			String internalParticipant = Utility.getTestData().get("STREAMPARTICIPANT");
+			String stepCommMsg=Utility.getTestData().get("STEPCOMMENT")+time;
+			String stepDesc = Utility.getTestData().get("STEPDESC");
+			Global.login(Utility.getConfigData().get("USER6"), Utility.getConfigData().get("PASSWORD"));
+			// Create Template without step
+			/*RM_Streams.createTemplateWithOneStep(templateName, templateDesc, tag1, tag2, streamOwner, internalParticipant,
+					stepName, stepDesc);*/
+			RM_Streams.createTemplate(templateName, templateDesc, tag1, tag2, streamOwner, internalParticipant);
+			//Add Steps To Template
+			RM_Streams.addStep(stepName1, stepDesc);
+			RM_Streams.addStep(stepName2, stepDesc);
+			RM_Streams.addStep(stepName3, stepDesc);
+			//Activate Template
+			RM_Streams.activate();
+			
+			// Create Stream & Start the Stream
+			RM_Streams.createStreamWithOutComplete(templateName);
+			//Select All Steps in Dropdown
+			RM_Streams.selectAllStepsInStreams();
+			
+			// Start Stream Step
+			RM_Streams.startStreamStep(stepName2);
+			//Complete Stream Step
+			RM_Streams.completeStreamStep(stepName3);
+			//Verify Stream Due Date
+			verifyStreamDueDate();
+			//Verify Step1 Due Date
+			verifyStepDueDate(stepName1);
+			//Verify Step2 Due Date
+			verifyStepDueDate(stepName2);
+			//Verify Step2 Due Date
+			verifyStepDueDate(stepName3);
+			
+			
+			
+			//Change Step1 Due Date
+			RM_Streams.editStepDueDate(stepName1, -2);
+			//Change Step1 Due Date
+			RM_Streams.editStepDueDate(stepName2, -2);
+			// Send Comment in Step
+			RM_Streams.postStepComment(stepName1, stepCommMsg);
+			//Change Stream Due Date
+			RM_Streams.editStreamDueDate(-2);
+			
+			//Complete the Stream
+			RM_Streams.completeStream();
+			//Restart the Stream
+			RM_Streams.restartStream();
+			//Select All Steps in Dropdown
+			RM_Streams.selectAllStepsInStreams();
+			//Verify Stream Due Date
+			verifyStreamDueDate();
+			//Verify Step1 Due Date
+			verifyStepDueDate(stepName1);
+			//Verify Step2 Due Date
+			verifyStepDueDate(stepName2);
+			//Verify Step2 Due Date
+			verifyStepDueDate(stepName3);
+			//Verify Step Status
+			RM_Streams.verifyStreamStepStatus(stepName1, "New");
+			RM_Streams.verifyStreamStepStatus(stepName2, "Started");
+			RM_Streams.verifyStreamStepStatus(stepName3, "Completed");
+			//Verify Step Comment
+			RM_Streams.verifyStreamStepComment(stepName1, stepCommMsg);
+		
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+
+	}
+
+	public void rb() {
+		try {
+			Actions.switchToDefaultContent();
+			// Delete Stream
+			RM_Streams.delete_Template1(templateName);
+			// Delete Stream
+			RM_Streams.navigateToStreams();
+			//Newly Added
+			Actions.click(Streams.completeFilterIcon, "Click On Complete Filter Icon");
+			RM_Streams.select_CreatedTemplate(templateName);
+			RM_Streams.deleteStream();
+			Global.acceptConfirmation();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	
+	public void verifyStepDueDate(String stepName)
+	{
+		try {
+			//Getting Stream Step Due Date
+			By by=By.xpath("//div[@title='"+stepName+"']/following::span[2]");
+			Actions.scrollToElement(by);
+			String streamStepdate=Actions.getText(by);
+			/*Date capturedDate1=null;
+			try {
+				capturedDate1=new SimpleDateFormat("MM/dd/yyyy").parse(streamStepdate);
+			} catch (ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}*/
+			System.out.println("@@@@@@@@@@@@@@@ Captured Stream Step "+stepName+" Due Date :"+ streamStepdate);
+			//Getting & Converting Template Due iN value in to Iteger
+			
+			//Assert.assertTrue(streamStepdate);
+			//Actions.compareDates(expectedDueDate(stepName), capturedDate1);
+			Actions.verifyString(streamStepdate, expectedDueDate(stepName));
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
+	public void verifyStreamDueDate()
+	{
+		try {
+			Actions.scrollToElement(Streams.streamDueDate_input);
+			String streamDueDate=Actions.getAttribute(Streams.streamDueDate_input, "value");
+			/*Date capturedDate2=null;
+			try {
+				capturedDate2=new SimpleDateFormat("MM/dd/yyyy").parse(streamDueDate);
+			} catch (ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}*/
+			System.out.println("@@@@@@@@@@@@@@@ Captured Stream "+templateName+" Due Date:"+ streamDueDate);
+			//Getting & Converting Template Due iN value in to Iteger
+			
+			//Assert.assertTrue(streamStepdate);
+			//Actions.compareDates(expectedDueDate(), capturedDate2);
+			Actions.verifyString(streamDueDate, expectedDueDate());
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	public String expectedDueDate(String stepName)
+	{
+		int dueDate=0;
+		String period=Streams.templateDuePeriod.toUpperCase();
+		switch(period)
+		{
+			case "DAYS" :
+			{
+				dueDate=Integer.parseInt(Streams.templateDueValue);
+				break;
+			}
+			case "WEEKS" :
+			{
+				int weeks=Integer.parseInt(Streams.templateDueValue);
+				dueDate=weeks*7;
+				break;
+			}
+			case "MONTHS" :
+			{
+				int months=Integer.parseInt(Streams.templateDueValue);
+				dueDate=months*30;
+				break;
+			}
+			case "YEARS" :
+			{
+				int years=Integer.parseInt(Streams.templateDueValue);
+				dueDate=years*365;
+				break;
+			}
+		
+		}
+		if(stepName.equalsIgnoreCase(stepName3))
+		{
+			dueDate=0;
+		}
+		SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
+		Calendar c = Calendar.getInstance();
+		c.setTime(new Date()); // Now use today date.
+		c.add(Calendar.DATE, dueDate); // Adding 5 days
+		String output = sdf.format(c.getTime());
+		
+		String dd=output.split("/")[1].toString().trim();
+		String mm=output.split("/")[0].toString().trim();
+		String yyyy=output.split("/")[2].toString().trim();
+		
+		if(mm.startsWith("0"))
+		{
+			mm=mm.substring(1).trim();
+		}
+		if(dd.startsWith("0"))
+		{
+			dd=dd.substring(1).trim();
+		}
+		output=mm+"/"+dd+"/"+yyyy;
+		/*Date expectedDate = null;
+		try {
+			expectedDate=new SimpleDateFormat("MM/dd/yyyy").parse(output);
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}*/
+		System.out.println("String: Expected Due Date from Template : "+output);
+		//System.out.println("Date Format: Expected Due Date from Template : "+expectedDate);
+		//Assert.assertTrue(streamStepdate);
+		//return expectedDate;
+		return output;
+		
+	}
+	public String expectedDueDate()
+	{
+		int dueDate=0;
+		String period=Streams.templateDuePeriod.toUpperCase();
+		switch(period)
+		{
+			case "DAYS" :
+			{
+				dueDate=Integer.parseInt(Streams.templateDueValue);
+				break;
+			}
+			case "WEEKS" :
+			{
+				int weeks=Integer.parseInt(Streams.templateDueValue);
+				dueDate=weeks*7;
+				break;
+			}
+			case "MONTHS" :
+			{
+				int months=Integer.parseInt(Streams.templateDueValue);
+				dueDate=months*30;
+				break;
+			}
+			case "YEARS" :
+			{
+				int years=Integer.parseInt(Streams.templateDueValue);
+				dueDate=years*365;
+				break;
+			}
+		
+		}
+		
+		SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
+		Calendar c = Calendar.getInstance();
+		c.setTime(new Date()); // Now use today date.
+		c.add(Calendar.DATE, dueDate); // Adding 5 days
+		String output = sdf.format(c.getTime());
+		String dd=output.split("/")[1].toString().trim();
+		String mm=output.split("/")[0].toString().trim();
+		String yyyy=output.split("/")[2].toString().trim();
+		
+		if(mm.startsWith("0"))
+		{
+			mm=mm.substring(1).trim();
+		}
+		if(dd.startsWith("0"))
+		{
+			dd=dd.substring(1).trim();
+		}
+		output=mm+"/"+dd+"/"+yyyy;
+		/*Date expectedDate = null;
+		try {
+			expectedDate=new SimpleDateFormat("MM/dd/yyyy").parse(output);
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}*/
+		System.out.println("String: Expected Due Date from Template : "+output);
+		//System.out.println("Date Format: Expected Due Date from Template : "+expectedDate);
+		//Assert.assertTrue(streamStepdate);
+		
+		
+		
+		
+		
+		
+		//return expectedDate;
+		return output;
+		
+	}
+	
+	
+	
+	
+
+}

@@ -1,0 +1,146 @@
+package scripts.ION;
+
+import java.util.HashMap;
+
+import org.testng.annotations.AfterClass;
+import org.testng.annotations.BeforeClass;
+import org.testng.annotations.Test;
+
+import com.relevantcodes.extentreports.ExtentTest;
+
+import actions.Actions;
+import objRepository.Global;
+import reusableMethods.RM_IONDESK;
+import utility.Utility;
+
+public class WF3_AutoAssignTask
+{
+	ExtentTest logger;
+	private Utility utl;
+	 HashMap<String, String> testData=Utility.getTestData();
+	 HashMap<String, String> configData=Utility.getConfigData();
+		
+		//TESTDATA
+		 String userName=configData.get("USER2");
+		 String user4=configData.get("USER4");
+		 String user3=configData.get("USER3");
+		 String pwd=configData.get("PASSWORD");
+		 String wfname=testData.get("WORKFLOW_NAME1");
+		 
+	@BeforeClass
+	public void setUp()
+	{
+		 utl=new Utility();
+		 logger=utl.initTest(this.getClass().getName().substring(this.getClass().getName().lastIndexOf(".")+1).trim());
+		 new Actions();
+	
+	}
+	@AfterClass
+	public void tearDown()
+	{
+		Utility.report.endTest(logger);
+		//Actions.driverClose();
+	
+	}
+	
+	@org.testng.annotations.Test(priority=166)
+	public void check_AutoAssign()
+	 {
+		try {
+			
+	    //login
+		Global.login(userName,pwd);
+		RM_IONDESK.checkAutoAssign();
+		
+         } catch (Exception e) {
+			
+		}finally
+		{
+			Global.logOut();
+			Actions.driverClose();
+		}
+		
+     }
+
+	@org.testng.annotations.Test(priority=167)
+	public void start_WorkFlowAuto()
+	 {
+		try {
+			
+	    //login
+		Global.login(userName,pwd);
+		RM_IONDESK.start_MultiWorkFlow(wfname);
+		RM_IONDESK.verify_task2completion();
+		 
+         } catch (Exception e) {
+			
+		}finally
+		{
+			Global.logOut();
+			Actions.driverClose();
+		}
+		
+     }
+	
+	
+	@org.testng.annotations.Test(priority=168)
+	public void autoassigncheckuser4()
+	 {
+		try {
+			
+	    //login
+		Global.login(user4,pwd);
+		RM_IONDESK.verify_autotask1Notifcompletion(wfname);
+		
+         } catch (Exception e) {
+			
+		}finally
+		{
+			Global.logOut();
+			Actions.driverClose();
+		}
+		
+     }
+	
+	@org.testng.annotations.Test(priority=169)
+	public void notifcheckuser3()
+	 {
+		try {
+			
+	    //login
+		Global.login(user3,pwd);
+		RM_IONDESK.verify_Notifcompletion(wfname);
+		
+         } catch (Exception e) {
+			
+		}finally
+		{
+			Global.logOut();
+			Actions.driverClose();
+		}
+		
+     }
+	@org.testng.annotations.Test(priority=170)
+	public void rbAutoAssign()
+	 {
+		try {
+			
+	    //login
+		Global.login(userName,pwd);
+		RM_IONDESK.navigateToActivityPage();
+		RM_IONDESK.navigate_StreamsWF();
+		RM_IONDESK.remove_WorkFlow(wfname);
+		Actions.pause(2);
+		Actions.switchToDefaultContent();
+		RM_IONDESK.checkAutoAssign();
+		
+         } catch (Exception e) {
+			
+		}finally
+		{
+			Global.logOut();
+			Actions.driverClose();
+		}
+		
+     }
+}

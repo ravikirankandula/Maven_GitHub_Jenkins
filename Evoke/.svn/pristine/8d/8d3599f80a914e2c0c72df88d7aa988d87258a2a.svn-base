@@ -1,0 +1,43 @@
+package objRepository.IONAPI;
+
+import org.openqa.selenium.By;
+
+public class IONAPIAuthorizedApps_V_13 {
+	public static final By addNewApp=By.xpath("//button[@title='Add New Authorized App']");
+	public static final By appName=By.xpath("//label[text()='Name']/following::input");
+	public static final By android=By.xpath("//label[text()='Mobile - Android']/preceding-sibling::input");
+	public static final By ios=By.xpath("//label[text()='Mobile - iOS']/preceding-sibling::input[1]");
+	public static final By windows=By.xpath("//label[text()='Mobile - Windows']/preceding-sibling::input[1]");
+	public static final By others=By.xpath("//label[text()='Mobile - Others']/preceding-sibling::input[1]");
+	public static final By web=By.xpath("//label[text()='Web']/preceding-sibling::input[1]");
+	public static final By backendService=By.xpath("//label[text()='Backend Service']/preceding-sibling::input[1]");
+	public static final By description=By.xpath("//label[text()='Description']/following::input");
+	public static final By redirectURL=By.xpath("//label[text()='Redirect URL']/following::input");
+	public static final By downloadURL=By.xpath("//label[text()='Download URL']/following::input");
+	public static final By save=By.xpath("//button[text()='Save']");
+	public static final By authorizedOrigins=By.xpath("//label[text()='Authorized Javascript Origins']/following::input");
+	public static final By ok=By.xpath("//button[text()='Ok']");
+	public static final By downloadCredentials=By.xpath("//button[text()='Download Credentials']");
+	public static final By resetSecret=By.xpath("//button[text()='Reset Secret']");
+	public static final By verify_DownloadCredentials=By.xpath("//span[text()='Downloaded Credentials']/following::span[text()='Complete']");
+	public static final By verify_resetSecret=By.xpath("//span[text()='Secret Key Reset']/following::span[text()='Complete']");
+	public static final By emailQRCode=By.xpath("//button[text()='Email QR Code to Users']");
+	public static final By authorized_mobileQRCodeUser=By.id("searchInput");
+	public static final By send=By.xpath("//button[text()='Send']");
+	public static final By refreshToken=By.xpath("//label[text()='Refresh Token Grant Lifetime']/following::input");
+	public static final By verify_emailQRCode=By.xpath("//span[text()='QR code email sent to users']/following::span[text()='Complete']");
+	public static final By package_Name=By.xpath("//label[text()='Package Name']/following::input");
+	
+	public static final By cancel=By.xpath("//button[text()='Cancel']");
+	public static final By select=By.xpath("//div[@class='dropdown']");
+	public static final By documentationLabel=By.xpath("//label[text()='Documentation']");
+	public static final By backButton=By.xpath("//span[text()='Back']");
+	public static final By issuerefresh=By.xpath("//label[text()='Issue Refresh Tokens']");
+	public static final By refreshErrorMsg=By.xpath("//span[@class='error validation-error up-arrow']");
+	public static final By addNewAPISuite=By.xpath("//button[@title='Add New API Suite']");
+	public static final By download=By.xpath("//button[text()='Download']");
+	public static final By mcc_Back=By.xpath("//button[text()='Back']");
+	public static final By importButton=By.xpath("//button[@title='Import']");
+	public static final By exportButton=By.xpath("//button[@title='Export']");
+	public static final By exportSuite=By.xpath("//button[text()='Export']");
+}

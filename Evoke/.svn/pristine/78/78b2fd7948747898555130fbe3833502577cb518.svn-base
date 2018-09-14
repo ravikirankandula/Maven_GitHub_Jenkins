@@ -1,0 +1,11 @@
+package objRepository.Social;
+
+import org.openqa.selenium.By;
+
+public class ProfilePage {
+	public static final By contactInfo=By.xpath("//div[@title='Contact Info']");
+	public static final By textArea=By.id("dialogDivContentareaContentsTxtarea");
+	public static final By notification=By.xpath("//span[@data-infor-translate='user_notify_prompt']");
+	public static final By disableNotification=By.xpath("//label[@title='Display prompt when the user leaves the application']/../descendant::input");
+	public static final By saveNotification=By.xpath("//button[@data-ng-click='onSavenotificationSettings()']");
+}

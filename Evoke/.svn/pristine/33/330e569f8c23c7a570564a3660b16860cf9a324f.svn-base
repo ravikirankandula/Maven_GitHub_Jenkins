@@ -1,0 +1,95 @@
+package scripts.ActivityFeed;
+
+import org.apache.commons.lang3.RandomStringUtils;
+import org.testng.annotations.AfterClass;
+import org.testng.annotations.AfterMethod;
+import org.testng.annotations.BeforeClass;
+import org.testng.annotations.Test;
+
+import actions.Actions;
+import objRepository.Global;
+import objRepository.Social.ActivityFeed;
+import objRepository.Social.ShellHeaderShareOverlay;
+import reusableMethods.RM_Social;
+import utility.Utility;
+
+public class Ts_VerifyNotificationOnTaggedUsersNotificationPage_13259 {
+	
+	private Utility utl;
+	//ExtentTest logger;
+
+	static boolean rerun=false;	
+	public static String className;
+	@BeforeClass
+	public void setUp()
+	{
+		utl=new Utility();
+		utl.initTest(this.getClass().getName().substring(this.getClass().getName().lastIndexOf(".")+1).trim());
+		className=this.getClass().getName().toString();
+		new Actions();
+	}
+		@AfterMethod
+		public void logOutAndBrowserClose()
+		{
+			Actions.logOutAndBrowserCloseMU();
+		}
+		@AfterClass
+		public void endReport() 
+		{
+			if(rerun)
+			{
+				Utility.addClass(className);
+			}
+			Actions.endScriptReportMU();
+			
+			
+		}
+		String time=RandomStringUtils.randomNumeric(4);
+		@Test
+		public void postMessgae()
+		{
+		
+			try {
+				Global.login(Utility.getConfigData().get("USER21"), Utility.getConfigData().get("PASSWORD"));
+				//Actions.pause(3);
+				RM_Social.navigateToActivityPage();
+				Actions.click(ActivityFeed.privacyLink, "Open Privacy dropdown");
+				RM_Social.selectPrivacyInAFP(Utility.getTestData().get("PRIVACY_CONNECTEDUSERS"));
+				RM_Social.tagUserInAFP(Utility.getTestData().get("FULLNAME_USER23"));
+				RM_Social.typeMessageInAFP(Utility.getTestData().get("POSTMSG")+time);
+				RM_Social.clickOnPostBtnInAFP();
+				Actions.switchToDefaultContent();
+				RM_Social.navigateToActivityPage();
+				//Actions.switchtoFrame(Global.socialCLFrame, "Switch to Social Frame");
+				//Actions.verify(ActivityFeed.msgContainer, Utility.getTestData().get("POSTMSG")+time);
+				RM_Social.verifyMessage(Utility.getTestData().get("POSTMSG")+time);
+			} catch (Exception e) {
+				rerun=true;
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+		}
+		@Test(dependsOnMethods={"postMessgae"})
+		public void verifyPostMsg()
+		{
+			
+				
+				try {
+					Global.login(Utility.getConfigData().get("USER23"),Utility.getConfigData().get("PASSWORD"));
+					RM_Social.navigateToActivityPage();
+					Actions.pause(2);
+					//Actions.verify(ActivityFeed.msgContainer, Utility.getTestData().get("POSTMSG")+time);
+					RM_Social.verifyMessage(Utility.getTestData().get("POSTMSG")+time);
+					Actions.switchToDefaultContent();
+					RM_Social.verifyNotification(Utility.getTestData().get("Gl_TD_VERIFYTAGNOTIFICATION_21"));
+				} catch (Exception e) {
+					rerun=true;
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				
+		
+		}
+
+}

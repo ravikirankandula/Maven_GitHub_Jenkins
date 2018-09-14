@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WorkflowDefinitions creationDate="2017-04-07T11:25:03Z" versionNumber="12.0.89025.7325">
+   <WorkflowDefinition version="1">
+      <Name>AutoSingleTask</Name>
+      <Description>Automation Work flow description</Description>
+      <LastUpdatedBy>mingleqatest2@gmail.com</LastUpdatedBy>
+      <Variables>
+         <Variable>
+            <Name>Hyperlink</Name>
+            <DataType>Hyperlink</DataType>
+            <IsWorkflowInput>True</IsWorkflowInput>
+            <IsWorkflowOutput>False</IsWorkflowOutput>
+            <InitialValue>http://www.infor.com/</InitialValue>
+            <IsUseValue>True</IsUseValue>
+         </Variable>
+         <Variable>
+            <Name>Boolean</Name>
+            <DataType>Boolean</DataType>
+            <IsWorkflowInput>True</IsWorkflowInput>
+            <IsWorkflowOutput>False</IsWorkflowOutput>
+            <InitialValue>False</InitialValue>
+            <IsUseValue>True</IsUseValue>
+         </Variable>
+         <Variable>
+            <Name>Integer</Name>
+            <DataType>Integer</DataType>
+            <IsWorkflowInput>True</IsWorkflowInput>
+            <IsWorkflowOutput>False</IsWorkflowOutput>
+            <InitialValue>0</InitialValue>
+            <IsUseValue>True</IsUseValue>
+         </Variable>
+         <Variable>
+            <Name>DateTime</Name>
+            <DataType>DateAndTime</DataType>
+            <IsWorkflowInput>True</IsWorkflowInput>
+            <IsWorkflowOutput>False</IsWorkflowOutput>
+            <InitialValue>2017-04-01T09:38:00Z</InitialValue>
+            <IsUseValue>True</IsUseValue>
+         </Variable>
+         <Variable>
+            <Name>string</Name>
+            <DataType>String</DataType>
+            <IsWorkflowInput>True</IsWorkflowInput>
+            <IsWorkflowOutput>False</IsWorkflowOutput>
+            <InitialValue>Automation test</InitialValue>
+            <IsUseValue>True</IsUseValue>
+         </Variable>
+         <Variable>
+            <Name>Date</Name>
+            <DataType>Date</DataType>
+            <IsWorkflowInput>True</IsWorkflowInput>
+            <IsWorkflowOutput>False</IsWorkflowOutput>
+            <InitialValue>2017-04-01</InitialValue>
+            <IsUseValue>True</IsUseValue>
+         </Variable>
+         <Variable>
+            <Name>Decimal</Name>
+            <DataType>Decimal</DataType>
+            <IsWorkflowInput>True</IsWorkflowInput>
+            <IsWorkflowOutput>False</IsWorkflowOutput>
+            <InitialValue>0.0</InitialValue>
+            <IsUseValue>True</IsUseValue>
+         </Variable>
+      </Variables>
+      <Views/>
+      <WorkFlowTrees/>
+      <DistributionItems>
+         <DistributionItem>
+            <Id>1917</Id>
+            <Type>Person</Type>
+            <Name>mingleqatest2@gmail.com</Name>
+            <Description>QAAuto Test2</Description>
+            <SendEmail>True</SendEmail>
+         </DistributionItem>
+      </DistributionItems>
+      <WorkflowDecisionTables>
+         <WorkflowDecisionTable>
+            <Id>1621</Id>
+            <Decisions/>
+            <DecisionColumns/>
+            <DefaultDistributionItemIds/>
+         </WorkflowDecisionTable>
+      </WorkflowDecisionTables>
+      <SequentialFlow>
+         <SequenceNumber>0</SequenceNumber>
+         <FlowParts>
+            <FlowPart type="UserTask">
+               <SequenceNumber>1</SequenceNumber>
+               <Name>Task 1</Name>
+               <SummaryMessage>Task 1 Message in Work flow</SummaryMessage>
+               <Priority>Medium</Priority>
+               <IsParallel>False</IsParallel>
+               <TaskActionType>StandardAction</TaskActionType>
+               <UserTaskType>USER_TASK</UserTaskType>
+               <MaxEscalationLevel>1</MaxEscalationLevel>
+               <DistributionComplexity>simple</DistributionComplexity>
+               <DistributionItemIds>
+                  <DistributionItemId>1917</DistributionItemId>
+               </DistributionItemIds>
+               <Parameters/>
+               <ActionButtons/>
+               <TaskMessages/>
+               <Escalations/>
+               <WorkflowDecisionTableIds>
+                  <WorkflowDecisionTableId>1621</WorkflowDecisionTableId>
+               </WorkflowDecisionTableIds>
+            </FlowPart>
+         </FlowParts>
+      </SequentialFlow>
+   </WorkflowDefinition>
+</WorkflowDefinitions>

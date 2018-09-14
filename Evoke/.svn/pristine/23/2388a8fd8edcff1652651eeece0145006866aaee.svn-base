@@ -1,0 +1,4149 @@
+package reusableMethods;
+
+import java.io.File;
+import java.io.IOException;
+import java.util.HashMap;
+
+import org.apache.commons.lang3.RandomStringUtils;
+import org.openqa.selenium.By;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+
+import actions.Actions;
+import objRepository.Global;
+import objRepository.IFS.Contacts;
+import objRepository.IFS.DistributionGroup;
+import objRepository.IFS.DocumentAuthorizations;
+import objRepository.IFS.ERPPersonIDS;
+import objRepository.IFS.ExternalUsers;
+import objRepository.IFS.IFSUSERS;
+import objRepository.IFS.IFSUSERS_Trial10;
+import objRepository.IFS.SCIIMAccounts;
+import objRepository.IFS.SecurityRole;
+import objRepository.IFS.ServiceAccounts;
+import objRepository.IONAPI.IONAPIAuthorizedApps;
+import objRepository.Social.ShellHeader;
+import utility.Utility;
+
+public class RM_IFS_Trial10 {
+	//NAVIGATE TO USER MENU
+	public static void navigateToMenu(String menu)
+	{
+		try {
+			/*WebElement element = Utility.getDriver().findElement(By.name("MingleOverlay"));
+			String contents = (String)((JavascriptExecutor)Utility.getDriver()).executeScript("return arguments[0].innerHTML;", element); 
+			System.out.println(contents+"*******************");*/
+			
+			Actions.click(ShellHeader.userMenu, "Click on User Menu");
+			Actions.click(By.xpath("//span[text()='"+menu+"']"), "Click on Menu Details"+menu);
+			//Actions.impwait();
+			Actions.pause1(1);
+			Actions.explicitWait_VisibilityOfElement(Global.socialCLFrame);
+			Actions.verifyElement(Global.socialCLFrame, "Verify presence of 'Social' Frame");
+			Actions.switchtoFrame(Global.socialCLFrame, "Switch to the Frame");
+			Actions.pause1(1);
+			//Actions.explicitWait_VisibilityOfElement(IFSUSERS_Trial10.enterEmailAddress);
+			WebDriverWait wait = new WebDriverWait(Utility.getDriver(), 40); 
+			wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("headerTitle")));
+			//Actions.verifyElement(IFSUSERS_Trial10.enterEmailAddress, "Verify presence of 'EmailAddress'");
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace(); throw e; 
+		}
+	}
+public static String navigateToAbout( ){
+	System.out.println("in the about method");
+	Actions.switchToDefaultContent();
+	Actions.pause1(1);
+	Actions.click_JS(ShellHeader.userMenu, "Click on User Menu");
+	Actions.click(By.xpath("//span[text()='About']"), "Click on Menu Details About");
+	String s=Actions.getText(ShellHeader.about_Content);
+	String[] s1=s.split("&");
+	System.out.println(s1[0]);
+	String[] s2=s1[0].split(" ");
+	System.out.println(s2[3]);
+	Actions.click(ShellHeader.close_AboutButton, "Close button");
+	//Actions.impwait();
+	Actions.pause1(1);
+	/*Properties prop = new Properties();
+	OutputStream output = null;
+
+	try {
+		String filename = Store.class.getResource("config.properties").getFile();
+
+		output = new FileOutputStream(filename,true);
+
+		// set the properties value
+		prop.setProperty("VERSION", s2[3]);
+		prop.store(output, null);
+		output.close();
+	}
+	catch (Exception e) {
+		// TODO: handle exception
+	}*/
+/*	Parameters params = new Parameters();
+	FileBasedConfigurationBuilder<FileBasedConfiguration> builder =
+	    new FileBasedConfigurationBuilder<FileBasedConfiguration>(PropertiesConfiguration.class)
+	    .configure(params.properties()
+	        .setFileName("config.properties"));
+	Configuration config;
+	try {
+		config = builder.getConfiguration();
+		config.setProperty("VERSION", s2[3]);
+		builder.save();
+	} catch (ConfigurationException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}*/
+	return s2[3];
+	
+}
+	//Add multiple roles to dataAdministrator 
+	public static String accountingChart_AddMultipleRoles(String type,String role1,String role2)
+	{
+		String actual=null;
+		try {
+			navigateToMenu("User Management");
+			navigate_DocAuth();
+			//Actions.click(DocumentAuthorizations.accountingChart, "click on AccountingChart");
+			search(type);
+			actual = Actions.getText(By.xpath("//i[text()='"+type+"']/following::div"));
+			Actions.click(By.xpath("//i[text()='"+type+"']/ancestor::tr/descendant::button"), "click on AccountingChart");
+			Actions.pause1(1.5);
+			add_IFS();
+			Actions.pause1(2);
+			Actions.type(By.id("txtSelectRoleSearch"), role1, "Role Data");
+			Actions.enter();
+			Actions.pause1(2);
+			Actions.click_JS(By.xpath("//div[text()='"+role1+"']/../../descendant::span"), "Add Grid administrator");
+			Actions.pause1(2);
+			Actions.click(DocumentAuthorizations.add_Btn, "Click add buton");
+			Actions.pause1(1);
+			add_IFS();
+			Actions.pause1(2);
+			Actions.type(By.id("txtSelectRoleSearch"), role2, "Role Data");
+			Actions.enter();
+			Actions.pause1(2);
+			Actions.click_JS(By.xpath("//div[text()='"+role2+"']/../../descendant::span"), "Add data administrator");
+			Actions.click(DocumentAuthorizations.add_Btn, "Click add buton");
+			Actions.pause1(1);
+			saveIFS();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace(); throw e; 
+		}
+		//search(type);
+		//click_CloseBtn();
+		//verify_Data("2");
+
+		return actual;
+	}
+	//SELECT MAILADDRESS
+	public static void searchMailID(String userEmail){	
+		//Actions.verifyElement(IFSUSERS_Trial10.enterEmailAddress, "Verify presence of 'EmailAddress'");
+		try {
+			System.out.println("in the seacrh");
+
+			Actions.pause1(.5);
+			Actions.verifyElement(By.xpath("//button[contains(@class,'drilldown')]"),"drill down loaded");
+			Actions.click(IFSUSERS_Trial10.propertyDrpoDown, "Property Drop Down");
+			Actions.verifyElement(IFSUSERS_Trial10.selectEmailAddressFromProperty, "Verify Presence of 'Email Address' from list");
+			Actions.pause1(1);
+			Actions.click(IFSUSERS_Trial10.selectEmailAddressFromProperty, "Click 'Email Address'from list");
+			Actions.pause1(.5);
+			System.out.println(userEmail+"**********");
+			Actions.clearText(IFSUSERS_Trial10.enterEmailAddress, "Clear the Content");
+			Actions.type(IFSUSERS_Trial10.enterEmailAddress,userEmail,"User Mail Address");
+			Actions.pause1(.5);
+			Actions.enter();
+			Actions.pause1(1);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace(); throw e; 
+		}
+	}
+	//DRILL DOWN USER
+	public static void drillDownUser(String user)
+	{
+		try {
+			Actions.verifyElement(By.xpath("//div[text()='"+user+"']/../../descendant::button[@class='btn-icon small datagrid-drilldown']"), "Drill Down");
+			Actions.moveTo(By.xpath("//div[text()='"+user+"']/../../descendant::button[@class='btn-icon small datagrid-drilldown']"), "Moveto Drill Down User");
+			//Actions.pause1(2);
+			//JavaScriptLibrary.CallEmbeddedSelenium(U, "triggerMouseEventAt", element, "click", "0,0");
+			Actions.click(By.xpath("//div[text()='"+user+"']/../../descendant::button[@class='btn-icon small datagrid-drilldown']"), "Drill Down User");
+			//Actions.enter();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace(); throw e; 
+		}
+	}
+
+
+	//Drill DOwn Distribution Group
+
+	public static void drillDistributionGroup(String dgName){
+		try {
+			Actions.pause1(3);
+			Actions.verifyElement(By.xpath("//i[text()='"+dgName+"']/ancestor::tr/descendant::button[@class='btn-icon small datagrid-drilldown']"), "Drill Down");
+			Actions.moveTo(By.xpath("//i[text()='"+dgName+"']/ancestor::tr/descendant::button[@class='btn-icon small datagrid-drilldown']"), "Moveto Drill Down group");
+			
+			
+			Actions.click(By.xpath("//i[text()='"+dgName+"']/ancestor::tr/descendant::button[@class='btn-icon small datagrid-drilldown']"), "Click On Drill Down Group Name");
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace(); throw e; 
+		}
+	
+	}
+
+	//SAVE IFS ITEM
+	public static void saveIFSITEM()
+	{
+		try {
+			Actions.click(IFSUSERS_Trial10.saveIFS, "Save IFS ITEM");
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace(); throw e; 
+		}
+	}
+
+	//Reteieve Full Name
+	public static String retrieve_FullName(){
+		String actual=null;
+		try {
+			Actions.verifyElement(By.xpath("//button[@class='btn-icon small datagrid-drilldown']/following::div[2]"),"Verify Presence of Full Name");
+			actual=Actions.getText(By.xpath("//button[@class='btn-icon small datagrid-drilldown']/following::div[2]"));
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace(); throw e; 
+		}
+		return actual; 
+	}
+	public static void update_SecurityRole(String emailID,String securityRole){
+
+		try {
+			navigateToMenu("User Management");
+			searchMailID(emailID);
+			HashMap<String, String> testData=Utility.getConfigData();
+			String env=testData.get("ENVIRONMENT").toUpperCase();
+			System.out.println(env);
+			switch(env)
+			{
+
+			case "CLOUD":
+			{
+				Actions.pause1(.5);
+				String fullNmae=retrieve_FullName();
+
+				drillDownUser(fullNmae);
+				break;
+			}
+			case "OP":
+			{
+				Actions.pause1(.5);
+				drillDownUser(emailID);
+				break;
+			}
+			}	
+			Actions.pause1(1.5);
+			addSecurity(securityRole);
+			checkSecurityRole(securityRole);
+			rbSecurityRole();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace(); throw e; 
+		}
+
+	}
+
+	public static void select_TabList(String role){
+		
+		try {
+			Actions.verifyElement(By.xpath("//ul[@role='tablist']/descendant::a[text()='"+role+"']"), "Verify presence of ' "+role+"' Tab");
+			Actions.moveTo(By.xpath("//ul[@role='tablist']/descendant::a[text()='"+role+"']"), "Moveto "+role+" Tab");
+			Actions.pause1(1);
+			Actions.click(By.xpath("//ul[@role='tablist']/descendant::a[text()='"+role+"']"), "click on "+role+"Tab");
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace(); throw e; 
+		}
+	}
+
+	//ADD SECURITY ROLEBUTTON
+	public static void addSecurity(String secRole)
+	{
+		try {
+			Actions.pause1(1);
+			select_TabList("Security Roles");
+			Actions.verifyElement(IFSUSERS_Trial10.addSecurityButton, "Verify presence of 'Add Security' button");
+			Actions.moveTo(IFSUSERS_Trial10.addSecurityButton, "Moveto Security button");
+			Actions.pause1(1);
+			Actions.click_JS(IFSUSERS_Trial10.addSecurityButton, "Add Security Button");
+			Actions.pause1(1);
+			Actions.verifyElement(IFSUSERS_Trial10.enterSecurityRole, "Verify presence of 'Enter Security' role");
+			Actions.type(IFSUSERS_Trial10.enterSecurityRole,secRole,"Enter Security Role");
+			Actions.pause1(.5);
+			Actions.enter();
+			Actions.pause1(1);
+			//Actions.scrollToElement(By.xpath("//div[text()='"+secRole+"']/../../descendant::span"));
+			Actions.verifyElement(By.xpath("//div[text()='"+secRole+"']"), "Verify presence of 'Add Security Role'");
+			Actions.pause1(.5);
+			Actions.click_JS(By.xpath("//div[text()='"+secRole+"']/../../descendant::span"), "Add Security Role");
+			Actions.click(IFSUSERS_Trial10.saveRole, "Save  Role");
+			Actions.pause1(.5);
+			Actions.verifyElement(IFSUSERS_Trial10.saveSecurityRole, "Verify presence of 'S'");
+			Actions.moveTo(IFSUSERS_Trial10.saveSecurityRole, "Move ToSave Security Role");
+			Actions.click_JS(IFSUSERS_Trial10.saveSecurityRole, "Save Security Role");
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace(); throw e; 
+		}
+	}
+	
+	//ADD SECURITY ROLEBUTTON
+		public static void addFirstSecurity()
+		{
+			try {
+				Actions.pause1(1);
+				select_TabList("Security Roles");
+				Actions.verifyElement(IFSUSERS_Trial10.addSecurityButton, "Verify presence of 'Add Security' button");
+				Actions.moveTo(IFSUSERS_Trial10.addSecurityButton, "Moveto Security button");
+				Actions.pause1(1);
+				Actions.click_JS(IFSUSERS_Trial10.addSecurityButton, "Add Security Button");
+				Actions.pause1(1);
+				//Actions.verifyElement(IFSUSERS_Trial10.enterSecurityRole, "Verify presence of 'Enter Security' role");
+				/*Actions.type(IFSUSERS_Trial10.enterSecurityRole,secRole,"Enter Security Role");
+				Actions.pause1(.5);
+				Actions.enter();
+				Actions.pause1(1);*/
+				//Actions.scrollToElement(By.xpath("//div[text()='"+secRole+"']/../../descendant::span"));
+				//Actions.verifyElement(By.xpath("//div[@id='inforDataGridAddSecurityRoles']/descendant::td/div/descendant::Span"), "Verify presence of 'Add Security Role'");
+				Actions.pause1(.5);
+				Actions.click_JS(By.xpath("//div[@id='inforDataGridAddSecurityRoles']/descendant::td/div/descendant::Span"), "Add Security Role");
+				Actions.click(IFSUSERS_Trial10.saveRole, "Save  Role");
+				Actions.pause1(.5);
+				Actions.verifyElement(IFSUSERS_Trial10.saveSecurityRole, "Verify presence of 'S'");
+				Actions.moveTo(IFSUSERS_Trial10.saveSecurityRole, "Move ToSave Security Role");
+				Actions.click_JS(IFSUSERS_Trial10.saveSecurityRole, "Save Security Role");
+				Actions.getText(IFSUSERS_Trial10.saveMsg);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace(); throw e; 
+			}
+			
+		}
+	//VERIFY AND CHECK SECURITY ROLE
+	public static void checkSecurityRole(String roleDetails)
+	{
+		try {
+			Actions.pause1(2);
+			Actions.verifyElement(By.xpath("//div[text()='"+roleDetails+"']"), "Verify presence of 'Role':"+roleDetails);
+			Actions.scrollToElement(By.xpath("//div[text()='"+roleDetails+"']/../../descendant::span"));
+			Actions.moveTo(By.xpath("//div[text()='"+roleDetails+"']/../../descendant::span"), "Check the role:"+roleDetails);
+			Actions.click_JS(By.xpath("//div[text()='"+roleDetails+"']/../../descendant::span"), "Check the role:"+roleDetails);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace(); throw e; 
+		}
+	}
+	//Roll Back Security Role
+	public static void rbSecurityRole()
+	{
+		try {
+			Actions.scrollToElement(IFSUSERS_Trial10.deleteSecurityRole);
+			Actions.moveTo(IFSUSERS_Trial10.deleteSecurityRole, "Move To Delete Security Role");
+			Actions.click(IFSUSERS_Trial10.deleteSecurityRole, "Delete Security Role");
+			Actions.click(Global.yes, "Click On Yes");
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace(); throw e; 
+		}
+	}
+	//Create External User
+	public static String create_ExternalUsers(String user){
+		String user1=null;
+		try {
+			navigateToMenu("User Management");
+			select_ItemFromManage("Manage","External Users");
+
+			user1=add_ExternalUsers(user);
+			save_ExternalUser();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace(); throw e; 
+		}
+		return user1;
+
+	}
+	public static void save_ExternalUser(){
+		try {
+			Actions.verifyElement(ExternalUsers.save_ExternalUsers, "Verify presence of 'Save External Users' button");
+			Actions.click(ExternalUsers.save_ExternalUsers, "Save External User");
+			Actions.getText(IFSUSERS_Trial10.saveMsg);
+			Actions.getText(IFSUSERS_Trial10.updateMsg);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace(); throw e; 
+		}
+	}
+	//Add External Users
+	public static String add_ExternalUsers(String user1){
+		String val2=null;
+		
+		try {
+			System.out.println("in the external users");
+			add_IFS();
+			Actions.pause1(1);
+			Actions.verifyElement(ExternalUsers.save_ExternalUsers, "Verify presence of 'Save External User' button");
+			Actions.pause1(1);
+			Actions.moveTo(ExternalUsers.moveto_externalUser1, "Move to External User1");
+			Actions.click_JS(ExternalUsers.moveto_externalUser1, "Move to External User1");
+			Actions.pause1(1);
+			Actions.verifyElement(ExternalUsers.moveto_externalUser1, "Move to External User1");
+			Actions.pause1(1);
+			Actions.click_JS(ExternalUsers.moveto_externalUser1, "Move to External User1");
+			//String[] user=user1.split(".");
+			String[] val=user1.split("@");
+			System.out.println(val[0]);
+			String val1=val[0]+RandomStringUtils.randomNumeric(3);
+			val2=val1+"@"+val[1];
+			System.out.println(val2+"**********");
+			Actions.type(ExternalUsers.externaluser1_MailAddress, val2, "Enter External User Details");
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace(); throw e; 
+		}
+		return val2;
+
+	}
+	public static void delete_ExternalUser(String mail){
+		try {
+			Actions.pause1(1);
+			select_ExternalUser(mail);
+			action_btn();
+			Actions.pause1(2.5);
+			//	Actions.verifyElement(ExternalUsers.delete_Btn, "Verify Delete");
+			Actions.click(ExternalUsers.delete_Btn, "Click On Delet Button");
+			click_YesBtn();
+			Actions.pause1(1);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace(); throw e; 
+		}
+	}
+	public static void activateDeactivate_ExternalUser(String mail){
+		try {
+			navigateToMenu("User Management");
+
+			select_ItemFromManage("Manage","External Users");
+			Actions.pause1(1);
+			//verify_Data("Disabled");
+			select_ExternalUser(mail);
+			action_btn();
+			Actions.pause1(1);
+			Actions.verifyElement(ExternalUsers.activate, " Verify presence of 'Activate' button");
+			Actions.click(ExternalUsers.activate, "Click on Activate button");
+			click_YesBtn();
+			Actions.pause1(1);
+			verify_Data("Active");
+
+			delete_ExternalUser(mail);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace(); throw e; 
+		}
+	}
+	//Click On Yes Button
+	public static void click_YesBtn(){
+		try {
+			if(Actions.verifyElementPresent(IFSUSERS_Trial10.yesButton, "Verify presence of 'Yes 'Button"))
+			{
+				Actions.click(IFSUSERS_Trial10.yesButton, "Click On Yes Button");	
+			}
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace(); throw e; 
+		}
+	}
+	//SELECT External User
+	public static void select_ExternalUser(String mail){
+
+		try {
+			Actions.pause1(1);
+
+
+			search(mail);
+
+
+			Actions.pause1(2);
+			Actions.moveTo(ExternalUsers.select_AllExtUsers, "Move To Select All External User");
+			Actions.click_JS(ExternalUsers.select_AllExtUsers, "Select All External User");
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace(); throw e; 
+			
+		}
+	}
+	public static void action_btn(){
+		try {
+			Actions.moveTo(ExternalUsers.action_Btn, "Move To Action Button");
+			Actions.click_JS(ExternalUsers.action_Btn, "Click On Action Button");
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace(); throw e;
+			
+		}
+	}
+	public static void deactivate_ExternalUser(String mail){
+
+		try {
+			select_ExternalUser(mail);
+			action_btn();
+			Actions.click(ExternalUsers.deactivate, "Click On Deactivate");	
+			click_YesBtn();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace(); throw e;
+			
+		}
+
+	}
+	//IMPORT AND EXPOERT USER DETAILS
+	public static void importExportUsers(){
+		try {
+			navigateToMenu("User Management");
+			HashMap<String, String> testData=Utility.getConfigData();
+			String env=testData.get("ENVIRONMENT").toUpperCase();
+			System.out.println(env);
+			switch(env)
+			{
+
+			case "CLOUD":
+			{
+				Actions.pause1(1);
+				select_Users();
+				import_Users();
+				Actions.pause1(1);
+
+				export_Users();
+				break;
+			}
+
+
+			case "OP":
+			{
+				Actions.pause1(1.5);
+				select_Users();
+				import_Users();
+				Actions.pause1(2);
+				export_Users();
+				break;
+			}
+			}
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace(); throw e;
+			
+		}
+	}
+	//SELECT USERS
+	public static void select_Users()
+	{
+		try {
+			Actions.moveTo(IFSUSERS_Trial10.selectUsers,"Move To Users Selected");
+			Actions.click_JS(IFSUSERS_Trial10.selectUsers,"Users Selected");
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace(); throw e;
+			
+		}
+
+	}
+
+	//EXPORT USERS
+	public static void export_Users(){
+		try {
+			Actions.verifyElement(IFSUSERS_Trial10.exportUsers, "Verify presence of 'Export Users' button");
+			Actions.moveTo(IFSUSERS_Trial10.exportUsers, "Move To Export Users");
+			Actions.click(IFSUSERS_Trial10.exportUsers, "Export Users");
+			Actions.verifyElement(IFSUSERS_Trial10.selectExport, "Verify presence of 'Select Export Users' Raido button");
+			Actions.click(IFSUSERS_Trial10.selectExport, "Click'Select Export Users' Raido button");
+			Actions.click(IFSUSERS_Trial10.clickExport, "Click' Export Users'  button");
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace(); throw e;
+			
+		}
+	}
+
+	//IMPORT USERS
+	public static void import_Users(){
+		try {
+			Actions.verifyElement(IFSUSERS_Trial10.importUsers, "Verify presence of 'Import Users' button");
+			Actions.moveTo(IFSUSERS_Trial10.importUsers, "Move To'Import Users' button");
+			Actions.click_JS(IFSUSERS_Trial10.importUsers, "Import Users");
+			Actions.pause1(1);
+			Actions.verifyElement(IFSUSERS_Trial10.closeImport, "Verify presence of 'Close Import' button"); 
+			Actions.click(IFSUSERS_Trial10.closeImport, "Close Import");
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace(); throw e;
+			
+		}
+
+	}
+	public static void click_HeaderMenu(){
+		try {
+			Actions.pause1(1);
+			Actions.verifyElement(IFSUSERS_Trial10.headerMenuIcon, "verify presence of 'Header Menu Icon'");
+			Actions.moveTo(IFSUSERS_Trial10.headerMenuIcon,"Move to Header menu Icon");
+			Actions.click_JS(IFSUSERS_Trial10.headerMenuIcon,"Click On Header Menu Icon");
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace(); throw e;
+			
+		}
+	}
+	//SELECT Manage
+	public static void select_ItemFromManage(String menuItem,String subMenu)
+	{
+		try {
+			click_HeaderMenu();
+			Actions.verifyElement(By.xpath("//a[text()='"+menuItem+"']"), menuItem);
+			Actions.moveTo(By.xpath("//a[text()='"+menuItem+"']"), "Move to Menu Details "+menuItem);
+			Actions.click_JS(By.xpath("//a[text()='"+subMenu+"']"), "Click on Menu Details "+subMenu);
+			/*Actions.moveTo(By.xpath("//a[text()='"+subMenu+"']"), "Move to Menu Details "+subMenu);
+			Actions.click_JS(By.xpath("//a[text()='"+subMenu+"']"), "Click on Menu Details "+subMenu);*/
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace(); throw e;
+			
+		}
+
+
+	}//SELECT Manage
+	public static void select_ItemFromManageGroups(String menuItem,String subMenu,String menu)
+	{
+		try {
+			click_HeaderMenu();
+			Actions.pause1(1);
+			Actions.verifyElement(By.xpath("//a[text()='"+menuItem+"']"), menuItem);
+			Actions.moveTo(By.xpath("//a[text()='"+menuItem+"']"), "Move to Menu Details "+menuItem);
+			Actions.click_JS(By.xpath("//a[text()='"+subMenu+"']"), "Click on Menu Details "+subMenu);
+			Actions.moveTo(By.xpath("//a[text()='"+subMenu+"']"), "Move to Menu Details "+subMenu);
+			Actions.click_JS(By.xpath("//a[text()='"+subMenu+"']"), "Click on Menu Details "+subMenu);
+			Actions.moveTo(By.xpath("//a[text()='"+menu+"']"), "Move to Menu Details "+menu);
+			Actions.click_JS(By.xpath("//a[text()='"+menu+"']"), "Click on Menu Details "+menu);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace(); throw e;
+			
+		}
+
+
+	}
+    
+	
+	public static void select_ItemFromManagedomain(String menuItem,String subMenu)
+	{
+		try {
+			click_HeaderMenu();
+			Actions.pause1(1);
+			Actions.verifyElement(By.xpath("//a[text()='"+menuItem+"']"), menuItem);
+			Actions.moveTo(By.xpath("//a[text()='"+menuItem+"']"), "Move to Menu Details "+menuItem);
+			Actions.click_JS(By.xpath("//a[text()='"+subMenu+"']"), "Click on Menu Details "+subMenu);
+			Actions.moveTo(By.xpath("//a[text()='"+subMenu+"']"), "Move to Menu Details "+subMenu);
+			Actions.click_JS(By.xpath("//a[text()='"+subMenu+"']"), "Click on Menu Details "+subMenu);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace(); throw e;
+			
+		}
+	}
+
+
+	//ADD IFS
+	public static void add_IFS()
+	{
+		try {
+			Actions.pause1(1);
+			Actions.verifyElement(IFSUSERS_Trial10.addIFSItem,"Add IFS");
+			Actions.moveTo(IFSUSERS_Trial10.addIFSItem, "Move to Add IFS");
+			Actions.pause1(1);
+			Actions.click_JS(IFSUSERS_Trial10.addIFSItem,"Click On Add IFS");
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace(); throw e;
+			
+		}
+
+	}
+
+	public static void add_ServiceAccounts(String desc){
+		try {
+			Actions.type(ServiceAccounts.serviceAccontDetails,desc,"Description Details");
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace(); throw e;
+			
+		}
+	}
+	//SAVE IFS
+
+	public static void saveIFS()
+	{
+		//	Global.minglePageLoad_Social();
+		try {
+			Actions.pause1(1);
+			Actions.verifyElement(IFSUSERS_Trial10.saveIFS,"Verify presence of'Save IFS'");
+			Actions.click(IFSUSERS_Trial10.saveIFS, "Save IFS Item");
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace(); throw e;
+			
+		}
+
+	}
+	//SERVICEACCOUNTS
+	public static void serviceAccounts(String desc){
+		try {
+			navigateToMenu("User Management");
+			HashMap<String, String> testData=Utility.getConfigData();
+			String env=testData.get("ENVIRONMENT").toUpperCase();
+			System.out.println(env);
+			switch(env)
+			{
+
+			case "CLOUD":
+			{
+				Actions.pause1(.5);
+				select_ItemFromManage("Security Administration","General Settings");
+				Actions.mingleWait(IFSUSERS_Trial10.manageFeatures, "wait for Manage Features", 10);
+				//Actions.pause1(1);
+				Actions.verifyElement(IFSUSERS_Trial10.manageFeatures, "Verify Presence of Manage Features ");
+				Actions.click_JS(IFSUSERS_Trial10.manageFeatures, "Click on Manage Features");
+				Actions.pause1(1);
+				boolean serviceAcc=false;
+				System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"+Actions.isChecked(IFSUSERS_Trial10.checkServiceAcc));
+				
+				if(!Actions.isChecked(IFSUSERS_Trial10.checkServiceAcc))
+				{
+					System.out.println(serviceAcc+"Print the flag");
+					Actions.pause1(1);
+					Actions.click_JS(IFSUSERS_Trial10.checkServiceAcc, "Click on Check Service Acc");
+					Actions.click(IFSUSERS_Trial10.saveExtFeatures, "Click On Save ");
+					Actions.getText(IFSUSERS_Trial10.saveMsg);
+					navigateToAnotherPageAndReturn();
+					//Actions.pause1(1);
+				}
+				
+				break;
+			}
+			case "OP":
+			{
+				Actions.pause1(.5);
+				
+				break;
+			}
+			}	
+			
+			//click_HeaderMenu();
+			/*navigateToMenu("User Management");*/
+			navigateToAnotherPageAndReturn();
+			select_ItemFromManage("Manage","Service Accounts");
+			add_IFS();
+			add_ServiceAccounts(desc);
+			saveIFS();
+			Actions.click(ServiceAccounts.downloadSeriveAccounts, "Click On Service Accounts");
+			//cancel_ServiceAccounts();
+			Actions.pause1(2);
+			File folder = new File(RpPath+"\\Downloads");
+			File[] listOfFiles = folder.listFiles();
+
+			    for (int i = 0; i < listOfFiles.length; i++) {
+			      if (listOfFiles[i].isFile()) {
+			        System.out.println("File " + listOfFiles[i].getName());
+			        Actions.loggerDetails(listOfFiles[i].getName());
+			    	File f1=new File(RpPath+"\\Downloads\\"+listOfFiles[i].getName());
+			    	f1.delete();
+			      }
+			    }
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace(); throw e;
+			
+		}
+		
+	}
+	//CANCEL SERVICE ACCOUNTS
+
+	public static void cancel_ServiceAccounts()
+	{
+		try {
+			Actions.verifyElement(ServiceAccounts.downloadSeriveAccounts, "Verify presence of Download Service Accounts");
+			Actions.click(ServiceAccounts.cancelSeriveAccounts, "Cancel Service Accounts");
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace(); throw e;
+			
+		}
+
+	}
+	public static void check_ServiceAcc(){
+		
+	}
+	//Verify Service Acconts
+			public static void verify_ServiceAccounts(String actual)
+			{
+				
+				try {
+					search(actual);
+					Actions.pause1(2);
+					Actions.moveTo(By.xpath("//span[text()='Access Key']/../../../descendant::span[2]"), "Move To Select Service Accounts");
+					Actions.click_JS(By.xpath("//span[text()='Access Key']/../../../descendant::span[2]"), "Select Service Accounts");
+					deleteIFS();
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace(); throw e;
+					
+				}
+			}
+	//SERVICEACCOUNTS
+	public static void rb_serviceAccounts(String desc){
+		try {
+			navigateToMenu("User Management");
+			select_ItemFromManage("Manage","Service Accounts");
+			Actions.pause1(1.5);
+			verify_ServiceAccounts(desc);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace(); throw e;
+			
+		}
+
+	}
+	//Delete IFS
+
+	public static void deleteIFS()
+	{
+		try {
+			Actions.click_JS(IFSUSERS_Trial10.deleteIFSItem, "Delete IFS Item");
+			if(Actions.verifyElementPresent(IFSUSERS_Trial10.yesButton, "Verify presence of 'Yes' button"))
+			{
+				Actions.moveTo(IFSUSERS_Trial10.yesButton, "Move to Yes Button");	
+				Actions.pause1(.5);
+				Actions.click(IFSUSERS_Trial10.yesButton, "Click On Yes Button");	
+			}
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace(); throw e;
+			
+		}
+	}
+	//CANCEL SERVICE ACCOUNTS
+
+	public static void select_ServiceAccounts(String user)
+	{
+
+		try {
+			Actions.pause1(1);
+			Actions.verifyElement(By.xpath("//div[text()='"+user+"']/../../descendant::span"), "Verify presence of Select Service");
+			Actions.moveTo(By.xpath("//div[text()='"+user+"']/../../descendant::span"), "Move To Select Service Accounts");
+			Actions.click_JS(By.xpath("//div[text()='"+user+"']/../../descendant::span"), "Select Service Accounts");
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace(); throw e;
+			
+		}
+
+	}
+
+	//Create ERP IDS
+	public static void create_ERPPersoinIDS(String user,String erpID,String entity,String logicalID,String email){
+		try {
+			navigateToMenu("User Management");
+			select_ItemFromManage("Manage","ERP Person IDs");
+			Actions.pause1(2);
+			add_IFS();
+			add_ERPPersonIDS(user,erpID,entity,logicalID,email);
+			Actions.pause1(1);
+			saveIFSITEM();
+			Actions.pause1(1);
+			//click_CloseBtn();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace(); throw e;
+			
+		}
+	}
+
+	public static void add_ERPPersonIDS(String user,String erpID,String entity,String logicalID,String mail){
+		try {
+			Actions.pause1(2);
+			Actions.verifyElement(ERPPersonIDS.search_ERPUser, "Verify presence of 'ERP User' Details");
+			Actions.type(ERPPersonIDS.search_ERPUser, user, "Enter ERP User Details");
+			Actions.pause1(2);
+			Actions.enter();
+
+			Actions.pause1(2);
+			Actions.click(ERPPersonIDS.moveTo_ERPPersonID, "Focus to ERP Person IDS");
+			Actions.type(ERPPersonIDS.enter_ERPPersonID, erpID, "Enter ERP ID Details");
+			Actions.click(ERPPersonIDS.moveTo_ERPAccountingEntity, "Focus to ERP Accounting Entity");
+			Actions.type(ERPPersonIDS.enter_ERPAccountingEntity, entity, "Enter ERP Accounting Details");
+			Actions.click(ERPPersonIDS.moveTo_ERPLogicalID, "Focus to ERP Logiocal IDS");
+			Actions.type(ERPPersonIDS.enter_ERPLogicalID, logicalID, "Enter ERP Logcal Details");
+			Actions.pause1(1);
+			//Actions.scrollToElement(By.xpath("//input[@id='txtSelectuserSearch']/following::table/descendant::Span[2]"));
+			Actions.click_JS(By.xpath("//input[@id='txtSelectuserSearch']/following::table/descendant::Span[2]"), "Check ERP Person IDS");
+			Actions.click(ERPPersonIDS.addAndCloseBtn, "Add And Close Button");
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace(); throw e;
+			
+		}
+
+	}
+
+	//Click On Close Button
+	public static void click_CloseBtn(){
+		try {
+			if(Actions.verifyElementPresent(By.xpath("//div[@class='popupMiddleCenterInner content']/descendant::div[@title='Close']"), "Verify presence of 'Close' button"))
+			{
+				Actions.pause1(.5);
+				Actions.click_JS(By.xpath("//div[@class='popupMiddleCenterInner content']/descendant::div[@title='Close']"), "Click On Close Button");	
+			}
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace(); throw e;
+			
+		}
+	} 
+
+	//Verify External Users
+	public static void verify_Data(String user){
+		try {
+			Actions.verifyElement(By.xpath("//div[text()='"+user+"']"), user);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace(); throw e;
+			
+		}
+	}
+
+	public static void delete_ERPPersonIDS(String erpID,String entity,String logicalID){
+		try {
+			navigateToMenu("User Management");
+			select_ItemFromManage("Manage","ERP Person IDs");
+			Actions.pause1(1.5);
+			Actions.pause1(1);
+
+			/*Actions.moveTo(IFSUSERS_Trial10.headerMenuIcon,"Move to Header menu Icon");
+			Actions.click_JS(IFSUSERS_Trial10.headerMenuIcon,"Click On Header Menu Icon");
+			Actions.click(By.id("gridfilter"), "Search Option");
+			Actions.type(By.id("gridfilter"), logicalID, "Filter Logical ID");
+			Actions.enter();
+			Actions.pause1(1);*/
+			search(logicalID);
+			verify_Data(erpID);
+			verify_Data(entity);
+			//verify_Data(logicalID);
+			Actions.moveTo(By.xpath("//span[text()='Full Name']/ancestor::tr/descendant::span[@role='checkbox']"), "Move To Check ERP Pesron IDS");
+			Actions.click_JS(By.xpath("//span[text()='Full Name']/ancestor::tr/descendant::span[@role='checkbox']"), "Check ERP Pesron IDS");
+
+			deleteIFS();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace(); throw e;
+			
+		}
+
+	}
+
+
+	public static String[] create_MultipleExtUser(String user1,String user2){
+		String [] myArray =null;
+		try {
+			navigateToMenu("User Management");
+			select_ItemFromManage("Manage","External Users");
+			String user=add_ExternalUsers(user1);
+			Actions.pause1(1);
+
+			String user3=add_SecExternalUsers(user2);
+			/*verify_Data(user2);
+				verify_Data(user1);*/
+			myArray = new String[2];
+			myArray[0] = user;
+			myArray[1] = user3;
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace(); throw e;
+			
+		}
+		return myArray;
+	}
+	//Create Multiple External user
+	public static String[] deactivate_MultipleExternalUser(String user1,String user2)
+	{   
+		String[] val=null;
+		try {
+			val=create_MultipleExtUser(user1,user2);
+			/*verify_Data(user1);
+				verify_Data(user2);*/
+			Actions.pause1(1);
+			select_ExternalUser(val[0]);
+
+			Actions.pause1(1);
+			action_btn();
+			Actions.click(ExternalUsers.deactivate, "deactivate multiple by selecting all");
+			click_YesBtn();
+
+			verify_Data("Disabled");
+			select_ExternalUser(val[1]);
+			Actions.pause1(1);
+			action_btn();
+			Actions.click(ExternalUsers.deactivate, "deactivate multiple by selecting all");
+			click_YesBtn();
+
+			verify_Data("Disabled");
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace(); throw e;
+			
+		}
+		return val;
+
+	}
+
+
+	//Add External Users
+	public static String add_SecExternalUsers(String user2){
+		String val2=null;
+		try {
+			Actions.pause1(1);
+			Actions.moveTo(ExternalUsers.addRow, "Move to  add row button");
+			Actions.click_JS(ExternalUsers.addRow, "Click on add row button");
+			Actions.click(ExternalUsers.moveto_externalUser2, "Move to External User2");
+			String[] val=user2.split("@");
+			System.out.println(val[0]);
+			String val1=val[0]+RandomStringUtils.randomNumeric(3);
+			val2=val1+"@"+val[1];
+			System.out.println(val2+"**********");
+			Actions.type(ExternalUsers.externaluser2_MailAddress, val2, "Enter External User Details");
+			save_ExternalUser();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace(); throw e;
+			
+		}
+		return val2;
+
+	}
+
+	//DELETE EXTERNAL USER
+
+	public static void rb_ExternalUser(String user){
+		try {
+			navigateToMenu("User Management");
+			select_ItemFromManage("Manage","External Users");
+			/*verify_Data(user);
+				Actions.pause1(1);*/
+
+			Actions.pause1(3);
+
+			//search(user);
+			/*Actions.moveTo(By.xpath("//i[text()='"+user+"']/ancestor::tr/descendant::span"), "Move To Select External User");
+				Actions.click_JS(By.xpath("//i[text()='"+user+"']/ancestor::tr/descendant::span"), "Select Extenal User");*/
+			delete_ExternalUser(user);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace(); throw e;
+			
+		}
+	}
+	public static void rb_MultipleExternalUser(String user,String user2){
+		try {
+			Actions.pause1(1);
+			navigateToMenu("User Management");
+			select_ItemFromManage("Manage","External Users");
+			/*verify_Data(user);
+				Actions.pause1(1);*/
+
+			delete_ExternalUser(user);
+			delete_ExternalUser(user2);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace(); throw e;
+			
+		}
+	}
+	//Activate Deactivated Multiple Users
+	public static String[] activateDeactivatedMultiUsers(String user1,String user2)
+	{
+		String[] val=null;
+		try {
+			val=deactivate_MultipleExternalUser(user1,user2);
+			Actions.pause1(1);
+			//Actions.click(ExternalUsers.activate_All, "deactivate multiple by selecting all");
+			//click_YesBtn();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace(); throw e;
+			
+		}
+		return val;
+
+
+	}
+
+	//Add Contacts To ContactGroup
+	public static void addcontacts_ToContactGrps(String grpname,String desc,String fullname,String email,String contactid,String cg)
+	{
+		try {
+			create_ContactGroups(grpname,desc);
+			Actions.pause1(2);
+
+			select_ItemFromManage("Manage","Contacts");
+			add_IFS();
+			add_Singlecontact(fullname, email, contactid,cg);
+			select_ContactGrp(grpname);
+			saveContacts();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace(); throw e;
+			
+		}
+	}
+
+
+	//Add contact Groups
+	public static String version;
+	public static void create_ContactGroups(String grpname,String description)
+	{
+		try {
+			version=navigateToAbout();
+			System.out.println("print the version"+version);
+			 HashMap<String, String> configData=Utility.getConfigData();
+			navigateToMenu("User Management");
+			
+			String[] ver=version.split("\\.");
+			System.out.println(ver[2]);
+			int versionDetails = Integer.parseInt(ver[2]);
+			if(versionDetails<12){
+			
+			select_ItemFromManageGroups("Manage","Groups","Contact Groups");
+			add_IFS();
+			Actions.verifyElement(Contacts.enter_ContactGroupName, "Verify presence of 'Group Name' ");
+			Actions.type(Contacts.enter_ContactGroupName,grpname,"Enter group name");
+			Actions.type(Contacts.enter_contactDescription, description,"Enter  contact group description");
+			Actions.click_JS(Contacts.save_DistGrp, "Save contact group");
+			}
+			else{
+			select_ItemFromManage("Manage","Contact Groups");	
+			add_IFS();
+			Actions.verifyElement(Contacts.enter_ContactGroupName, "Verify presence of 'Group Name' ");
+			Actions.type(Contacts.enter_ContactGroupName,grpname,"Enter group name");
+			Actions.type(Contacts.enter_contactDescription, description,"Enter  contact group description");
+			Actions.click_JS(Contacts.save_DistGrp, "Save contact group");
+			}
+			//click_CloseBtn();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace(); throw e;
+		}
+
+	}
+	
+	public static void verify_ContactsinContactGroup(String contact,String contactGroup){
+	
+		try {
+			search(contactGroup);
+			Actions.pause1(1);
+			drillDistributionGroup(contactGroup);
+			verify_Data(contactGroup);
+			//select_AllContactgrps(contactGroup);
+			Actions.click_JS(IFSUSERS_Trial10.select_ContactGroup, "Select Contact Group");
+			deleteIFS();
+			saveIFS();
+			
+			search(contact);
+			select_Contacts(contact);
+			deleteIFS();
+			//click_HeaderMenu();
+			Actions.switchToDefaultContent();
+			navigateToMenu("User Management");
+			select_ItemFromManageGroups("Manage","Groups","Contact Groups");
+			Actions.pause1(3);
+			search(contactGroup);
+			select_Contacts(contactGroup);
+			//Actions.click_JS(IFSUSERS_Trial10.select_Contact, "Select Contact ");
+			deleteIFS();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace(); throw e;
+		}
+	}
+	public static void verify_ContactsGroupsinContacts(String contactGroup,String contact){
+		
+		try {
+			search(contactGroup);
+			Actions.pause1(1);
+			drillDistributionGroup(contactGroup);
+			Actions.pause1(1);
+			add_IFS();
+			Actions.pause1(1);
+			System.out.println(contactGroup);
+			//Actions.verifyElement(By.xpath("//div[text()='"+email+"']/../../descendant::span"), " Verify presence of 'Assign Contatct Groups' ");
+			Actions.moveTo(By.xpath("//div[text()='"+contact+"']/../../descendant::span"), "Move To assaign contacts to group");
+			Actions.click_JS(By.xpath("//div[text()='"+contact+"']/../../descendant::span"), "click assaign contacts to group");
+			Actions.click(DistributionGroup.dist_AddandCloseBtn, "click add and close button");
+			verify_Data(contact);
+			Actions.click(Contacts.save_ContactGrp, "Save contact group");
+			Actions.switchToDefaultContent();
+			navigateToMenu("User Management");
+			//click_HeaderMenu();
+			Actions.pause1(2);
+			select_ItemFromManage("Manage","Contacts");
+			Actions.pause1(3);
+			search(contact);
+			drillDistributionGroup(contact);
+			verify_Data(contactGroup);
+			select_AllContactgrps(contactGroup);
+			deleteIFS();
+			saveIFS();
+			
+			search(contact);
+			select_Contacts(contact);
+			deleteIFS();
+			//click_HeaderMenu();
+			Actions.pause1(2);
+			select_ItemFromManageGroups("Manage","Groups","Contact Groups");
+			Actions.pause1(3);
+			search(contactGroup);
+			select_Contacts(contactGroup);
+			deleteIFS();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace(); throw e;
+		}
+	}
+	// save contacts
+	public static void saveContacts()
+	{
+		try {
+			Actions.click(Contacts.save_Contacts, "save to contacts");
+			Actions.pause1(1);
+			/*if(Actions.verifyElementPresent(IFSUSERS_Trial10.saveMsg, "Verify presence of save Msg")){
+					Actions.getText(IFSUSERS_Trial10.saveMsg);
+					Actions.getText(IFSUSERS_Trial10.updateMsg);
+				}*/
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace(); throw e;
+		}
+
+	}
+	//Add single contact
+	public static void add_Singlecontact(String fullname,String email,String contactid,String cg)
+	{
+		try {
+			Actions.pause1(1);
+			Actions.verifyElement(Contacts.moveTo_fullname, "Verify presence of 'Full Name' button");
+			Actions.pause1(1);
+			Actions.click(Contacts.moveTo_fullname, "click on Full name");
+			Actions.type(Contacts.enter_FullName, fullname, "Enter full name");
+			Actions.click(Contacts.moveTo_EmailAddress, "click on Emaill address");
+			Actions.type(Contacts.enter_EmailAddress, email, "Enter full name");
+			Actions.pause1(1);
+			//Actions.click_JS(Contacts.moveTo_ContactID, "click on Contact ID");
+			Actions.tab();
+			Actions.click_JS(Contacts.moveTo_ContactID, "click on Contact ID");
+			Actions.type(Contacts.enter_ContactID, contactid, "Enter Contact ID");
+			Actions.moveTo(Contacts.moveto_contactGroups1, "Move to Contact Group");
+			Actions.click(Contacts.moveto_contactGroups1, "click on Contact Group");
+			Actions.pause1(.9);
+			Actions.type(Contacts.contactGroup_Name, cg, "Contact Group Name:"+cg);
+			Actions.pause1(1.5);
+			Actions.enter();
+			//Actions.click(By.xpath("//a[text()='"+cg+"']"), "Click On Contact Grouo");
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace(); throw e;
+		}
+	}
+
+	//select contact group
+	public static void select_ContactGrp(String contactGrpName)
+	{
+
+
+		try {
+			Actions.pause1(0.5);
+			Actions.click(Contacts.moveto_contactGroups1, "Contact Groups");
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace(); throw e;
+		}
+	}
+
+	public static void rb_AddContactstoGrp(String fullname,String email,String contactid,String grpname)
+	{
+		try {
+			navigateToMenu("User Management");
+			select_ItemFromManage("Manage","Contacts");
+			Actions.pause1(1);
+			verify_Data(fullname);
+			verify_Data(email);
+			verify_Data(contactid);
+			//verify_Data(grpname);
+			delete_Contacts(email);
+			//Actions.pause1(2.5);
+			Actions.pause1(2);
+			Actions.switchToDefaultContent();
+			RM_Admin.navigateToMenu("Admin Settings");
+			Actions.pause1(2);
+			Actions.switchToDefaultContent();
+			navigateToMenu("User Management");
+			select_ItemFromManageGroups("Manage","Groups","Contact Groups");
+			Actions.pause1(1);
+			select_AllContactgrps(grpname);
+			Actions.pause1(1);
+			deleteIFS();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace(); throw e;
+		}
+
+	}
+
+	//select all contact groups
+	public static void select_AllContactgrps(String groupName)
+	{
+		//Actions.verifyElement(Contacts.select_AllContactGrps, "Verify presence of 'Select all Contacts' button");
+		try {
+			Actions.pause1(1);
+			Actions.moveTo(By.xpath("//div[text()='"+groupName+"']/../../descendant::span"), "select Contact  Group name");
+			Actions.click_JS(By.xpath("//div[text()='"+groupName+"']/../../descendant::span"), "select Contact contact groups");
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace(); throw e;
+		}
+	}
+	//select contacts
+	public static void select_Contacts(String mail)
+	{
+		try {
+			Actions.pause1(1.5);
+			Actions.moveTo(By.xpath("//i[text()='"+mail+"']/ancestor::tr/descendant::span"), "Move to select all contacts");	
+			Actions.click_JS(By.xpath("//i[text()='"+mail+"']/ancestor::tr/descendant::span"), "select all contacts");
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace(); throw e;
+		}	
+	}
+
+	//delete contacts 
+	public static void delete_Contacts(String mail)
+	{
+		try {
+			select_Contacts(mail);
+			deleteIFS();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace(); throw e;
+		}
+	}
+
+	//Add multiple contact groups
+
+	public static void createMultipleContactGroups(String grpname,String description,String grpname1,String description1)
+	{
+		try {
+			navigateToMenu("User Management");
+			select_ItemFromManageGroups("Manage","Groups","Contact Groups");
+			add_ContactGroups(grpname,description);
+			click_CloseBtn();
+			add_ContactGroups(grpname1,description1);
+			click_CloseBtn();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace(); throw e;
+		}
+	}
+
+	//Delete contact Groups
+	public static void delete_ContactGroups(String grpname,String description)
+	{   
+		try {
+			navigateToMenu("User Management");
+			select_ItemFromManageGroups("Manage","Groups","Contact Groups");
+			Actions.pause1(1);
+			verify_Data(grpname);
+			verify_Data(description);
+			select_AllContactgrps(grpname);
+			Actions.pause1(1);
+			deleteIFS();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace(); throw e;
+		}
+	}
+
+	public static void delete_MulContactGroups(String grpname,String grpname1,String description)
+	{   
+		try {
+			navigateToMenu("User Management");
+			select_ItemFromManageGroups("Manage","Groups","Contact Groups");
+			Actions.pause1(1);
+			verify_Data(grpname);
+			verify_Data(description);
+			select_AllContactgrps(grpname);
+			select_AllContactgrps(grpname1);
+			Actions.pause1(1);
+			deleteIFS();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace(); throw e;
+		}
+	}
+
+	public static void add_ContactGroups(String grpname,String description){
+		try {
+			add_IFS();
+			Actions.verifyElement(Contacts.enter_ContactGroupName,"Enter group name");
+			Actions.type(Contacts.enter_ContactGroupName,grpname,"Enter group name");
+			Actions.type(Contacts.enter_contactDescription, description,"Enter  contact group description");
+			Actions.pause1(1.5);
+			save_ContactGrp();
+			Actions.pause1(1);
+			verify_Data(grpname);
+			verify_Data(description);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace(); throw e;
+		}
+	} 
+
+	//Save contact group button
+
+	public static void save_ContactGrp()
+	{
+		try {
+			Actions.pause1(1);
+			Actions.moveTo(Contacts.save_DistGrp, "Move to Save contact group");
+			Actions.click_JS(Contacts.save_DistGrp, "Save contact group");
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace(); throw e;
+		}
+	} 
+	//create single contact
+	public static void create_SingleContact(String fullname,String email,String contactid,String cg)
+	{
+		try {
+			navigateToMenu("User Management");
+			select_ItemFromManage("Manage","Contacts");
+			Actions.pause1(1);
+			add_IFS();
+			Actions.pause1(1);
+			add_Singlecontact(fullname,email,contactid,cg);
+			Actions.pause1(.9);
+			saveContacts();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace(); throw e;
+		}
+
+
+	}
+
+	public static void create_Contact(String fullname,String email,String contactid)
+	{
+		try {
+			navigateToMenu("User Management");
+			select_ItemFromManage("Manage","Contacts");
+			Actions.pause1(1);
+			add_IFS();
+			Actions.pause1(1);
+			Actions.pause1(1);
+			Actions.verifyElement(Contacts.moveTo_fullname, "Verify presence of 'Full Name' button");
+			Actions.pause1(1);
+			Actions.click(Contacts.moveTo_fullname, "click on Full name");
+			Actions.type(Contacts.enter_FullName, fullname, "Enter full name");
+			Actions.click(Contacts.moveTo_EmailAddress, "click on Emaill address");
+			Actions.type(Contacts.enter_EmailAddress, email, "Enter full name");
+			Actions.pause1(1);
+			//Actions.click_JS(Contacts.moveTo_ContactID, "click on Contact ID");
+			Actions.tab();
+			Actions.click_JS(Contacts.moveTo_ContactID, "click on Contact ID");
+			Actions.type(Contacts.enter_ContactID, contactid, "Enter Contact ID");
+			Actions.pause1(.9);
+			saveContacts();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace(); throw e;
+		}
+
+
+	}
+	public static void assosciate_ContactGroup(String contact,String contactGrp){
+		try {
+			search(contact);
+			drillDistributionGroup(contact);
+			add_CG(contactGrp);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace(); throw e;
+		}
+		
+	}
+	
+	//Roll back saved contacts
+	public static void rb_Contacts(String fullname,String email,String contactid)
+	{
+		try {
+			navigateToMenu("User Management");
+			select_ItemFromManage("Manage","Contacts");
+			verify_Data(fullname);
+			verify_Data(email);
+			//verify_Data(contactid);
+			Actions.pause1(1);
+			delete_Contacts(email);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace(); throw e;
+		}
+	}
+
+	//Roll back saved contacts
+	public static void rb_MultipleContacts(String fullname,String email,String contactid,String email2)
+	{
+		try {
+			navigateToMenu("User Management");
+			select_ItemFromManage("Manage","Contacts");
+			verify_Data(fullname);
+			verify_Data(email);
+			//verify_Data(contactid);
+			Actions.pause1(1);
+			delete_Contacts(email);
+			delete_Contacts(email2);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace(); throw e;
+		}
+	}
+
+	//Create multiple contacts
+	public static void create_MultipleContacts(String fullname,String email,String contactID,String fullname1,String email1,String contactID1)
+	{
+		try {
+			navigateToMenu("User Management");
+			select_ItemFromManage("Manage","Contacts");
+			add_IFS();
+			Actions.pause1(1.5);
+			//add_Singlecontact(fullname,email,contactID);
+			Actions.pause1(2);
+			Actions.click(Contacts.addContacts,"Click on add contact button ");
+			Actions.pause1(1);
+			//add_Singlecontact(fullname1,email1,contactID1);
+			saveContacts();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace(); throw e;
+		}
+	}
+
+
+	//Add second contact 
+	public static void add_SecContact(String fullname1,String email1,String contactid1)
+	{
+		try {
+			Actions.pause1(2);
+			Actions.click(Contacts.addContacts,"Click on add contact button ");
+			Actions.pause1(1);
+			//Actions.click(Contacts.moveTo_fullname1, "click to add second full name");
+			Actions.type(Contacts.enter_FullName1, fullname1, "Enter full name");
+			Actions.click(Contacts.moveTo_EmailAddress1, "click on Emaill address");
+			Actions.type(Contacts.enter_EmailAddress1, email1, "Enter full name");
+			Actions.click(Contacts.moveTo_ContactID1, "click on Contact ID");
+			Actions.type(Contacts.enter_ContactID1, contactid1, "Enter Contact ID");
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace(); throw e;
+		}
+
+	}
+	//Delete Activate Multiple users
+	public static String[] delete_ActMultipleUsers(String user1,String user2)
+	{
+		String[] mail=null;
+		try {
+			mail=create_MultipleExtUser(user1,user2);
+			verify_Data("Active");
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace(); throw e;
+		}
+		return mail;
+	}
+	//Navigate to Document Authorizations.
+
+	public static void navigate_DocAuth()
+	{
+		try {
+			select_ItemFromManage("Configure","Document Authorizations");
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace(); throw e;
+		}
+	}
+
+	public static void search(String val){
+	//search(val);
+
+		try {
+			Actions.click_JS(By.id("gridfilter"), "Search Option");
+			Actions.type(By.id("gridfilter"),val,"Filter");
+			Actions.enter();
+			//Actions.pause1(.5);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace(); throw e;
+		}
+	}
+	//Add role to dataAdministrator 
+	public static String accountingChart_AddRole(String type,String role)
+	{
+		//Actions.pause1(2);
+				//Actions.verifyElement(By.xpath("//div[text()='"+type+"']/../../descendant::button"), "Verify presence of 'Account Charting' button");
+		String actual=null;
+		try {
+			navigateToMenu("User Management");
+			navigate_DocAuth();
+			search(type);
+			actual = Actions.getText(By.xpath("//i[text()='"+type+"']/following::div"));
+			Actions.click(By.xpath("//i[text()='"+type+"']/ancestor::tr/descendant::button"), "click on AccountingChart");
+			Actions.pause1(2);
+			add_IFS();
+			Actions.pause1(2);
+			Actions.type(By.id("txtSelectRoleSearch"), role, "Role Data");
+			Actions.enter();
+			Actions.pause1(2);
+			Actions.click_JS(By.xpath("//div[text()='"+role+"']/../../descendant::span"), "Add Grid administrator");
+			Actions.pause1(1.5);
+			Actions.click(DocumentAuthorizations.add_Btn, "Click add buton");
+			Actions.pause1(1.5);
+			verify_entity_location();
+
+			saveIFS();
+			Actions.pause1(1);
+			//search(type);
+			//verify_Data("1");
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace(); throw e;
+		}
+		return actual;
+	}
+	
+
+	//Roll back role for dataAdministrator
+	public static void rb_accountingChart_AddRole(String type,String role)
+	{
+		try {
+			navigateToMenu("User Management");
+			navigate_DocAuth();
+			Actions.pause1(1);
+			search(type);
+			Actions.pause1(1);
+			Actions.click(By.xpath("//i[text()='"+type+"']/ancestor::tr/descendant::button"), "click on AccountingChart");
+			Actions.pause1(2);
+
+			delete_SecurityRoles(role);
+			Actions.pause1(1);
+			//saveIFS();
+			Actions.getText(IFSUSERS_Trial10.saveMsg);
+			Actions.getText(IFSUSERS_Trial10.updateMsg);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace(); throw e;
+		}
+	}
+
+	//Roll back role for dataAdministrator
+	public static void rb_MulaccountingChart_AddRole(String type,String role,String role1)
+	{
+		try {
+			navigateToMenu("User Management");
+			navigate_DocAuth();
+			Actions.pause1(2);
+			search(type);
+			Actions.click(By.xpath("//i[text()='"+type+"']/ancestor::tr/descendant::button"), "click on AccountingChart");
+
+			Actions.pause1(2);
+
+			Actions.click_JS(By.xpath("//div[text()='"+role+"']/ancestor::tr/descendant::span"), "select  security roles");
+			Actions.click_JS(By.xpath("//div[text()='"+role1+"']/ancestor::tr/descendant::span"), "select all security roles");
+			deleteIFS();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace(); throw e;
+		}
+	}
+	//delete security roles
+	public static void delete_SecurityRoles(String role)
+	{
+
+		//Actions.verifyElement(By.xpath("//div[text()='"+role+"']/ancestor::tr/descendant::span"), "Verify presence of security roles");
+		try {
+			Actions.scrollToElement(By.xpath("//div[text()='"+role+"']/ancestor::tr/descendant::span"));
+			Actions.click_JS(By.xpath("//div[text()='"+role+"']/ancestor::tr/descendant::span"), "select all security roles");
+			deleteIFS();
+			saveIFS();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace(); throw e;
+		}
+	}
+
+	//Verify mapped roles
+	public static void verify_MappedRoles(String doctypes,String expected,int i)
+	{
+
+
+		try {
+			Actions.moveTo(IFSUSERS_Trial10.headerMenuIcon,"Move to Header menu Icon");
+			Actions.click_JS(IFSUSERS_Trial10.headerMenuIcon,"Click On Header Menu Icon");
+			Actions.pause1(1);
+			Actions.verifyElement(By.xpath("//li[text()='"+doctypes+"']/following::div"), "verify presence of data  in mapped roles");
+			String actual=Actions.getText(By.xpath("//li[text()='"+doctypes+"']/following::div"));
+			//Actions.verifyString(actual,expected);
+
+			Integer x = Integer.valueOf(expected);
+			int val=x+i;
+			String s=String.valueOf(val);
+			System.out.println(actual+"*********"+s);
+			Actions.verifyString(actual,s);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace(); throw e;
+		}
+	}
+
+	//ADD Create Distribution Group
+	public static void create_DG(String distName,String distDesc)
+	{
+		try {
+			Actions.type(DistributionGroup.dist_Name,distName,"Dist Name");
+			Actions.type(DistributionGroup.dist_Desc,distDesc,"Dist Desc");
+			Actions.verifyElement(DistributionGroup.dist_Save, "Save Distribution");
+			Actions.moveTo(DistributionGroup.dist_Save, "Move To Save Distribution");
+			Actions.click_JS(DistributionGroup.dist_Save, "Save Distribution");
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace(); throw e;
+		}
+	}
+	public static void select_DG(String dg)
+	{
+
+
+
+		try {
+			Actions.pause1(2);
+			Actions.click_JS(By.xpath("//i[text()='"+dg+"']/ancestor::tr/descendant::button"),"Select Distribution Group");
+
+			Actions.click_JS(By.xpath("//div[text()='"+dg+"']/../../descendant::span"),"Select Distribution Group");
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace(); throw e;
+		}
+
+
+	}
+
+	//Add Dist User
+	public static void add_Dist_Users(String distUser){
+		try {
+			Actions.pause1(2);
+			Actions.moveTo(IFSUSERS_Trial10.addIFSItem, "Move To Dist IFS USers");
+			Actions.click(IFSUSERS_Trial10.addIFSItem, "Dist IFS USers");
+			Actions.pause1(1.5);
+			Actions.verifyElement(DistributionGroup.dist_selectUserSearch, "Verify Presence of Distribution User");
+			Actions.type(DistributionGroup.dist_selectUserSearch,distUser, "Dist User");
+			Actions.pause1(1.5);
+			/*Actions.moveTo(DistributionGroup.dist_Search, " Move to Search Dist IFS USers");
+				Actions.click_JS(DistributionGroup.dist_Search, " Search Dist IFS USers");
+				Actions.pause1(2);*/
+			Actions.enter();
+			Actions.pause1(2);
+			//Actions.verifyElement(By.xpath("//div[text()='"+distUser+"']/../../descendant::span"), "Verify Presence of  User");
+			Actions.moveTo(By.xpath("//div[text()='"+distUser+"']/../../descendant::span"), "Move To Select User");
+			Actions.click_JS(By.xpath("//div[text()='"+distUser+"']/../../descendant::span"), "Select User");
+			Actions.pause1(1);
+			Actions.moveTo(DistributionGroup.dist_AddUser, " Move To Add User");
+			Actions.click(DistributionGroup.dist_AddUser, " Add User");
+
+			Actions.pause1(1);
+			Actions.moveTo(DistributionGroup.dist_SaveDistributionGroup, "Move To Save Distribution");
+			Actions.click(DistributionGroup.dist_SaveDistributionGroup, "Save Distribution");
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace(); throw e;
+		}
+	}
+	
+	//Add Dist User
+		public static void add_CG(String contactGroup){
+			try {
+				Actions.pause1(2);
+				Actions.moveTo(IFSUSERS_Trial10.addIFSItem, "Move To Dist IFS USers");
+				Actions.click(IFSUSERS_Trial10.addIFSItem, "Dist IFS USers");
+				Actions.pause1(1.5);
+				Actions.verifyElement(DistributionGroup.dist_selectUserSearch, "Verify Presence of Distribution User");
+				Actions.type(DistributionGroup.dist_selectUserSearch,contactGroup, "Contact Group");
+				Actions.pause1(1.5);
+				/*Actions.moveTo(DistributionGroup.dist_Search, " Move to Search Dist IFS USers");
+					Actions.click_JS(DistributionGroup.dist_Search, " Search Dist IFS USers");
+					Actions.pause1(2);*/
+				Actions.enter();
+				Actions.pause1(1);
+				Actions.moveTo(By.xpath("//div[text()='"+contactGroup+"']/../../descendant::span"), "Move To Select User");
+				Actions.click_JS(By.xpath("//div[text()='"+contactGroup+"']/../../descendant::span"), "Select User");
+				Actions.pause1(1);
+				Actions.moveTo(DistributionGroup.dist_AddUser, " Move To Add User");
+				Actions.click(DistributionGroup.dist_AddUser, " Add User");
+
+				Actions.pause1(1);
+				Actions.moveTo(Contacts.save_ContactGrp, "Move To Save Contact");
+				Actions.click(Contacts.save_ContactGrp, "Save Contact");
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace(); throw e;
+			}
+		}
+	//DISTRIBUTION GROUPS
+	public static void addDistGroup(String distName,String distDesc,String user){
+		try {
+			navigateToMenu("User Management");
+			HashMap<String, String> testData=Utility.getConfigData();
+			String env=testData.get("ENVIRONMENT").toUpperCase();
+			version=navigateToAbout();
+			System.out.println("print the version"+version);
+			 HashMap<String, String> configData=Utility.getConfigData();
+			navigateToMenu("User Management");
+			
+			String[] ver=version.split("\\.");
+			System.out.println(ver[2]);
+			int versionDetails = Integer.parseInt(ver[2]);
+			
+			switch(env)
+			{
+
+			case "CLOUD":
+			{
+				if(versionDetails<12){
+					System.out.println(env);
+					select_ItemFromManageGroups("Manage","Groups","Distribution Groups");
+					Actions.pause1(1);
+					add_IFS();
+					Actions.pause1(1);
+					create_DG(distName,distDesc);
+					//click_CloseBtn();
+					search(distName);
+
+					//select_DG(distName);
+					Actions.pause1(1);
+					drillDistributionGroup(distName);
+					add_Dist_Users(user);
+					//click_CloseBtn();
+					Actions.pause1(2);
+					select_ItemFromManage("Manage","Users");
+					Actions.pause1(1);
+					searchMailID(user);
+					Actions.pause1(1);
+					
+					switch(env)
+					{
+
+					case "CLOUD":
+					{
+						Actions.pause1(.5);
+						String fullNmae=retrieve_FullName();
+						drillDownUser(fullNmae);
+						break;
+					}
+					case "OP":
+					{
+						Actions.pause1(.5);
+						drillDownUser(user);
+						break;
+					}
+					}	
+					verify_DistTab(distName);		
+					Actions.pause1(1);
+					/*Actions.switchToDefaultContent();
+					RM_Admin.navigateToMenu("Admin Settings");
+					Actions.pause1(2);
+					Actions.switchToDefaultContent();
+					navigateToMenu("User Management");*/
+					navigateToAnotherPageAndReturn();
+					//select_ItemFromManagedomain("Manage","Groups");
+					select_ItemFromManageGroups("Manage","Groups","Distribution Groups");
+					Actions.pause1(1);
+					search(distName);
+					select_MappedUser(distName,user);
+					deleteIFS();
+					Actions.pause1(1);
+					Actions.moveTo(DistributionGroup.dist_SaveDistributionGroup, "Move To Save Distribution");
+					Actions.click(DistributionGroup.dist_SaveDistributionGroup, "Save Distribution");
+				}
+				else{
+			select_ItemFromManagedomain("Manage","Groups");
+			Actions.pause1(1);
+			add_IFS();
+			Actions.pause1(1);
+			create_DG(distName,distDesc);
+			//click_CloseBtn();
+			search(distName);
+
+			//select_DG(distName);
+			Actions.pause1(1);
+			drillDistributionGroup(distName);
+			add_Dist_Users(user);
+			//click_CloseBtn();
+			Actions.pause1(2);
+			select_ItemFromManage("Manage","Users");
+			Actions.pause1(1);
+			searchMailID(user);
+			Actions.pause1(1);
+			
+			switch(env)
+			{
+
+			case "CLOUD":
+			{
+				Actions.pause1(.5);
+				String fullNmae=retrieve_FullName();
+				drillDownUser(fullNmae);
+				break;
+			}
+			case "OP":
+			{
+				Actions.pause1(.5);
+				drillDownUser(user);
+				break;
+			}
+			}	
+			verify_DistTab(distName);		
+			Actions.pause1(1);
+			/*Actions.switchToDefaultContent();
+			RM_Admin.navigateToMenu("Admin Settings");
+			Actions.pause1(2);
+			Actions.switchToDefaultContent();
+			navigateToMenu("User Management");*/
+			navigateToAnotherPageAndReturn();
+			select_ItemFromManagedomain("Manage","Groups");
+			//select_ItemFromManageGroups("Manage","Groups","Distribution Groups");
+			Actions.pause1(1);
+			search(distName);
+			select_MappedUser(distName,user);
+			deleteIFS();
+			Actions.pause1(1);
+			Actions.moveTo(DistributionGroup.dist_SaveDistributionGroup, "Move To Save Distribution");
+			Actions.click(DistributionGroup.dist_SaveDistributionGroup, "Save Distribution");
+				}
+			break;
+			}
+			case "OP":
+			{
+			select_ItemFromManageGroups("Manage","Groups","Distribution Groups");
+			Actions.pause1(1);
+			add_IFS();
+			Actions.pause1(1);
+			create_DG(distName,distDesc);
+			//click_CloseBtn();
+			search(distName);
+
+			//select_DG(distName);
+			Actions.pause1(1);
+			drillDistributionGroup(distName);
+			add_Dist_Users(user);
+			//click_CloseBtn();
+			Actions.pause1(2);
+			select_ItemFromManage("Manage","Users");
+			Actions.pause1(1);
+			searchMailID(user);
+			Actions.pause1(1);
+			
+			switch(env)
+			{
+
+			case "CLOUD":
+			{
+				Actions.pause1(.5);
+				String fullNmae=retrieve_FullName();
+				drillDownUser(fullNmae);
+				break;
+			}
+			case "OP":
+			{
+				Actions.pause1(.5);
+				drillDownUser(user);
+				break;
+			}
+			}	
+			verify_DistTab(distName);		
+			Actions.pause1(1);
+			/*Actions.switchToDefaultContent();
+			RM_Admin.navigateToMenu("Admin Settings");
+			Actions.pause1(2);
+			Actions.switchToDefaultContent();
+			navigateToMenu("User Management");*/
+			navigateToAnotherPageAndReturn();
+			//select_ItemFromManagedomain("Manage","Groups");
+			select_ItemFromManageGroups("Manage","Groups","Distribution Groups");
+			Actions.pause1(1);
+			search(distName);
+			select_MappedUser(distName,user);
+			deleteIFS();
+			Actions.pause1(1);
+			Actions.moveTo(DistributionGroup.dist_SaveDistributionGroup, "Move To Save Distribution");
+			Actions.click(DistributionGroup.dist_SaveDistributionGroup, "Save Distribution");
+			break;
+			}
+			}
+			
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace(); throw e;
+		}
+	}
+
+	public static void select_MappedUser(String dgGroup,String mappedUser)
+	{
+		//Actions.pause1(1);
+		/*	Actions.pause1(3);
+			if(Actions.verifyElementPresent(By.xpath("//ul[@class='pager-toolbar']"), "Pagination displayed")){
+				Actions.pause1(3);
+				String allpages=Actions.getText(By.xpath("//span[@class='pager-total-pages']"));
+				System.out.println(allpages+"**********Total pages");
+				int pages = Integer.parseInt(allpages);
+
+				WebElement table=Utility.getDriver().findElement(By.xpath("//tbody[@class='paginated']"));
+				List<WebElement> allrows = table.findElements(By.tagName("tr"));
+				for(int i=0; i<=(pages); i++)
+		        {
+		            for(int row=1; row<=allrows.size(); row++)
+		                {
+		                    System.out.println("Total rows :" +allrows.size()); 
+		                    if(Actions.verifyElementPresent(By.xpath("//div[text()='"+dgGroup+"']"), "Verify Presence of Description")){
+		                    String name = Actions.getText(By.xpath("//div[text()='"+dgGroup+"']"));
+		                    if(name.contains(dgGroup))
+	                        {
+		                    	System.out.println("in athe if ");
+		                    	Actions.verifyString(name, dgGroup);
+		                    	Actions.pause1(2);
+		            			Actions.verifyElement(By.xpath("//div[text()='"+dgGroup+"']/../../descendant::span"), "Verify presence of Select Service");
+		            			Actions.moveTo(By.xpath("//div[text()='"+dgGroup+"']/../../descendant::span"), "Move To Select Service Accounts");
+		            			Actions.click_JS(By.xpath("//div[text()='"+dgGroup+"']/../../descendant::span"), "Select Service Accounts");
+		            			//deleteIFS();
+		            			break;
+	                        }
+
+		                    }
+		                    Actions.click(By.xpath("//a[@rel='next']"), "Nextpage in paginator");
+	                        }
+
+		           break;
+
+		        }
+			}
+	//String val=Actions.getText(By.xpath("//div[text()='"+actual+"']"));
+			else{
+				Actions.pause1(3);
+				Actions.click_JS(By.xpath("//div[text()='"+dgGroup+"']/../../descendant::span"),"Select Distribution Group");
+			}*/
+		try {
+			drillDistributionGroup(dgGroup);
+
+			Actions.pause1(4);
+			Actions.click_JS(By.xpath("//div[text()='"+mappedUser+"']/../../../descendant::span"), "Select Mapped User");
+			Actions.pause1(1);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace(); throw e;
+		}
+	}
+
+	//VERITY ACTIVITY TAB
+	public static void verify_DistTab(String group){
+		try {
+			Actions.verifyElementPresent(IFSUSERS.distributionTab, "Verify Distribution Tab Presence");
+			Actions.moveTo(IFSUSERS.distributionTab, " MoveTo Distribution Tab");
+			Actions.click(IFSUSERS.distributionTab, "Distribution Tab");
+			Actions.verifyElementPresent(By.xpath("//div[text()='"+group+"']"), group);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace(); throw e;
+		}
+
+	}
+	//SELECTGROUP FOR RB
+	public static void select_Group(String group){
+
+
+		try {
+			search(group);
+			Actions.verifyElementPresent(By.xpath("//i[text()='"+group+"']/ancestor::tr/descendant::span"), "Verify presence of Distribution Group");
+			Actions.moveTo(By.xpath("//i[text()='"+group+"']/ancestor::tr/descendant::span"), "Move To Select Distribution Group");
+			Actions.pause1(1);
+			Actions.click_JS(By.xpath("//i[text()='"+group+"']/ancestor::tr/descendant::span"), "Select Distribution Group");
+			Actions.pause1(.9);
+
+			Actions.click(DistributionGroup.dist_Import,"Distribution Import");
+			Actions.click(DistributionGroup.dist_Import_Close,"Distribution Import Close");
+			Actions.pause1(1.5);
+			Actions.click(DistributionGroup.dist_Export,"Distribution Export");
+			Actions.scrollToElement(DistributionGroup.dist_Export_Close);
+			Actions.click(DistributionGroup.dist_Export_Close,"Distribution Export Close");
+			deleteIFS();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace(); throw e;
+		}
+
+
+
+	}
+	//DISTRIBUTION GROUP
+	public static void rb_DG(String group,String user){
+	/*	navigateToMenu("User Management");
+		select_ItemFromManageGroups("Manage","Groups","Distribution Groups");*/
+		//verify_Data(group);
+		try {
+			select_Group(group);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace(); throw e;
+		}
+		//deleteIFS();
+	}
+
+	//USER INFORMATION UPDATION
+	public static void update_UserInfor(String emailID,String dept){
+		try {
+			navigateToMenu("User Management");
+			searchMailID(emailID);
+			Actions.pause1(1.5);
+			HashMap<String, String> testData=Utility.getConfigData();
+			String env=testData.get("ENVIRONMENT").toUpperCase();
+			System.out.println(env);
+			switch(env)
+			{
+
+			case "CLOUD":
+			{
+				Actions.pause1(.5);
+				String fullNmae=retrieve_FullName();
+				drillDownUser(fullNmae);
+				break;
+			}
+			case "OP":
+			{
+				Actions.pause1(.5);
+				drillDownUser(emailID);
+				break;
+			}
+			}	
+			Actions.verifyElement(IFSUSERS_Trial10.department,"Verify presence of  'Department'");
+			Actions.clearText(IFSUSERS_Trial10.department, "Clear department field");
+			Actions.type(IFSUSERS_Trial10.department,dept,"Update Department");
+			saveIFS();
+			Actions.getText(IFSUSERS_Trial10.saveMsg);
+			Actions.getText(IFSUSERS_Trial10.updateMsg);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace(); throw e;
+		}
+	}
+
+	//VERIFY TAB ACIVITY
+
+	public static void verify_ActiviytTab(String emailID,String dep){
+
+		try {
+			update_UserInfor(emailID,dep);
+			verify_ActivityTab();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace(); throw e;
+		}
+
+	}
+	//VERITY ACTIVITY TAB
+	public static void verify_ActivityTab(){
+		/*WebElement html = Utility.getDriver().findElement(By.tagName("html"));
+			html.sendKeys(Keys.chord(Keys.CONTROL, Keys.ADD));*/
+		/*JavascriptExecutor js = (JavascriptExecutor) Utility.getDriver();
+		js.executeScript("document.body.style.zoom='70%'");
+		Actions.pause1(2);*/
+		try {
+			//Actions.zoomIn();
+			Actions.verifyElement(IFSUSERS_Trial10.activityTab, "Verify Activity Tab");
+			Actions.pause1(1);
+			Actions.moveTo(IFSUSERS_Trial10.activityTab, "Move TO Activity Tab");
+			Actions.click_JS(IFSUSERS_Trial10.activityTab, "Click On Activity Tab");
+			Actions.getText(IFSUSERS_Trial10.activity_info);
+			Actions.getText(IFSUSERS_Trial10.activity_timeStamp);
+			Actions.getText(IFSUSERS_Trial10.activity_performedby);
+			Actions.zoomOut();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace(); throw e;
+		}
+	}
+
+	public static void create_ContactGrpAssignContacts(String grpname,String description,String fullname,String email,String contactid)
+	{   
+	//	create_SingleContact(fullname,email,contactid);
+		//click_CloseBtn();
+		/*Actions.switchToDefaultContent();
+		RM_Admin.navigateToMenu("Admin Settings");
+		Actions.pause1(1);
+		Actions.switchToDefaultContent();*/
+		
+		try {
+			navigateToMenu("User Management");
+			Actions.pause1(1);
+			select_ItemFromManageGroups("Manage","Groups","Contact Groups");
+			Actions.pause1(1.5);
+			add_ContactGroups(grpname,description);
+			//click_CloseBtn();
+
+			Actions.pause1(1.5);
+
+
+			Actions.click_JSLocation(By.xpath("//div[text()='"+grpname+"']/../../descendant::button"));
+			//Actions.click(By.xpath("//div[text()='"+grpname+"']/../descendant::a/span"), "Click add contacts to group");
+			Actions.pause1(1);
+			add_IFS();
+			Actions.pause1(1);
+			System.out.println(email);
+			//Actions.verifyElement(By.xpath("//div[text()='"+email+"']/../../descendant::span"), " Verify presence of 'Assign Contatct Groups' ");
+			Actions.moveTo(By.xpath("//div[text()='"+email+"']/../../descendant::span"), "Move To assaign contacts to group");
+			Actions.pause1(1);
+			Actions.click_JS(By.xpath("//div[text()='"+email+"']/../../descendant::span"), "click assaign contacts to group");
+			Actions.click(DistributionGroup.dist_AddandCloseBtn, "click add and close button");
+			verify_Data(fullname);
+			verify_Data(email);
+			Actions.click(Contacts.save_ContactGrp, "Save contact group");
+			String actual=Actions.getText(By.xpath("//div[text()='"+grpname+"']/following::div[2]")); 
+			Actions.verifyString(actual,"1");
+			verify_deleteAssignedContact(grpname);
+			Actions.pause1(1);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace(); throw e;
+		}
+	}
+	//delete assigned contact in distribution group
+	public static void verify_deleteAssignedContact(String grpname)
+	{
+		try {
+			select_AllContactgrps(grpname);
+			Actions.click(IFSUSERS.deleteIFSItem, "Delete IFS Item");
+			String warning=Actions.getText(By.id("message-text"));
+			//verify_Data(warning);
+			Actions.click(By.xpath("//button[text()='Close']"), "click Close button");
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace(); throw e;
+		}
+	}
+
+	public static void rb_ContactGrpAssignContacts(String fullName,String email,String contactID,String grpname)
+	{
+		try {
+			rb_Contacts(fullName,email,contactID);
+			Actions.switchToDefaultContent();
+			RM_Admin.navigateToMenu("Admin Settings");
+			Actions.pause1(2);
+			Actions.switchToDefaultContent();
+			navigateToMenu("User Management");
+			select_ItemFromManageGroups("Manage","Groups","Contact Groups");
+			Actions.pause1(1.5);
+			search(grpname);
+			select_Contacts(grpname);
+			deleteIFS();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace(); throw e;
+		}
+
+	}
+
+	public static void verify_IFSUser(String mail,String user)
+	{
+		try {
+			navigateToMenu("User Management");
+			
+			/*  Actions.click(IFSUSERS.searchuser, "click search user");
+			    Actions.type(IFSUSERS.searchuser, user, "search user");
+			    Actions.enter();
+			    Actions.verifyElement(IFSUSERS.loading, "loading");*/
+			System.out.println(mail);
+
+			searchMailID(mail);
+			if(Actions.verifyElementPresent(By.xpath("//div[text()='"+mail+"']"), user+"is present "))
+			{
+				Actions.click(By.xpath("//div[text()='"+mail+"']/../../descendant::td"), "select user");
+				Actions.click(IFSUSERS.action, "click on Actions");
+				Actions.verifyElement(IFSUSERS.disable, "Verify presence of Disable in Action");
+				Actions.click(IFSUSERS.disable, "disable users");
+				Actions.click(IFSUSERS.yesButton, "click Yes button");
+				Actions.pause1(2);
+				searchMailID(mail);
+				//  Actions.type(IFSUSERS.searchuser, mail, "search user");
+				verify_Data("Disabled");
+				//  Actions.enter();
+				Actions.verifyElement(By.xpath("//div[text()='"+mail+"']/../../descendant::td"), "Verify presence of Disabled User");
+				Actions.click(By.xpath("//div[text()='"+mail+"']/../../descendant::td"), "select user");
+				Actions.click(IFSUSERS.action, "click on Actions");
+				Actions.click(IFSUSERS.deleteuser, "delete user");
+				Actions.click(IFSUSERS.yesButton, "click Yes button");
+				Actions.pause1(2);
+				//System.out.println("in the else condition");
+				add_IFSUser(mail,user);
+			}
+			else
+			{
+				add_IFSUser(mail,user);
+
+			}
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace(); throw e;
+		}
+	}
+
+	public static void add_IFSUser(String mail,String user)
+	{
+		try {
+			String[] lname=user.split(" ");
+			String lastName=lname[1];
+			String firstName=lname[0];
+			System.out.println(lastName+"***********");
+			Actions.pause1(2);
+			Actions.click(IFSUSERS.addIFSItem, "add user");
+			Actions.pause1(2);
+			Actions.verifyElement(IFSUSERS.firstName, "Verify Presence of 'first Name'");
+			Actions.click(IFSUSERS.firstName, "click at firstname");
+			Actions.type(IFSUSERS.firstName_type, firstName, "enter First name");
+			Actions.click(IFSUSERS.lastName, "click at lastname");
+			Actions.type(IFSUSERS.lastName_type, lastName, "enter Last name");
+			Actions.click(IFSUSERS.emailAddress, "click at email address");
+			Actions.type(IFSUSERS.emailaddress_type, mail, "enter Email address");
+			Actions.click(IFSUSERS.saveUsers, "Save user");
+			if(Actions.verifyElementPresent(IFSUSERS.yesButton, "Verify Presence of Yes")){
+			Actions.click(IFSUSERS.yesButton, "click Yes button");
+			}
+			searchMailID(mail);
+			Actions.pause1(1);
+			//verify_Data("Draft");
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace(); throw e;
+		}
+	}
+
+	public static void delete_SecContactGroup(String grpname,String description){
+		try {
+			verify_Data(grpname);
+			verify_Data(description);
+			select_AllContactgrps(grpname);
+			Actions.pause1(1);
+			deleteIFS();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace(); throw e;
+		}
+	}
+
+	//Navigate to Domain Security
+	public static void navigateDomainSecurity()
+	{
+		try {
+			navigateToMenu("User Management");
+			select_ItemFromManagedomain("Security Administration","Domain Security");
+			Actions.pause1(2);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace(); throw e;
+		}
+
+	}
+	
+
+	//ALLOWED DOMAINS
+	public static void rb_blockedDomain(String domain)
+	{
+		try {
+			navigateDomainSecurity();
+			Actions.click(IFSUSERS_Trial10.domains_DropDown, "click on Domains drop down");
+			Actions.pause1(1);
+			Actions.click(IFSUSERS_Trial10.blockedDomains, "blocked Domians drop down");
+			Actions.pause1(2);
+			Actions.verifyElement(By.xpath("//li[text()='"+domain+"']"), domain);
+			Actions.moveTo(By.xpath("//li[text()='"+domain+"']"), "move to domain");
+			Actions.pause1(2);
+			Actions.click_JS(By.xpath("//li[text()='"+domain+"']/descendant::span"), "remove domain");
+			Actions.pause1(3);
+			Actions.click(IFSUSERS_Trial10.saveDomainSecurity, "Save Domain");
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace(); throw e;
+		}
+	}
+
+	//BLOCKED DOMAINS
+	public static void blockedDomain(String domain)
+	{
+		try {
+			navigateDomainSecurity();
+			Actions.click(IFSUSERS_Trial10.domains_DropDown, "click on Domains drop down");
+			Actions.pause1(1);
+			Actions.click(IFSUSERS_Trial10.blockedDomains, "blocked Domians drop down");
+			Actions.type(IFSUSERS_Trial10.domain_Name,domain, "Enter allowed domain Name");
+			Actions.click(IFSUSERS_Trial10.saveDomain, "Add Domain");
+			//Actions.verifyString(actual, expected);
+			Actions.click(IFSUSERS_Trial10.saveDomainSecurity, "Save Domain");
+			if(Actions.verifyElementPresent(IFSUSERS_Trial10.yesButton, "Verify presence of 'Yes 'Button"))
+			{
+				Global.acceptConfirmation();
+			}
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace(); throw e;
+		}
+
+	}
+
+
+	//Verify BLOCKED DOMAINS
+	public static void verify_blockedDomain(String user,String mail)
+	{
+		    //select_ItemFromManage("Manage","Users");
+		    try {
+				String[] lname=user.split(" ");
+				String lastName=lname[1];
+				String firstName=lname[0];
+				System.out.println(lastName+"***********");
+				Actions.pause1(4);
+				Actions.click(IFSUSERS.addIFSItem, "add user");
+				Actions.pause1(2);
+				Actions.verifyElement(IFSUSERS.firstName, "Verify Presence of 'first Name'");
+				Actions.click(IFSUSERS.firstName, "click at firstname");
+				Actions.type(IFSUSERS.firstName_type, firstName, "enter First name");
+				Actions.click(IFSUSERS.lastName, "click at lastname");
+				Actions.type(IFSUSERS.lastName_type, lastName, "enter Last name");
+				Actions.click(IFSUSERS.emailAddress, "click at email address");
+				Actions.type(IFSUSERS.emailaddress_type,mail, "enter Email address");
+				Actions.click(IFSUSERS.saveUsers, "Save user");
+				
+				Actions.scrollToElement(IFSUSERS_Trial10.alloweddomain_Errormsg);
+				Actions.getText(IFSUSERS_Trial10.alloweddomain_Errormsg);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace(); throw e;
+			}
+		}
+	
+	public static void verify_AccCreation(){
+		try {
+			Actions.mingleWait(IFSUSERS_Trial10.acountCreateinDraftStatus, "wait for Account Creation", 10);
+			Actions.pause1(1);
+			Actions.verifyElement(IFSUSERS_Trial10.acountCreateinDraftStatus, "Verify Presence of Account Creating ");
+			Actions.click_JS(IFSUSERS_Trial10.acountCreateinDraftStatus, "Click on Account creating status");
+			if(!Actions.isChecked(IFSUSERS_Trial10.checkDraftStatus))
+			{
+				Actions.pause1(1);
+				Actions.click_JS(IFSUSERS_Trial10.checkDraftStatus, "Click on Check Draft Status");
+				Actions.pause1(.9);
+				if(Actions.verifyElementPresent(IFSUSERS_Trial10.saveAccCreation, "save present"))
+				{
+				Actions.click_JS(IFSUSERS_Trial10.saveAccCreation, "Click On Save Account");
+				}
+				else if(Actions.verifyElementPresent(IFSUSERS_Trial10.saveAccCreation_OP, "save in OP"))
+				{
+					Actions.click_JS(IFSUSERS_Trial10.saveAccCreation_OP, "Click On Save Account");
+				}
+				Actions.getText(IFSUSERS_Trial10.saveMsg);
+				//navigateToAnotherPageAndReturn();
+			}
+			navigateToAnotherPageAndReturn();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace(); throw e;
+		}
+		
+	}
+	
+	public static void uncheck_AppicaationSpecific(){
+		try {
+			Actions.mingleWait(IFSUSERS_Trial10.applicationSpecificSetting, "wait for Application Setting", 10);
+			Actions.pause1(1);
+			Actions.verifyElement(IFSUSERS_Trial10.applicationSpecificSetting, "Verify Presence of Application Setting ");
+			Actions.click_JS(IFSUSERS_Trial10.applicationSpecificSetting, "Click on Application Setting");
+			Actions.pause1(1);
+				Actions.click_JS(IFSUSERS_Trial10.checkAppSetting, "Click on Check Application Specific Setting");
+				Actions.pause1(.9);
+				Actions.click_JS(IFSUSERS_Trial10.saveSpecificSetting, "Click On Save Specific Setting");
+				Actions.getText(IFSUSERS_Trial10.saveMsg);
+				//navigateToAnotherPageAndReturn();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace(); throw e;
+		}
+		
+	
+	}
+	public static void verify_ApplicationSpeciific(){
+		try {
+			Actions.mingleWait(IFSUSERS_Trial10.applicationSpecificSetting, "wait for Application Setting", 10);
+			Actions.pause1(1);
+			Actions.verifyElement(IFSUSERS_Trial10.applicationSpecificSetting, "Verify Presence of Application Setting ");
+			Actions.click_JS(IFSUSERS_Trial10.applicationSpecificSetting, "Click on Application Setting");
+			if(!Actions.isChecked(IFSUSERS_Trial10.checkAppSetting))
+			{
+				Actions.pause1(1);
+				Actions.click_JS(IFSUSERS_Trial10.checkAppSetting, "Click on Check Application Specific Setting");
+				Actions.pause1(.9);
+				Actions.click_JS(IFSUSERS_Trial10.saveSpecificSetting, "Click On Save Specific Setting");
+				Actions.getText(IFSUSERS_Trial10.saveMsg);
+				//navigateToAnotherPageAndReturn();
+			}
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace(); throw e;
+		}
+	}
+
+	public static void disableAndDeleteUser(String mail){
+		  
+		  try {
+			searchMailID(mail);
+			    Actions.click(By.xpath("//div[text()='"+mail+"']/../../descendant::td"), "select user");
+			    Actions.click(IFSUSERS_Trial10.action, "click on Actions");
+			    Actions.verifyElement(IFSUSERS_Trial10.disable, "Verify presence of Disable in Action");
+			    Actions.click(IFSUSERS_Trial10.disable, "disable users");
+			    Actions.click(IFSUSERS_Trial10.yesButton, "click Yes button");
+			    Actions.refresh();
+			    /*Actions.pause1(1);
+			    Actions.alertAccept();*/
+			    Actions.verifyElement(Global.socialCLFrame, "Verify presence of 'Social' Frame");
+				Actions.switchtoFrame(Global.socialCLFrame, "Switch to the Frame");
+				
+			    
+			 
+			  //  Actions.type(IFSUSERS.searchuser, mail, "search user");
+			    
+			    searchMailID(mail);
+			    verify_Data("Disabled");
+			  //  Actions.enter();
+			    Actions.verifyElement(By.xpath("//div[text()='"+mail+"']/../../descendant::td"), "Verify presence of Disabled User");
+			    Actions.click(By.xpath("//div[text()='"+mail+"']/../../descendant::td"), "select user");
+			    Actions.click(IFSUSERS_Trial10.action, "click on Actions");
+			    Actions.click(IFSUSERS_Trial10.deleteuser, "delete user");
+			    Actions.click(IFSUSERS_Trial10.yesButton, "click Yes button");
+				//Actions.getText(IFSUSERS_Trial10.saveMsg);
+			    Actions.pause1(1);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace(); throw e;
+		}
+	}
+	
+	public static void delte_User(String mail){
+		 try {
+			Actions.verifyElement(By.xpath("//div[text()='"+mail+"']/../../descendant::td"), "Verify presence of Disabled User");
+			    Actions.click(By.xpath("//div[text()='"+mail+"']/../../descendant::td"), "select user");
+			    Actions.click(IFSUSERS_Trial10.action, "click on Actions");
+			    Actions.click(IFSUSERS_Trial10.deleteuser, "delete user");
+			    Actions.click(IFSUSERS_Trial10.yesButton, "click Yes button");
+				//Actions.getText(IFSUSERS_Trial10.saveMsg);
+			    Actions.pause1(1);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace(); throw e;
+		}
+	}
+	public static void activateDraftUser(String mail){
+		  
+		   try {
+			//searchMailID(mail);
+			    
+			    /*Actions.click(By.xpath("//div[text()='"+mail+"']/../../descendant::td"), "select user");
+			    Actions.click(IFSUSERS.action, "click on Actions");
+			    //Actions.verifyElement(IFSUSERS.activateDraftUser, "Verify presence of Disable in Action");
+			    Actions.click(IFSUSERS.activateDraftUser, "Activate draft users");
+			    Actions.click(IFSUSERS.yesButton, "click Yes button");*/
+			    //Actions.pause1(2);
+			   // searchMailID(mail);
+			  //  Actions.type(IFSUSERS.searchuser, mail, "search user");
+			   // verify_Data("Disabled");
+			  //  Actions.enter();
+			    Actions.verifyElement(By.xpath("//div[text()='"+mail+"']/../../descendant::td"), "Verify presence of Disabled User");
+			    Actions.click(By.xpath("//div[text()='"+mail+"']/../../descendant::td"), "select user");
+			   
+			    Actions.click(IFSUSERS_Trial10.action, "click on Actions");
+			    Actions.click(IFSUSERS_Trial10.activateDraftUser, "Activate draft users");
+			  
+			    Actions.click(IFSUSERS_Trial10.yesButton, "click Yes button");
+			    Global.minglePageLoad_Social();
+			   // close_Timeout();
+			    
+			    Actions.getText(IFSUSERS_Trial10.activateCompleted);
+			    Actions.click(IFSUSERS_Trial10.btnactivateCompleted, "Close Activate Completed Popup");
+			    Actions.pause1(2);
+			    searchMailID(mail);
+			    verify_Data("Active");
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace(); throw e;
+		}
+	}
+	
+	public static void resend_Invitation(String mail){
+		  try {
+			Actions.click(By.xpath("//div[text()='"+mail+"']/../../descendant::td"), "select user");
+			    Actions.click(IFSUSERS_Trial10.action, "click on Actions");
+			    //Actions.verifyElement(IFSUSERS.activateDraftUser, "Verify presence of Disable in Action");
+			    Actions.click(IFSUSERS_Trial10.resendInvitation, "Resend Invitation");
+			    Actions.click(IFSUSERS_Trial10.yesButton, "click Yes button");
+			    Actions.isChecked(By.xpath("//span[@aria-label='Email Verified']"));
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace(); throw e;
+		}
+		    	
+		   
+	}
+	
+	public static void changePasswordattempts(String attempts){
+		try {
+			select_ItemFromManage("Security Administration","Password Management");	
+			Actions.pause1(1);
+			Actions.clearText(IFSUSERS.passwordManagement, "Clear content");
+			Actions.type(IFSUSERS.passwordManagement, attempts,"Change Password");
+			Actions.click(IFSUSERS.passwordSave, "Save Password");
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace(); throw e;
+		}
+	
+	}
+	public static void userActions(String mail,String user){
+		try {
+			navigateToMenu("User Management");
+			select_ItemFromManage("Security Administration","General Settings");
+			verify_AccCreation();
+			Actions.pause1(1);
+			//click_HeaderMenu();
+			Actions.pause1(2);
+			select_ItemFromManage("Manage","Users");
+			add_IFSUser(mail,user);
+			verify_Data("Draft");
+			activateDraftUser(mail);
+			resend_Invitation(mail);
+			disableAndDeleteUser(mail);
+			//changePasswordattempts("1");
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace(); throw e;
+		}
+		
+	}
+	
+	
+	public static void disable_UserActions(String mail){
+		try {
+			navigateToMenu("User Management");
+			searchMailID(mail);
+			Actions.click(By.xpath("//div[text()='"+mail+"']/../../descendant::td"), "select user");
+			Actions.click(IFSUSERS.action, "click on Actions");
+			//Actions.verifyElement(IFSUSERS.activateDraftUser, "Verify presence of Disable in Action");
+			Actions.click(IFSUSERS.unlockAcc, "Unlock users");
+			Actions.click(IFSUSERS.yesButton, "click Yes button");
+			searchMailID(mail);
+			Actions.isChecked(By.xpath("//span[@aria-label='Account Locked']"));
+			
+   // changePasswordattempts("3");
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace(); throw e;
+		}
+	}
+	
+	public static void navigateToAnotherPageAndReturn(){
+		try {
+			Actions.switchToDefaultContent();
+			RM_Admin.navigateToMenu("Admin Settings");
+			Actions.pause1(2);
+			Actions.switchToDefaultContent();
+			navigateToMenu("User Management");
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace(); throw e;
+		}
+		
+	}
+	public static void click_ManageFeatures(){
+		try {
+			Actions.mingleWait(IFSUSERS_Trial10.manageFeatures, "wait for Manage Features", 10);
+			Actions.pause1(1);
+			Actions.verifyElement(IFSUSERS_Trial10.manageFeatures, "Verify Presence of Manage Features ");
+			Actions.click_JS(IFSUSERS_Trial10.manageFeatures, "Click on Manage Features");
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace(); throw e;
+		}
+	}
+	public static void verify_externalUser(){
+		try {
+			select_ItemFromManage("Security Administration","General Settings");
+			click_ManageFeatures();
+			if(!Actions.isChecked(IFSUSERS_Trial10.checkcomnaccess))
+			{
+				Actions.pause1(1);
+				Actions.click_JS(IFSUSERS_Trial10.checkcomnaccess, "Click on CheckEnable Common Services");
+				Actions.click(IFSUSERS_Trial10.saveExtFeatures, "Click On Save Scim Features");
+				Actions.getText(IFSUSERS_Trial10.saveMsg);
+				navigateToAnotherPageAndReturn();
+				
+				
+			}
+			
+			if(!Actions.isChecked(IFSUSERS_Trial10.checkEnableExt))
+			{
+				Actions.pause1(1);
+			
+				Actions.click_JS(IFSUSERS_Trial10.checkEnableExt, "Click on CheckEnable Scim Services");
+				Actions.click(IFSUSERS_Trial10.saveExtFeatures, "Click On Save Scim Features");
+				Actions.getText(IFSUSERS_Trial10.saveMsg);
+				navigateToAnotherPageAndReturn();
+			}
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace(); throw e;
+		}
+	}
+	
+	
+
+	public static void externalUser(String user){
+		try {
+			navigateToMenu("User Management");
+			HashMap<String, String> testData=Utility.getConfigData();
+			String env=testData.get("ENVIRONMENT").toUpperCase();
+			System.out.println(env);
+			switch(env)
+			{
+
+			case "CLOUD":
+			{
+			verify_externalUser();
+			navigateToAnotherPageAndReturn();
+			}
+			}
+			Actions.pause1(2);
+			/*click_HeaderMenu();
+			Actions.pause1(1);*/
+			
+			select_ItemFromManage("Manage","External Users");
+			Actions.pause1(1);
+			String mail=add_ExternalUsers(user);
+			save_ExternalUser();
+			//search(mail);
+			deactivate_ExternalUser(mail);
+			select_ExternalUser(mail);
+			action_btn();
+			Actions.pause1(1);
+			Actions.verifyElement(ExternalUsers.activate, " Verify presence of 'Activate' button");
+			Actions.click(ExternalUsers.activate, "Click on Activate button");
+			click_YesBtn();
+			Actions.pause1(1);
+			verify_Data("Active");
+
+			delete_ExternalUser(mail);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace(); throw e;
+		}
+		
+		
+	}
+	
+	public static void verifyTabUnderUser(String user,String tab,String erpID){
+		try {
+			Actions.refresh();
+			navigateToMenu("User Management");
+			//select_ItemFromManage("Manage","Users");
+			Actions.pause1(1);
+			searchMailID(user);
+			Actions.pause1(1);
+			HashMap<String, String> testData=Utility.getConfigData();
+			String env=testData.get("ENVIRONMENT").toUpperCase();
+			System.out.println(env);
+			switch(env)
+			{
+
+			case "CLOUD":
+			{
+				Actions.pause1(.5);
+				String fullNmae=retrieve_FullName();
+				drillDownUser(fullNmae);
+				break;
+			}
+			case "OP":
+			{
+				Actions.pause1(.5);
+				drillDownUser(user);
+				break;
+			}
+			}	
+			verify_Tab(tab,erpID);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace(); throw e;
+		}
+	
+		
+		
+	}
+	
+	//VERITY ACTIVITY TAB
+		public static void verify_Tab(String tab,String erpID){
+			try {
+				Actions.zoomIn();
+				Actions.pause1(1);
+				Actions.verifyElement(By.xpath("//ul[@class='tab-list']/li/a[text()='"+tab+"']"), "Verify  Tab Presence:"+tab);
+				Actions.moveTo(By.xpath("//ul[@class='tab-list']/li/a[text()='"+tab+"']"), " MoveTo: "+tab);
+				Actions.click_JS(By.xpath("//ul[@class='tab-list']/li/a[text()='"+tab+"']"), tab+"Tab");
+				Actions.verifyElement(By.xpath("//div[text()='"+erpID+"']"), erpID);
+				Actions.zoomOut();
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace(); throw e;
+			}
+		}
+		
+		public static void securityRoleDetails(String secName,String secDesc){
+			try {
+				Actions.type(SecurityRole.sec_Name, secName, "Enter Security Name"+secName);
+				Actions.type(SecurityRole.sec_Desc, secDesc, "Enter Security Desc"+secDesc);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace(); throw e;
+			}
+			
+		}
+		public static void add_SecurityRole(String secName,String secDesc,String user,String docName){
+			try {
+				navigateToMenu("User Management");
+				//select_ItemFromManage("Master Data Types", "Security Roles");
+				select_ItemFromManageGroups("Configure", "Master Data Types", "Security Roles");
+				add_IFS();
+				securityRoleDetails(secName,secDesc);
+				
+				
+				Actions.pause1(1);
+				Actions.click(By.id("addUsersIFSItem"), "Click On Add Users IFS Item");
+				Actions.verifyElement(ERPPersonIDS.search_ERPUser, "Verify presence of 'ERP User' Details");
+				Actions.type(ERPPersonIDS.search_ERPUser, user, "Enter  User Details");
+				Actions.pause1(1);
+				Actions.enter();
+				Actions.pause1(1);
+				Actions.scrollToElement(By.xpath("//div[text()='"+user+"']/../../descendant::span"));
+				Actions.click_JS(By.xpath("//div[text()='"+user+"']/../../descendant::span"), "Check ERP Person IDS");
+				Actions.click(ERPPersonIDS.addAndCloseBtn, "Add And Close Button");
+				Actions.pause1(1);
+				Actions.click(SecurityRole.documents, "Click On Documents");
+				add_IFS();
+				Actions.pause1(4);
+				System.out.println(docName);
+				//Actions.verifyElement(By.xpath("//div[text()='"+docName+"']/ancestor::tr/descendant::span"), "Verify Presence of 'Select Document'");
+				Actions.click_JS(By.xpath("//div[text()='"+docName+"']/ancestor::tr/descendant::span"), "Select Document");
+				Actions.click(SecurityRole.addDoc, "Add Document");
+				Actions.click(SecurityRole.save_SecRole, "Save Security Role");
+				Actions.getText(IFSUSERS_Trial10.saveMsg);
+				Actions.pause1(1);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace(); throw e;
+			}
+			
+		}
+		
+		public static void delete_Role(String role){
+			try {
+				select_ItemFromManageGroups("Configure", "Master Data Types", "Security Roles");
+				Actions.pause1(1);
+				search(role);
+				Actions.click_JS(By.xpath("//i[text()='"+role+"']/ancestor::tr/descendant::span"), "Select Role");
+				deleteIFS();
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace(); throw e;
+			}
+		}
+		
+		public static void verify_entity_location(){
+			try {
+				if(!Actions.isChecked(DocumentAuthorizations.check_Entity))
+				{
+					Actions.pause1(1);
+				
+					Actions.click_JS(DocumentAuthorizations.check_Entity, "Click on CheckEnable Entity");
+				}
+				if(!Actions.isChecked(DocumentAuthorizations.check_Location))
+				{
+					Actions.pause1(1);
+				
+					Actions.click_JS(DocumentAuthorizations.check_Location, "Click on CheckEnable Location");
+				}
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace(); throw e;
+			}
+		}
+		
+		public static void verifyDoc_Under_SecRoles(String role,String doc){
+			try {
+				select_ItemFromManageGroups("Configure", "Master Data Types", "Security Roles");
+				Actions.pause1(2);
+				search(role);
+				Actions.click(By.xpath("//i[text()='"+role+"']/ancestor::Tr/descendant::button"), "Drill down role");
+				Actions.click(SecurityRole.documents, "Click On Documents");
+				verify_Data(doc);
+				/*Actions.pause1(1);
+				Actions.click_JS(By.xpath("//div[text()='"+doc+"']/ancestor::Tr/descendant::span"), "Select Doc Type");
+				Actions.isEnabled(IFSUSERS_Trial10.deleteIFSItem,"Delete Element is enabled");
+				deleteIFS();
+				saveIFS();*/
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace(); throw e;
+			}
+			
+		}
+		public static boolean verify_EmailSettings(){
+			try {
+				Actions.mingleWait(IFSUSERS_Trial10.emailSettings, "wait for Email Settings", 10);
+				Actions.pause1(1);
+				Actions.verifyElement(IFSUSERS_Trial10.emailSettings, "Verify Presence of Email Setting ");
+				Actions.click_JS(IFSUSERS_Trial10.emailSettings, "Click on Email Setting ");
+				Actions.pause1(1);
+				if(!Actions.isChecked(IFSUSERS_Trial10.checkEmailMingle))
+				{
+					System.out.println("in the if condition");
+					Actions.pause1(1);
+					Actions.click_JS(IFSUSERS_Trial10.checkEmailMingle, "Click on Check Email");
+					Actions.click(IFSUSERS_Trial10.saveEmail, "Click On Save Email");
+					Actions.getText(IFSUSERS_Trial10.saveMsg);
+					//navigateToAnotherPageAndReturn();
+					//return true;
+				}
+				else if(Actions.isChecked(IFSUSERS_Trial10.checkEmailMingle))
+					{
+					Actions.pause1(1);
+					//click_HeaderMenu();
+					//Actions.pause1(2);
+					
+					return true;
+					}
+				
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace(); throw e;
+			}
+			return true;
+				
+			
+			}
+		
+		public static boolean disable_EmailSettings(){
+			try {
+				Actions.mingleWait(IFSUSERS_Trial10.emailSettings, "wait for Email Settings", 10);
+				Actions.pause1(1);
+				Actions.verifyElement(IFSUSERS_Trial10.emailSettings, "Verify Presence of Email Setting ");
+				Actions.click_JS(IFSUSERS_Trial10.emailSettings, "Click on Email Setting ");
+				if(Actions.isChecked(IFSUSERS_Trial10.checkEmailMingle))
+				{
+					Actions.pause1(1);
+					Actions.click_JS(IFSUSERS_Trial10.checkEmailMingle, "Click on Check Email");
+					Actions.click(IFSUSERS_Trial10.saveEmail, "Click On Save Email");
+					Actions.click(IFSUSERS_Trial10.yesButton, "Click On Yes Button");
+					Actions.getText(IFSUSERS_Trial10.saveMsg);
+					//navigateToAnotherPageAndReturn();
+					//return true;
+				}
+				else if(!Actions.isChecked(IFSUSERS_Trial10.checkEmailMingle))
+					{
+					return false;
+					}
+				
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace(); throw e;
+			}
+			return false;
+			
+			}
+		
+		
+		
+		
+		public static boolean verifyUserEmailSettings(){
+			if(Actions.isChecked(IFSUSERS_Trial10.checkSendInvitation))
+			{
+			System.out.println("in the if condition");
+				
+				return false;//navigateToAnotherPageAndReturn();
+			}
+			else 
+			{
+				System.out.println("in the else");
+			return true;
+			}
+		}
+		
+		public static boolean verifyDisableUserEmailSettings(){
+			if(!Actions.isChecked(IFSUSERS_Trial10.checkSendInvitation))
+			{
+			
+				
+				return false;//navigateToAnotherPageAndReturn();
+			}
+			else 
+			{
+			return true;
+			}
+			
+		}
+		public static void emailSettings(){
+			try {
+				navigateToMenu("User Management");
+				select_ItemFromManage("Security Administration","General Settings");
+				boolean a=verify_EmailSettings();
+				//changePasswordattempts("1");
+				/*Actions.pause1(1);
+				click_HeaderMenu();
+				Actions.pause1(1);*/
+				//Actions.switchToDefaultContent();
+				//navigateToMenu("User Management");
+				Actions.pause1(1);
+				navigateToAnotherPageAndReturn();
+				select_ItemFromManage("Manage","Users");
+				add_IFS();
+				boolean b=verifyUserEmailSettings();
+				System.out.println(a +"************"+b);
+				Actions.compareBoolean(a, b, "Comparing the email setting s and user mail settings");
+				
+				//boolean c=disable_EmailSettings();
+				Actions.click(By.name("close"), "Click On Close");
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace(); throw e;
+			}
+		}
+		
+		public static void emailSettingsDisable(){
+			try {
+				select_ItemFromManage("Security Administration","General Settings");
+				boolean a=disable_EmailSettings();
+				//changePasswordattempts("1");
+				Actions.pause1(1);
+				navigateToAnotherPageAndReturn();
+				Actions.pause1(1);
+				select_ItemFromManage("Manage","Users");
+				add_IFS();
+				boolean b=verifyDisableUserEmailSettings();
+				Actions.compareBoolean(a, b, "Comparing the disbale email setting s and user mail settings");
+				
+				//boolean c=disable_EmailSettings();
+				Actions.click(By.name("close"), "Click On Close");
+				select_ItemFromManage("Security Administration","General Settings");
+				verify_EmailSettings();
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace(); throw e;
+			}
+		}
+		public static String createSciim(String pwd,String cpwd){
+			String userIdentifier=null;
+			try {
+				navigateToMenu("User Management");
+				select_ItemFromManage("Manage","SCIM Accounts");
+				Actions.pause1(3);
+				Actions.click(SCIIMAccounts.addScimOPtions, "Click On add Scimm");
+				Actions.getText(SCIIMAccounts.readOnly);
+				Actions.click(SCIIMAccounts.moveTopassword, "Click On Password ");
+				Actions.type(SCIIMAccounts.password, pwd, "Enter Password:"+pwd);
+				Actions.click(SCIIMAccounts.moveToconfirmPassword, "Click On confirm  Password ");
+				Actions.type(SCIIMAccounts.confirmPassword, cpwd, "Enter Confirm Password:"+cpwd);
+				Actions.click(SCIIMAccounts.saveScimOPtions, "Save Sciim options");
+				Actions.click(IFSUSERS_Trial10.yesButton, "Click On Yes");
+				Actions.getText(IFSUSERS_Trial10.saveMsg);
+				Actions.getText(IFSUSERS_Trial10.updateMsg);
+				Actions.pause1(3);
+				userIdentifier = Actions.getText(SCIIMAccounts.readOnly);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace(); throw e;
+			}
+			return userIdentifier;
+		}
+		
+		public static void deleteSciim(String useridentifier){
+			try {
+				System.out.println(useridentifier);
+				Actions.click_JS(By.xpath("//span[text()='"+useridentifier+"']/ancestor::tr/descendant::Span"), "Select the user Identifier");
+				Actions.click(SCIIMAccounts.deleteScimOPtions, "Delete Sccim Options");
+				Actions.click(IFSUSERS_Trial10.yesButton, "Click On Yes");
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace(); throw e;
+			}
+		}
+		
+		public static void add_User(String user){
+			try {
+				navigateToMenu("User Management");
+				searchMailID(user);
+				resend_Invitation(user);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace(); throw e;
+			}
+			
+		}
+		
+		public static void import_update(String user1) {
+			    
+					navigateToMenu("User Management");
+					Actions.verifyElement(IFSUSERS_Trial10.importUsers, "Verify presence of 'Import Users' button");
+					Actions.moveTo(IFSUSERS_Trial10.importUsers, "Move To'Import Users' button");
+					Actions.click_JS(IFSUSERS_Trial10.importUsers, "Import Users");
+					Actions.click(IFSUSERS_Trial10.importUsers_FileButton, "Click On Import users file for selecting file");
+					Actions.pause1(1);
+					//Utility.uploadFile(RpPath+"\\UsersExport.xml");
+					try {
+						Runtime.getRuntime().exec(RpPath+"\\chrome.exe"+" "+RpPath+"\\img\\importupdate.xml");
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					} 
+					//Actions.type(By.id("fileimportifsUsers-filename"), RpPath+"\\Downloads\\"+listOfFiles[i].getName(), "Import Users List");
+					Actions.pause1(1);
+					Actions.click(IFSUSERS_Trial10.importUsersOK, "Import Users Ok");
+					Actions.pause1(2);
+					//Actions.verifyElement(By.id("h1-title"), "Verify Presence of Import users");
+					//Actions.getText(By.id("h1-title"));
+					Actions.click_JS(By.id("btnImpportSuccess"),"Click on Close");
+					searchMailID(user1);
+					verify_Data(user1);
+				
+		}
+		public final static String RpPath=System.getProperty("user.dir");
+		public static void importUser(String user1,String user2) {
+			
+				navigateToMenu("User Management");
+				searchMailID(user1);
+				Actions.verifyElement(By.xpath("//div[text()='"+user1+"']/../../descendant::td"), "Verify presence of Disabled User");
+				Actions.click(By.xpath("//div[text()='"+user1+"']/../../descendant::td"), "select user");
+				export_Users();
+				Actions.pause1(2);
+				File folder = new File(RpPath+"\\Downloads");
+				File[] listOfFiles = folder.listFiles();
+
+				    for (int i = 0; i < listOfFiles.length; i++) {
+				      if (listOfFiles[i].isFile()) {
+				        System.out.println("File " + listOfFiles[i].getName());
+				        Actions.verifyElement(IFSUSERS_Trial10.importUsers, "Verify presence of 'Import Users' button");
+						Actions.moveTo(IFSUSERS_Trial10.importUsers, "Move To'Import Users' button");
+						Actions.click_JS(IFSUSERS_Trial10.importUsers, "Import Users");
+						Actions.click(IFSUSERS_Trial10.importUsers_FileButton, "Click On Import users file for selecting file");
+						Actions.pause1(1);
+						System.out.println(RpPath+"\\UsersExport.xml");
+						//Utility.uploadFile(RpPath+"\\UsersExport.xml");
+						try {
+							Runtime.getRuntime().exec(RpPath+"\\chrome.exe"+" "+RpPath+"\\Downloads\\"+listOfFiles[i].getName());
+						} catch (IOException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}  
+						//Actions.type(By.id("fileimportifsUsers-filename"), RpPath+"\\Downloads\\"+listOfFiles[i].getName(), "Import Users List");
+						Actions.pause1(1);
+						Actions.click(IFSUSERS_Trial10.importUsersOK, "Import Users Ok");
+						Actions.pause1(2);
+						//Actions.verifyElement(By.id("h1-title"), "Verify Presence of Import users");
+						//Actions.getText(By.id("h1-title"));
+						Actions.click_JS(By.id("btnImpportSuccess"),"Click on Close");
+						searchMailID(user1);
+						verify_Data(user1);
+						try{
+						File f1=new File(RpPath+"\\Downloads\\"+listOfFiles[i].getName());
+				    	f1.delete();
+						}
+						catch (Exception e) {
+							// TODO: handle exception
+							e.printStackTrace();
+						}
+						
+				      } else if (listOfFiles[i].isDirectory()) {
+				        System.out.println("Directory " + listOfFiles[i].getName());
+				      }
+				    }
+			
+			
+			
+			
+		}
+		
+		public static void check_EnableServices(){
+			try {
+				if(!Actions.isChecked(IFSUSERS_Trial10.checkEnableServiceAccounts))
+				{
+					Actions.pause1(1);
+				
+					Actions.click_JS(IFSUSERS_Trial10.checkEnableServiceAccounts, "Click on CheckEnable Service Accounts");
+					Actions.click(IFSUSERS_Trial10.saveExtFeatures, "Click On Save Service Accounts");
+					
+					Actions.getText(IFSUSERS_Trial10.saveMsg);
+					navigateToAnotherPageAndReturn();
+				}
+				else{
+					Actions.click_JS(IFSUSERS_Trial10.checkEnableServiceAccounts, "Click on CheckEnable Service Accounts");
+					Actions.click(IFSUSERS_Trial10.saveExtFeatures, "Click On Save Service Accounts");
+					
+					Actions.getText(IFSUSERS_Trial10.saveMsg);
+				}
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace(); throw e;
+			}
+		}
+		public static void check_EnableScimServices(){
+			try {
+				if(!Actions.isChecked(IFSUSERS_Trial10.checkEnableServiceAccounts))
+				{
+					Actions.pause1(1);
+				
+					Actions.click_JS(IFSUSERS_Trial10.checkEnableServiceAccounts, "Click on CheckEnable Scim Services");
+					Actions.click(IFSUSERS_Trial10.saveExtFeatures, "Click On Save Service Accounts");
+					if(Actions.verifyElementPresent(IFSUSERS_Trial10.yesButton, "Verify presence of Yes Button")){
+						Actions.click(IFSUSERS_Trial10.yesButton, "Click On Yes Button");
+					}
+					else{
+						click_HeaderMenu();
+					}
+					//Actions.getText(IFSUSERS_Trial10.saveMsg);
+					/*navigateToAnotherPageAndReturn();
+					
+					Actions.switchToDefaultContent();
+					RM_Social.navigateToActivityPage();
+					Actions.switchToDefaultContent();
+					Actions.refresh();
+					Actions.pause1(2);
+					Actions.alertAccept();
+					Actions.pause1(5);
+					RM_IONAPI.navigateToActivityPage();			
+					RM_IONAPI.click_AuthorizedApps();
+					Actions.pause1(5);
+					RM_IONAPI.click_AddAuthorizedApps();
+					Actions.verifyElementPresent(IONAPIAuthorizedApps.authorized_mobileBackendType, "Verify presence of Mobile Backend Type");*/
+				}
+				else{
+					System.out.println("in the else condition");
+					Actions.click_JS(IFSUSERS_Trial10.checkEnableServiceAccounts, "Click on CheckEnable Scim Services");
+					Actions.click(IFSUSERS_Trial10.saveExtFeatures, "Click On Save Service Accounts");
+					if(Actions.verifyElementPresent(IFSUSERS_Trial10.yesButton, "Verify presence of Yes Button")){
+						Actions.click(IFSUSERS_Trial10.yesButton, "Click On Yes Button");
+					}
+					/*//Actions.getText(IFSUSERS_Trial10.saveMsg);
+					navigateToAnotherPageAndReturn();
+					Actions.switchToDefaultContent();
+					RM_Social.navigateToActivityPage();
+					Actions.refresh();
+					Actions.pause1(2);
+					Actions.alertAccept();
+					Actions.pause1(5);
+					Actions.switchToDefaultContent();
+					Actions.click(AppMenu.appMenu, "Click on AppMenu");
+					Actions.verifyElement(AppMenu.inforIonApi,"Verify presence of 'ION API' from App Menu ");
+					Actions.click(AppMenu.inforIonApi, "Click on ION API");
+					Actions.switchtoFrame(Global.IONCLFrame, "Switch to the Frame");
+					Actions.click(IONAPI.availableAPIs, "Clock On Available APIS");
+					
+					Actions.refresh();
+					Actions.pause1(2);
+					Actions.alertAccept();
+					Actions.pause1(5);
+					Actions.switchtoFrame(Global.IONCLFrame, "Switch to the Frame");
+					RM_IONAPI.click_AuthorizedApps();
+					
+					RM_IONAPI.click_AddAuthorizedApps();
+					Actions.pause1(2);
+					Actions.verifyElementPresent(IONAPIAuthorizedApps.authorized_mobileBackendType, "Verify presence of Mobile Backend Type");*/
+					/*Actions.switchToDefaultContent();
+					RM_Social.navigateToActivityPage();
+					Actions.switchToDefaultContent();
+					Actions.refresh();
+					Actions.pause1(2);
+					Actions.alertAccept();
+					Actions.pause1(5);
+					RM_IONAPI.navigateToActivityPage();	
+					Actions.refresh();
+					Actions.pause1(2);
+					Actions.alertAccept();
+					Actions.pause1(5);
+					Actions.switchtoFrame(Global.IONCLFrame, "Switch to the Frame");
+					RM_IONAPI.click_AuthorizedApps();
+					Actions.pause1(5);
+					RM_IONAPI.click_AddAuthorizedApps();
+					Actions.pause1(5);
+					Actions.verifyElementPresent(IONAPIAuthorizedApps.authorized_mobileBackendType, "Verify presence of Mobile Backend Type");*/
+				}
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace(); throw e;
+			}
+		
+		}
+		public static void manageFeatures(){
+			try {
+				navigateToMenu("User Management");
+				select_ItemFromManage("Security Administration","General Settings");
+				click_ManageFeatures();
+				check_EnableScimServices();
+				Actions.switchToDefaultContent();
+				/*navigateToMenu("User Management");
+				select_ItemFromManage("Security Administration","General Settings");
+				click_ManageFeatures();
+				check_EnableScimServices();
+				Actions.switchToDefaultContent();*/
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace(); throw e;
+			}
+		}
+		
+		public static void verify_BackEndService(){
+			try {
+				RM_IONAPI.navigateToActivityPage();	
+				Actions.refresh();
+				Actions.pause1(2);
+				/*Actions.pause1(2);
+				Actions.alertAccept();
+				Actions.pause1(5);*/
+				Actions.switchtoFrame(Global.IONCLFrame, "Switch to the Frame");
+				RM_IONAPI.click_AuthorizedApps();
+				//Actions.pause1(5);
+				RM_IONAPI.click_AddAuthorizedApps();
+				//Actions.pause1(5);
+				Actions.verifyElementPresent(IONAPIAuthorizedApps.authorized_mobileBackendType, "Verify presence of Mobile Backend Type");
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace(); throw e;
+			}
+		}
+		
+		public static void createErp_User(String erp,String erpAcc){
+			try {
+				Actions.verifyElement(IFSUSERS_Trial10.moveerpID_UnderUser, "Verify presence of erp ID");
+				Actions.click(IFSUSERS_Trial10.moveerpID_UnderUser, "Move to ERP ID");
+				Actions.type(IFSUSERS_Trial10.entererpID_UnderUser, erp, "Enter ERP Person ID");
+				Actions.click(IFSUSERS_Trial10.moveerpAcc_UnderUser, "Move to ERP Accounting entity");
+				Actions.type(IFSUSERS_Trial10.entererpAcc_UnderUser, erpAcc, "Enter ERP Accounting entity");
+				Actions.click(IFSUSERS_Trial10.save_ERp, "Save ERP");
+				Actions.explicitWait_InVisibilityOfElement();
+				Actions.pause1(1.5);
+				verify_Data(erp);
+				Actions.click_JS(By.xpath("//div[text()='"+erp+"']/ancestor::Tr/descendant::span"), "Select ERPPerson ID");
+				Actions.click(By.id("btnDeleteERPPersonIds"), "Delete ERP Person");
+				if(Actions.verifyElementPresent(IFSUSERS_Trial10.yesButton, "Verify presence of 'Yes' button"))
+				{
+					Actions.moveTo(IFSUSERS_Trial10.yesButton, "Move to Yes Button");	
+					Actions.pause1(.5);
+					Actions.click(IFSUSERS_Trial10.yesButton, "Click On Yes Button");	
+				}
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace(); throw e;
+			}
+		}
+		
+		public static void add_InforSuiteRole(String mail,String secRole)
+		{
+			try {
+				navigateToMenu("User Management");
+				searchMailID(mail);
+				HashMap<String, String> testData=Utility.getConfigData();
+				String env=testData.get("ENVIRONMENT").toUpperCase();
+				System.out.println(env);
+				switch(env)
+				{
+
+				case "CLOUD":
+				{
+					Actions.pause1(.5);
+					String fullNmae=retrieve_FullName();
+
+					drillDownUser(fullNmae);
+					break;
+				}
+				case "OP":
+				{
+					Actions.pause1(.5);
+					drillDownUser(mail);
+					break;
+				}
+				}	
+				Actions.pause1(1.5);
+				select_TabList("Security Roles");
+				addFirstSecurity();
+				Actions.explicitWait_InVisibilityOfElement();
+				Actions.pause1(1.5);
+				Actions.click_JS(IFSUSERS_Trial10.select_AllSecurityRoles, "Select All Security Roles");
+				if(Actions.verifyElementPresent(By.xpath("//div[text()='"+secRole+"']"), "Verify presence of 'Add Security Role'")){
+					Actions.click_JS(By.xpath("//div[text()='"+secRole+"']/ancestor::Tr/descendant::span"), "Click On Default security Role");
+				}
+				rbSecurityRole();
+				Actions.explicitWait_InVisibilityOfElement();
+				//Actions.waitUntill_PleaseWait();
+				//addSecurity(secRole);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace(); throw e;
+			}
+		}
+		public static void verify_InforSuiteUsers(){
+			try {
+				Actions.verifyElement(By.xpath("//p[@data-infor-translate='user_doesnot_have_authorization']"), "Verify Presence of Message");
+				Actions.getText(By.xpath("//p[@data-infor-translate='user_doesnot_have_authorization']"));
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace(); throw e;
+			}
+		}
+		
+		public static void user_Details(String distName,String distDesc,String mail,String secRole,String erpID,String erpAcc,String dep){
+			try {
+				RM_IFS_Trial10.addDistGroup(distName, distDesc,mail);
+
+				Actions.refresh();
+				Actions.pause1(1);
+				//Actions.alertAccept();
+				Actions.pause1(5);
+				Actions.verifyElement(Global.socialCLFrame, "Verify presence of 'Social' Frame");
+				Actions.switchtoFrame(Global.socialCLFrame, "Switch to the Frame");
+				
+			/*	select_ItemFromManage("Manage","Groups");
+				Actions.pause1(1);
+				select_Group(distName);
+				Actions.pause1(1);
+				navigateToAnotherPageAndReturn();*/
+				select_ItemFromManage("Manage","Users");
+				searchMailID(mail);
+				HashMap<String, String> testData=Utility.getConfigData();
+				String env=testData.get("ENVIRONMENT").toUpperCase();
+				System.out.println(env);
+				switch(env)
+				{
+
+				case "CLOUD":
+				{
+					Actions.pause1(.5);
+					String fullNmae=retrieve_FullName();
+
+					drillDownUser(fullNmae);
+					break;
+				}
+				case "OP":
+				{
+					Actions.pause1(.5);
+					drillDownUser(mail);
+					break;
+				}
+				}	
+				Actions.pause1(1.5);
+				select_TabList("Security Roles");
+				addSecurity(secRole);
+				Actions.explicitWait_InVisibilityOfElement();
+				Actions.waitUntill_PleaseWait();
+				Actions.pause1(1.5);
+				//Actions.click_JS(IFSUSERS_Trial10.select_AllSecurityRoles, "Select All Security Roles");
+				if(Actions.verifyElementPresent(By.xpath("//div[text()='"+secRole+"']"), "Verify presence of 'Add Security Role'")){
+					Actions.click_JS(By.xpath("//div[text()='"+secRole+"']/ancestor::Tr/descendant::span"), "Click On Default security Role");
+				}
+				Actions.pause1(1);
+				rbSecurityRole();
+				Actions.pause1(1);
+				
+
+				Actions.explicitWait_InVisibilityOfElement();
+				Actions.waitUntill_PleaseWait();
+				Actions.pause1(1.5);
+				select_TabList("ERP Person IDs");
+				Actions.pause1(1);
+				Actions.verifyElement(By.id("btnAddERPPersonIds"), "Verify presence of add ERP Person ID");
+				Actions.click(By.id("btnAddERPPersonIds"), "click on add ERP Person ID");
+				
+				createErp_User(erpID,erpAcc);
+				Actions.click(IFSUSERS_Trial10.save_ERp, "Save ERP");
+				Actions.explicitWait_InVisibilityOfElement();
+				Actions.pause1(1.5);
+				select_TabList("Details");
+				Actions.verifyElement(IFSUSERS_Trial10.department,"Verify presence of  'Department'");
+				Actions.clearText(IFSUSERS_Trial10.department, "Clear department field");
+				Actions.type(IFSUSERS_Trial10.department,dep,"Update Department");
+				saveIFS();
+				Actions.getText(IFSUSERS_Trial10.saveMsg);
+				Actions.getText(IFSUSERS_Trial10.updateMsg);
+				verify_ActivityTab();
+				/*select_TabList("Custom Properties");
+				verify_Data("MinglePicture");*/
+				Actions.pause1(1);
+				Actions.click_JS(By.xpath("//a[@class='returnResult']"), "Click On back Button");
+				Actions.pause1(1);
+				
+
+				userAlias();
+navigateToAnotherPageAndReturn();
+				select_ItemFromManage("Manage","Users");
+				searchMailID(mail);
+				switch(env)
+				{
+
+				case "CLOUD":
+				{
+					Actions.pause1(.5);
+					String fullNmae=retrieve_FullName();
+
+					drillDownUser(fullNmae);
+					break;
+				}
+				case "OP":
+				{
+					Actions.pause1(.5);
+					drillDownUser(mail);
+					break;
+				}
+				}	
+				Actions.pause1(1.5);
+				Actions.verifyElement(By.id("showUserAlias"), "Verify Presence of User Alias");
+				click_HeaderMenu();
+				userAlias();
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace(); throw e;
+			}
+		}
+		
+		
+		public static void userAlias(){
+			//navigateToMenu("User Management");
+			try {
+				select_ItemFromManage("Metadata","User Properties");
+				search("User Alias");
+				Actions.pause1(1);
+				Actions.verifyElement(By.xpath("//i[text()='User Alias']/ancestor::Tr/descendant::button[@class='btn-icon small datagrid-edit']"), "Verify presence of Alias");
+				Actions.moveTo(By.xpath("//i[text()='User Alias']/ancestor::Tr/descendant::button[@class='btn-icon small datagrid-edit']"),"Move to User Alias Edit");
+				Actions.click(By.xpath("//i[text()='User Alias']/ancestor::Tr/descendant::button[@class='btn-icon small datagrid-edit']"), "Click at Edit Button");
+				//Actions.verifyElement(By.xpath("//label[text()='Required']/../input"), "Verify Presence of User Label");
+				if(!Actions.isChecked(By.xpath("//label[@for='chkIsRequired']")));
+				{
+					System.out.println("in the if conditopn");
+				Actions.click_JS(By.xpath("//label[@for='chkIsRequired']"), "Click On Required");
+				}
+
+				Actions.click(By.id("btnSaveUserProperties"), "Save User Properites");
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace(); throw e;
+			}
+		
+		}
+		
+		
+
+		public static void userAlias_RB(){
+			try {
+				//navigateToMenu("User Management");
+				select_ItemFromManage("Metadata","User Properties");
+				search("User Alias");
+				Actions.pause1(1);
+				Actions.verifyElement(By.xpath("//i[text()='User Alias']/ancestor::Tr/descendant::button[@class='btn-icon small datagrid-edit']"), "Verify presence of Alias");
+				Actions.moveTo(By.xpath("//i[text()='User Alias']/ancestor::Tr/descendant::button[@class='btn-icon small datagrid-edit']"),"Move to User Alias Edit");
+				Actions.click(By.xpath("//i[text()='User Alias']/ancestor::Tr/descendant::button[@class='btn-icon small datagrid-edit']"), "Click at Edit Button");
+				//Actions.verifyElement(By.xpath("//label[text()='Required']/../input"), "Verify Presence of User Label");
+				if(Actions.isChecked(By.xpath("//label[text()='Required']/../input")));
+				{
+				Actions.click_JS(By.xpath("//label[text()='Required']/../input"), "Click On Required");
+				}
+				Actions.click(By.id("btnSaveUserProperties"), "Save User Properites");
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace(); throw e;
+			}
+		
+		}
+		
+		public static void metaData(String mail){
+			try {
+				navigateToMenu("User Management");
+				userAlias();
+				select_ItemFromManage("Manage","Users");
+				searchMailID(mail);
+				drillDownUser(mail);
+				//Actions.scrollToElement(By.xpath("//input[@id='txtUserAlias']/../label[@class='label required']"));
+				Actions.verifyElementPresent(By.xpath("//input[@id='txtUserAlias']/../label[@class='label required']"), "User Alias Required");
+/*	if(!Actions.isChecked(By.xpath("//div[contains(@id,'contextual-action-modal')]/descendant::label[text()='Required']/../input")));
+				{
+				Actions.click_JS(By.xpath("//div[contains(@id,'contextual-action-modal')]/descendant::label[text()='Required']/../input"), "Click On Required");
+				}*/
+				/*Actions.pause1(1);
+				Actions.click_JS(By.xpath("//a[@class='returnResult']"), "Click On back Button");
+				Actions.pause1(1);
+				//click_HeaderMenu();
+				userAlias();*/
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace(); throw e;
+			}
+			
+		}
+		public static void close_Timeout(){
+			try {
+				if(Actions.verifyElementPresent(By.xpath("//p[@class='message']/following::button"), "Verify presence of Close button in Timeout Session")){
+					Actions.click(By.xpath("//p[@class='message']/following::button"), "Click on Close button");
+				}
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace(); throw e;
+			}
+		}
+		public static void check_Automatic(){
+			try {
+				//Actions.verifyElement(By.id("emailOption"), "Verify Presence of email Options Setting");
+				Actions.click(By.xpath("//label[@for='emailOption']"), "Click on email Options Setting");
+				Actions.click(By.id("saveERPPersonID"),"Click On Save");
+				Actions.click(Global.yes, "Click on Yes");
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace(); throw e;
+			}
+		}
+		
+		public static void uncheck_Automatic(){
+			try {
+				//Actions.verifyElement(By.id("radioGroupERPPersonID"), "Verify Presence of email Options Setting");
+				Actions.click(By.xpath("//label[@for='automicOption']"), "Click on email Options Setting");
+				Actions.click(By.id("saveERPPersonID"),"Click On Save");
+				Actions.click(Global.yes, "Click on Yes");
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace(); throw e;
+			}
+		}
+		public static void ifs_PersonIDs(String mail){
+			try {
+				navigateToMenu("User Management");
+				select_ItemFromManage("Security Administration","IFS Person ID");
+				check_Automatic();
+				select_ItemFromManage("Manage","Users");
+				searchMailID(mail);	
+				HashMap<String, String> testData=Utility.getConfigData();
+				String env=testData.get("ENVIRONMENT").toUpperCase();
+				System.out.println(env);
+				switch(env)
+				{
+
+				case "CLOUD":
+				{
+					Actions.pause1(.5);
+					String fullNmae=retrieve_FullName();
+
+					drillDownUser(fullNmae);
+					break;
+				}
+				case "OP":
+				{
+					Actions.pause1(.5);
+					drillDownUser(mail);
+					break;
+				}
+				}	
+				Actions.click(By.xpath("//ul[@class='tab-list']/li/a[text()='Additional Properties']"), "Click On Additional Properties");
+				verify_Data("IFS Person ID");
+				Actions.pause1(1);
+				click_HeaderMenu();
+				select_ItemFromManage("Security Administration","IFS Person ID");
+				if(Actions.isEnabled(By.id("ddlExternalName-shdo"), "Verify presence of IFS Person ID is Disabled"))
+				uncheck_Automatic();
+				select_ItemFromManage("Manage","Users");
+				searchMailID(mail);	
+				
+				switch(env)
+				{
+
+				case "CLOUD":
+				{
+					Actions.pause1(.5);
+					String fullNmae=retrieve_FullName();
+
+					drillDownUser(fullNmae);
+					break;
+				}
+				case "OP":
+				{
+					Actions.pause1(.5);
+					drillDownUser(mail);
+					break;
+				}
+				}	
+				Actions.click(By.xpath("//ul[@class='tab-list']/li/a[text()='Additional Properties']"), "Click On Additional Properties");
+				verify_Data("IFS Person ID");
+				Actions.click(By.xpath("//div[text()='IFS Person ID']/following::div"), "Verify presence of IFS Person ID Editable");
+				Actions.type(By.xpath("//div[text()='IFS Person ID']/following::div/input"),"test@gmail.com" ,"Edit the IFS Person ID");
+				//Actions.click(By.id("btnSaveAdditionalProp"), "Save Additonal Properties");
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace(); throw e;
+			}
+		}
+		
+		public static void verify_AccountStatus(String mail,String user){
+			try {
+				navigateToMenu("User Management");
+				select_ItemFromManage("Security Administration","General Settings");
+				Actions.mingleWait(IFSUSERS_Trial10.acountCreateinDraftStatus, "wait for Account Creation", 10);
+				Actions.pause1(1);
+				Actions.verifyElement(IFSUSERS_Trial10.acountCreateinDraftStatus, "Verify Presence of Account Creating ");
+				Actions.click_JS(IFSUSERS_Trial10.acountCreateinDraftStatus, "Click on Account creating status");
+				if(!Actions.isChecked(IFSUSERS_Trial10.checkDraftStatus))
+				{
+					Actions.pause1(1);
+					Actions.click_JS(IFSUSERS_Trial10.checkDraftStatus, "Click on Check Draft Status");
+					Actions.click(IFSUSERS_Trial10.saveAccCreation, "Click On Save Account");
+					Actions.getText(IFSUSERS_Trial10.saveMsg);
+					navigateToAnotherPageAndReturn();
+					Actions.pause1(1);
+					//click_HeaderMenu();
+					Actions.pause1(2);
+					select_ItemFromManage("Manage","Users");
+					add_IFSUser(mail,user);
+					verify_Data("Draft");
+					delte_User(mail);
+					//select_ItemFromManage("Security Administration","General Settings");
+				}
+				else{
+					//click_HeaderMenu();
+					navigateToAnotherPageAndReturn();
+					Actions.pause1(1);
+					select_ItemFromManage("Manage","Users");
+					add_IFSUser(mail,user);
+					verify_Data("Draft");
+					delte_User(mail);
+				}
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace(); throw e; 
+			}
+		}
+		public static void active_User(String mail,String user){
+			
+			try {
+				select_ItemFromManage("Security Administration","General Settings");
+				Actions.mingleWait(IFSUSERS_Trial10.acountCreateinDraftStatus, "wait for Account Creation", 10);
+				Actions.pause1(1);
+				Actions.verifyElement(IFSUSERS_Trial10.acountCreateinDraftStatus, "Verify Presence of Account Creating ");
+				Actions.click_JS(IFSUSERS_Trial10.acountCreateinDraftStatus, "Click on Account creating status");
+				if(Actions.isChecked(IFSUSERS_Trial10.checkDraftStatus))
+				{
+					Actions.pause1(1);
+					Actions.click_JS(IFSUSERS_Trial10.checkDraftStatus, "Click on Check Draft Status");
+					Actions.click(IFSUSERS_Trial10.saveAccCreation, "Click On Save Account");
+					Actions.getText(IFSUSERS_Trial10.saveMsg);
+					navigateToAnotherPageAndReturn();
+					Actions.pause1(1);
+					//click_HeaderMenu();
+					Actions.pause1(2);
+					select_ItemFromManage("Manage","Users");
+					add_IFSUser(mail,user);
+					verify_Data("Active");
+					delte_User(mail);
+				}
+				else{
+					click_HeaderMenu();
+					Actions.pause1(1);
+					select_ItemFromManage("Manage","Users");
+					add_IFSUser(mail,user);
+					verify_Data("Active");
+					delte_User(mail);
+				}
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace(); throw e; 
+			}
+		
+		}
+		
+		public static void specific_Settings(String mail,String user){
+			try {
+				navigateToMenu("User Management");
+				select_ItemFromManage("Security Administration","General Settings");
+				verify_ApplicationSpeciific();
+				select_ItemFromManage("Manage","Users");
+				add_IFSUser(mail,user);
+				//searchMailID(mail);
+				drillDownUser(mail);
+				Actions.verifyElement(By.id("txtUserAlias"), "Verify Presence of User Alias");
+				Actions.getText(By.id("txtUserAlias"));
+				//Actions.verifyTextNotPresent(By.id("txtUserAlias"), "");
+				Actions.type(By.id("txtUserAlias"), "Test", "User Can able to Enter");
+				Actions.pause1(1);
+				Actions.click_JS(By.xpath("//a[@class='returnResult']"), "Click On back Button");
+				Actions.pause1(1);
+				//searchMailID(mail);
+				delte_User(mail);
+				
+				select_ItemFromManage("Security Administration","General Settings");
+				uncheck_AppicaationSpecific();
+				Actions.pause1(1);
+				select_ItemFromManage("Manage","Users");
+				add_IFSUser(mail,user);
+				//searchMailID(mail);
+				drillDownUser(mail);
+				Actions.verifyElementPresent(By.id("txtUserAlias"), "Verify Presence of User Alias");
+				Actions.getAttribute(By.id("txtUserAlias"),"value");
+				Actions.isEnabled(By.id("txtUserAlias"), "Verify text user Alias is disabled");
+				
+				Actions.pause1(1);
+				Actions.click_JS(By.xpath("//a[@class='returnResult']"), "Click On back Button");
+				Actions.pause1(1);
+				//searchMailID(mail);
+				delte_User(mail);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace(); throw e;
+			}
+			
+		}
+		
+		
+		////////////////////////////////////////////////////////////////////////////////////
+		
+		
+		
+		//ALLOWED DOMAINS
+		public static void allowedDomain(String domain)
+		{
+			try {
+				navigateDomainSecurity();
+				Actions.verifyElementNotPresent(IFSUSERS_Trial10.domains_list, "empty domain list");
+				Actions.click(IFSUSERS_Trial10.domains_DropDown, "click on Domains drop down");
+				Actions.pause1(3);
+				Actions.verifyElementPresent(IFSUSERS_Trial10.blockedDomains, "blocked Domians drop down");
+				Actions.verifyElementPresent(IFSUSERS_Trial10.allowedDomains, "allowed Domians drop down");
+				Actions.click(IFSUSERS_Trial10.allowedDomains, "select allowed domains");
+				Actions.verifyElementNotPresent(IFSUSERS_Trial10.domains_list, "empty domain list");
+				Actions.type(IFSUSERS_Trial10.domain_Name,domain, "Enter allowed domain Name");
+				Actions.click(IFSUSERS_Trial10.saveDomain, "Add Domain");
+				//Actions.verifyString(actual, expected);
+				Actions.click(IFSUSERS_Trial10.saveDomainSecurity, "Save Domain");
+				if(Actions.verifyElementPresent(IFSUSERS_Trial10.yesButton, "Verify presence of 'Yes 'Button"))
+				{
+					Global.acceptConfirmation();
+				}
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace(); throw e;
+			}
+
+		}
+
+		
+		//Verify BLOCKED DOMAINS
+		public static void verify_allowedDomain(String mail,String user)
+		{
+			    try {
+			    	navigateToAnotherPageAndReturn();
+					select_ItemFromManage("Manage","Users");
+					String[] val=mail.split("@");
+					System.out.println(val[0]);
+					String val1=val[0]+RandomStringUtils.randomNumeric(3);
+					String val2=val1+"@"+val[1];
+					add_IFSUser(val2,user);
+					//verify_Data("Active");
+					Actions.click(By.xpath("//div[text()='"+val2+"']/../../descendant::td"), "select user");
+					Actions.click(IFSUSERS.action, "click on Actions");
+					Actions.click(IFSUSERS.deleteuser, "delete user");
+					Actions.click(IFSUSERS.yesButton, "click Yes button");
+					Actions.pause1(2);
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace(); throw e;
+				}
+			}
+		
+		
+		public static void rb_alloweddomain(String domain)
+		{
+		try {
+			select_ItemFromManagedomain("Security Administration","Domain Security");
+			Actions.verifyElement(By.xpath("//li[text()='"+domain+"']"), domain);
+			Actions.moveTo(By.xpath("//li[text()='"+domain+"']"), "move to domain");
+			Actions.pause1(3);
+			Actions.click_JS(By.xpath("//li[text()='"+domain+"']/descendant::span"),"remove domain");
+			Actions.pause1(3);
+			Actions.click(IFSUSERS_Trial10.saveDomainSecurity, "Save Domain");
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace(); throw e;
+		}
+		}
+		
+		
+		public static void activeColumn()
+		{
+		try {
+			navigateToMenu("User Management");
+			select_ItemFromManage("Security Administration","General Settings");
+			verify_AccCreation();
+			Actions.pause1(2);
+			//click_HeaderMenu();
+			//click_HeaderMenu();
+			Actions.refresh();
+			Actions.explicitWait_VisibilityOfElement(Global.socialCLFrame);
+			Actions.verifyElement(Global.socialCLFrame, "Verify presence of 'Social' Frame");
+			Actions.switchtoFrame(Global.socialCLFrame, "Switch to the Frame");
+			userAlias();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace(); throw e;
+		}
+		}
+		
+		
+		public static void add_ActiveColumnUser(String mail,String user)
+		{
+			
+			try {
+				select_ItemFromManage("Manage","Users");
+				String[] lname=user.split(" ");
+				String lastName=lname[1];
+				String firstName=lname[0];
+				System.out.println(lastName+"***********");
+				Actions.pause1(2);
+				Actions.click(IFSUSERS.addIFSItem, "add user");
+				Actions.pause1(2);
+				Actions.verifyElement(IFSUSERS.firstName, "Verify Presence of 'first Name'");
+				Actions.click(IFSUSERS.firstName, "click at firstname");
+				Actions.type(IFSUSERS.firstName_type, firstName, "enter First name");
+				Actions.click(IFSUSERS.lastName, "click at lastname");
+				Actions.type(IFSUSERS.lastName_type, lastName, "enter Last name");
+				Actions.click(IFSUSERS.emailAddress, "click at email address");
+				Actions.type(IFSUSERS.emailaddress_type, mail, "enter Email address");
+				Actions.click_JS(IFSUSERS.active_chkBox, "check active checkbox");
+				Actions.click(IFSUSERS.saveUsers, "Save user");
+				if(Actions.verifyElementPresent(IFSUSERS.yesButton, "Verify Presence of Yes")){
+				Actions.click(IFSUSERS.yesButton, "click Yes button");
+				}
+				Actions.scrollToElement(IFSUSERS_Trial10.domain_Errormsg);
+				Actions.getText(IFSUSERS_Trial10.domain_Errormsg);
+				Actions.click(IFSUSERS_Trial10.cancel, "cancel adding user");
+				//searchMailID(mail);
+				Actions.pause1(1);
+				//verify_Data("Draft");
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace(); throw e;
+			}
+		}
+		
+		public static void add_uncheckActiveColumnUser(String mail,String user)
+		{
+			
+			try {
+				select_ItemFromManage("Manage","Users");
+				String[] lname=user.split(" ");
+				String lastName=lname[1];
+				String firstName=lname[0];
+				System.out.println(lastName+"***********");
+				Actions.pause1(2);
+				Actions.click(IFSUSERS.addIFSItem, "add user");
+				Actions.pause1(2);
+				Actions.verifyElement(IFSUSERS.firstName, "Verify Presence of 'first Name'");
+				Actions.click(IFSUSERS.firstName, "click at firstname");
+				Actions.type(IFSUSERS.firstName_type, firstName, "enter First name");
+				Actions.click(IFSUSERS.lastName, "click at lastname");
+				Actions.type(IFSUSERS.lastName_type, lastName, "enter Last name");
+				Actions.click(IFSUSERS.emailAddress, "click at email address");
+				Actions.type(IFSUSERS.emailaddress_type, mail, "enter Email address");
+				//Actions.click(IFSUSERS.active_chkBox, "check active checkbox");
+				Actions.click(IFSUSERS.saveUsers, "Save user");
+				if(Actions.verifyElementPresent(IFSUSERS.yesButton, "Verify Presence of Yes")){
+				Actions.click(IFSUSERS.yesButton, "click Yes button");
+				}
+				//disableAndDeleteUser(mail);
+				searchMailID(mail);
+				Actions.click(By.xpath("//div[text()='"+mail+"']/../../descendant::td"), "select user");
+				Actions.click(IFSUSERS_Trial10.action, "click on Actions");
+				Actions.click(IFSUSERS_Trial10.deleteuser, "delete user");
+				Actions.click(IFSUSERS_Trial10.yesButton, "click Yes button");
+				//Actions.getText(IFSUSERS_Trial10.saveMsg);
+				Actions.pause1(1);
+				//verify_Data("Draft");
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace(); throw e;
+			}
+		}
+		
+		
+		
+		public static void ActorID(){
+			//navigateToMenu("User Management");
+			
+			try {
+				select_ItemFromManage("Metadata","User Properties");
+				search("ActorID");
+				Actions.pause1(1);
+				Actions.verifyElement(By.xpath("//i[text()='ActorID']/ancestor::Tr/descendant::button[@class='btn-icon small datagrid-edit']"), "Verify presence of ActorID");
+				Actions.moveTo(By.xpath("//i[text()='ActorID']/ancestor::Tr/descendant::button[@class='btn-icon small datagrid-edit']"),"Move to ActorID Edit");
+				Actions.click(By.xpath("//i[text()='ActorID']/ancestor::Tr/descendant::button[@class='btn-icon small datagrid-edit']"), "Click at Edit Button");
+				//Actions.verifyElement(By.xpath("//label[text()='Required']/../input"), "Verify Presence of User Label");
+				if(!Actions.isChecked(By.xpath("//label[text()='Required']/../input")))
+				{
+				Actions.click_JS(By.xpath("//label[text()='Required']/../input"), "Click On Required");
+				Actions.click(By.id("btnSaveUserProperties"), "Save User Properites");
+				}
+				else
+				{
+				Actions.click(By.id("btnSaveUserProperties"), "Save User Properites");
+				}
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace(); throw e;
+			}
+		}
+			
+			public static void rb_ActorID(){
+				//navigateToMenu("User Management");
+				
+				try {
+					select_ItemFromManage("Metadata","User Properties");
+					search("ActorID");
+					Actions.pause1(1);
+					Actions.verifyElement(By.xpath("//i[text()='ActorID']/ancestor::Tr/descendant::button[@class='btn-icon small datagrid-edit']"), "Verify presence of ActorID");
+					Actions.moveTo(By.xpath("//i[text()='ActorID']/ancestor::Tr/descendant::button[@class='btn-icon small datagrid-edit']"),"Move to ActorID Edit");
+					Actions.click(By.xpath("//i[text()='ActorID']/ancestor::Tr/descendant::button[@class='btn-icon small datagrid-edit']"), "Click at Edit Button");
+					//Actions.verifyElement(By.xpath("//label[text()='Required']/../input"), "Verify Presence of User Label");
+					Actions.click_JS(By.xpath("//label[text()='Required']/../input"), "Click On Required");
+					Actions.click(By.id("btnSaveUserProperties"), "Save User Properites");
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace(); throw e;
+				}
+		
+		}
+			
+			public static void userAliascheck(){
+				try {
+					//navigateToMenu("User Management");
+					select_ItemFromManage("Metadata","User Properties");
+					search("User Alias");
+					Actions.pause1(1);
+					Actions.verifyElement(By.xpath("//i[text()='User Alias']/ancestor::Tr/descendant::button[@class='btn-icon small datagrid-edit']"), "Verify presence of Alias");
+					Actions.moveTo(By.xpath("//i[text()='User Alias']/ancestor::Tr/descendant::button[@class='btn-icon small datagrid-edit']"),"Move to User Alias Edit");
+					Actions.click(By.xpath("//i[text()='User Alias']/ancestor::Tr/descendant::button[@class='btn-icon small datagrid-edit']"), "Click at Edit Button");
+					//Actions.verifyElement(By.xpath("//label[text()='Required']/../input"), "Verify Presence of User Label");
+					if(Actions.isChecked(By.xpath("//div[contains(@id,'contextual-action-modal')]/descendant::label[text()='Required']/../input")));
+					{
+						Actions.click_JS(By.xpath("//div[contains(@id,'contextual-action-modal')]/descendant::label[text()='Required']/../input"), "Click On Required");
+					}
+
+					Actions.click(By.id("btnSaveUserProperties"), "Save User Properites");
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace(); throw e;
+				}
+		
+			}
+			
+			public static void verify_importdata(String mail,String user){
+				try {
+					searchMailID(user);
+					drillDownUser(user);
+					String[] name=user.split(" ");
+					String lastName=name[1];
+					String firstName=name[0];
+					String fname=Actions.getText(IFSUSERS_Trial10.firstname);
+					Actions.verifyString(firstName, fname);
+					String lname=Actions.getText(IFSUSERS_Trial10.laststname);
+					Actions.verifyString(lastName, lname);
+					String mailid=Actions.getText(IFSUSERS_Trial10.emailAddress);
+					Actions.verifyString(mail, mailid);
+					String title=Actions.getText(IFSUSERS_Trial10.title);
+					Actions.verifyString("title", title);
+					String Dept=Actions.getText(IFSUSERS_Trial10.userdepartment);
+					Actions.verifyString("QA", Dept);
+					String manager=Actions.getText(IFSUSERS_Trial10.manager);
+					Actions.verifyString("QAAuto ApplicationAdmin", manager);
+					String altmanager=Actions.getText(IFSUSERS_Trial10.alternate_manager);
+					Actions.verifyString("QAAuto ApplicationAdmin", altmanager);
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace(); throw e;
+				}
+				
+			}
+			public static void download_IDPProperties(){
+				try {
+					navigateToMenu("User Management");
+					select_ItemFromManage("Security Administration","Service Provider");
+					Actions.click(IFSUSERS_Trial10.select_ServiceProvider, "Select Service Provider");
+					Actions.click(IFSUSERS_Trial10.view, "Click On View");
+					Actions.click(IFSUSERS_Trial10.download_File, "Click On Download");
+					Actions.pause1(5);
+					File folder = new File(RpPath+"\\Downloads");
+					File[] listOfFiles = folder.listFiles();
+
+					    for (int i = 0; i < listOfFiles.length; i++) {
+					    	System.out.println("File " + listOfFiles[i].getName());
+					   
+					    	 
+					      
+					        	 Actions.loggerDetails(listOfFiles[i].getName());
+					        
+					      
+					      File f1=new File(RpPath+"\\Downloads\\"+listOfFiles[i].getName());
+					    	f1.delete();
+					    }
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace(); throw e;
+				}
+			}
+			public static void securityProvider(){
+				try {
+					navigateToMenu("User Management");
+					select_ItemFromManage("Security Administration","Federated Security");
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace(); throw e;
+				}
+				
+			}
+}

@@ -1,0 +1,26 @@
+package objRepository.Social;
+
+import org.openqa.selenium.By;
+
+import actions.Actions;
+
+public class AppMenu {
+	
+	
+	
+	/****************Locator***************/
+	public static final By appMenu=By.xpath("//button[@title='App Menu']//*");
+	public static final By homePages=By.xpath("//a[@title='Homepages']");
+	public static final By inforIonApi=By.xpath("//a[contains(@title,'ION API')]");
+	//public static final By template=By.xpath("//span[contains(text(),'Templates')]");
+	public static final By testApp=By.xpath("//a[@title='TestApplication']");
+	
+	
+//	public static final By inforMingle=By.xpath("//a[@title='Infor Ming.le™ ']");
+	public static final By inforMingle=By.xpath("//a[contains(@title,'Infor Ming.le')]");
+	public static final By homePage=By.xpath("//a[@title='Homepages']");
+	public static final By doc=By.xpath("//a[@title='Document Management']");
+	
+	 
+
+}

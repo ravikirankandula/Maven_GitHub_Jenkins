@@ -1,0 +1,83 @@
+package scripts.IONAPI;
+
+import java.util.HashMap;
+
+import org.apache.commons.lang3.RandomStringUtils;
+import org.testng.annotations.AfterClass;
+import org.testng.annotations.BeforeClass;
+
+import com.relevantcodes.extentreports.ExtentTest;
+
+import actions.Actions;
+import objRepository.Global;
+import reusableMethods.RM_IONAPI;
+import utility.Utility;
+
+public class TS_CloneFeatures_14119_14131 {
+	ExtentTest logger;
+	private Utility utl;
+	 HashMap<String, String> testData=Utility.getTestData();
+	 HashMap<String, String> configData=Utility.getConfigData();
+		
+		//TESTDATA
+		 String userName=configData.get("USER14");	
+		 String pwd=configData.get("PASSWORD");
+		 String appName=testData.get("IONAPI_APPNAME");
+		 String desc=testData.get("IONAPI_APPDESC");		
+		 String status=testData.get("IONAPI_STATUS");
+		 String editApp=testData.get("IONAPI_ANDROIDEDIT");
+		 String user=testData.get("IONAPI_EMAILQAUSER");
+		 String selectedUser=testData.get("IONAPI_EMAILQASELECTUSER");
+		 String applicationName=appName+RandomStringUtils.randomNumeric(3);
+	
+		 @BeforeClass
+	public void setUp()
+	{
+		 utl=new Utility();
+		 logger=utl.initTest(this.getClass().getName().substring(this.getClass().getName().lastIndexOf(".")+1).trim());
+		 new Actions();
+	
+	}
+	@AfterClass
+	public void tearDown()
+	{
+		Utility.report.endTest(logger);
+		//Actions.driverClose();
+		Utility.report.flush();
+	}
+	
+	
+
+
+	@org.testng.annotations.Test(priority =1)
+	public void cloneFeatures(){
+		try {
+			
+			//LOGIN
+			Global.login(userName,pwd);
+			//Create Back End Service App
+		
+			RM_IONAPI.clone_Features();
+		
+			
+			
+		} catch (Exception e) {
+			
+		}finally
+		{
+			try{
+			Global.logOut();
+			}
+			catch (Exception e) {
+				// TODO: handle exception
+			}
+			finally{
+			Actions.driverClose();
+			}
+			
+		}
+	}
+
+	
+	
+}

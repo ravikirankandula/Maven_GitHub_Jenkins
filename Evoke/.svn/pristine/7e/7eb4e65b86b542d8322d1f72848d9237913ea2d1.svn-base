@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+<suite name="suite1">
+	<!-- <listeners> <listener class-name="utility.RetryListener" /> </listeners> -->
+	<test name="SFExtra">
+		<classes>
+
+
+			<class name="utility.Utility" />
+			<class
+				name="scripts.ActivityFeed.Ts_MakeConReqAndAcceptConnectionRequest_ShellHeader_13238" />
+			<class
+				name="scripts.ShellHeader.Ts_ShareMsgToConUsersFromShellShare_13233" />
+			<class
+				name="scripts.ShellHeader.Ts_ShareMsgToPublicUsersFromShellShare_13234" />
+			<class
+				name="scripts.ActivityFeed.Ts_VerifyNotificationForConReqOnNotificationPage_13260" />
+			<!-- <class name="scripts.ShellHeader.Ts_VerifyIconOnSh_13224" /> -->
+			<class name="scripts.ShellHeader.Ts_VerifyAppSwitchIconOnSh_13225" />
+			<class name="scripts.ShellHeader.Ts_VerifyUserMenu_13226" />
+			<class name="scripts.ShellHeader.Ts_CreateBookmark_13227" />
+			<class name="scripts.ShellHeader.Ts_EditBookmarkName_13229" />
+			<class name="scripts.ShellHeader.Ts_CreateBookmarkForStreamsPage_13231" />
+			<class name="scripts.ActivityFeed.Ts_PromptOnOff_AcceptConnectionReq_12760_1" />
+			<class name="scripts.ActivityFeed.DisconnectUser_U17_13242" />
+
+		</classes>
+
+
+	</test>
+
+
+
+
+
+</suite>

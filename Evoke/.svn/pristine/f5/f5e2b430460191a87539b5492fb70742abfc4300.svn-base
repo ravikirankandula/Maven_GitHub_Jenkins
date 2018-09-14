@@ -1,0 +1,68 @@
+package scripts.ActivityFeed;
+
+import org.apache.commons.lang3.RandomStringUtils;
+import org.testng.annotations.AfterClass;
+import org.testng.annotations.AfterMethod;
+import org.testng.annotations.BeforeClass;
+import org.testng.annotations.Test;
+
+import actions.Actions;
+import objRepository.Global;
+import objRepository.Social.ActivityFeed;
+import reusableMethods.RM_Social;
+import utility.Utility;
+
+public class Ts_MakePostOnGroupProfilePage_13278 {
+	
+	private Utility utl;
+	//ExtentTest logger;
+
+		
+	public static String className;
+	@BeforeClass
+	public void setUp()
+	{
+		utl=new Utility();
+		utl.initTest(this.getClass().getName().substring(this.getClass().getName().lastIndexOf(".")+1).trim());
+		className=this.getClass().getName().toString();
+		new Actions();
+	}
+		@AfterMethod
+		public void logOutAndBrowserClose()
+		{
+			Actions.logOutAndBrowserCloseMU();
+		}
+		@AfterClass
+		public void endReport() 
+		{
+			Actions.endScriptReportMU();
+			
+			
+		}
+		String time=RandomStringUtils.randomNumeric(4);
+		private String groupName=Utility.getTestData().get("GROUP_NAME")+time;
+		@Test
+		public void createGroup(){
+			try {
+				Global.login(Utility.getConfigData().get("USER26"), Utility.getConfigData().get("PASSWORD"));
+				//Actions.pause(3);
+				RM_Social.createGroup(groupName);
+				//RM_Social.inviteToGroup(Utility.getTestData().get("FULLNAME_USER7"));
+				Actions.pause(3);
+				RM_Social.clickOnActivityFeed();
+				RM_Social.navigateToGroupProfilepage(groupName);
+				RM_Social.typeMessageInGroupProfilePage(Utility.getTestData().get("POSTMSG")+time);
+				RM_Social.clickOnPostBtnInAFP();
+				RM_Social.verifyMessage(Utility.getTestData().get("POSTMSG")+time);
+				//Actions.verify(ActivityFeed.msgContainer,Utility.getTestData().get("POSTMSG")+time );
+				RM_Social.deleteMsg(Utility.getTestData().get("POSTMSG")+time);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				Utility.addClass(className);
+				e.printStackTrace();
+			}
+		}
+		
+		
+
+}

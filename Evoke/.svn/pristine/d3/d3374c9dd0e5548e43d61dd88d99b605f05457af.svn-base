@@ -1,0 +1,14 @@
+package objRepository.IONAPI;
+
+import org.openqa.selenium.By;
+
+public class IONAPI_V_13 {
+	public static final By available_APIS=By.xpath("//span[text()='Available APIs']");
+	public static final By authorized_APIS=By.xpath("//span[text()='Authorized Apps']");
+	public static final By general_Settings=By.xpath("//span[text()='General Settings']");
+	public static final By api_Metadata=By.xpath("//span[text()='API Metadata']");
+	
+	public static final By enableExportSwitch=By.xpath("//label[@infor-translate='enable_export_audit']");
+	public static final By download=By.xpath("//a[text()='Download']");
+	
+}

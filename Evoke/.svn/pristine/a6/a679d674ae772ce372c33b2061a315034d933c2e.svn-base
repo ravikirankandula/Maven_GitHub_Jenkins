@@ -1,0 +1,140 @@
+package scripts.Admin;
+
+import java.util.HashMap;
+
+import org.apache.commons.lang3.RandomStringUtils;
+import org.openqa.selenium.By;
+import org.testng.annotations.AfterClass;
+import org.testng.annotations.BeforeClass;
+
+import com.relevantcodes.extentreports.ExtentTest;
+
+import actions.Actions;
+import objRepository.Global;
+import objRepository.Admin.Admin_Context;
+import reusableMethods.RM_Admin;
+import utility.Utility;
+
+public class TS_SupportMultipleContext_14031 {
+	ExtentTest logger;
+	private Utility utl;
+	 HashMap<String, String> testData=Utility.getTestData();
+	 HashMap<String, String> configData=Utility.getConfigData();
+		String lid=RandomStringUtils.randomNumeric(3);
+		//TESTDATA
+		 String userName=configData.get("USER5");	
+		 String pwd=configData.get("PASSWORD");
+		 String appType=testData.get("CONTEXTAPP");
+		 String name=testData.get("CONTEXTAPP_NAME");
+		 String desc=testData.get("UTILITYAPP_DESC");
+		 String url=testData.get("UTLITYAPP_URL");
+		 String helpurl=testData.get("UTILTYAPP_HELPURL");
+		 String selectApp=testData.get("CONTEXT_APPSELECTION");
+		 String host=testData.get("APP_HOST");
+		 String logical=testData.get("APP_LOGICAL");
+		 String context=testData.get("APP_CONTEXT");
+		 String tenanat=testData.get("APP_TENANT");
+		 String appName=testData.get("UTILITYAPP_APPNAME");
+		 String user=testData.get("ALTMANAGERDETAILS");
+		 String parameterName=testData.get("PARAMETER_NAME");
+		 String parameterValue=testData.get("PARAMETER_VALUE");
+		 String logicalID=testData.get("LOGICAL_ID")+lid;
+		 String deleteApp=testData.get("DELETE_APP");
+		 String msg=testData.get("MESSAGE");
+		 String msg1=testData.get("MESSAGE1");
+		 String url1=testData.get("NONINFOR_HTTPS");
+		 String app;
+		 String multiapp;
+		
+		 String applicationName=name+RandomStringUtils.randomNumeric(3);
+		 String multiapplicationName=name+RandomStringUtils.randomNumeric(3);
+	
+	@BeforeClass
+	public void setUp()
+	{
+		 utl=new Utility();
+		 logger=utl.initTest(this.getClass().getName().substring(this.getClass().getName().lastIndexOf(".")+1).trim());
+		 new Actions();
+	
+	}
+	@AfterClass
+	public void tearDown()
+	{
+		Utility.report.endTest(logger);
+		//Actions.driverClose();
+	
+	}
+	
+	
+
+
+	@org.testng.annotations.Test(priority =1)
+	public void create_App(){
+		try {
+			
+			//LOGIN
+			Global.login(userName,pwd);
+			RM_Admin.addContextOrUtitlityApp(appType, applicationName, desc, url, helpurl);
+			RM_Admin.add_Messages(msg);
+			//app=RM_Admin.create_InforNonPropvisionedContext(appName, host, logical, context, tenanat,user,applicationName,parameterName,parameterValue,logicalID);
+			Actions.switchToDefaultContent();
+			RM_Admin.addContextOrUtitlityApp(appType, multiapplicationName, desc, url, helpurl);	
+			RM_Admin.add_Messages(msg1);
+			RM_Admin.navigateToManageApp();
+			app=RM_Admin.create_multipleContext(appName, host, logical, context, tenanat,user,applicationName,multiapplicationName,parameterName,parameterValue,logicalID);
+
+
+			 
+			RM_Admin.verify_multimsgs(app, url1,applicationName,multiapplicationName);
+			//Global.logOut();
+		} catch (Exception e) {
+			
+		}finally
+		{
+			try{
+			Global.logOut();
+			}
+			catch (Exception e) {
+				// TODO: handle exception
+			}
+			finally{
+			Actions.driverClose();
+			rb_DeleteApp();
+			}
+		}
+	}
+	//@org.testng.annotations.Test(priority =2, dependsOnMethods ="create_App")
+	public void rb_DeleteApp()
+	{
+		try {
+			Global.login(userName,pwd);
+			RM_Admin.delete_ContextOrUtitlityApp(applicationName);
+			Actions.waitUntill_PleaseWait();
+			//Actions.verifyElement(By.xpath("//span[text()='"+app+"']"), "Verify presence of 'Application'");
+			Actions.click(By.xpath("//span[text()='"+multiapplicationName+"']"), "Select"+app+ " :App");
+			Actions.explicitWait_InVisibilityOfElement();
+			Actions.waitUntill_PleaseWait();
+			Actions.click(Admin_Context.delete_UtilityApp, "Delete Utility App");
+			Actions.explicitWait_InVisibilityOfElement();
+			Actions.waitUntill_PleaseWait();
+			Actions.click(Global.yes, "Click On Yes");
+			RM_Admin.delete_Application(app);
+			//Global.logOut();
+		} catch (Exception e) {
+			
+		}
+		finally
+		{
+			try{
+			Global.logOut();
+			
+			}
+			catch (Exception e) {
+				// TODO: handle exception
+			}
+			finally{
+			Actions.driverClose();
+			}
+		}
+	}
+}

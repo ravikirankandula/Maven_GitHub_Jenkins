@@ -1,0 +1,26 @@
+package objRepository.IFS;
+
+import org.openqa.selenium.By;
+
+public class ExternalUsers {
+	/*
+	 * 
+	 * Objects In ExternalUsers Page.
+	 * 
+	 */
+	
+	public static final By moveto_externalUser1=By.xpath("//div[@id='inforAddExternalUsersDataGrid']/descendant::td[2]/div");
+	public static final By externaluser1_MailAddress=By.xpath("//div[@id='inforAddExternalUsersDataGrid']/descendant::td[2]/div/input");
+	public static final By moveto_externalUser2=By.xpath("//div[@id='inforAddExternalUsersDataGrid']/descendant::td[4]/div");
+	public static final By externaluser2_MailAddress=By.xpath("//div[@id='inforAddExternalUsersDataGrid']/descendant::td[4]/div/input");
+	public static final By save_ExternalUsers=By.id("btnSaveExternalUsers");
+	public static final By select_AllExtUsers=By.xpath("//span[text()='Email Address']/../../../descendant::span[@role='checkbox']");
+	public static final By action_Btn=By.id("menuButton");
+	public static final By delete_Btn=By.id("DeleteExternalUsers");
+	public static final By deactivate=By.id("DeactiveExternalUsers");
+	public static final By activate=By.id("ActiveExternalUsers");
+	public static final By addRow=By.id("add-btn");
+	public static final By deactivate_All=By.id("btnDeactivateAll");
+	public static final By activate_All=By.id("btnActivateAll");
+	
+}

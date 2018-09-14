@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+<suite name="suite1">
+	<!-- <listeners> <listener class-name="utility.RetryListener" /> </listeners> -->
+	<test name="chrome">
+		<parameter name="Browser" value="IE" />
+		<classes>
+
+
+			<class name="utility.Utility" />
+
+<class name="scripts.IONAPI_V_13.TS_AndroidApp_12800_12807" />
+			<class name="scripts.IONAPI_V_13.TS_BackendService_12805_12812" />
+			<class name="scripts.IONAPI_V_13.TS_IOSApp_12801_12808" />
+			<class name="scripts.IONAPI_V_13.TS_OthersApp_12803_12810" />
+			<class name="scripts.IONAPI_V_13.TS_WebApp_12804_12811" />
+			<class name="scripts.IONAPI_V_13.TS_WindowsApp_12802_12809" />
+			<class name="scripts.IONAPI_V_13.Ts_IONAPIGeneralSettings_14766" />
+			<class name="scripts.IONAPI_V_13.TS_ProvisionedSuiteSwagger_13960" />
+			<class name="scripts.IONAPI_V_13.TS_IssueRefreshToken_14132" />
+			<class name="scripts.IONAPI_V_13.TS_CloneFeatures_14119_14131" />
+
+
+		</classes>
+
+
+	</test>
+
+
+
+
+
+</suite>

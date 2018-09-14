@@ -1,0 +1,76 @@
+package scripts.Admin;
+
+import java.util.HashMap;
+
+import org.apache.commons.lang3.RandomStringUtils;
+import org.testng.annotations.AfterClass;
+import org.testng.annotations.BeforeClass;
+import org.testng.annotations.Test;
+
+import com.relevantcodes.extentreports.ExtentTest;
+
+import actions.Actions;
+import objRepository.Global;
+import reusableMethods.RM_Admin;
+import utility.Utility;
+
+public class TS_HttpContentApp_14558 {
+	ExtentTest logger;
+	private Utility utl;
+	 HashMap<String, String> testData=Utility.getTestData();
+		
+	 HashMap<String, String> configData=Utility.getConfigData();
+		//TESTDATA
+		 String userName=configData.get("USER5");	
+		 String pwd=configData.get("PASSWORD");
+		 String name=testData.get("UTILITYAPP_NAME");
+		 String applicationName=name+RandomStringUtils.randomNumeric(3);
+		 String url=testData.get("NONINFOR_HTTPS");
+		 String url1=testData.get("NONINFOR_HTTP");
+		 
+	@BeforeClass
+	public void setUp()
+	{
+		 utl=new Utility();
+		 logger=utl.initTest(this.getClass().getName().substring(this.getClass().getName().lastIndexOf(".")+1).trim());
+		 new Actions();
+	
+	}
+	@AfterClass
+	public void tearDown()
+	{
+		Utility.report.endTest(logger);
+		//Actions.driverClose();
+	
+	}
+	
+	
+
+	@Test
+	public void verfiy_ContentApp(){
+		try {
+			
+			//LOGIN
+			Global.login(userName,pwd);
+			RM_Admin.navigateToMenu("Admin Settings");
+		RM_Admin.create_MulNonInforApp(applicationName,url);
+			RM_Admin.verifyNon_Infor(applicationName,url);
+			RM_Admin.verify_Https();
+			RM_Admin.delete_Application(applicationName);
+			RM_Admin.navigateToMenu("Admin Settings");
+			RM_Admin.create_MulNonInforApp(applicationName,url1);
+			RM_Admin.verifyNon_Infor(applicationName,url1);
+			RM_Admin.verify_Http();
+			RM_Admin.delete_Application(applicationName);
+			
+			//Global.logOut();
+		} catch (Exception e) {
+			
+		}finally
+		{
+			//Global.logOut();
+			Actions.driverClose();
+		}
+	}
+
+}

@@ -1,0 +1,32 @@
+/**
+ * 
+ */
+package objRepository.IFS;
+
+import org.openqa.selenium.By;
+
+
+public class DistributionGroup {
+	/*
+	 * 
+	 * Objects In Distribution Group 
+	 * 
+	 */
+	public static final By dist_Name=By.id("txtName");
+	public static final By dist_Desc=By.id("txtDescription");
+	public static final By dist_Save=By.id("saveDistGroup");
+	public static final By dist_Import=By.id("importIFSItems");
+	public static final By dist_Export=By.id("exportIFSItems");
+	public static final By dist_Import_Close=By.id("cancelButton");
+	public static final By dist_Export_Close=By.xpath("//button[text()='No']");
+	public static final By dist_AddIFSUsersItem=By.id("addUsersIFSItem");
+	public static final By dist_selectUserSearch=By.id("txtSelectuserSearch");
+	public static final By dist_checkUser=By.xpath("//div[text()='Assign Users to Distribution Group']/following::div[11]/descendant::span");
+	public static final By dist_AddUser=By.id("btnSearchSelectClose");
+	public static final By dist_Close=By.xpath("//button[@id='btnSearchSelect']/following::button[text()='Cancel']");
+	public static final By dist_Search=By.xpath("//input[@id='txtSelectuserSearch']/following::button[@title='Search']");
+	public static final By dist_SaveDistributionGroup=By.id("saveDistributionGroup");
+	public static final By dist_AssignContactsToGrp=By.xpath("//div[text()='Assign Contacts to Contact Group']/following::div[12]/span");
+	public static final By dist_AddandCloseBtn=By.id("btnSearchSelectClose");
+	public static final By dist_AddContactsToGrp=By.xpath("//div[@class='grid-canvas grid-canvas-top grid-canvas-left']//following::div[3]");
+}

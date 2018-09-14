@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+<suite name="suite1">
+<!-- <listeners>
+		<listener class-name="utility.RetryListener" />
+	</listeners> -->
+	<test name="SFConnectedPublicUsers">
+	<classes>
+		
+	  
+			 <class name="utility.Utility" />
+			 
+			   
+			   
+				
+			   <class name="scripts.ActivityFeed.Ts_MakeConReqAndAcceptConnectionRequest_13238" />
+			   <class name="scripts.ActivityFeed.Ts_PostToConnectedUsers_13257" />
+			   <class name="scripts.ActivityFeed.Ts_PostToPublicUsers_13258" />
+			   <class name="scripts.ActivityFeed.Ts_SharePostToConUsersFromFeedPage_13267" />
+			   <class name="scripts.ActivityFeed.Ts_SharePostToPublicUsersFromFeedPgae_13268" />
+			   <class name="scripts.ActivityFeed.Ts_ConnectedUsersProfilePage_PostMessage_13274" />
+			   <class name="scripts.ActivityFeed.Ts_VerifyPostOnConnectedUsersPostPage_13772" />
+			   <class name="scripts.ActivityFeed.Ts_VerifyPostOnPublicUsersPostPage_13773" />
+			   <class name="scripts.ActivityFeed.Ts_LikeAndUnlikePostFromActivityFeedPage_13265" />
+			   <class name="scripts.ActivityFeed.DisconnectUser_13241" /> 
+			   
+			   			    
+			   
+		</classes>
+	
+	
+	</test>
+
+
+  
+
+
+</suite>

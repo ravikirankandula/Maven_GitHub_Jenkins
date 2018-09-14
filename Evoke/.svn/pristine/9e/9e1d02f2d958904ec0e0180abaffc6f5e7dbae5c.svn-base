@@ -1,0 +1,56 @@
+package objRepository.Social;
+
+import org.openqa.selenium.By;
+
+public class ShellHeader {
+	
+	
+	 public static final	 By mobileApps=By.xpath("//span[text()='Mobile Apps']");//By.xpath("//span[@data-infor-translate='User_Menu_Mobile_App']");	
+	 public static final	 By user_admin_settings=By.xpath("//span[text()='Admin Settings']");//By.xpath("//span[@data-infor-translate='User_Menu_Admin']");
+	 public static final     By userMenu_Notifications=By.xpath("//span[@title='Notifications']");
+	 public static final     By userMenu_Post=By.xpath("//span[@title='Posts']");///
+	 public static final     By userMenu_UserSettings=By.xpath("//span[text()='User Settings']");//By.xpath("//span[@data-infor-translate='User_Menu_Settings']");
+	 public static final     By userMenu_UserSettings_ProfileInformationHeading=By.xpath("//h2[text()='Personal Info']");///
+	 public static final     By userMenu_UserSettings_SaveBtn=By.xpath("//span[@title='Save']/button");///
+	 public static final     By userMenu_UserSettings_OK_Prompt=By.xpath("//button[text()='OK']");
+	 public static final     By userMenu_UserSettings_deletePostSwitch_InputTag=By.xpath("//label[text()='Delete post']/../input");//label[@title='Delete post']/../descendant::input[@id='prompt_connection_2']");///
+	 public static final     By userMenu_UserSettings_deletePostSwitch_LabelTag=By.xpath("//label[text()='Delete post']");//label[contains(text(),'Delete post')]/../descendant::label[@class='inforSwitchLabel']");//Have to Look about this
+	 public static final     By userMenu_UserSettings_AcceptOrDenyRequest_LabelTag=By.xpath("//label[text()='Accept or deny request']");
+	 public static final     By userMenu_UserSettings_AcceptOrDenyRequest_InputTag=By.xpath("//label[text()='Accept or deny request']/../input");
+	 public static final     By userMenu_UserManagement=By.xpath("//span[normalize-space(text())='User Management']");//By.xpath("//span[@data-infor-translate='User_Menu_Security_Settings']");
+	 public static final     By userMenu_Help=By.xpath("//a[@target='helpPage']");
+	 public static final     By userMenu_About=By.xpath("//span[text()='About']");//By.xpath("//span[@data-infor-translate='User_Menu_About']");
+	 public static final     By userMenu_About_InforHeading=By.xpath("//h1[contains(text(),'Infor Ming.le')]");//
+	 public static final     By userMenu_About_CloseIcon=By.xpath("//div[@class='close-container']/button[@class='m-menu-btn']");///
+	 public static final     By userMenu_Help_Version=By.xpath("//a[@title='v12.0']");
+	 public static final     By userMenu_Help_Title=By.xpath("//div[contains(text(),'Help')]");//By.xpath("//div[conatins(text(),'Infor Ming.le')]");
+	 public static final     By userMenu_About_CloseIcon2=By.xpath("//div[@data-ng-controller='AboutController']/descendant::button");
+	 public static final     By inforIcon=By.xpath("//a[@href='http://www.infor.com/']");
+	 public static final     By newPage=By.xpath("//button[@class='btn-tertiary e2e-createNewPage-btn ng-binding']");
+	 public static final	 By userMenu=By.xpath("//button[@title='User Menu']");
+	 public static final	 By signOut=By.xpath("//div[@class='drop-down-container']/descendant::span[contains(text(),'Sign Out')]");
+	 public static final	 By bookMarks=By.xpath("//li/button[@title='Bookmarks']");
+	 public static final     By bookmarks_bookMarkThisPage=By.xpath("//a[text()='Bookmark this page']");//By.xpath("//a[@data-infor-translate='Bookmark_this_page']");
+	 public static final	 By bookMarks_Save=By.xpath("//input[normalize-space(@title)='Enter bookmark name']/following-sibling::button[normalize-space(text())='Save']");//By.xpath("//button[@data-infor-translate='save']");
+	 public static final	 By bookmarks_manageBookMarks=By.xpath("//a[normalize-space(text())='Manage Bookmarks']");//By.xpath("//a[@data-infor-translate='Manage_Bookmarks']");
+	 public static final	 By shareLink=By.xpath("//button[@title='Share']");
+	 public static final     By userMenu_Alerts=By.xpath("//span[normalize-space(text())='Alerts']");//By.xpath("//span[@data-infor-translate='User_Menu_ALERTS_caps']");
+	 public static final     By userMenu_Tasks=By.xpath("//span[normalize-space(text())='Tasks']");//By.xpath("//span[@data-infor-translate='User_Menu_TASKS_caps']");
+	 public static final     By userMenu_UserSecurity=By.xpath("//span[normalize-space(text())='User Management']");;//By.xpath("//span[@data-infor-translate='User_Menu_Security_Settings']"); 
+	 public static final     By search_ShellHeader=By.id("searchInput");
+	 
+	 
+	 public static final     By startStream_Switch_InputTag=By.xpath("//label[text()='Start Stream']/../input");
+	 public static final     By startStream_Switch_LabelTag=By.xpath("//label[text()='Start Stream']");
+	 public static final     By DeleteStreamStep_Switch_InputTag=By.xpath("//label[text()='Delete Stream Step']/../input");
+	 public static final     By DeleteStreamStep_Switch_LabelTag=By.xpath("//label[text()='Delete Stream Step']");
+	 public static final     By removeWF_Switch_InputTag=By.xpath("//label[text()='Remove Workflow']/../input");
+	 public static final     By removeWF_Switch_LabelTag=By.xpath("//label[text()='Remove Workflow']");
+	 public static final     By GroupConnection_Switch_InputTag=By.xpath("//label[text()='Group Connection Action']/../input");
+	 public static final     By GroupConnection_Switch_LabelTag=By.xpath("//label[text()='Group Connection Action']");
+	 
+	 public static final     By connect=By.xpath("//span[text()='Connect']");
+	 public static final 	 By about_Content=By.xpath("//div[@class='modal-body']");
+	 public static final     By close_AboutButton=By.xpath("//div[@class='close-container']/descendant::button");//By.xpath("//button[@data-ng-click='closeMingleOverlay()']");
+	 
+}

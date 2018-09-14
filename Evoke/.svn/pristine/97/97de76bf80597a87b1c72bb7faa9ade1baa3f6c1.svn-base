@@ -1,0 +1,19 @@
+package objRepository.Social;
+
+import org.openqa.selenium.By;
+
+public class ShellHeaderShareOverlay {
+	
+	
+	public static final By privacyLink=By.xpath("//div[@class='share-container']/descendant::span[@class='more-label']");//By.xpath("//div[@class='share-container']/descendant::span[@ng-click='toggleConnectionDropDown($event)']");///
+	public static final By textArea=By.xpath("//div[@class='share-container']/descendant::textarea[@id='input']");
+	public static final By shareBtn=By.xpath("//div[@class='share-container']/descendant::button[@title='Share']");
+	public static final By cancelBtn=By.xpath("//div[@class='share-container']/descendant::button[@title='Cancel']");
+	//public static final By
+	//public static final By
+	
+	
+	
+	
+	
+}

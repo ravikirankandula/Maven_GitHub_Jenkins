@@ -1,0 +1,82 @@
+package scripts.ION;
+
+import java.util.HashMap;
+
+import org.openqa.selenium.By;
+import org.testng.annotations.AfterClass;
+import org.testng.annotations.BeforeClass;
+
+import com.relevantcodes.extentreports.ExtentTest;
+
+import actions.Actions;
+import objRepository.Global;
+import objRepository.IONDesk.WorkFlow;
+import reusableMethods.RM_IONDESK;
+import utility.Utility;
+
+public class Ts_NotesinWorkflowView_14141
+{
+	ExtentTest logger;
+	private Utility utl;
+	 HashMap<String, String> testData=Utility.getTestData();
+	 HashMap<String, String> configData=Utility.getConfigData();
+		
+		//TESTDATA
+		 String userName=configData.get("USER2");
+		 String pwd=configData.get("PASSWORD");
+		 String wfname=testData.get("WORKFLOW_NAME");
+		 
+	@BeforeClass
+	public void setUp()
+	{
+		 utl=new Utility();
+		 logger=utl.initTest(this.getClass().getName().substring(this.getClass().getName().lastIndexOf(".")+1).trim());
+		 new Actions();
+	
+	}
+	@AfterClass
+	public void tearDown()
+	{
+		Utility.report.endTest(logger);
+		//Actions.driverClose();
+	
+	}
+	
+
+
+	@org.testng.annotations.Test(priority=2)
+	public void start_WorkFlow()
+	 {
+		try {
+			
+	    //login
+		Global.login(userName,pwd);
+		RM_IONDESK.start_WorkFlowMingle(wfname);
+		RM_IONDESK.navigateToActivityfeedfrmstreams();
+		String notestime=RM_IONDESK.verify_notesinWFView();
+		RM_IONDESK.navigateToActivityfeedfrmstreams();
+		RM_IONDESK.navigateToActivityfeedfrmstreams();
+		String commenttime=RM_IONDESK.addcommentsincompletedtask(wfname);
+		RM_IONDESK.navigate_StreamsWF();
+		RM_IONDESK.verifyWFStatuses(wfname);
+		Actions.click(By.xpath("//div[@title='"+wfname+"']"), "select Work flow");
+		Actions.scrollToElement(By.xpath("//div[contains(text(),'Notes')]/following::span[3]"));
+		String actual1=Actions.getText(By.xpath("//span[text()='notes']/following::span"));
+		Actions.verifyString(actual1, notestime);
+		String actual2=Actions.getText(By.xpath("//span[text()='comment']/following::span"));
+		Actions.verifyString(actual2, commenttime);
+		Actions.scrollToElement(WorkFlow.remove_WFBtn);
+		Actions.click(WorkFlow.remove_WFBtn, "remove WF");
+		Actions.verifyElement(WorkFlow.deleteWF_prompt, "Prompt when removing a Workflow");
+		Actions.click(WorkFlow.yes_Btn, "click yes button");
+		 
+         } catch (Exception e) {
+			
+		}finally
+		{
+			Global.logOut();
+			Actions.driverClose();
+		}
+		
+     }
+}

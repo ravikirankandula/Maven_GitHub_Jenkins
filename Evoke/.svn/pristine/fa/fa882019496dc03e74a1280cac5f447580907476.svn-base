@@ -1,0 +1,115 @@
+package scripts.IONAPI;
+
+import java.util.HashMap;
+
+import org.apache.commons.lang3.RandomStringUtils;
+import org.openqa.selenium.WebDriver;
+import org.testng.annotations.AfterClass;
+import org.testng.annotations.BeforeClass;
+
+import com.relevantcodes.extentreports.ExtentTest;
+
+import actions.Actions;
+import objRepository.Global;
+import reusableMethods.RM_IONAPI;
+import utility.Utility;
+
+public class TS_InforNonProvisioned_12782_12784_12786_12788_12789 {
+	WebDriver driver;
+	ExtentTest logger;
+	Global global;
+	
+	private Utility utl;
+	
+	public static String className;
+	@BeforeClass
+	public void setUp()
+	{    
+
+		utl=new Utility();
+		logger=utl.initTest(this.getClass().getName().substring(this.getClass().getName().lastIndexOf(".")+1).trim());
+		className=this.getClass().getName().toString();
+		new Actions();
+	}
+	@AfterClass
+	public void tearDown() throws Exception
+	{
+	
+	Utility.report.endTest(logger);
+	Utility.report.flush();
+	}
+	
+	
+	HashMap<String, String> configData=Utility.getConfigData();
+	 HashMap<String, String> testData=Utility.getTestData();
+		
+		//TESTDATA
+	 String userName=configData.get("USER14");
+	 String pwd=configData.get("PASSWORD");
+	 String appName=testData.get("TD_IONAPI_PROVISONEDSUITE_APPNAME");
+	 String version=testData.get("TD_IONAPI_PROVISIONEDSUITE_VERSION");
+	 String suite=testData.get("TD_IONAPI_PROVISIONEDSUITE_NAME");
+	 String hostName=testData.get("TD_IONAPI_PROVISIONEDSUITE_HOSTNAME");
+	 String accessKey=testData.get("TD_IONAPI_PROVISIONEDSUITE_ACCESSKEY");
+	 String secreteKey=testData.get("TD_IONAPI_PROVISIONEDSUITE_SECRETEKEY");
+	 String depName=testData.get("TD_IONAPI_PROVISIONEDSUITE_ENDPOINT_DEPLOYMENT");
+	 String hostNameDetails=testData.get("TD_IONAPI_PROVISIONEDSUITE_ENDPOINT_DEPLOYMENTHOST");
+	 String port=testData.get("TD_IONAPI_PROVISIONEDSUITE_ENDPOINT_DEPLOYMENTPORT");
+	 String context=testData.get("TD_IONAPI_PROVISIONEDSUITE_ENDPOINT_DEPLOYMENTCONTEXT")+RandomStringUtils.randomNumeric(3);
+	
+	 String tenantID=testData.get("TD_IONAPI_PROVISIONEDSUITE_ENDPOINT_DEPLOYMENTTENANTID");
+	 String editDepDetails=testData.get("TD_IONAPI_EDITPROVISIONEDSUITE_EDITENDPONT_HOST");
+	 String app;
+	
+	@org.testng.annotations.Test
+	public void test() {
+		 
+		try{
+		//LOGIN
+		Global.login(userName,pwd);
+		System.out.println(context);
+		app=RM_IONAPI.create_Suite(appName,version,suite,hostName,accessKey,secreteKey,depName,hostNameDetails,port,context,tenantID,accessKey,secreteKey,editDepDetails);
+		
+		}
+		catch (Exception e) {
+			// TODO: handle exception
+		}
+		try{
+		//LOGOUT
+		Global.logOut();
+		
+		}
+		catch (Exception e) {
+			Utility.addClass(className);
+			// TODO: handle exception
+		}
+		finally{
+		//DRIVER CLOSE
+		Actions.driverClose();
+		rb_DeleteApp();
+		}
+		
+	}
+	public void rb_DeleteApp()
+	{
+		try {
+			Global.login(userName,pwd);
+			RM_IONAPI.delete_Suite("Infor Non Provisioned Suites",app);
+			//Global.logOut();
+		} catch (Exception e) {
+			
+		}
+		finally
+		{
+			try{
+			Global.logOut();
+			}
+			catch (Exception e) {
+				// TODO: handle exception
+			}
+			finally{
+			Actions.driverClose();
+			}
+		}
+	}
+}

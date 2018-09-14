@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+<suite name="suite1">
+<!-- <listeners>
+		<listener class-name="utility.RetryListener" />
+	</listeners> -->
+	<test name="SFTaggedGroup">
+	<classes>
+		
+	  
+			 <class name="utility.Utility" />
+			   <class name="scripts.ActivityFeed.Ts_PostToGroupFromFeedPage_12752" />
+			   <class name="scripts.ShellHeader.Ts_SharePostToTaggedGroup_13236" /> 
+			   <class name="scripts.ActivityFeed.Ts_PostToTagGroupFromFeedPage_13262" />
+			   <class name="scripts.ActivityFeed.Ts_SharePostFromFeedPageToTaggedGroup_13271" />
+			   <class name="scripts.ActivityFeed.Ts_CreateGroupAndInviteMember_13272" />
+			   <class name="scripts.ActivityFeed.Ts_MakePostOnGroupProfilePage_13278" />
+			   <class name="scripts.ActivityFeed.Ts_SharePostToGroupFromFeedPage_12764" />
+			   <class name="scripts.ShellHeader.Ts_SharePostToGroupFromShellShare_12773" />
+			   <class name="scripts.ActivityFeed.Ts_PromptOnOFF_AcceptGroupReq_12760_2" />
+			   <class name="scripts.ActivityFeed.DeleteGroup" />
+			   
+			     
+			   
+		</classes>
+	
+	
+	</test>
+
+
+  
+
+
+</suite>

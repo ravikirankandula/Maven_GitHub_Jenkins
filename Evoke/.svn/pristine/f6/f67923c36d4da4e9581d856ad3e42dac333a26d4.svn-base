@@ -1,0 +1,816 @@
+<?xml version="1.0" encoding="utf-16"?>
+<Views xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="ERP LN Drillback Views - Test Content" applicationId="infor.ln" standard="no" xmlns="http://www.infor.com/ViewDefinition.xsd">
+  <description />
+  <View name="ActivityView" level="BOD_COMPONENT" noun="ProjectMaster" standard="yes">
+    <description />
+    <parameter name="ProjectID" required="yes" />
+    <parameter name="PlanActivityID" required="yes" />
+    <parameter name="ActivityID" required="yes" />
+    <urltemplate />
+  </View>
+  <View name="AdjustmentOrderView" level="OTHER" noun="" standard="yes">
+    <description />
+    <urltemplate />
+  </View>
+  <View name="ASNLineView" level="OTHER" noun="" standard="no">
+    <description />
+    <parameter name="ASNID" required="yes" />
+    <parameter name="LineNumber" required="yes" />
+    <urltemplate />
+  </View>
+  <View name="ASNView" level="OTHER" noun="" standard="no">
+    <description />
+    <parameter name="ASNID" required="yes" />
+    <urltemplate />
+  </View>
+  <View name="BillOfResourcesView" level="BOD" noun="BillOfResources" standard="no">
+    <description />
+    <parameter name="BillOfResources" required="yes" />
+    <urltemplate />
+  </View>
+  <View name="BillToPartyMasterView" level="BOD" noun="BillToPartyMaster" standard="no">
+    <description />
+    <parameter name="BillToPartyID" required="yes" />
+    <urltemplate />
+  </View>
+  <View name="BusinessPartnerView" level="OTHER" noun="" standard="no">
+    <description />
+    <parameter name="BusinessPartner" required="yes" />
+    <urltemplate />
+  </View>
+  <View name="Buyer_ActionableActualOrderLines" level="OTHER" noun="" standard="no">
+    <description>Actual Order Lines View</description>
+    <parameter name="BuyerID" required="yes">Buyer</parameter>
+    <parameter name="StartDate" required="yes">Start Date</parameter>
+    <parameter name="EndDate" required="yes">End Date</parameter>
+    <urltemplate />
+  </View>
+  <View name="Buyer_ActionableAdvices" level="OTHER" noun="" standard="no">
+    <description>Purchase Order Advice View</description>
+    <parameter name="BuyerID" required="yes">Buyer</parameter>
+    <parameter name="StartDate" required="yes">Start Date</parameter>
+    <parameter name="EndDate" required="yes">End Date</parameter>
+    <urltemplate />
+  </View>
+  <View name="Buyer_ActionableBackOrderLines" level="OTHER" noun="" standard="no">
+    <description>Back Order Lines View</description>
+    <parameter name="BuyerID" required="yes">Buyer</parameter>
+    <parameter name="StartDate" required="yes">Start Date</parameter>
+    <parameter name="EndDate" required="yes">End Date</parameter>
+    <urltemplate />
+  </View>
+  <View name="Buyer_ActionablePlannedOrders" level="OTHER" noun="" standard="no">
+    <description>Planned Orders View</description>
+    <parameter name="BuyerID" required="yes">Buyer</parameter>
+    <parameter name="StartDate" required="yes">Start Date</parameter>
+    <parameter name="EndDate" required="yes">End Date</parameter>
+    <urltemplate />
+  </View>
+  <View name="Buyer_ActionableRequisitionLines" level="OTHER" noun="" standard="no">
+    <description>Requisition Lines View</description>
+    <parameter name="BuyerID" required="yes">Buyer</parameter>
+    <parameter name="StartDate" required="yes">Start Date</parameter>
+    <parameter name="EndDate" required="yes">End Date</parameter>
+    <urltemplate />
+  </View>
+  <View name="Buyer_ActionableRFQLines" level="OTHER" noun="" standard="no">
+    <description>RFQ Lines View</description>
+    <parameter name="BuyerID" required="yes">Buyer</parameter>
+    <parameter name="StartDate" required="yes">Start Date</parameter>
+    <parameter name="EndDate" required="yes">End Date</parameter>
+    <urltemplate />
+  </View>
+  <View name="Buyer_PlannedOrder" level="OTHER" noun="" standard="no">
+    <description>PlannedOrder View</description>
+    <parameter name="OrderNumber" required="yes">Planned Order Number</parameter>
+    <urltemplate />
+  </View>
+  <View name="Buyer_PurchaseOrder" level="OTHER" noun="" standard="no">
+    <description>PurchaseOrder View</description>
+    <parameter name="OrderNumber" required="yes">Purchase Order Number</parameter>
+    <urltemplate />
+  </View>
+  <View name="Buyer_PurchaseOrderLine" level="OTHER" noun="" standard="no">
+    <description>PurchaseOrder Line View</description>
+    <parameter name="OrderNumber" required="yes">Purchase Order Number</parameter>
+    <parameter name="LineNumber" required="yes">Purchase Order Line Number</parameter>
+    <parameter name="SequenceNumber" required="yes">Purchase Order Line Sequence N</parameter>
+    <urltemplate />
+  </View>
+  <View name="CarrierPartyView" level="BOD" noun="CarrierParty" standard="yes">
+    <description />
+    <parameter name="CarrierParty" required="yes" />
+    <urltemplate />
+  </View>
+  <View name="CarrierRouteView" level="BOD" noun="CarrierRoute" standard="no">
+    <description />
+    <parameter name="CarrierRoute" required="yes" />
+    <urltemplate />
+  </View>
+  <View name="ChartOfAccountView" level="OTHER" noun="" standard="no">
+    <description />
+    <parameter name="LedgerAccount" required="yes" />
+    <urltemplate />
+  </View>
+  <View name="CompletedShipments_CompletedShipmentsView" level="OTHER" noun="" standard="no">
+    <description>Completed Shipments - Completed Shipments View</description>
+    <parameter name="WarehouseID" required="yes">Warehouse</parameter>
+    <parameter name="DateFrom" required="yes">Planned/Actual Delivery Date F</parameter>
+    <parameter name="DateTo" required="yes">Planned/Actual Delivery Date T</parameter>
+    <urltemplate />
+  </View>
+  <View name="CompletedShipments_UnfinishedShipmentsView" level="OTHER" noun="" standard="no">
+    <description>Completed Shipments - Unfinished Shipments View</description>
+    <parameter name="WarehouseID" required="yes">Warehouse</parameter>
+    <parameter name="DateFrom" required="yes">Planned/Actual Delivery Date F</parameter>
+    <parameter name="DateTo" required="yes">Planned/Actual Delivery Date T</parameter>
+    <urltemplate />
+  </View>
+  <View name="ConfiguredAssetMasterView" level="BOD" noun="ConfiguredAssetMaster" standard="no">
+    <description />
+    <parameter name="ConfiguredAssetID" required="yes" />
+    <urltemplate />
+  </View>
+  <View name="ConstrainedResourceView" level="BOD" noun="ConstrainedResource" standard="no">
+    <description />
+    <parameter name="ConstrainedResource" required="yes" />
+    <urltemplate />
+  </View>
+  <View name="ContactMasterView" level="BOD" noun="ContactView" standard="no">
+    <description />
+    <parameter name="Contact" required="yes" />
+    <urltemplate />
+  </View>
+  <View name="ContractLineView" level="BOD_COMPONENT" noun="ContractLine" standard="no">
+    <description />
+    <parameter name="Contract" required="yes" />
+    <parameter name="ContractLineNumber" required="yes" />
+    <urltemplate />
+  </View>
+  <View name="ContractView" level="BOD" noun="Contract" standard="no">
+    <description />
+    <parameter name="Contract" required="yes" />
+    <urltemplate />
+  </View>
+  <View name="CorrectiveActionPlanView" level="BOD" noun="CorrectiveActionPlan" standard="yes">
+    <description />
+    <parameter name="CorrectiveActionPlan" required="yes" />
+    <urltemplate />
+  </View>
+  <View name="CurrencyExchangeRateMasterView" level="BOD" noun="CorrectiveExchangeRateMaster" standard="no">
+    <description />
+    <parameter name="CurrencyExchangeRateID" required="yes" />
+    <urltemplate />
+  </View>
+  <View name="CurrencyRateTypeView" level="BOD" noun="CurrencyRateType" standard="no">
+    <description />
+    <parameter name="CurrencyRateType" required="yes" />
+    <urltemplate />
+  </View>
+  <View name="Customer360NotesView" level="OTHER" noun="" standard="no">
+    <description>Customer360 Notes View</description>
+    <parameter name="CustomerID" required="yes">Sold-to Business partner</parameter>
+    <urltemplate />
+  </View>
+  <View name="Customer360OpenActivitiesView" level="OTHER" noun="" standard="no">
+    <description>Customer360 Open Activities View</description>
+    <parameter name="CustomerID" required="yes">Sold-to Business partner</parameter>
+    <urltemplate />
+  </View>
+  <View name="Customer360OpenContractsView" level="OTHER" noun="" standard="no">
+    <description>Customer360 Open Contracts View</description>
+    <parameter name="CustomerID" required="yes">Sold-to Business partner</parameter>
+    <urltemplate />
+  </View>
+  <View name="Customer360OpenOpportunitiesView" level="OTHER" noun="" standard="no">
+    <description>Customer360 Open Opportunities View</description>
+    <parameter name="CustomerID" required="yes">Sold-to Business partner</parameter>
+    <urltemplate />
+  </View>
+  <View name="Customer360OpenQuotationsView" level="OTHER" noun="" standard="no">
+    <description>Customer360 Open Quotations View</description>
+    <parameter name="CustomerID" required="yes">Sold-to Business partner</parameter>
+    <urltemplate />
+  </View>
+  <View name="Customer360OpenSalesOrdersView" level="OTHER" noun="" standard="no">
+    <description>Customer360 Open Sales Orders View</description>
+    <parameter name="CustomerID" required="yes">Sold-to Business partner</parameter>
+    <urltemplate />
+  </View>
+  <View name="CustomerCallView" level="BOD" noun="CustomerCall" standard="no">
+    <description />
+    <parameter name="Call" required="yes" />
+    <urltemplate />
+  </View>
+  <View name="CustomerClaimLineView" level="OTHER" noun="CustomerClaimLevel" standard="no">
+    <description />
+    <parameter name="Claim" required="yes" />
+    <parameter name="Line" required="yes" />
+    <urltemplate />
+  </View>
+  <View name="CustomerClaimView" level="OTHER" noun="" standard="no">
+    <description />
+    <parameter name="Claim" required="yes" />
+    <urltemplate />
+  </View>
+  <View name="CustomerReturnView" level="BOD" noun="CustomerReturn" standard="no">
+    <description />
+    <parameter name="CustomerReturn" required="yes" />
+    <urltemplate />
+  </View>
+  <View name="CustomerView" level="BOD" noun="CustomerPartyMaster" standard="no">
+    <description />
+    <parameter name="CustomerId" required="yes" />
+    <urltemplate />
+  </View>
+  <View name="DefectiveMaterialNoticeView" level="BOD" noun="DefectiveMaterialNotice" standard="no">
+    <description />
+    <parameter name="DefectiveMaterialNotice" required="yes" />
+    <urltemplate />
+  </View>
+  <View name="DepartmentView" level="OTHER" noun="" standard="yes">
+    <description />
+    <parameter name="DepartmentId" required="yes" />
+    <urltemplate />
+  </View>
+  <View name="EmployeeView" level="BOD" noun="Personal" standard="yes">
+    <description />
+    <parameter name="EmployeeId" required="yes" />
+    <urltemplate />
+  </View>
+  <View name="EmployeeWorkTimeView" level="BOD" noun="EmployeeWorkTime" standard="yes">
+    <description />
+    <parameter name="EmployeeWorkTimeID" required="yes" />
+    <urltemplate />
+  </View>
+  <View name="ExpectedReceiptsView" level="OTHER" noun="" standard="yes">
+    <description>Expected Receipts View</description>
+    <parameter name="StartDate" required="yes">Start Date</parameter>
+    <parameter name="EndDate" required="yes">End Date</parameter>
+    <urltemplate />
+  </View>
+  <View name="FinancialCalendarView" level="OTHER" noun="" standard="no">
+    <description />
+    <parameter name="FinancialCalendarID" required="yes" />
+    <urltemplate />
+  </View>
+  <View name="GLMovementView" level="OTHER" noun="" standard="no">
+    <description />
+    <parameter name="NaturalAccount" required="yes" />
+    <parameter name="PeriodID" required="yes" />
+    <parameter name="Year" required="yes" />
+    <parameter name="BookType" required="yes" />
+    <parameter name="BookInstanceID" required="yes" />
+    <urltemplate />
+  </View>
+  <View name="InternalSalesRep_ActionableActualOrderLines" level="OTHER" noun="" standard="no">
+    <description>Actual Order Lines View</description>
+    <parameter name="InternalSalesRepID" required="yes">Internal Sales Rep</parameter>
+    <parameter name="StartDate" required="yes">Start Date</parameter>
+    <parameter name="EndDate" required="yes">End Date</parameter>
+    <urltemplate />
+  </View>
+  <View name="InternalSalesRep_ActionableBackOrderLines" level="OTHER" noun="" standard="no">
+    <description>Back Order Lines View</description>
+    <parameter name="InternalSalesRepID" required="yes">Internal Sales Rep</parameter>
+    <parameter name="StartDate" required="yes">Start Date</parameter>
+    <parameter name="EndDate" required="yes">End Date</parameter>
+    <urltemplate />
+  </View>
+  <View name="InternalSalesRep_ActionableSalesContractLines" level="OTHER" noun="" standard="no">
+    <description>SalesContract Lines View</description>
+    <parameter name="InternalSalesRepID" required="yes">Internal Sales Rep</parameter>
+    <parameter name="StartDate" required="yes">Start Date</parameter>
+    <parameter name="EndDate" required="yes">End Date</parameter>
+    <urltemplate />
+  </View>
+  <View name="InternalSalesRep_ActionableSalesQuotationLines" level="OTHER" noun="" standard="no">
+    <description>SalesQuotation Lines View</description>
+    <parameter name="InternalSalesRepID" required="yes">Internal Sales Rep</parameter>
+    <parameter name="StartDate" required="yes">Start Date</parameter>
+    <parameter name="EndDate" required="yes">End Date</parameter>
+    <urltemplate />
+  </View>
+  <View name="InternalSalesRep_SalesOrder" level="OTHER" noun="" standard="no">
+    <description>SalesOrder View</description>
+    <parameter name="OrderNumber" required="yes">Sales Order Number</parameter>
+    <urltemplate />
+  </View>
+  <View name="InternalSalesRep_SalesOrderLine" level="OTHER" noun="" standard="no">
+    <description>SalesOrder Line View</description>
+    <parameter name="OrderNumber" required="yes">Sales Order Number</parameter>
+    <parameter name="LineNumber" required="yes">Sales Order Line Number</parameter>
+    <parameter name="SequenceNumber" required="yes">Sales Order Line Sequence Numb</parameter>
+    <urltemplate />
+  </View>
+  <View name="InternalSalesRep_SalesQuotation" level="OTHER" noun="" standard="no">
+    <description>SalesQuotation View</description>
+    <parameter name="OrderNumber" required="yes">Sales Quotation Number</parameter>
+    <urltemplate />
+  </View>
+  <View name="InternalSalesRep_SalesQuotationLine" level="OTHER" noun="" standard="no">
+    <description>SalesQuotation Line View</description>
+    <parameter name="OrderNumber" required="yes">Sales Quotation Number</parameter>
+    <parameter name="LineNumber" required="yes">Sales Quotation Line Number</parameter>
+    <urltemplate />
+  </View>
+  <View name="InventoryConsumptionView" level="BOD" noun="InventoryConsumption" standard="no">
+    <description />
+    <parameter name="InventoryConsumptionID" required="yes" />
+    <urltemplate />
+  </View>
+  <View name="InventoryCountView" level="BOD" noun="InventoryCount" standard="yes">
+    <description />
+    <parameter name="InventoryCountID" required="yes" />
+    <urltemplate />
+  </View>
+  <View name="InventoryView" level="BOD_COMPONENT" noun="ItemMaster" standard="no">
+    <description />
+    <parameter name="Warehouse" required="yes" />
+    <parameter name="Item" required="yes" />
+    <urltemplate />
+  </View>
+  <View name="InvoiceLineView" level="BOD_COMPONENT" noun="Invoice" standard="no">
+    <description />
+    <parameter name="InvoiceNumber" required="yes" />
+    <urltemplate />
+  </View>
+  <View name="InvoiceView" level="BOD" noun="Invoice" standard="yes">
+    <description />
+    <parameter name="InvoiceNumber" required="yes" />
+    <urltemplate />
+  </View>
+  <View name="ItemView" level="BOD" noun="ItemMaster" standard="yes">
+    <description />
+    <parameter name="Item" required="yes" />
+    <urltemplate />
+  </View>
+  <View name="JournalVoucherView" level="OTHER" noun="" standard="no">
+    <description />
+    <parameter name="TransactionType" required="yes" />
+    <parameter name="Document" required="yes" />
+    <urltemplate />
+  </View>
+  <View name="LaborCostMasterView" level="OTHER" noun="" standard="no">
+    <description />
+    <parameter name="LaborCostID" required="yes" />
+    <urltemplate />
+  </View>
+  <View name="LnMessageView" level="OTHER" noun="" standard="no">
+    <description />
+    <parameter name="LnMessageID" required="yes" />
+    <urltemplate />
+  </View>
+  <View name="LnPlanningSignalView" level="OTHER" noun="" standard="no">
+    <description />
+    <parameter name="LnPlanningSignalID" required="yes" />
+    <urltemplate />
+  </View>
+  <View name="LocationView" level="BOD" noun="Location" standard="no">
+    <description />
+    <parameter name="LocationID" required="yes" />
+    <urltemplate />
+  </View>
+  <View name="ManufacturerPartyMasterView" level="BOD" noun="ManufacturerPartyMaster" standard="no">
+    <description />
+    <parameter name="Manufacturer" required="yes" />
+    <urltemplate />
+  </View>
+  <View name="MilestoneView" level="BOD_COMPONENT" noun="ProjectMaster" standard="no">
+    <description />
+    <parameter name="ProjectID" required="yes" />
+    <parameter name="PlanActivityID" required="yes" />
+    <parameter name="MilestoneID" required="yes" />
+    <urltemplate />
+  </View>
+  <View name="OnTimeShipments_EarlyShipmentsView" level="OTHER" noun="" standard="no">
+    <description>On Time Shipments - Early Shipments View</description>
+    <parameter name="WarehouseID" required="yes">Warehouse</parameter>
+    <parameter name="DateFrom" required="yes">Actual Delivery Date From</parameter>
+    <parameter name="DateTo" required="yes">Actual Delivery Date To</parameter>
+    <parameter name="OrderOriginFrom" required="yes">Order Origin From</parameter>
+    <parameter name="OrderOriginTo" required="yes">Order Origin To</parameter>
+    <parameter name="HourTolerance" required="yes">Tolerance in Hours</parameter>
+    <urltemplate />
+  </View>
+  <View name="OnTimeShipments_LateShipmentsView" level="OTHER" noun="" standard="no">
+    <description>On Time Shipments - Late Shipments View</description>
+    <parameter name="WarehouseID" required="yes">Warehouse</parameter>
+    <parameter name="DateFrom" required="yes">Actual Delivery Date From</parameter>
+    <parameter name="DateTo" required="yes">Actual Delivery Date To</parameter>
+    <parameter name="OrderOriginFrom" required="yes">Order Origin From</parameter>
+    <parameter name="OrderOriginTo" required="yes">Order Origin To</parameter>
+    <parameter name="HourTolerance" required="yes">Tolerance in Hours</parameter>
+    <urltemplate />
+  </View>
+  <View name="OnTimeShipments_OnTimeShipmentsView" level="OTHER" noun="" standard="no">
+    <description>On Time Shipments - On Time Shipments View</description>
+    <parameter name="WarehouseID" required="yes">Warehouse</parameter>
+    <parameter name="DateFrom" required="yes">Actual Delivery Date From</parameter>
+    <parameter name="DateTo" required="yes">Actual Delivery Date To</parameter>
+    <parameter name="OrderOriginFrom" required="yes">Order Origin From</parameter>
+    <parameter name="OrderOriginTo" required="yes">Order Origin To</parameter>
+    <parameter name="HourTolerance" required="yes">Tolerance in Hours</parameter>
+    <urltemplate />
+  </View>
+  <View name="OpportunityView" level="BOD" noun="Opportunity" standard="yes">
+    <description />
+    <parameter name="SalesLeadId" required="yes" />
+    <urltemplate />
+  </View>
+  <View name="PayableView" level="BOD" noun="PayableTransaction" standard="yes">
+    <description />
+    <parameter name="PayableDocumentId" required="yes" />
+    <urltemplate />
+  </View>
+  <View name="PayFromPartyMasterView" level="BOD" noun="PayFromPartyMaster" standard="no">
+    <description />
+    <parameter name="PayFromPartyID" required="yes" />
+    <urltemplate />
+  </View>
+  <View name="PaymentBatchView" level="OTHER" noun="" standard="no">
+    <description />
+    <parameter name="PaymentBatch" required="yes" />
+    <urltemplate />
+  </View>
+  <View name="PlannedProductionOrderView" level="BOD" noun="PlannedProductionOrderView" standard="no">
+    <description />
+    <parameter name="PlannedProductionOrderID" required="yes" />
+    <urltemplate />
+  </View>
+  <View name="PlannedPurchaseOrderView" level="BOD" noun="PlannedPurchaseOrder" standard="no">
+    <description />
+    <parameter name="PlannedPurchaseOrderID" required="yes" />
+    <urltemplate />
+  </View>
+  <View name="PlannedTransferView" level="BOD" noun="PlannedTransfer" standard="no">
+    <description />
+    <parameter name="PlannedTransferID" required="yes" />
+    <urltemplate />
+  </View>
+  <View name="ProductionOperationView" level="OTHER" noun="" standard="yes">
+    <description />
+    <parameter name="ProductionOrder" required="yes" />
+    <parameter name="ProductionOperationID" required="yes" />
+    <urltemplate />
+  </View>
+  <View name="ProductionOrderView" level="BOD" noun="ProductionOrder" standard="yes">
+    <description />
+    <parameter name="ProductionOrder" required="yes" />
+    <urltemplate />
+  </View>
+  <View name="ProjectBidView" level="BOD" noun="ProjectBid" standard="yes">
+    <description />
+    <parameter name="BidID" required="yes" />
+    <urltemplate />
+  </View>
+  <View name="ProjectBudgetView" level="BOD" noun="ProjectBudget" standard="no">
+    <description />
+    <parameter name="BudgetDetailID" required="yes" />
+    <urltemplate />
+  </View>
+  <View name="ProjectContractDeliverableDAView" level="OTHER" noun="" standard="no">
+    <description />
+    <parameter name="Contract" required="yes" />
+    <parameter name="ContractLine" required="yes" />
+    <parameter name="Deliverable" required="yes" />
+    <urltemplate />
+  </View>
+  <View name="ProjectContractDeliverableView" level="BOD" noun="ProjectContractDeliverable" standard="no">
+    <description />
+    <parameter name="ProjectContractDeliverableID" required="yes" />
+    <urltemplate />
+  </View>
+  <View name="ProjectContractInstallmentsView" level="BOD" noun="ProjectContractInstallment" standard="yes">
+    <description />
+    <parameter name="ProjectContractInstallmentID" required="yes" />
+    <urltemplate />
+  </View>
+  <View name="ProjectContractLineView" level="BOD_COMPONENT" noun="ProjectContract" standard="no">
+    <description />
+    <parameter name="ProjectContract" required="yes" />
+    <parameter name="ProjectContractLineNumber" required="yes" />
+    <urltemplate />
+  </View>
+  <View name="ProjectContractView" level="BOD" noun="ProjectContract" standard="no">
+    <description />
+    <parameter name="ProjectContract" required="yes" />
+    <urltemplate />
+  </View>
+  <View name="ProjectCostsView" level="BOD" noun="ProjectCosts" standard="no">
+    <description />
+    <parameter name="ProjectCostsID" required="yes" />
+    <urltemplate />
+  </View>
+  <View name="ProjectEstimateView" level="BOD_COMPONENT" noun="ProjectEstimate" standard="no">
+    <description />
+    <parameter name="ProjectID" required="yes" />
+    <parameter name="EstimateVersionID" required="yes" />
+    <parameter name="EstimateLineNumber" required="yes" />
+    <urltemplate />
+  </View>
+  <View name="ProjectExtensionView" level="BOD" noun="ProjectExtension" standard="no">
+    <description />
+    <parameter name="ProjectExtensionID" required="yes" />
+    <urltemplate />
+  </View>
+  <View name="ProjectInterimResultView" level="OTHER" noun="" standard="no">
+    <description />
+    <parameter name="ProjectInterimResultID" required="yes" />
+    <urltemplate />
+  </View>
+  <View name="ProjectManagerView" level="OTHER" noun="" standard="yes">
+    <description />
+    <parameter name="EmployeeId" required="yes" />
+    <urltemplate />
+  </View>
+  <View name="ProjectMonitoringView" level="OTHER" noun="" standard="yes">
+    <description />
+    <parameter name="ProjectCostTypeID" required="yes" />
+    <urltemplate />
+  </View>
+  <View name="ProjectPerformanceView" level="OTHER" noun="" standard="yes">
+    <description />
+    <parameter name="ProjectID" required="yes" />
+    <urltemplate />
+  </View>
+  <View name="ProjectProgressView" level="BOD" noun="ProjectProgress" standard="no">
+    <description />
+    <parameter name="ID" required="yes" />
+    <urltemplate />
+  </View>
+  <View name="ProjectRevenueView" level="BOD" noun="ProjectRevenue" standard="no">
+    <description />
+    <parameter name="ProjectRevenueID" required="yes" />
+    <urltemplate />
+  </View>
+  <View name="ProjectView" level="BOD" noun="ProjectMaster" standard="yes">
+    <description />
+    <parameter name="ProjectID" required="yes" />
+    <urltemplate />
+  </View>
+  <View name="PurchaseContractLineView" level="BOD_COMPONENT" noun="Contract" standard="yes">
+    <description />
+    <parameter name="PurchaseContract" required="yes" />
+    <parameter name="PurchaseContractLineNumber" required="yes" />
+    <urltemplate />
+  </View>
+  <View name="PurchaseContractView" level="BOD" noun="Contract" standard="yes">
+    <description />
+    <parameter name="PurchaseContract" required="yes" />
+    <urltemplate />
+  </View>
+  <View name="PurchaseInvoiceLineView" level="BOD_COMPONENT" noun="SupplierInvoice" standard="no">
+    <description />
+    <parameter name="InvoiceNumber" required="yes" />
+    <urltemplate />
+  </View>
+  <View name="PurchaseInvoiceView" level="BOD" noun="SupplierInvoice" standard="yes">
+    <description />
+    <parameter name="InvoiceNumber" required="yes" />
+    <urltemplate />
+  </View>
+  <View name="PurchaseOrderLineView" level="BOD_COMPONENT" noun="PurchaseOrder" standard="yes">
+    <description />
+    <parameter name="PurchaseOrder" required="yes" />
+    <parameter name="PurchaseOrderLineNumber" required="yes" />
+    <urltemplate />
+  </View>
+  <View name="PurchaseOrderView" level="BOD" noun="PurchaseOrder" standard="yes">
+    <description />
+    <parameter name="PurchaseOrder" required="yes" />
+    <urltemplate />
+  </View>
+  <View name="QuoteView" level="BOD" noun="Quote" standard="yes">
+    <description />
+    <parameter name="QuoteId" required="yes" />
+    <urltemplate />
+  </View>
+  <View name="ReceiptLinesView" level="BOD_COMPONENT" noun="ReceiveDelivery" standard="yes">
+    <description />
+    <parameter name="Receipt" required="yes" />
+    <parameter name="ReceiptLineNumber" required="yes" />
+    <urltemplate />
+  </View>
+  <View name="ReceiptView" level="BOD" noun="ReceiveDelivery" standard="yes">
+    <description />
+    <parameter name="Receipt" required="yes" />
+    <urltemplate />
+  </View>
+  <View name="ReceivableView" level="BOD" noun="ReceivableTransaction" standard="yes">
+    <description />
+    <parameter name="ReceivableDocumentId" required="yes" />
+    <urltemplate />
+  </View>
+  <View name="RecurringJournalView" level="OTHER" noun="" standard="no">
+    <description />
+    <parameter name="RecurringJournal" required="yes" />
+    <urltemplate />
+  </View>
+  <View name="RemitToBankAccountView" level="OTHER" noun="" standard="no">
+    <description />
+    <parameter name="RemitToPartyID" required="yes" />
+    <parameter name="BankAccountCode" required="yes" />
+    <urltemplate />
+  </View>
+  <View name="RemitToPartyMasterView" level="BOD" noun="RemitToPartyMaster" standard="no">
+    <description />
+    <parameter name="RemitToPartyID" required="yes" />
+    <urltemplate />
+  </View>
+  <View name="RequestForQuotationView" level="BOD" noun="RFQ" standard="yes">
+    <description />
+    <parameter name="RFQId" required="yes" />
+    <urltemplate />
+  </View>
+  <View name="RequisitionView" level="BOD" noun="Requisition" standard="yes">
+    <description />
+    <parameter name="Requisition" required="yes" />
+    <urltemplate />
+  </View>
+  <View name="SalesOrderLineView" level="BOD_COMPONENT" noun="SalesOrder" standard="yes">
+    <description />
+    <parameter name="SalesOrder" required="yes" />
+    <parameter name="SalesOrderLineNumber" required="yes" />
+    <urltemplate />
+  </View>
+  <View name="SalesOrderView" level="BOD" noun="SalesOrder" standard="yes">
+    <description />
+    <parameter name="SalesOrder" required="yes" />
+    <urltemplate />
+  </View>
+  <View name="ServiceContractView" level="BOD" noun="ServiceContract" standard="no">
+    <description />
+    <parameter name="Contract" required="yes" />
+    <urltemplate />
+  </View>
+  <View name="ServiceOrderView" level="BOD" noun="ServiceOrder" standard="no">
+    <description />
+    <parameter name="ServiceOrder" required="yes" />
+    <urltemplate />
+  </View>
+  <View name="ServiceScheduler_Appointments" level="OTHER" noun="" standard="no">
+    <description>Appointments View</description>
+    <urltemplate />
+  </View>
+  <View name="ServiceScheduler_BusinessPartner" level="OTHER" noun="" standard="no">
+    <description>Business Partner View</description>
+    <parameter name="CustomerID" required="yes">Customer</parameter>
+    <urltemplate />
+  </View>
+  <View name="ServiceScheduler_CalendarWorkingHours" level="OTHER" noun="" standard="no">
+    <description>Calendar Working Hours View</description>
+    <parameter name="CalendarCode" required="yes">Calendar Code</parameter>
+    <parameter name="AvailabilityType" required="yes">Availability Type</parameter>
+    <urltemplate />
+  </View>
+  <View name="ServiceScheduler_Employee_Service" level="OTHER" noun="" standard="no">
+    <description>Employee_Service View</description>
+    <parameter name="ServiceEngineerID" required="yes">Service Engineer</parameter>
+    <urltemplate />
+  </View>
+  <View name="ServiceScheduler_GeneralHours" level="OTHER" noun="" standard="no">
+    <description>General Hours View</description>
+    <parameter name="ServiceEngineerID" required="yes">Service Engineer</parameter>
+    <urltemplate />
+  </View>
+  <View name="ServiceScheduler_InstallationGroup" level="OTHER" noun="" standard="no">
+    <description>Installation Group View</description>
+    <parameter name="InstallationGroupID" required="yes">Installation Group</parameter>
+    <urltemplate />
+  </View>
+  <View name="ServiceScheduler_Installations" level="OTHER" noun="" standard="no">
+    <description>Installations View</description>
+    <parameter name="InstallationGroupID" required="yes">Installation Group</parameter>
+    <urltemplate />
+  </View>
+  <View name="ServiceScheduler_PlannedActivities" level="OTHER" noun="" standard="no">
+    <description>Planned Activities by Installation Group View</description>
+    <parameter name="InstallationGroupID" required="yes">Installation Group</parameter>
+    <urltemplate />
+  </View>
+  <View name="ServiceScheduler_SerializedItems" level="OTHER" noun="" standard="no">
+    <description>Serialized Items View</description>
+    <parameter name="ItemID" required="yes">Item</parameter>
+    <parameter name="SerialNumberID" required="yes">Serial Number</parameter>
+    <urltemplate />
+  </View>
+  <View name="ServiceScheduler_ServiceEmployee_Skills" level="OTHER" noun="" standard="no">
+    <description>Service Employee_Skills View</description>
+    <parameter name="ServiceEngineerID" required="yes">Service Engineer</parameter>
+    <urltemplate />
+  </View>
+  <View name="ServiceScheduler_ServiceEngineerAssignmentsList" level="OTHER" noun="" standard="no">
+    <description>Service Engineer Assignments List View</description>
+    <parameter name="ServiceOrderID" required="yes">Service Order</parameter>
+    <parameter name="ActivityLineID" required="yes">Activity Line</parameter>
+    <parameter name="ServiceEngineerID" required="yes">Service Engineer</parameter>
+    <urltemplate />
+  </View>
+  <View name="ServiceScheduler_ServiceOrderHours" level="OTHER" noun="" standard="no">
+    <description>Service Order Hours View</description>
+    <parameter name="ServiceEngineerID" required="yes">Service Engineer</parameter>
+    <urltemplate />
+  </View>
+  <View name="ShipFromPartyMasterView" level="BOD" noun="ShipFromPartyMaster" standard="no">
+    <description />
+    <parameter name="ShipFromParty" required="yes" />
+    <urltemplate />
+  </View>
+  <View name="ShipmentLinesView" level="BOD" noun="Shipment" standard="yes">
+    <description />
+    <parameter name="ShipmentNumber" required="yes" />
+    <parameter name="ShipmentLineNumber" required="yes" />
+    <urltemplate />
+  </View>
+  <View name="ShipmentView" level="BOD" noun="Shipment" standard="yes">
+    <description />
+    <parameter name="ShipmentNumber" required="yes" />
+    <urltemplate />
+  </View>
+  <View name="ShipToPartyMasterView" level="BOD" noun="ShipToPartyMaster" standard="no">
+    <description />
+    <parameter name="ShipToParty" required="yes" />
+    <urltemplate />
+  </View>
+  <View name="SourceSystemJournalEntryView" level="BOD" noun="SourceSystemJournalEntry" standard="no">
+    <description />
+    <parameter name="SourceSystemJournalEntryID" required="yes" />
+    <urltemplate />
+  </View>
+  <View name="SundryCostMasterView" level="BOD" noun="SundryCostMaster" standard="no">
+    <description />
+    <parameter name="SundryCostID" required="yes" />
+    <urltemplate />
+  </View>
+  <View name="Supplier360NotesView" level="OTHER" noun="" standard="no">
+    <description>Supplier360 Notes View</description>
+    <parameter name="SupplierID" required="yes">Buy-from Business partner</parameter>
+    <urltemplate />
+  </View>
+  <View name="Supplier360OpenActivitiesView" level="OTHER" noun="" standard="no">
+    <description>Supplier360 Open Activities View</description>
+    <parameter name="SupplierID" required="yes">Buy-from Business partner</parameter>
+    <urltemplate />
+  </View>
+  <View name="Supplier360OpenPurchaseOrdersView" level="OTHER" noun="" standard="no">
+    <description>Supplier360 Open Purchase Orders View</description>
+    <parameter name="SupplierID" required="yes">Buy-from Business partner</parameter>
+    <urltemplate />
+  </View>
+  <View name="Supplier360OpenRequisitionsView" level="OTHER" noun="" standard="no">
+    <description>Supplier360 Open Requisitions View</description>
+    <parameter name="SupplierID" required="yes">Buy-from Business partner</parameter>
+    <urltemplate />
+  </View>
+  <View name="Supplier360OpenRFQsView" level="OTHER" noun="" standard="no">
+    <description>Supplier360 Open RFQs View</description>
+    <parameter name="SupplierID" required="yes">Buy-from Business partner</parameter>
+    <urltemplate />
+  </View>
+  <View name="Supplier360PotentialBackordersView" level="OTHER" noun="" standard="no">
+    <description>Supplier360 Potential Backorders View</description>
+    <parameter name="SupplierID" required="yes">Buy-from Business partner</parameter>
+    <urltemplate />
+  </View>
+  <View name="SupplierPlanningScheduleView" level="OTHER" noun="" standard="no">
+    <description />
+    <parameter name="PurchaseReleaseID" required="yes" />
+    <urltemplate />
+  </View>
+  <View name="SupplierQuoteView" level="BOD" noun="SupplierQuote" standard="yes">
+    <description />
+    <parameter name="SupplierQuoteID" required="yes" />
+    <urltemplate />
+  </View>
+  <View name="SupplierRMAView" level="BOD" noun="SupplierRMA" standard="yes">
+    <description />
+    <parameter name="SupplierRMA" required="yes" />
+    <urltemplate />
+  </View>
+  <View name="SupplierShipmentScheduleView" level="OTHER" noun="" standard="no">
+    <description />
+    <parameter name="PurchaseReleaseID" required="yes" />
+    <urltemplate />
+  </View>
+  <View name="SupplierView" level="BOD" noun="SupplierPartyMaster" standard="yes">
+    <description />
+    <parameter name="Supplier" required="yes" />
+    <urltemplate />
+  </View>
+  <View name="TerritoryView" level="OTHER" noun="" standard="no">
+    <description />
+    <parameter name="TerritoryId" required="yes" />
+    <urltemplate />
+  </View>
+  <View name="TransferView" level="BOD" noun="Transfer" standard="no">
+    <description />
+    <parameter name="TransferID" required="yes" />
+    <urltemplate />
+  </View>
+  <View name="WarehouseView" level="OTHER" noun="" standard="no">
+    <description />
+    <parameter name="Warehouse" required="yes" />
+    <urltemplate />
+  </View>
+</Views>

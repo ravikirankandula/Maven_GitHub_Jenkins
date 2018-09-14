@@ -1,0 +1,92 @@
+package scripts.IFS;
+
+import java.util.HashMap;
+
+import org.apache.commons.lang3.RandomStringUtils;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.testng.annotations.AfterClass;
+import org.testng.annotations.BeforeClass;
+
+import com.relevantcodes.extentreports.ExtentTest;
+
+import actions.Actions;
+import objRepository.Global;
+import reusableMethods.RM_IFS_Trial10;
+import utility.Utility;
+
+public class TS_ERPPersonID_1265 {
+	WebDriver driver;
+	ExtentTest logger;
+	Global global;
+	
+	private Utility utl;
+	
+	 public static String className;
+	    static boolean rerun=false;
+		@BeforeClass
+		public void setUp()
+		{    
+			
+			 utl=new Utility();
+			 logger=utl.initTest(this.getClass().getName().substring(this.getClass().getName().lastIndexOf(".")+1).trim());
+			 className=this.getClass().getName().toString();
+			 new Actions();
+		}
+	@AfterClass
+	public void tearDown() 
+	{
+	
+	Utility.report.endTest(logger);
+	Utility.report.flush();
+	}
+	
+	
+	HashMap<String, String> configData=Utility.getConfigData();
+	 HashMap<String, String> testData=Utility.getTestData();
+		
+		//TESTDATA
+		 String userName=configData.get("USER1");	
+
+	 String pwd=configData.get("PASSWORD");
+	 String email=testData.get("USER10");
+	 String personID=RandomStringUtils.randomNumeric(3);
+	 String entity=testData.get("ERPENTITY");
+	 String logicalID=testData.get("ERPLOGICALID");
+	@org.testng.annotations.Test
+	public void test() {
+		 
+		
+		//LOGIN
+		Global.login(userName,pwd);
+		try{
+		//UPDATE USER INFORMATION
+		RM_IFS_Trial10.create_ERPPersoinIDS(email, personID, entity, logicalID,email);
+		RM_IFS_Trial10.verifyTabUnderUser(email,"ERP Person IDs",personID);
+		Actions.pause(1);
+		Actions.click_JS(By.xpath("//a[@class='returnResult']"), "Click On back Button");
+		Actions.pause(1);
+		Actions.switchToDefaultContent();
+		RM_IFS_Trial10.delete_ERPPersonIDS( entity, logicalID,email);
+		}
+		catch (Exception e) {
+			// TODO: handle exception
+			Utility.addClass(className);
+		}
+		finally{
+		try{
+			//LOGOUT
+			Global.logOut();
+			
+			}
+			catch (Exception e) {
+				// TODO: handle exception
+			}
+			finally{
+			//DRIVER CLOSE
+			Actions.driverClose();
+			}
+		}
+	}
+	
+}

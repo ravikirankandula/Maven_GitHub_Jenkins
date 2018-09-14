@@ -1,0 +1,42 @@
+package objRepository.IFS;
+
+import org.openqa.selenium.By;
+
+public class Contacts
+/*
+ * 
+ * Objects In ExternalUsers Page.
+ * 
+ */
+{
+	public static final By moveTo_fullname=By.xpath("//div[@id='inforAddContactsDataGrid']/descendant::td[2]/div");
+	public static final By enter_FullName=By.xpath("//div[@id='inforAddContactsDataGrid']/descendant::td[2]/div/input");
+	public static final By moveTo_EmailAddress=By.xpath("//div[@id='inforAddContactsDataGrid']/descendant::td[3]/div");
+	public static final By enter_EmailAddress=By.xpath("//div[@id='inforAddContactsDataGrid']/descendant::td[3]/div/input");
+	public static final By moveTo_ContactID=By.xpath("//div[@id='inforAddContactsDataGrid']/descendant::td[4]/div");
+	public static final By enter_ContactID=By.xpath("//div[@id='inforAddContactsDataGrid']/descendant::td[4]/div/input");
+	public static final By moveto_contactGroups1=By.xpath("//div[@id='inforAddContactsDataGrid']/descendant::td[5]/div");
+	public static final By moveTo_fullname1=By.xpath("//div[@id='inforAddContactsDataGrid']/descendant::td[7]/div");
+	public static final By enter_FullName1=By.xpath("//div[@id='inforAddContactsDataGrid']/descendant::td[7]/div/input");
+	public static final By moveTo_EmailAddress1=By.xpath("//div[@id='inforAddContactsDataGrid']/descendant::td[8]/div");
+	public static final By enter_EmailAddress1=By.xpath("//div[@id='inforAddContactsDataGrid']/descendant::td[8]/div/input");
+	public static final By moveTo_ContactID1=By.xpath("//div[@id='inforAddContactsDataGrid']/descendant::td[9]/div");
+	public static final By enter_ContactID1=By.xpath("//div[@id='inforAddContactsDataGrid']/descendant::td[9]/div/input");
+	public static final By moveto_contactGroups2=By.xpath("//div[@id='inforAddContactsDataGrid']/descendant::div[25]/following::div[21]");
+	public static final By save_Contacts=By.id("btnSaveContacts");
+	public static final By addRow=By.id("addUserRow");
+	public static final By select_AllContacts=By.xpath("//span[text()='Contact ID']/../../../descendant::span[2]");
+	public static final By addContacts=By.id("add-btn");
+	public static final By enter_ContactGroupName=By.xpath("//label[text()='Name']/../descendant::input");
+	public static final By enter_contactDescription=By.id("txtDescription");
+	public static final By save_DistGrp=By.id("saveDistGroup");
+	public static final By contactGroup=By.xpath("//div[@id='inforAddContactsDataGrid']/descendant::div[25]/following::div[4]/descendant::div[8]");
+	public static final By select_ContactGrp=By.xpath("//div[text()='ConctGrop1']/../descendant::input");//"//div[@class='inforLookupHeader']/following::div[8]");
+	public static final By close_ContactGrpSelection=By.xpath("//button[@title='Close']");
+	public static final By select_AllContactGrps=By.xpath("//span[text()='Name']/../../../descendant::span[2]");
+	public static final By save_ContactGrp=By.id("saveContactGroup");
+	public static final By contactGroup_Name=By.id("dropdown-search");
+	//public static final By choose_ContactGroup=By.xpath("//button[@class='inforTriggerButton inforLookupButton']/span[text()='Open'");
+	//public static final By choose_ContactGroup=By.xpath("//div[@id='inforAddContactsDataGrid']/descendant::span[text()='Open']");
+}
+

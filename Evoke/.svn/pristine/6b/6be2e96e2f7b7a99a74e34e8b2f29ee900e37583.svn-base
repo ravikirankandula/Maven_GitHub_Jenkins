@@ -1,0 +1,149 @@
+package scripts.Admin;
+
+import java.util.HashMap;
+
+import org.apache.commons.lang3.RandomStringUtils;
+import org.testng.annotations.AfterClass;
+import org.testng.annotations.BeforeClass;
+
+import com.relevantcodes.extentreports.ExtentTest;
+
+import actions.Actions;
+import objRepository.Global;
+import reusableMethods.RM_Admin;
+import utility.Utility;
+
+public class TS_AddUsersToApp_12768 {
+	private Utility utl;
+	ExtentTest logger;
+	 HashMap<String, String> testData=Utility.getTestData();
+		
+	 HashMap<String, String> configData=Utility.getConfigData();
+		String lid=RandomStringUtils.randomNumeric(3);
+		//TESTDATA
+		 String userName=configData.get("USER5");	
+		 String userName14=testData.get("USER14");	
+		 String pwd=configData.get("PASSWORD");
+		 String appType=testData.get("UTITLITYAPP");
+		 String name=testData.get("UTILITYAPP_NAME");
+		 String desc=testData.get("UTILITYAPP_DESC");
+		 String url=testData.get("UTLITYAPP_URL");
+		 String helpurl=testData.get("UTILTYAPP_HELPURL");
+		 String host=testData.get("APP_HOST");
+		 String logical=testData.get("APP_LOGICAL");
+		 String context=testData.get("APP_CONTEXT");
+		 String tenanat=testData.get("APP_TENANT");
+		 String appName=testData.get("UTILITYAPP_APPNAME");
+		 String user=testData.get("ALTMANAGERDETAILS");
+		 String parameterName=testData.get("PARAMETER_NAME");
+		 String parameterValue=testData.get("PARAMETER_VALUE");
+		 String logicalID=testData.get("LOGICAL_ID")+lid;
+		 String deleteApp=testData.get("DELETE_APP");
+		 String selectApp=testData.get("UTILITY_APPSELECTION");
+		 String applicationName=name+RandomStringUtils.randomNumeric(3);
+		 String msg=testData.get("MESSAGE");
+		 String app;
+		 public static String className;
+		    static boolean rerun=false;
+			@BeforeClass
+			public void setUp()
+			{    
+				
+				 utl=new Utility();
+				 logger=utl.initTest(this.getClass().getName().substring(this.getClass().getName().lastIndexOf(".")+1).trim());
+				 className=this.getClass().getName().toString();
+				 new Actions();
+			}
+			@AfterClass
+			
+			public void tearDown()
+			{
+				if(rerun)
+				{
+					Utility.addClass(className);
+				}
+					
+				Utility.report.endTest(logger);
+				//Actions.driverClose();
+				Utility.report.flush();
+			}
+			
+	
+
+
+	@org.testng.annotations.Test(priority =1)
+	public void create_App(){
+		try {
+			
+			//LOGIN
+			Global.login(userName,pwd);
+			
+			 app=RM_Admin.create_InforNonProvisionedUserRole(appName, host, logical, context, tenanat,user);
+		
+			//Global.logOut();
+		} catch (Exception e) {
+			rerun=true;
+			
+		}finally
+		{
+			try{
+			Global.logOut();
+			}
+			catch (Exception e) {
+				// TODO: handle exception
+			}
+			finally{
+			Actions.driverClose();
+			}
+		}
+	}
+	@org.testng.annotations.Test(priority =2)
+	
+	public void verify_user(){
+		try {
+			Global.login(userName14,pwd);
+			RM_Admin.verify_UserRole(app);
+			//Global.logOut();
+		} catch (Exception e) {
+			rerun=true;
+			
+		}
+		finally
+		{
+			try{
+			Global.logOut();
+			}
+			catch (Exception e) {
+				// TODO: handle exception
+			}
+			finally{
+			Actions.driverClose();
+			rb_DeleteApp();
+			}
+		}
+	}
+	public void rb_DeleteApp()
+	{
+		try {
+			Global.login(userName,pwd);
+			RM_Admin.navigateToMenu("Admin Settings");
+			RM_Admin.delete_Application(app);
+			//Global.logOut();
+		} catch (Exception e) {
+			
+		}
+		finally
+		{
+			try{
+			Global.logOut();
+			}
+			catch (Exception e) {
+				// TODO: handle exception
+			}
+			finally{
+			Actions.driverClose();
+			}
+		}
+	}
+
+}

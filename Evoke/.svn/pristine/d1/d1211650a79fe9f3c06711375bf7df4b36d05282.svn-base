@@ -1,0 +1,114 @@
+package scripts.ION;
+
+import java.util.HashMap;
+
+import org.testng.annotations.AfterClass;
+import org.testng.annotations.BeforeClass;
+
+import com.relevantcodes.extentreports.ExtentTest;
+
+import actions.Actions;
+import objRepository.Global;
+
+import reusableMethods.RM_OOO;
+import utility.Utility;
+
+public class CannotassignTask_OOOUser 
+
+{
+	ExtentTest logger;
+	private Utility utl;
+	 HashMap<String, String> testData=Utility.getTestData();
+	 HashMap<String, String> configData=Utility.getConfigData();
+		
+		//TESTDATA
+		 String userName=configData.get("USER2");
+		 String userName4=configData.get("USER4");
+		 String pwd=configData.get("PASSWORD");
+		 String wfname=testData.get("WORKFLOW_NAME");
+		 String wfdesc=testData.get("WORKFLOW_DESC");
+		 String message=testData.get("WORKFLOW_MSG");
+		 String user3=testData.get("WORKFLOW_USER3");
+		 String user2=testData.get("WORKFLOW_USER2");
+		 String user4=testData.get("WORKFLOW_USER4");
+		 
+	@BeforeClass
+	public void setUp()
+	{
+		 utl=new Utility();
+		 logger=utl.initTest(this.getClass().getName().substring(this.getClass().getName().lastIndexOf(".")+1).trim());
+		 new Actions();
+	
+	}
+	@AfterClass
+	public void tearDown()
+	{
+		Utility.report.endTest(logger);
+		//Actions.driverClose();
+		Utility.report.flush();
+	}
+	
+
+
+	@org.testng.annotations.Test(priority=181)
+	public void create_WorkFlow()
+	 {
+		try {
+			
+	    //login
+		Global.login(userName,pwd);
+		
+		RM_OOO.cannotAssignTaskto_OOOUser(user3,wfname);
+		Actions.switchToDefaultContent();
+		RM_OOO.start_WorkFlowMingleAppmenu(wfname);
+		
+         } catch (Exception e) {
+			
+		}finally
+		{
+			try{
+			Global.logOut();
+			}
+			catch (Exception e) {
+				// TODO: handle exception
+			}
+			finally {
+				Actions.driverClose();
+			}
+			
+		}
+		
+     }
+	
+	
+	@org.testng.annotations.Test(priority=182)
+	public void verifyooo()
+	 {
+		try {
+			
+	    //login
+		Global.login(userName4,pwd);
+		//RM_IONDESK.cannotAssignTaskto_OOOUser(user1);
+		//RM_OOO.start_WorkFlowMingle(wfname);
+		//RM_OOO.verify_OOOmessage(wfname);
+		RM_OOO.cannotAssignTaskto_OOOUser(user2,wfname);
+		RM_OOO.delegateooo();
+		
+         } catch (Exception e) {
+			
+		}finally
+		{
+			
+			try{
+				Global.logOut();
+			}
+			catch (Exception e) {
+				// TODO: handle exception
+			}
+			finally{
+			Actions.driverClose();
+			}
+		}
+		
+     }
+}

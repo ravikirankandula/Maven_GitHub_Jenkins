@@ -1,0 +1,95 @@
+package scripts.ActivityFeed;
+
+import org.apache.commons.lang3.RandomStringUtils;
+import org.testng.annotations.AfterClass;
+import org.testng.annotations.AfterMethod;
+import org.testng.annotations.BeforeClass;
+import org.testng.annotations.Test;
+
+import actions.Actions;
+import objRepository.Global;
+import objRepository.Social.ActivityFeed;
+import objRepository.Social.Posts;
+import objRepository.Social.ShellHeader;
+import reusableMethods.RM_Social;
+import utility.Utility;
+
+public class Ts_VerifyPostOnConnectedUsersPostPage_13772 {
+	
+	private Utility utl;
+	//ExtentTest logger;
+
+	static boolean rerun=false;	
+	public static String className;
+	@BeforeClass
+	public void setUp()
+	{
+		utl=new Utility();
+		utl.initTest(this.getClass().getName().substring(this.getClass().getName().lastIndexOf(".")+1).trim());
+		className=this.getClass().getName().toString();
+		new Actions();
+	}
+		@AfterMethod
+		public void logOutAndBrowserClose()
+		{
+			Actions.logOutAndBrowserCloseMU();
+		}
+		@AfterClass
+		public void endReport() 
+		{
+			if(rerun)
+			{
+				Utility.addClass(className);
+			}
+			Actions.endScriptReportMU();
+			
+			
+		}
+		String time=RandomStringUtils.randomNumeric(4);
+		@Test
+		public void postMsg()
+		{
+		
+			try {
+				Global.login(Utility.getConfigData().get("USER7"), Utility.getConfigData().get("PASSWORD"));
+				//Actions.pause(3);
+				RM_Social.navigateToActivityPage();
+				Actions.click(ActivityFeed.privacyLink, "Open Privacy List");
+				RM_Social.selectPrivacyInAFP(Utility.getTestData().get("PRIVACY_CONNECTEDUSERS"));
+				RM_Social.typeMessageInAFP(Utility.getTestData().get("POSTMSG")+time);
+				RM_Social.clickOnPostBtnInAFP();
+				RM_Social.clickOnActivityFeed();
+				//Actions.switchtoFrame(Global.socialCLFrame, "Switch to Social Frame");
+				//Actions.verify(ActivityFeed.msgContainer, Utility.getTestData().get("POSTMSG")+time);
+				RM_Social.verifyMessage(Utility.getTestData().get("POSTMSG")+time);
+			} catch (Exception e) {
+				rerun=true;
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		@Test(dependsOnMethods={"postMsg"})
+		public void verifyMsg()
+		{
+			
+				
+				try {
+					Global.login(Utility.getConfigData().get("USER12"),Utility.getConfigData().get("PASSWORD"));
+					Actions.pause2(15);
+					Actions.click(ShellHeader.userMenu, "Click On User Menu");
+					Actions.click(ShellHeader.userMenu_Post, "Click On Posts");
+					Actions.switchtoFrame(Global.socialCLFrame, "switch to Social frame");
+					//Global.minglePageLoad_Social();
+					//Actions.pause(1);
+					Actions.verifyElement(Posts.myPosts, "My Posts");
+					//Actions.verify(ActivityFeed.msgContainer, Utility.getTestData().get("POSTMSG")+time);
+					RM_Social.verifyMessage(Utility.getTestData().get("POSTMSG")+time);
+				} catch (Exception e) {
+					rerun=true;
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+		
+		}
+
+}

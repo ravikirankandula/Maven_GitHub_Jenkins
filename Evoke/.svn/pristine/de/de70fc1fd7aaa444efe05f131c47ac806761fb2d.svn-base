@@ -1,0 +1,11 @@
+package objRepository.IFS;
+
+import org.openqa.selenium.By;
+
+public class SecurityRole {
+public static final By sec_Name=By.id("txtName");
+public static final By sec_Desc=By.id("txtDescription");
+public static final By save_SecRole=By.id("saveSecurityRole");
+public static final By documents=By.xpath("//a[text()='Documents']");
+public static final By addDoc=By.id("btnAddDocument");
+}

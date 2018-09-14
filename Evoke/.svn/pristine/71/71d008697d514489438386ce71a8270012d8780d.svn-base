@@ -1,0 +1,86 @@
+package scripts.IFS;
+
+import java.util.HashMap;
+
+import org.openqa.selenium.By;
+import org.testng.annotations.AfterClass;
+import org.testng.annotations.BeforeClass;
+import org.testng.annotations.Test;
+
+import com.relevantcodes.extentreports.ExtentTest;
+
+import actions.Actions;
+import objRepository.Global;
+import objRepository.IFS.IFSUSERS_Trial10;
+import reusableMethods.RM_IFS_Trial10;
+import utility.Utility;
+
+public class Ts_AllowedDomainempty_14745 {
+	ExtentTest logger;
+	private Utility utl;
+	 HashMap<String, String> testData=Utility.getTestData();
+	 HashMap<String, String> configData=Utility.getConfigData();
+		
+		//TESTDATA
+		 String userName=configData.get("USER1");
+		 String yahooLogin=configData.get("YAHOOUSER");
+		 String pwd=configData.get("PASSWORD");
+		 String mail=testData.get("YAHOOMAIL");
+		 String yahoouser=testData.get("YAHOOUSER");
+		 String gmaildomain=testData.get("GMAILDOMAIN");
+		 String gmail=testData.get("EXTERNALUSER1");
+	
+		 public static String className;
+		    static boolean rerun=false;
+			@BeforeClass
+			public void setUp()
+			{    
+				
+				 utl=new Utility();
+				 logger=utl.initTest(this.getClass().getName().substring(this.getClass().getName().lastIndexOf(".")+1).trim());
+				 className=this.getClass().getName().toString();
+				 new Actions();
+			}
+	@AfterClass
+	public void tearDown()
+	{
+		Utility.report.endTest(logger);
+		//Actions.driverClose();
+	
+	}
+	
+
+
+	@Test
+	public void verifyBlockedDomain(){
+		try {
+			
+			//LOGIN
+			try {
+				Global.login(userName,pwd);
+				RM_IFS_Trial10.allowedDomain(gmaildomain);
+				RM_IFS_Trial10.verify_allowedDomain(yahoouser,gmail);
+				RM_IFS_Trial10.verify_blockedDomain(yahoouser,mail);
+				Actions.click(IFSUSERS_Trial10.cancel, "click cancel");
+				RM_IFS_Trial10.rb_alloweddomain(gmaildomain);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				Utility.addClass(className);
+			}
+			
+		} catch (Exception e) {
+			
+		}finally
+		{
+			try{
+			Global.logOut();
+			}
+			catch (Exception e) {
+				// TODO: handle exception
+			}
+			finally {
+				Actions.driverClose();
+			}
+			
+		}}
+}

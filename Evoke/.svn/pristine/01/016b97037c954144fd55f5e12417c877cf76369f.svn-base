@@ -1,0 +1,104 @@
+package scripts.Admin;
+
+import java.util.HashMap;
+
+import org.apache.commons.lang3.RandomStringUtils;
+import org.testng.annotations.AfterClass;
+import org.testng.annotations.BeforeClass;
+
+import com.relevantcodes.extentreports.ExtentTest;
+
+import actions.Actions;
+import objRepository.Global;
+import objRepository.Admin.Admin_ManageApp;
+import reusableMethods.RM_Admin;
+import reusableMethods.RM_IFS_Trial10;
+import utility.Utility;
+
+public class Ts_ActorIDwhenLandmarkorLSFAppisadded_14720 {
+	private Utility utl;
+	ExtentTest logger;
+	 HashMap<String, String> testData=Utility.getTestData();
+		
+	 HashMap<String, String> configData=Utility.getConfigData();
+		String lid=RandomStringUtils.randomNumeric(3);
+		//TESTDATA
+		 String userName=configData.get("USER1");	
+		 String pwd=configData.get("PASSWORD");
+		 String appType=testData.get("UTITLITYAPP");
+		 String name=testData.get("UTILITYAPP_NAME");
+		 String desc=testData.get("UTILITYAPP_DESC");
+		 String url=testData.get("UTLITYAPP_URL");
+		 String helpurl=testData.get("UTILTYAPP_HELPURL");
+		 String host=testData.get("APP_HOST");
+		 String logical=testData.get("APP_LOGICAL");
+		 String context=testData.get("APP_CONTEXT");
+		 String tenanat=testData.get("APP_TENANT");
+		 String appName=testData.get("ACTORIDAPP_APPNAME");
+		 String user=testData.get("IONAPI_EMAILQASELECTUSER_IFS");
+		 String parameterName=testData.get("PARAMETER_NAME");
+		 String parameterValue=testData.get("PARAMETER_VALUE");
+		 String deleteApp=testData.get("DELETE_APP");
+		 String selectApp=testData.get("UTILITY_APPSELECTION");
+		 String app;
+		 public static String className;
+			@BeforeClass
+			public void setUp()
+			{    
+				
+				 utl=new Utility();
+				 logger=utl.initTest(this.getClass().getName().substring(this.getClass().getName().lastIndexOf(".")+1).trim());
+				 className=this.getClass().getName().toString();
+				 new Actions();
+			}
+	@AfterClass
+	public void tearDown()
+	{
+		Utility.report.endTest(logger);
+		//Actions.driverClose();
+		Utility.report.flush();
+	}
+	
+	
+
+
+	@org.testng.annotations.Test(priority =1)
+	public void create_App(){
+		try {
+			
+			//LOGIN
+			Global.login(userName,pwd);
+			RM_Admin.navigateToMenu("Admin Settings");
+			RM_Admin.navigateToManageApp();
+			RM_Admin.navigateToAddApp();
+			Global.minglePageLoad_Admin();
+			String app=RM_Admin.ActorIDApp(appName,host);
+			RM_IFS_Trial10.navigateToMenu("User Management");
+			RM_IFS_Trial10.ActorID();
+			RM_IFS_Trial10.select_ItemFromManage("Manage","Users");
+			RM_IFS_Trial10.searchMailID(userName);
+			RM_IFS_Trial10.drillDownUser(user);
+			Actions.verifyElementPresent(Admin_ManageApp.landmarkActoridReq_Detailstab, "Actor ID displayed under user details tab");
+			RM_IFS_Trial10.click_HeaderMenu();
+			RM_IFS_Trial10.rb_ActorID();
+			Actions.switchToDefaultContent();
+			RM_Admin.delete_Application(app);
+			//Global.logOut();
+		} catch (Exception e) {
+			
+			Utility.addClass(className);
+			
+		}finally
+		{
+			try{
+			Global.logOut();
+			}
+			catch (Exception e) {
+				// TODO: handle exception
+			}
+			finally{
+			Actions.driverClose();
+			}
+		}
+	}
+}

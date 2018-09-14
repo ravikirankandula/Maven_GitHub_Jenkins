@@ -1,0 +1,128 @@
+package scripts.ION;
+
+import java.util.HashMap;
+
+import org.testng.annotations.AfterClass;
+import org.testng.annotations.BeforeClass;
+import org.testng.annotations.Test;
+
+import com.relevantcodes.extentreports.ExtentTest;
+
+import actions.Actions;
+import objRepository.Global;
+import reusableMethods.RM_IONDESK;
+import utility.Utility;
+
+public class Complete_allTasksin_Workflow
+{
+	ExtentTest logger;
+	private Utility utl;
+	 HashMap<String, String> testData=Utility.getTestData();
+	 HashMap<String, String> configData=Utility.getConfigData();
+		
+		//TESTDATA
+		 String userName=configData.get("USER2");
+		 String user3=configData.get("USER3");
+		 String user4=configData.get("USER4");
+		 String pwd=configData.get("PASSWORD");
+		 String multitaskwf=testData.get("WORKFLOW_NAME1");
+		 
+	@BeforeClass
+	public void setUp()
+	{
+		 utl=new Utility();
+		 logger=utl.initTest(this.getClass().getName().substring(this.getClass().getName().lastIndexOf(".")+1).trim());
+		 new Actions();
+	
+	}
+	@AfterClass
+	public void tearDown()
+	{
+		Utility.report.endTest(logger);
+		//Actions.driverClose();
+	
+	}
+	
+
+
+	@org.testng.annotations.Test(priority=161)
+	public void startflow()
+	 {
+		try {
+			
+	    //login
+		Global.login(userName,pwd);
+		RM_IONDESK.start_MultiWorkFlow(multitaskwf);
+		RM_IONDESK.verify_task2completion();
+		
+		 
+         } catch (Exception e) {
+			
+		}finally
+		{
+			Global.logOut();
+			Actions.driverClose();
+		}
+		
+     }
+	@org.testng.annotations.Test(priority=162)
+	public void task1_Flowuser4()
+	 {
+		try {
+			
+	    //login
+		Global.login(user4,pwd);
+		RM_IONDESK.verify_task1completion(multitaskwf);
+		
+		 
+         } catch (Exception e) {
+			
+		}finally
+		{
+			Global.logOut();
+			Actions.driverClose();
+		}
+		
+     }
+	@org.testng.annotations.Test(priority=163)
+	public void start_Flowuser12()
+	 {
+		try {
+			
+	    //login
+		Global.login(user3,pwd);
+		RM_IONDESK.verify_Notifcompletion(multitaskwf);
+		
+		 
+         } catch (Exception e) {
+			
+		}finally
+		{
+			Global.logOut();
+			Actions.driverClose();
+		}
+		
+     }
+	
+	@org.testng.annotations.Test(priority=165)
+	public void removeuser2()
+	 {
+		try {
+			
+	    //login
+		Global.login(userName,pwd);
+		RM_IONDESK.navigateToActivityPagemingle();
+		RM_IONDESK.navigate_StreamsWF();
+		RM_IONDESK.remove_WorkFlow(multitaskwf);
+		
+		 
+         } catch (Exception e) {
+			
+		}finally
+		{
+			Global.logOut();
+			Actions.driverClose();
+		}
+		
+     }
+}

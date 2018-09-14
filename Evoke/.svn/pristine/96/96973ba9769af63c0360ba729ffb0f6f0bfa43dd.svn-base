@@ -1,0 +1,125 @@
+package scripts.IONAPI;
+
+import java.util.HashMap;
+
+import org.apache.commons.lang3.RandomStringUtils;
+import org.openqa.selenium.WebDriver;
+import org.testng.annotations.AfterClass;
+import org.testng.annotations.BeforeClass;
+
+import com.relevantcodes.extentreports.ExtentTest;
+
+import actions.Actions;
+import objRepository.Global;
+import reusableMethods.RM_IONAPI;
+import utility.Utility;
+
+public class TS_NonInfor_12783_12798_12793_12794 {
+	WebDriver driver;
+	ExtentTest logger;
+	Global global;
+	 HashMap<String, String> testData=Utility.getTestData();
+		
+	 HashMap<String, String> configData=Utility.getConfigData();
+		
+		//TESTDATA
+		 String userName=configData.get("USER14");	
+		 String pwd=configData.get("PASSWORD");
+		 String name=testData.get("TD_IONAPI_PROVISONEDSUITE_APPNAME");
+		 String suiteName=testData.get("TD_IONAPI_PROVISIONEDSUITE_ENDPOINT_DEPLOYMENT");
+		 String apiContext=testData.get("TD_IONAPI_INFORSUITE_CONTEXT")+RandomStringUtils.randomNumeric(3);
+		 String desc=testData.get("IONAPI_ANDROIDEDIT");
+		 String targetUrl=testData.get("TD_IONAPI_INFORSUITETARGETENDPOINTURL");
+		 String proxyUrl=testData.get("TD_IONAPI_INFORSUITEPROXYENDPOINT");
+		 String targetEndPoint=testData.get("TD_IONAPI_PROVISIONEDSUITE_ACCESSKEY");
+		 String secretKey=testData.get("TD_IONAPI_PROVISIONEDSUITE_SECRETEKEY");
+		 String targetEndPointDetails=testData.get("TD_IONAPI_INFORSUITEEDITEDENDPOINTURL");
+			 
+		
+		 String proxyendPointURL=testData.get("TD_IONAPI_INFORSUITEPROXYENDPOINTRUL1");
+		
+		 String location=testData.get("TD_IONAPI_PROVISIONEDSUITE_ENDPOINT_DEPLOYMENTCONTEXT");
+		 String editedSuite=testData.get("TD_IONAPI_INOREDITEDSUITE");
+		 String editedDesc=testData.get("TD_IONAPI_INOREDITEDSUITEDESC");
+		 String applicationName=suiteName+RandomStringUtils.randomNumeric(3);
+		
+	
+	private Utility utl;
+	
+	public static String className;
+	@BeforeClass
+	public void setUp()
+	{    
+
+		utl=new Utility();
+		logger=utl.initTest(this.getClass().getName().substring(this.getClass().getName().lastIndexOf(".")+1).trim());
+		className=this.getClass().getName().toString();
+		new Actions();
+	}
+	@AfterClass
+	public void tearDown()
+	{
+	
+	Utility.report.endTest(logger);
+	Utility.report.flush();
+	}
+	
+	
+
+	@org.testng.annotations.Test
+	public void test() {
+		try{
+		
+		
+		//LOGIN
+		Global.login(userName,pwd);
+		RM_IONAPI.create_NonIforSuite(name, applicationName, apiContext, desc, targetUrl, proxyUrl, targetEndPoint, secretKey, targetEndPointDetails, targetEndPoint, secretKey, proxyendPointURL,suiteName,location,location,editedSuite+applicationName,editedDesc);
+		
+		
+		}
+		catch (Exception e) {
+			Utility.addClass(className);
+			// TODO: handle exception
+		}
+		finally{
+			try{
+		//LOGOUT
+		Global.logOut();
+			}
+			catch (Exception e) {
+				// TODO: handle exception
+			}
+			finally{
+		//DRIVER CLOSE
+		Actions.driverClose();
+		rb_DeleteApp();
+			}
+		}
+		
+
+	}
+	public void rb_DeleteApp()
+	{
+		try {
+			Global.login(userName,pwd);
+			RM_IONAPI.verify_EndPointSuite("Non-Infor Suites", editedSuite+applicationName, targetEndPointDetails);
+			
+			RM_IONAPI.delete_Suite("Non-Infor Suites",editedSuite+applicationName);
+		
+		} catch (Exception e) {
+			
+		}
+		finally
+		{
+			try{
+			Global.logOut();
+			}
+			catch (Exception e) {
+				// TODO: handle exception
+			}
+			finally{
+			Actions.driverClose();
+			}
+		}
+	}
+}

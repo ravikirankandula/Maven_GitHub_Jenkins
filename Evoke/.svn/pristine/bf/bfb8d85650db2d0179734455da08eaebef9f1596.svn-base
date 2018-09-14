@@ -1,0 +1,1315 @@
+/**
+ * 
+ */
+package reusableMethods;
+
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.List;
+import java.util.concurrent.TimeUnit;
+
+import org.apache.commons.lang3.RandomStringUtils;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
+
+import actions.Actions;
+import objRepository.Global;
+import objRepository.Admin.Admin_Context;
+import objRepository.Admin.Admin_ManageApp;
+import objRepository.Admin.ProfileInformation;
+import objRepository.IONDesk.WorkFlow;
+import objRepository.Social.AppMenu;
+import objRepository.Social.ShellHeader;
+import utility.Utility;
+
+public class RM_Admin {
+	//NAVIGATE TO USER MENU
+	public static void navigateToMenu(String menu)
+	{
+		Actions.click(ShellHeader.userMenu, "Click on User Menu");
+		Actions.verifyElement(By.xpath("//span[text()='"+menu+"']"), "Verify presence of 'Menu' Item"+menu);
+		Actions.click(By.xpath("//span[text()='"+menu+"']"), "Click on Menu Details"+menu);
+	}
+
+	
+	//NAVIGATE TO Manage Context
+	public static void navigateToManageContext()
+	{
+		
+		Actions.pause1(1);
+		Actions.verifyElement(Admin_Context.manage_Context_UtitlityApp, "Verify presence of 'Context/Utility Link' ");
+		//Actions.verifyElement(Alerts.busyindicator, "loading");
+		Actions.explicitWait_InVisibilityOfElement();
+		Actions.waitUntill_PleaseWait();
+		//Actions.pause1(4);
+		Actions.click(Admin_Context.manage_Context_UtitlityApp, "Click on Context/Utility App");
+
+	}		
+
+	//NAVIGATE TO Manage App
+	public static void navigateToManageApp()
+	{
+		Actions.verifyElement(Admin_ManageApp.manageApp, "Verify presence of 'Manage Application Link' ");
+		//Actions.pause1(3);
+		Actions.explicitWait_InVisibilityOfElement();
+		Actions.waitUntill_PleaseWait();
+		Actions.click_JS(Admin_ManageApp.manageApp, "Click on Manage Application");
+	}
+
+	//NAVIGATE TO Manage App
+		public static void navigateToManageDrillBacks()
+		{
+			/*Actions.verifyElement(Admin_ManageApp.drillBack, "Verify presence of 'Manage Drill Backs Link' ");
+			//Actions.pause1(3);*/
+			Actions.explicitWait_InVisibilityOfElement();
+			Actions.waitUntill_PleaseWait();
+			Actions.verifyElement(Admin_ManageApp.drillBack, "Verify presence of 'Manage Drill Backs Link' ");
+			Actions.pause1(5);
+			Actions.dblClick(Admin_ManageApp.drillBack, "Click on Manage Drill Backs");
+		}
+	//NAVIGATE TO Manage App
+	public static void navigateToAddApp()
+	{
+		//Actions.pause1(1.5);
+		Actions.explicitWait_InVisibilityOfElement();
+		Actions.verifyElement(Admin_ManageApp.addApp, "Verify presence of 'Add Application' button");
+		Actions.click(Admin_ManageApp.addApp, "Click on Add Application");
+	}
+	//NAVIGATE TO Add Context
+	public static void navigateToAddContext()
+	{
+		Actions.verifyElement(Admin_Context.add_Context_UtitlityApp, "Verify presence of 'Context/Utility App' button");
+		Actions.click(Admin_Context.add_Context_UtitlityApp, "Click on Add Context/Utility App Button");
+	}
+	
+	//Create Context Type
+	public static void createContext(String type,String appName,String desc,String url,String hepUrl)
+	{
+		Actions.verifyElement(Admin_Context.add_Context_UtitlityApp_Type, "Verify presence of ' App type' button");
+		Actions.select(Admin_Context.add_Context_UtitlityApp_Type, type, "Select the app type");
+		Actions.type(Admin_Context.add_Context_UtitlityApp_Name,appName,"Context/Utilityp App Name");
+		Actions.type(Admin_Context.add_Context_UtitlityApp_Desc,desc,"Context/Utilityp App Desc");
+		Actions.type(Admin_Context.add_Context_UtitlityApp_URL,url,"Context/Utilityp App URL");
+		Actions.type(Admin_Context.add_Context_UtitlityApp_HelpURL,hepUrl,"Context/Utilityp App Help URL");
+		Actions.click(Admin_Context.add_Context_UtitlityApp_Save, "Click on Add Context/Utility Save");
+		Actions.click(Admin_Context.ok, "Click on Ok");
+	}
+	
+	
+	//ADD NEW APPLICATION
+	public static String add_InforNonProvisonedApp(String appName,String host,String logical,String context,String tenanat){
+		Actions.explicitWait_InVisibilityOfElement();
+		Actions.waitUntill_PleaseWait();
+		HashMap<String, String> testData=Utility.getConfigData();
+		String env=testData.get("ENVIRONMENT").toUpperCase();
+		System.out.println(env);
+		String appNameDetails = null;
+		switch(env)
+		{
+
+		case "CLOUD":
+		{
+			Actions.pause1(.5);
+			Actions.verifyElementPresent(Admin_ManageApp.appType_NonProvisioned, " Verify presence of 'Non Provisioned Radio Button'");
+			Actions.pause1(.9);
+			Actions.click_JS(Admin_ManageApp.appType_NonProvisioned, "Select Infor Non Provisioned");
+			Actions.verifyElementPresent(Admin_ManageApp.nonProvisoned_AppName, " Verify presence of 'Select App Name'");
+			//Actions.select(Admin_ManageApp.nonProvisoned_AppName, appName, "Select the app Name");
+			//Global.minglePageLoad_Admin()
+			Actions.selectBy2Index(By.xpath("//label[text()='Application Name']/following::select"), "Select the app");
+			//Actions.verifyElement(By.name("display_name"), "Display App Name");
+			Actions.pause1(1);
+			 appNameDetails=Actions.getAttribute(Admin_ManageApp.nonProvisionedDisplayName,"value");
+			System.out.println(appNameDetails+"**************");
+			
+			Actions.click(Admin_ManageApp.nonProvisioned_ChooseIcon, "Click On Choose Icon button");
+			Actions.click(Admin_ManageApp.nonProvisioned_SelectIcon, "Select Icon from the list");
+			Actions.click(Admin_ManageApp.nonProvisioned_ChooseIcon_Done, "Done button");
+			Actions.pause1(1);
+			String logicalID=RandomStringUtils.randomNumeric(2);
+			Actions.type(Admin_ManageApp.nonProvisoned_LogicalID,logicalID,"Logical Id Details:");
+			Actions.type(Admin_ManageApp.nonProvisioned_Host,host,"Host Details:");
+			
+			/*Actions.type(Admin_ManageApp.nonProvisoned_context,logical,"Context Details:");
+			Actions.type(Admin_ManageApp.nonProvisoned_Tenant,logical,"Tenant Details:");*/
+			save();
+			break;
+		}
+		case "OP":
+		{
+			Actions.pause1(.5);
+			Actions.verifyElementPresent(Admin_ManageApp.appType_NonProvisioned_OP, " Verify presence of 'Non Provisioned Radio Button'");
+			Actions.pause1(.9);
+			Actions.click_JS(Admin_ManageApp.appType_NonProvisioned_OP, "Select Infor Non Provisioned");
+			Actions.verifyElementPresent(Admin_ManageApp.nonProvisoned_AppName, " Verify presence of 'Select App Name'");
+			//Actions.select(Admin_ManageApp.nonProvisoned_AppName, appName, "Select the app Name");
+			//Global.minglePageLoad_Admin()
+			Actions.selectBy2Index(By.xpath("//label[text()='Application Name']/following::select"), "Select the app");
+			//Actions.verifyElement(By.name("display_name"), "Display App Name");
+			//Actions.pause1(.5);
+			 appNameDetails=Actions.getAttribute(Admin_ManageApp.nonProvisionedDisplayName,"value");
+			System.out.println(appNameDetails+"**************");
+			Actions.click(Admin_ManageApp.nonProvisioned_ChooseIcon, "Click On Choose Icon button");
+			Actions.click(Admin_ManageApp.nonProvisioned_SelectIcon, "Select Icon from the list");
+			Actions.click(Admin_ManageApp.nonProvisioned_ChooseIcon_Done, "Done button");
+			//Actions.pause1(1);
+			String logicalID=RandomStringUtils.randomNumeric(2);
+			Actions.type(Admin_ManageApp.nonProvisoned_LogicalID,logicalID,"Logical Id Details:");
+			Actions.type(Admin_ManageApp.nonProvisioned_Host,host,"Host Details:");
+			
+			/*Actions.type(Admin_ManageApp.nonProvisoned_context,logical,"Context Details:");
+			Actions.type(Admin_ManageApp.nonProvisoned_Tenant,logical,"Tenant Details:");*/
+			save();
+			break;
+		}
+		}	
+		
+		return appNameDetails;
+	}
+	//SAVE Admin
+	public static void save(){
+		Actions.pause1(1);
+		Actions.click(Admin_Context.saveApp, "Click on Save");
+		Actions.click(Admin_Context.ok, "Click on Ok");
+	}
+	
+	//SAVE Admin
+		public static void saveApp(){
+			
+			Actions.scrollToElement(Admin_Context.save);
+			Actions.click_JS(Admin_Context.save, "Click on Save");
+			Actions.click(Admin_Context.ok, "Click on Ok");
+		}
+	//APPLICATIONS PERMISSSION TAB
+	public static void applicationDetails_PermssionsTab(String user){
+		//Actions.pause1(2);
+		Actions.explicitWait_InVisibilityOfElement();
+		Actions.waitUntill_PleaseWait();
+		//Actions.verifyElement(Admin_ManageApp.nonProvisioned_PermisssionsTab, "Verify presence of 'Permission' Tab");
+		Actions.click(Admin_ManageApp.nonProvisioned_PermisssionsTab, "Click on Permissions Tab");
+		//Actions.verifyElement(Admin_ManageApp.nonProvisoned_Permsiions_AddUser, "Verify presence of 'Add Users' button");
+		Actions.explicitWait_InVisibilityOfElement();
+		Actions.waitUntill_PleaseWait();
+		//Actions.pause1(2);
+		Actions.click(Admin_ManageApp.nonProvisoned_Permsiions_AddUser, "Click on Permissions Add User");
+		Global.minglePageLoad_Admin();
+		Actions.explicitWait_InVisibilityOfElement();
+		Actions.waitUntill_PleaseWait();
+		Actions.type(Admin_ManageApp.nonProvisoned_enterUserName,user,"Enter User Details:");
+		Actions.pause1(3);
+		Actions.explicitWait_InVisibilityOfElement();
+		Actions.waitUntill_PleaseWait();
+		Actions.pause1(3);
+		//Actions.verifyElement(By.xpath("//div[text()='"+user+"']/../../descendant::label"), "Verify presence of  Check Box");
+		Actions.click(By.xpath("//div[text()='"+user+"']/../../descendant::label"), "Click on Select User Check Box");
+		Actions.explicitWait_InVisibilityOfElement();
+		Actions.waitUntill_PleaseWait();
+		Actions.pause1(2);
+		Actions.click(Admin_Context.done, "Click on Done");
+		Actions.explicitWait_InVisibilityOfElement();
+		Actions.waitUntill_PleaseWait();
+		Actions.pause1(1);
+		saveApp();
+	}
+	//APPLICATIONS Context TAB
+	public static void applicationDetails_ContextTab(String app){
+		//Actions.verifyElement(Admin_ManageApp.nonProvisioned_ContextTab, "Verify presence of 'Context' Tab");
+	//	Actions.pause1(2);
+		Actions.explicitWait_InVisibilityOfElement();
+		Actions.waitUntill_PleaseWait();
+		Actions.click(Admin_ManageApp.nonProvisioned_ContextTab, "Click on Context Tab");
+		Actions.explicitWait_InVisibilityOfElement();
+		Actions.waitUntill_PleaseWait();
+		//Actions.verifyElement(Admin_ManageApp.nonProvisioned_AddRemove, "Verify presence of 'Add Remove' button");
+		Actions.click(Admin_ManageApp.nonProvisioned_AddRemove, "Click on Context Add Remove");
+		Actions.explicitWait_InVisibilityOfElement();
+		Actions.waitUntill_PleaseWait();
+		Actions.click(By.xpath("//a[text()='Utility Apps']"), "Click on App");
+		Actions.explicitWait_InVisibilityOfElement();
+		Actions.waitUntill_PleaseWait();
+		Actions.click(By.xpath("//div[@title='"+app+"']"), "Click on Available User");
+		Actions.explicitWait_InVisibilityOfElement();
+		Actions.waitUntill_PleaseWait();
+	//	Actions.pause1(1);	
+		Actions.makeElementVisible("block;height:10px;width:10px", Admin_ManageApp.nonProvisioned_rightArrow);
+		//Actions.pause1(1);
+		Actions.explicitWait_InVisibilityOfElement();
+		Actions.waitUntill_PleaseWait();
+		Actions.click_JS(Admin_ManageApp.nonProvisioned_rightArrow, "Click on Right Arrow ");
+		Actions.click(Admin_Context.done, "Click on Done");
+		saveApp();
+	}
+
+	
+	//APPLICATIONS Context TAB
+		public static void applicationDetails_ContextTabForContext(String app){
+			//Actions.verifyElement(Admin_ManageApp.nonProvisioned_ContextTab, "Verify presence of 'Context' Tab");
+			//Actions.pause1(2);
+			Actions.explicitWait_InVisibilityOfElement();
+			Actions.waitUntill_PleaseWait();
+			Actions.click(Admin_ManageApp.nonProvisioned_ContextTab, "Click on Context Tab");
+			Actions.explicitWait_InVisibilityOfElement();
+			Actions.waitUntill_PleaseWait();
+			//Actions.verifyElement(Admin_ManageApp.nonProvisioned_AddRemove, "Verify presence of 'Add Remove' button");
+			Actions.click(Admin_ManageApp.nonProvisioned_AddRemove, "Click on Context Add Remove");
+			Actions.explicitWait_InVisibilityOfElement();
+			Actions.waitUntill_PleaseWait();
+			Actions.click(By.xpath("//a[contains(text(),'Context Apps')]"), "Click on App");
+			Actions.explicitWait_InVisibilityOfElement();
+			Actions.waitUntill_PleaseWait();
+			Actions.click_JS(By.xpath("//div[@title='"+app+"']"), "Click on Available User");
+			Actions.explicitWait_InVisibilityOfElement();
+			Actions.waitUntill_PleaseWait();
+			//Actions.pause1(1);	
+			Actions.makeElementVisible("block;height:10px;width:10px", Admin_ManageApp.nonProvisioned_rightArrow);
+			//Actions.pause1(1);
+			Actions.explicitWait_InVisibilityOfElement();
+			Actions.waitUntill_PleaseWait();
+			Actions.click_JS(Admin_ManageApp.nonProvisioned_rightArrow, "Click on Right Arrow ");
+			Actions.click(Admin_Context.done, "Click on Done");
+			saveApp();
+		}
+		//APPLICATIONS Context TAB
+				public static void applicationDetails_MultiContextTabForContext(String app,String app1){
+					//Actions.verifyElement(Admin_ManageApp.nonProvisioned_ContextTab, "Verify presence of 'Context' Tab");
+					//Actions.pause1(2);
+					Actions.explicitWait_InVisibilityOfElement();
+					Actions.waitUntill_PleaseWait();
+					Actions.click(Admin_ManageApp.nonProvisioned_ContextTab, "Click on Context Tab");
+					Actions.explicitWait_InVisibilityOfElement();
+					Actions.waitUntill_PleaseWait();
+					//Actions.verifyElement(Admin_ManageApp.nonProvisioned_AddRemove, "Verify presence of 'Add Remove' button");
+					Actions.click(Admin_ManageApp.nonProvisioned_AddRemove, "Click on Context Add Remove");
+					Actions.explicitWait_InVisibilityOfElement();
+					Actions.waitUntill_PleaseWait();
+					Actions.click(By.xpath("//a[@data-infor-translate='Context_Apps']"), "Click on App");
+					Actions.explicitWait_InVisibilityOfElement();
+					Actions.waitUntill_PleaseWait();
+					Actions.click(By.xpath("//div[@title='"+app+"']"), "Click on Available User");
+					Actions.click(By.xpath("//div[@title='"+app1+"']"), "Click on Available User");
+					Actions.explicitWait_InVisibilityOfElement();
+					Actions.waitUntill_PleaseWait();
+					//Actions.pause1(1);	
+					Actions.makeElementVisible("block;height:10px;width:10px", Admin_ManageApp.nonProvisioned_rightArrow);
+					//Actions.pause1(1);
+					Actions.explicitWait_InVisibilityOfElement();
+					Actions.waitUntill_PleaseWait();
+					Actions.click_JS(Admin_ManageApp.nonProvisioned_rightArrow, "Click on Right Arrow ");
+					
+					Actions.click(Admin_Context.done, "Click on Done");
+					saveApp();
+				}
+	//APPLICATIONS Context TAB
+	public static void applicationDetails_CustomeTab(String name,String value){
+		Actions.verifyElement(Admin_ManageApp.nonProvisioned_customParamteres, "Verify presence of 'Custome Parameter' Tab");
+		Actions.click(Admin_ManageApp.nonProvisioned_customParamteres, "Click on CustomParameters Tab");
+		Actions.click(Admin_ManageApp.nonProvisioned_AddcustomParamteres, "Click on Add New Custome Parameters");
+		Actions.type(Admin_ManageApp.nonProvisioned_ParameterName,name,"Enter Parameter Name:");
+		Actions.type(Admin_ManageApp.nonProvisioned_ParameterValue,value,"Enter Parameter Value:");
+		Actions.click(Admin_Context.done, "Click on Done");
+		saveApp();
+	}
+
+	//APPLICATIONS Context TAB
+	public static void applicationDetails_LogicalIDTab(String logicalID){
+		Actions.explicitWait_InVisibilityOfElement();
+		Actions.waitUntill_PleaseWait();
+		//Actions.verifyElement(Admin_ManageApp.nonProvisioned_logicalIDTab, "Verify presence of 'Logical' Tab");
+		Actions.click(Admin_ManageApp.nonProvisioned_logicalIDTab, "Click on LogicalID Tab");
+		Actions.explicitWait_InVisibilityOfElement();
+		Actions.waitUntill_PleaseWait();
+		Actions.click(Admin_ManageApp.nonProvisioned_logicalID_Add, "Click on Add New Logical ID");
+		Actions.explicitWait_InVisibilityOfElement();
+		Actions.waitUntill_PleaseWait();
+		Actions.type(Admin_ManageApp.nonProvisioned_logicalID,logicalID,"Enter LogicalID:");
+		Actions.explicitWait_InVisibilityOfElement();
+		Actions.waitUntill_PleaseWait();
+		Actions.click(Admin_Context.done, "Click on Done");
+		Actions.explicitWait_InVisibilityOfElement();
+		Actions.waitUntill_PleaseWait();
+		saveApp();
+	}
+
+	//ADD INFOR PROVISIONED APP
+	public static void addInforProvisonedApp(String app,String appName){
+		navigateToMenu("Admin Settings");
+		navigateToManageApp();
+		if(Actions.verifyElementPresent(By.xpath("//ul[@class='icon-block-absolute-admin']/descendant::li/a[@title='"+app+"']"), "Verify presence of 'Application'")){
+			
+		
+		Actions.click(By.xpath("//ul[@class='icon-block-absolute-admin']/descendant::li/a[@title='"+app+"']"), "Select  App");
+		Actions.click(Admin_ManageApp.delete_App, "Click on Delete Application");
+		Actions.click(Global.yes, "Click On Yes");
+		}
+		navigateToAddApp();
+		Actions.impwait();
+		Global.minglePageLoad_Admin();
+		//Actions.click(Admin_ManageApp.appType_InforProvisioned, "Click on  Infor Provisioned");
+		Actions.select(Admin_ManageApp.nonProvisoned_AppName, appName, "Select the app Name");
+		Actions.getAttribute(By.xpath("//input[@name='display_name']"), "value");
+		Actions.click(Admin_ManageApp.nonProvisioned_ChooseIcon, "Click On Choose Icon button");
+		Actions.click(Admin_ManageApp.nonProvisioned_SelectIcon, "Select Icon from the list");
+		Actions.click(Admin_ManageApp.nonProvisioned_ChooseIcon_Done, "Done button");
+		save();
+	}
+	//ADD NON INOFR APP
+	public static void addNonInforApp(String appName,String appUrl){
+		//Actions.impwait();
+		//Actions.verifyElement(Admin_ManageApp.appType_NonInfor, "Verify presence of 'Non Infor Provisoined' button");
+		//Global.minglePageLoad_Admin();
+		
+		Actions.explicitWait_InVisibilityOfElement();
+		Actions.waitUntill_PleaseWait();
+		
+		Actions.pause1(2);
+		Actions.click_JS(Admin_ManageApp.appType_NonInfor, "Click on Non Infor App Type");
+		Actions.type(Admin_ManageApp.nonInfor_AppName,appName,"Enter appName:");
+		Actions.type(Admin_ManageApp.nonInfor_AppRUL,appUrl,"Enter appUrl:");
+		Global.minglePageLoad_Admin();
+		Actions.pause1(5);
+		Actions.click_JS(Admin_ManageApp.nonProvisioned_ChooseIcon, "Click On Choose Icon button");
+		//Actions.pause1(1);
+		Actions.click(Admin_ManageApp.nonProvisioned_SelectIcon, "Select Icon from the list");
+		//Actions.pause1(1);
+		Actions.click(Admin_ManageApp.nonInfor_SubIcon, "Select  Sub Icon from the list");
+		//Actions.pause1(1);
+		Actions.click(Admin_ManageApp.nonProvisioned_ChooseIcon_Done, "Done button");
+		save();
+	}
+	//ADD CONTEXT OR UTILITY APP
+	public static void addContextOrUtitlityApp(String type,String name,String description,String url,String helpURL){
+		navigateToMenu("Admin Settings");
+		Actions.impwait();
+		navigateToManageContext();
+		navigateToAddContext();
+		createContext(type,name,description,url,helpURL);
+
+	}
+	public static void add_Messages(String msg){
+		Actions.click(Admin_Context.contextMessage, "Click on Context Messages");
+		Actions.verifyElement(Admin_Context.addMsg, "Verify presence of add message button");
+		Actions.click(Admin_Context.addMsg, "click on add message button");
+		Actions.type(Admin_Context.msgName, msg, "Enter Message:"+msg);
+		Actions.click(Admin_Context.done, "Click On Done");
+		Actions.pause1(1);
+		/*Actions.click(By.xpath("//button[@data-ng-click='onSave(null,ctxappdetails)']"), "Click on Add Context/Utility Save");
+		Actions.click(Admin_Context.ok, "Click on Ok");*/
+		Actions.click(Admin_Context.add_Context_UtitlityApp_Save, "Click on Add Context/Utility Save");
+		Actions.click(Admin_Context.ok, "Click on Ok");
+	}
+	
+	public static String dp_Name(String app){
+		String msg=app+RandomStringUtils.randomNumeric(3);
+		Actions.verifyElement(By.xpath("//label[text()='Display Name']/following::input"), "Verify the presenc of the app Name");
+		Actions.clearText(By.xpath("//label[text()='Display Name']/following::input"), "Clear the app Name");
+		Actions.pause1(2);
+		System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! app:"+msg);
+		Actions.type(By.xpath("//label[text()='Display Name']/following::input"), msg, "Edit the app Name");
+		String appDetails=Actions.getAttribute(By.xpath("//label[text()='Display Name']/following::input"),"value");
+		System.out.println(appDetails+"*************@@@@@@@@@@@@@@");
+		saveApp();
+		return appDetails;
+		
+	}
+	//CREATE  INFOR NonPROVISIONED 
+	public static String create_InforNonPropvisioned(String appName,String host,String logical,String context,String tenanat,String user,String ocntextApp,String name,String value,String logicaID){
+		Actions.pause1(1);
+		navigateToManageApp();
+		Actions.pause1(2);
+		navigateToAddApp();
+		Global.minglePageLoad_Admin();
+		String app=add_InforNonProvisonedApp(appName,host,logical,context,tenanat);
+		applicationDetails_PermssionsTab(user);
+		//String appDetails=dp_Name(app);
+		applicationDetails_ContextTab(ocntextApp);
+		add_ScreenIDs(ocntextApp);
+		applicationDetails_CustomeTab(name,value);
+		applicationDetails_LogicalIDTab(logicaID);
+		return app;
+
+	}
+	//CREATE  INFOR NonPROVISIONED 
+		public static String create_InforNonPropvisionedContext(String appName,String host,String logical,String context,String tenanat,String user,String ocntextApp,String name,String value,String logicaID){
+			Actions.pause1(1);
+			navigateToManageApp();
+			navigateToAddApp();
+			Global.minglePageLoad_Admin();
+			String app=add_InforNonProvisonedApp(appName,host,logical,context,tenanat);
+			System.out.println(app+"******************");
+			applicationDetails_PermssionsTab(user);
+			//String appDetails=dp_Name(app);
+			applicationDetails_ContextTabForContext(ocntextApp);
+			add_ScreenIDs(ocntextApp);
+			applicationDetails_CustomeTab(name,value);
+			applicationDetails_LogicalIDTab(logicaID);
+			return app;
+
+		}
+		public static String create_multipleContext(String appName,String host,String logical,String context,String tenanat,String user,String contextApp,String contextApp2,String name,String value,String logicaID)
+		{
+		navigateToAddApp();
+		Global.minglePageLoad_Admin();
+		String app=add_InforNonProvisonedApp(appName,host,logical,context,tenanat);
+		applicationDetails_PermssionsTab(user);
+		//String multiappDetails=dp_Name(app);
+		applicationDetails_ContextTabForContext(contextApp);
+		
+		add_ScreenIDs(contextApp);
+		System.out.println("This Is Secound App : "+contextApp2+"*****************");
+		applicationDetails_ContextTabForContext(contextApp2);
+		add_ScreenIDs(contextApp2);
+		applicationDetails_CustomeTab(name,value);
+		applicationDetails_LogicalIDTab(logicaID);
+		return app;
+		}
+		
+		public static String create_multipleContext1(String appName,String host,String logical,String context,String tenanat,String user,String contextApp,String contextApp2,String name,String value,String logicaID)
+		{
+		navigateToAddApp();
+		Global.minglePageLoad_Admin();
+		String app=add_InforNonProvisonedApp(appName,host,logical,context,tenanat);
+		applicationDetails_PermssionsTab(user);
+		String multiappDetails=dp_Name(app);
+		applicationDetails_ContextTabForContext(contextApp);
+		
+		//add_ScreenIDs(contextApp);
+		System.out.println("This Is Secound App : "+contextApp2+"*****************");
+		applicationDetails_ContextTabForContext(contextApp2);
+		//add_ScreenIDs(contextApp2);
+		applicationDetails_CustomeTab(name,value);
+		applicationDetails_LogicalIDTab(logicaID);
+		return multiappDetails;
+		}
+		
+		
+		
+	public static String create_InforNonProvisionedUserRole(String appName,String host,String logical,String context,String tenanat,String user,String url){
+		navigateToMenu("Admin Settings");
+		Actions.pause1(1);
+		navigateToManageApp();
+		navigateToAddApp();
+		Global.minglePageLoad_Admin();
+		
+		String app=add_InforNonProvisonedApp(appName,host,logical,context,tenanat);
+		
+		applicationDetails_PermssionsTab(user);
+		return app;
+	}
+	
+	//CREATE  INFOR NonPROVISIONED 10 apps 
+		public static String create_10apps(String appName,String host,String logical,String context,String tenanat){
+			Actions.pause1(1);
+			navigateToManageApp();
+			navigateToAddApp();
+			Global.minglePageLoad_Admin();
+			String app=add_InforNonProvisonedApp(appName,host,logical,context,tenanat);
+			return app;
+		}
+
+	//CREATE  Non Infor App
+	public static void create_NonInforApp(String appName,String url,String user,String logicaID){
+		navigateToManageApp();
+		navigateToAddApp();
+		addNonInforApp(appName,url);
+		applicationDetails_PermssionsTab(user);
+		applicationDetails_ContextTab(appName);
+		applicationDetails_LogicalIDTab(logicaID);
+	}
+	
+
+	//CREATE  Non Infor App
+	public static void create_MulNonInforApp(String appName,String url){
+		Actions.pause1(1);
+		navigateToManageApp();
+		Actions.pause1(1);
+		navigateToAddApp();
+		addNonInforApp(appName,url);
+		Actions.pause1(1);
+		navigateToManageApp();
+	}
+	
+	//CREATE  Non Infor App
+		public static void verifyNon_Infor(String appName,String url){
+			//Actions.moveTo(AppMenu.appMenu, "Click On App Menu");
+			
+			Actions.click_JS(By.xpath("//a[@title='"+appName+"']"), "Test Application Created");
+			Actions.verifyElement(By.xpath("//span[@title='"+appName+"']"), "Application launch");
+			Actions.switchToDefaultContent();
+			Actions.switchtoFrame(By.xpath("//iframe[@src='"+url+"']"), "Switch to the frame");
+			//Utility.getDriver().switchTo().frame(2);
+			Actions.pause1(4);
+			/*String heading=Actions.getText(By.xpath("//td[@valign='top']"));
+			System.out.println(heading+"*********Heading");*/
+			/*String text=Actions.getText(By.xpath("//input[@value='Send Pinpoint']"));
+			System.out.println(text);*/
+		
+			
+		}
+		
+		public static void verify_Https()
+		{
+			Actions.click(By.xpath("//a[text()='BusinessContext']"), "Click On Business Context");
+			Actions.switchToDefaultContent();
+		}
+		public static void verify_Http(){
+			Actions.pause1(4);
+			Actions.verifyElement(By.xpath("//a[@title='Infor']"), "Click Infor");
+			Actions.switchToDefaultContent();
+		}
+	public static String createAndEditNonInfor(String appName,String url){
+		navigateToMenu("Admin Settings");
+		navigateToManageApp();
+		navigateToAddApp();
+		addNonInforApp(appName,url);
+		navigateToManageContext();
+		navigateToManageApp();
+		Actions.dblClick(By.xpath("//ul[@class='icon-block-absolute-admin']/descendant::li/a[@title='"+appName+"']"), "Select  App:"+appName);
+		String edited=dp_Name(appName);
+		return edited;
+	}
+	
+	public static void searchApp(String app)
+	{
+		System.out.println("in the search app Method");
+	Actions.click(By.xpath("//input[@id='searchfield']"), "search");
+	Actions.type(By.xpath("//input[@id='searchfield']"), app, "type in search app");
+	
+	}
+	
+	//Delete Context/Utility
+	public static void delete_ContextOrUtitlityApp(String app){
+		navigateToMenu("Admin Settings");
+		Actions.impwait();
+		navigateToManageContext();
+		Actions.pause1(1);
+		Actions.explicitWait_InVisibilityOfElement();
+		Actions.waitUntill_PleaseWait();
+		//Actions.verifyElement(By.xpath("//span[text()='"+app+"']"), "Verify presence of 'Application'");
+		searchApp(app);
+		Actions.click(By.xpath("//span[text()='"+app+"']"), "Select"+app+ " :App");
+		Actions.explicitWait_InVisibilityOfElement();
+		Actions.waitUntill_PleaseWait();
+		Actions.click(Admin_Context.delete_UtilityApp, "Delete Utility App");
+		Actions.explicitWait_InVisibilityOfElement();
+		Actions.waitUntill_PleaseWait();
+		Actions.click(Global.yes, "Click On Yes");
+	}
+
+	/*public static void delete_Application(String appName){
+		navigateToManageApp();
+		Actions.pause1(.5);
+		//Actions.verifyElement(By.xpath("//ul[@class='icon-block-absolute-admin']/descendant::li/a[@title='"+appName+"']"), "Verify presence of Application :"+appName);
+		Actions.click(By.xpath("//ul[@class='icon-block-absolute-admin']/descendant::li/a[@title='"+appName+"']"), "Select  App:"+appName);
+		Actions.click(Admin_ManageApp.delete_App, "Click on Delete Application");
+		Actions.click(Global.yes, "Click On Yes");
+	}
+*/
+	public static void delete_Application(String appName){
+		/*navigateToManageApp();
+		Actions.pause1(.5);
+		if(Actions.verifyElementPresent(By.xpath("//ul[@class='icon-block-absolute-admin']/descendant::li/a[@title='"+appName+"']"), "Verify presence of Application :"+appName)){
+			Actions.click(By.xpath("//ul[@class='icon-block-absolute-admin']/descendant::li/a[@title='"+appName+"']"), "Select  App:"+appName);
+			Actions.click(Admin_ManageApp.delete_App, "Click on Delete Application");
+			Actions.click(Global.yes, "Click On Yes");
+			}
+			else{*/
+				/*RM_IFS_Trial10.navigateToMenu("User Management");*/
+			//	Actions.switchToDefaultContent();
+				navigateToMenu("Admin Settings");
+				Actions.refresh();
+				navigateToManageApp();
+				Actions.pause1(1.5);
+				
+				if(Actions.verifyElementPresent(By.xpath("//ul[@class='icon-block-absolute-admin']/descendant::li/a[@title='"+appName+"']"), "Select  App:"+appName)){
+				Actions.click(By.xpath("//ul[@class='icon-block-absolute-admin']/descendant::li/a[@title='"+appName+"']"), "Select  App:"+appName);
+				}
+				else{
+					Actions.refresh();
+					navigateToManageApp();
+					Actions.pause1(1.5);
+					Actions.click(By.xpath("//ul[@class='icon-block-absolute-admin']/descendant::li/a[@title='"+appName+"']"), "Select  App:"+appName);
+				}
+				Actions.click(Admin_ManageApp.delete_App, "Click on Delete Application");
+				Actions.click(Global.yes, "Click On Yes");
+			//}
+	}
+		public static void delete_MulApps(String appName)
+		{
+			
+			navigateToMenu("Admin Settings");
+			Actions.impwait();
+			navigateToManageApp();
+			Actions.pause1(1.5);
+			Actions.refresh();
+			By xp=By.xpath("//ul[@class='icon-block-absolute-admin']/descendant::li/a[contains(@title,'"+appName+"')]");
+			for(int i=0;i<=6;i++){
+				if(Actions.verifyElementPresent(xp,"Verifyig Msg to delete in IF"))
+				
+					//Actions.pause1(2);
+				//navigateToManageApp();
+					//Actions.verifyElement(xp, "Delete button");
+					Actions.click(xp, "Select App:"+appName);
+					Actions.click(Admin_ManageApp.delete_App, "Click on Delete Application");
+					Actions.click(Global.yes, "Click On Yes");
+				//Actions.pause1(2);
+			
+			}
+		}
+		
+		
+
+	public static void select_ProvisionedApp(String appName){
+		navigateToMenu("Admin Settings");
+		delete_Application(appName);
+	}
+	//VERIFY ADMIN ROLE
+	public static void verify_AdminRole(){
+		Actions.click(ShellHeader.userMenu, "Click on User  Menu");
+		Actions.verifyElement(ShellHeader.user_admin_settings, "User Admin Settings");
+		verify_CommonSettingsInUserMenu();
+		Actions.click(ShellHeader.signOut, "Click on SignOut");
+	}
+
+	//VERIFY ADMIN ROLE
+	public static void verify_SecuritySeetingRole(){
+		Actions.click(ShellHeader.userMenu, "Click on User  Menu");
+		Actions.verifyElement(ShellHeader.userMenu_UserManagement, "User Security Settings");
+		verify_CommonSettingsInUserMenu();
+		Actions.click(ShellHeader.signOut, "Click on SignOut");
+	}
+	//Common Verifications in User Menu
+	public static void verify_CommonSettingsInUserMenu(){
+		Actions.verifyElement(ShellHeader.userMenu_Help, "Help Settings");
+		Actions.verifyElement(ShellHeader.userMenu_About, "About");
+		//Actions.verifyElement(ShellHeader.userMenu_Notifications, "Notification");
+		//Actions.verifyElement(ShellHeader.userMenu_Post, "Post");
+		Actions.verifyElement(ShellHeader.mobileApps, "Mobile Apps");
+		Actions.verifyElement(ShellHeader.signOut, "Sign Out");
+
+	}
+	//VERIFY MINGLE ION 
+	public static void verify_MingleION(){
+		Actions.click(ShellHeader.userMenu, "Click on User  Menu");
+		Actions.verifyElement(ShellHeader.userMenu_Alerts,"Alerts");
+		Actions.verifyElement(ShellHeader.userMenu_Tasks, "Tasks");
+		verify_CommonSettingsInUserMenu();
+		Actions.click(ShellHeader.signOut, "Click on SignOut");
+	}
+
+	//VERIFY MINGLE ENTERPRISE
+	public static void verify_MingleEnterprise(){
+		Actions.click(ShellHeader.userMenu, "Click on User  Menu");
+		verify_CommonSettingsInUserMenu();
+		Actions.click(ShellHeader.signOut, "Click on SignOut");
+	}
+	//CREATE TESTAPPLICATION
+
+	public static void create_TestApp(String appName,String url){
+		navigateToMenu("Admin Settings");
+		navigateToManageApp();
+		navigateToAddApp();
+		Actions.impwait();
+		addNonInforApp(appName,url);
+		Actions.click(AppMenu.appMenu, "Click On App Menu");
+		if(Actions.verifyElementPresent(By.xpath("//div[@class='dot-container']"), "Verify Presence of page size")){
+		WebElement el=Utility.getDriver().findElement(By.xpath("//div[@class='dot-container']"));
+		List<WebElement> menuItemsList = el.findElements(By.tagName("span"));
+		System.out.println(menuItemsList.size());
+		int size=menuItemsList.size()-1;
+		System.out.println(size+"Print eht esoz");
+		String val="go-to-page-"+size+"";
+		Actions.pause1(2);
+		Actions.click(By.xpath("//span[@id='"+val+"']"), "Click On the last paginator");
+		System.out.println(By.xpath("//span[@id='"+val+"']"));
+		String s="//span[@id='"+val+"']";
+		System.out.println(s+"************************");
+		Actions.pause1(2);
+		Actions.verifyElement(By.xpath("//a[@title='"+appName+"']"),"Application "+appName);
+		Actions.pause1(2);
+		Actions.click(By.xpath("//a[@title='"+appName+"']"), "Test Application Created");
+		Actions.verifyElement(By.xpath("//span[@title='"+appName+"']"), "Application launch");
+		RM_BookMarks.createBookMark(appName);
+		}
+		else{
+			Actions.pause1(2);
+			Actions.verifyElement(By.xpath("//a[@title='"+appName+"']"),"Application "+appName);
+			Actions.pause1(2);
+			Actions.click(By.xpath("//a[@title='"+appName+"']"), "Test Application Created");
+			Actions.verifyElement(By.xpath("//span[@title='"+appName+"']"), "Application launch");
+			RM_BookMarks.createBookMark(appName);
+		}
+
+	}
+	
+	
+	public static void verify_multimsgs(String appName,String url,String screenData,String screenData1)
+	{
+		//Actions.moveTo(AppMenu.appMenu, "Click On App Menu");
+		HashMap<String, String> testData=Utility.getConfigData();
+                    
+		            System.out.println("app name"+ appName);
+					Actions.click_JS(By.xpath("//a[@title='"+appName+"']"), "Test Application Created");
+					Actions.verifyElement(By.xpath("//span[@title='"+appName+"']"), "Application launch");
+					// Utility.getDriver().manage().timeouts().pageLoadTimeout(8, TimeUnit.SECONDS); 
+					 String test=url;
+						String[] testDetails=test.split("//");
+						System.out.println(testDetails[1]);
+						Actions.switchtoFrame(By.xpath("//iframe[contains(normalize-space(@src),'"+testDetails[1]+"')]"), "Switch to  Frame");
+					//WebElement iFrame= Utility.getDriver().findElement(By.tagName("iframe"));
+					//Utility.getDriver().switchTo().frame(2);
+					
+					String heading=Actions.getText(By.xpath("//td[@valign='top']"));
+					System.out.println(heading+"*********Heading");
+					Actions.click(By.xpath("//a[text()='Multiple  Messages']"), "Click On Multiple messages");
+					Actions.scrollToElement(By.xpath("//textarea[@name='bulkMsgContent']"));
+					Actions.clearText(By.xpath("//textarea[@name='bulkMsgContent']"), "clear text");
+					String s="[{ \"type\": \"test\", \"data\": {\"test\":\"test\"}},";
+					Actions.type(By.xpath("//textarea[@name='bulkMsgContent']"),s,"enter bulk message");
+					Actions.enter();
+					String s1="{ \"type\": \"inforBusinessContext\", \"data\": {\"test\":\"test\"}}]";
+					Actions.type(By.xpath("//textarea[@name='bulkMsgContent']"),s1,"enter bulk message");
+					Actions.click(By.xpath("//textarea[@name='bulkMsgContent']/following::input"), "click");
+					
+					/*
+					Actions.type(By.id("customMessage"), screenData, "Context App"+screenData);
+					Actions.enter();
+					Actions.type(By.id("customMessage"), screenData1, "Context App"+screenData1);
+					Actions.pause1(1);
+					String te=Actions.getAttribute(By.xpath("//textarea[@id='customMessage']/following::input[@value='Send Message']"),"value");
+					System.out.println(te);
+					//Actions.moveTo(By.xpath("//textarea[@id='customMessage']/following::input[@value='Send Message']"), "Move to Send Message");
+					Actions.click_JS(By.xpath("//textarea[@id='customMessage']/following::input[@value='Send Message']"), "Click On Send Message");
+					Actions.pause1(2);
+					Actions.alertAccept();
+					Actions.pause1(2);*/
+					Actions.switchToDefaultContent();
+					//Actions.refresh();
+					Actions.verifyElement(By.xpath("//h1[text()='"+screenData+"']"), "Verify presence of screen Name1");
+					//Actions.getText(By.xpath("//header[@title='"+screenData+"/descendant::h1']"));
+					//Actions.switchToDefaultContent();
+					Actions.verifyElement(By.xpath("//h1[text()='"+screenData1+"']"), "Verify presence of screen Name2");
+					//Actions.getText(By.xpath("//header[@title='"+screenData1+"/descendant::h1']"));	
+		
+	}
+	public static void verify_UserRole(String appName){
+	//	Actions.moveTo(AppMenu.appMenu, "Click On App Menu");
+	
+		Actions.pause1(2);
+		Actions.click_JS(By.xpath("//a[@title='"+appName+"']"),"Application "+appName);
+		
+	
+		
+		
+	}
+	public static boolean verifyPaginationInAppMenu(){
+		Actions.click(AppMenu.appMenu, "Click On App Menu");
+		if(Actions.verifyElementPresent(By.xpath("//div[@class='dot-container']"), "Verify Presence of Pagination in App Menu")){
+			
+		}
+		return false;
+	}
+	public static void add_ScreenIDs(String cntextName){
+		//Actions.verifyElement(By.xpath("//span[contains(text(),'"+cntextName+"')]/following::td[2]/div/descendant::label"), "Switch Label");
+		//Actions.click(By.xpath("//span[contains(text(),'"+cntextName+"')]/following::td[2]/div/descendant::label"), "Switch Label");
+		Actions.click(Admin_ManageApp.nonProvisioned_PermisssionsTab, "Click on Permissions Tab");
+		Actions.click(Admin_ManageApp.nonProvisioned_ContextTab, "Click on Context Tab");
+		Actions.verifyElement(By.xpath("//span[contains(text(),'"+cntextName+"')]/following::a[contains(text(),'Edit Screen ID Associations')]"), "verify presence of screen IDs");
+		Actions.click(By.xpath("//span[contains(text(),'"+cntextName+"')]/following::a[contains(text(),'Edit Screen ID Associations')]"), "Click On screen IDs");
+		Actions.verifyElement(By.xpath("//button[text()='Add Row']"), "Verify Add Row");
+		Actions.click(By.xpath("//button[text()='Add Row']"), "Click Add Row");
+		Actions.pause1(1);
+		Actions.click(By.xpath("//button[text()='Add Row']"), "Click Add Row");
+		//Actions.verifyElement(By.xpath("//select[@data-infor-validator='rule_type']"), "Verify presence of equals");
+		Actions.select(By.xpath("//span[contains(text(),'Rule Type')]/following::select"), "Equals", "Select Equals");
+		Actions.type(By.xpath("//span[contains(text(),'Rule Type')]/following::select/following::input"), cntextName, "Screen ID:"+cntextName);
+		Actions.click(Admin_Context.done, "Click on Done");
+		saveApp();
+	}
+	//Delete Test Application
+
+	public static void delete_TestApp(String appName){
+		navigateToMenu("Admin Settings");
+		navigateToManageApp();
+		Actions.pause1(1.5);
+		delete_Application(appName);
+		Actions.switchToDefaultContent();
+		RM_BookMarks.deleBookMarks();
+	}
+
+	//VERIFY AND UPDATE CONTACT INFO
+	public static void update_ContactInfo(String office,String nickname,String mobile,String location){
+		//Actions.switchtoFrame(Global.socialCLFrame, "Switch To Socail Frame");
+		Actions.verifyElement(ProfileInformation.verify_ProfilePage, "Verify presence of 'Profile Page' from User Settings");
+		Actions.clearText(ProfileInformation.nickName, "Clear Past Nick Name Details");
+		Actions.type(ProfileInformation.nickName,nickname,"Enter Nick Name Details:");
+		Actions.scrollToElement(ProfileInformation.office_Details);
+		Actions.clearText(ProfileInformation.office_Details, "Clear Past Office Details");
+		Actions.type(ProfileInformation.office_Details,office,"Enter Office Details:");
+		Actions.clearText(ProfileInformation.mobile_Details, "Clear Past Mobile Details");
+		Actions.type(ProfileInformation.mobile_Details,mobile,"Enter Mobile Details:");
+		Actions.clearText(ProfileInformation.location, "Clear Past Location Details");
+		Actions.type(ProfileInformation.location,location,"Enter Location Details:");
+		Actions.pause1(1.5);
+		//Actions.scrollToElement(ProfileInformation.save_PersonalInfo);
+		//Actions.pause1(1.5);
+		Actions.scrollToElement(ProfileInformation.save_PersonalInfo);
+		Actions.click_JS(ProfileInformation.save_PersonalInfo, "Save Contact Information");
+		Actions.click(ProfileInformation.ok_Btn, "click OK button");
+		String officedetails=Actions.getAttribute(ProfileInformation.office_Details, "value");
+		String mobiledetails=Actions.getAttribute(ProfileInformation.mobile_Details, "value");
+		Actions.verifyString(officedetails, office);
+		Actions.verifyString(mobiledetails, mobile);
+		String locationDetails=Actions.getAttribute(ProfileInformation.location, "value");
+		String nicknameDetails=Actions.getAttribute(ProfileInformation.nickName, "value");
+		Actions.verifyString(nicknameDetails, nickname);
+		Actions.verifyString(locationDetails, location);
+		Actions.pause1(1);
+	}
+
+	//VERIFY AND UPDATE PERSONAL INFOR
+	public static void update_PersonalInfo(String nickName,String location){
+		//Actions.type(ProfileInformation.nickName,nickName,"Enter Nick Name Details:");
+		Actions.type(ProfileInformation.location,location,"Enter Location Details:");
+		Actions.pause1(.9);
+		Actions.verifyElement(ProfileInformation.save_PersonalInfo, "Verify presence of save profile button");
+		Actions.click(ProfileInformation.save_PersonalInfo, "Save Personal Information");
+		//String officedetails=Actions.getAttribute(ProfileInformation.nickName, "value");
+		String mobiledetails=Actions.getAttribute(ProfileInformation.location, "value");
+		//Actions.verifyString(officedetails, nickName);
+		Actions.verifyString(mobiledetails, location);
+
+	}
+	//UPDATE USER SETTINGS PROFILE INFORMATION
+	public static void update_ProfileInfo(String office,String mobile,String nickName,String location){
+		navigateToMenu("User Settings");
+		update_ContactInfo(office,nickName,mobile,location);
+		//update_PersonalInfo(nickName,location);
+	}
+		
+	    //USER MENU OPTION ADMIN SETTINGS VERIFICATION
+		public static void verify_AdminSettings()
+		{
+			Actions.click(ShellHeader.userMenu, "Click on User  Menu");
+			Actions.verifyElement(ShellHeader.user_admin_settings, "Admin Settings");
+			Actions.click(ShellHeader.signOut, "Click On Sign Out");
+		}
+		
+		//USER MENU OPTION ADMIN SETTINGS NOT PRESENT VERIFICATION
+		public static void verify_AdminSettingsNotPresent()
+		{
+			Actions.click(ShellHeader.userMenu, "Click on User  Menu");
+			Actions.verifyElementNotPresent(ShellHeader.user_admin_settings, "Admin Settings");
+			Actions.click(ShellHeader.signOut, "Click On Sign Out");
+		}
+				
+		public static void verify_Menu(String title){
+			Actions.click(AppMenu.appMenu, "Click On App Menu");
+			/*WebElement el=Utility.getDriver().findElement(By.className("icon-block-absolute"));
+			List<WebElement> menuItemsList = el.findElements(By.tagName("a"));
+			List<WebElement> lst=Utility.getDriver().findElements(By.xpath("//ul[@class='icon-block-absolute']/descendant::a"));
+			System.out.println("Total list :"+lst.size());
+			System.out.println(menuItemsList.size());
+			Iterator it=lst.listIterator();
+			
+			//for(WebElement li:menuItemsList){
+			for(int i=1;i<=lst.size();i++){
+				//((WebElement) it.next()).click();
+				
+				
+				Actions.click(By.xpath("//ul[@class='icon-block-absolute']/descendant::a["+i+"]"), "Click On App menu Items");
+				
+				Actions.pause1(1.5);
+				if(Actions.verifyElementPresent(By.xpath("//a[@title='"+title+"']"), "Verify presence of App Title")){
+					System.out.println("in the if condition");
+					Actions.click(AppMenu.appMenu, "Click On App Menu");
+					Actions.click(By.xpath("//a[@title='"+title+"']"), "Click On App"+title);
+					Actions.getText(By.xpath("//span[@class='app-name block ng-binding']"));
+					
+				}
+				break;
+				
+			}*/
+			if(Actions.verifyElementPresent(By.xpath("//div[@class='dot-container']"), "Verify Presence of page size")){
+				WebElement el=Utility.getDriver().findElement(By.xpath("//div[@class='dot-container']"));
+				List<WebElement> menuItemsList = el.findElements(By.tagName("span"));
+				System.out.println(menuItemsList.size());
+				int size=menuItemsList.size()-1;
+				System.out.println(size+"Print eht esoz");
+				
+				for(WebElement li:menuItemsList){
+					String val="go-to-page-"+menuItemsList.size()+"";
+					Actions.pause1(2);
+				Actions.click(By.xpath("//span[@id='"+val+"']"), "Click On the  paginator");
+				System.out.println(By.xpath("//span[@id='"+val+"']"));
+				String s="//span[@id='"+val+"']";
+				System.out.println(s+"************************");
+				Actions.pause1(2);
+				String value=li.getText();
+				if(value.equals(title)){
+					System.out.println("in the if condition");
+				Actions.verifyElement(By.xpath("//a[@title='"+title+"']"),"Application "+title);
+				Actions.pause1(2);
+				Actions.click(By.xpath("//a[@title='"+title+"']"), "Click On"+title);
+				}
+				break;
+				}
+			
+			}
+			else{
+				Actions.verifyElement(By.xpath("//a[@title='"+title+"']"),"Application "+title);
+				Actions.pause1(2);
+				Actions.click(By.xpath("//a[@title='"+title+"']"), "Click On"+title);	
+			}
+		}
+	  //Verify ACCESS all default applications
+		
+		public static void verify_AccessdefApps()
+		{
+			/*Actions.click(AppMenu.appMenu, "Click On App Menu");
+			WebElement el=Utility.getDriver().findElement(By.className("icon-block-absolute"));
+			List<WebElement> menuItemsList = el.findElements(By.tagName("a"));
+			List<WebElement> lst=Utility.getDriver().findElements(By.xpath("//ul[@class='icon-block-absolute']/descendant::a"));
+			System.out.println("Total list :"+lst.size());
+			System.out.println(menuItemsList.size());
+			Iterator it=lst.listIterator();
+			for(;it.hasNext();)
+			{
+				System.out.println("%%%%%%%%%%%%%%%%%%%%%%%%%%% :"+it.next().toString());
+			}
+			//for(WebElement li:menuItemsList){
+			for(int i=1;i<=lst.size();i++){
+				//((WebElement) it.next()).click();
+				Actions.click(By.xpath("//ul[@class='icon-block-absolute']/descendant::a["+i+"]"), "Click On App menu Items");
+				Actions.pause1(1.5);
+				Actions.getText(By.xpath("//span[@class='app-name block ng-binding']"));
+				Actions.click(AppMenu.appMenu, "Click On App Menu");
+			}*/
+			RM_Social.navigateToActivityPage();
+			Actions.switchToDefaultContent();
+			RM_Social.navigateToApplication(AppMenu.homePage);
+			Actions.switchtoFrame(Global.homePagesCLFrame, "Switch to Home Pages Frame");
+			//Actions.verifyElement(ShellHeader.newPage, "NewPage");
+			Actions.switchToDefaultContent();
+			RM_IONAPI.navigateToActivityPage();
+			Actions.switchToDefaultContent();
+			/*RM_Social.navigateToApplication(AppMenu.doc);
+			Actions.switchtoFrame(By.xpath("//iframe[contains(@name,'daf_')]"), "Switch to document Frame");
+
+			Actions.switchtoFrame(By.id("clientFrame"), "Switch to document Frame");
+			Actions.verifyElement(By.xpath("//button[@class='btn btn-primary addDocumentButton']"), "Verify presence of New Document");
+			Actions.switchToDefaultContent();*/
+			RM_IONDESK.navigateionDesk();
+			Actions.switchtoFrame(WorkFlow.ionDeskCLFrame, "Switch to ION Desk Frame");
+			Actions.pause1(5);
+			//Actions.verifyElement(WorkFlow.statusOverview, "status over view");
+			//Actions.verifyElement(WorkFlow.iconMenu, "Verify presence of icon menu");
+			
+			
+			
+		}
+		public final static String RpPath=System.getProperty("user.dir");
+		public static void manage_DrillBacks() {
+			navigateToMenu("Admin Settings");
+			/*navigateToManageApp();
+			Actions.pause1(1);*/
+			navigateToManageDrillBacks();
+			Actions.explicitWait_InVisibilityOfElement();
+			Actions.waitUntill_PleaseWait();
+			Actions.pause1(1);
+			Actions.verifyElement(Admin_ManageApp.upload_DrillBacks, "Verify presence of Manage Drill Backs");
+			Actions.click(Admin_ManageApp.upload_DrillBacks, "Click On Upload Drill Backs");
+			System.out.println(RpPath+"\\ERP.xml");
+			Actions.pause1(2);
+			
+			try {
+				Runtime.getRuntime().exec(RpPath+"\\chrome.exe"+" "+RpPath+"\\ERP.xml");
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} 
+			Actions.pause1(2);
+			Actions.verifyElement(By.xpath("//div[text()='ERP LN Drillback Views - Test Content']"), "ERP LN is Displayed");
+			Actions.pause1(2);
+			Actions.click(By.xpath("//div[text()='ERP LN Drillback Views - Test Content']"), "Click On ERP LN ");
+			Actions.verifyElement(By.xpath("//span[text()='Delete']"), "Delete is Displayed");
+			Actions.click(By.xpath("//span[text()='Delete']"), "Click on Delete");
+			Actions.click(Global.yes, "Click On Yes");
+		}
+		
+		
+		
+		//ADD NEW APPLICATION
+		public static String ActorIDApp(String appName,String host){
+			Actions.explicitWait_InVisibilityOfElement();
+			Actions.waitUntill_PleaseWait();
+			HashMap<String, String> testData=Utility.getConfigData();
+			String env=testData.get("ENVIRONMENT").toUpperCase();
+			String appNameDetails = null;
+			System.out.println(env);
+			switch(env)
+			{
+
+			case "CLOUD":
+			{
+				Actions.pause1(.5);
+				Actions.verifyElementPresent(Admin_ManageApp.appType_NonProvisioned, " Verify presence of 'Non Provisioned Radio Button'");
+				Actions.pause1(.9);
+				Actions.click_JS(Admin_ManageApp.appType_NonProvisioned, "Select Infor Non Provisioned");
+				Actions.verifyElementPresent(Admin_ManageApp.nonProvisoned_AppName, " Verify presence of 'Select App Name'");
+				Actions.select(Admin_ManageApp.nonProvisoned_AppName, appName, "Select the app Name");
+				Global.minglePageLoad_Admin();
+				//Actions.selectBy2Index(By.xpath("//select[@data-ng-model='UI.newApplication.NameVersion']"), "Select the app");
+				//Actions.verifyElement(By.name("display_name"), "Display App Name");
+				Actions.pause1(.5);
+				 appNameDetails=Actions.getAttribute(By.name("display_name"),"value");
+				System.out.println(appNameDetails+"**************");
+				Actions.click(Admin_ManageApp.nonProvisioned_ChooseIcon, "Click On Choose Icon button");
+				Actions.click(Admin_ManageApp.nonProvisioned_SelectIcon, "Select Icon from the list");
+				Actions.click(Admin_ManageApp.nonProvisioned_ChooseIcon_Done, "Done button");
+				//Actions.pause1(1);
+			    String logicalID=RandomStringUtils.randomNumeric(2);
+				Actions.type(Admin_ManageApp.nonProvisoned_LogicalID,logicalID,"Logical Id Details:");
+				Actions.type(Admin_ManageApp.nonProvisioned_Host,host,"Host Details:");
+				
+				/*Actions.type(Admin_ManageApp.nonProvisoned_context,logical,"Context Details:");
+				Actions.type(Admin_ManageApp.nonProvisoned_Tenant,logical,"Tenant Details:");*/
+				save();
+				//saveApp();
+				break;
+			}
+			case "OP":
+			{
+				System.out.println("in the OP");
+				Actions.pause1(.5);
+				Actions.verifyElementPresent(Admin_ManageApp.appType_NonProvisioned_OP, " Verify presence of 'Non Provisioned Radio Button'");
+				Actions.pause1(.9);
+				Actions.click_JS(Admin_ManageApp.appType_NonProvisioned_OP, "Select Infor Non Provisioned");
+				Actions.verifyElementPresent(Admin_ManageApp.nonProvisoned_AppName, " Verify presence of 'Select App Name'");
+				Actions.select(Admin_ManageApp.nonProvisoned_AppName, appName, "Select the app Name");
+				Global.minglePageLoad_Admin();
+				//Actions.selectBy2Index(By.xpath("//select[@data-ng-model='UI.newApplication.NameVersion']"), "Select the app");
+				//Actions.verifyElement(By.name("display_name"), "Display App Name");
+				Actions.pause1(.5);
+				 appNameDetails=Actions.getAttribute(By.name("display_name"),"value");
+				System.out.println(appNameDetails+"**************");
+				Actions.click(Admin_ManageApp.nonProvisioned_ChooseIcon, "Click On Choose Icon button");
+				Actions.click(Admin_ManageApp.nonProvisioned_SelectIcon, "Select Icon from the list");
+				Actions.click(Admin_ManageApp.nonProvisioned_ChooseIcon_Done, "Done button");
+				//Actions.pause1(1);
+			    String logicalID=RandomStringUtils.randomNumeric(2);
+				Actions.type(Admin_ManageApp.nonProvisoned_LogicalID,logicalID,"Logical Id Details:");
+				Actions.type(Admin_ManageApp.nonProvisioned_Host,host,"Host Details:");
+				
+				/*Actions.type(Admin_ManageApp.nonProvisoned_context,logical,"Context Details:");
+				Actions.type(Admin_ManageApp.nonProvisoned_Tenant,logical,"Tenant Details:");*/
+				save();
+				saveApp();
+				break;
+			}
+			}	
+			
+			return appNameDetails;
+		}
+		
+		
+		
+		public static void verify_NonInforApp(String appName){
+			//Actions.moveTo(AppMenu.appMenu, "Click On App Menu");
+			/*if(Actions.verifyElementPresent(By.xpath("//div[@class='dot-container']"), "Verify Presence of page size")){
+			WebElement el=Utility.getDriver().findElement(By.xpath("//div[@class='dot-container']"));
+			List<WebElement> menuItemsList = el.findElements(By.tagName("span"));
+			System.out.println(menuItemsList.size());
+			int size=menuItemsList.size()-1;
+			System.out.println(size+"Print eht esoz");
+			String val="go-to-page-"+size+"";
+			Actions.pause1(2);
+			Actions.click(By.xpath("//span[@id='"+val+"']"), "Click On the last paginator");
+			System.out.println(By.xpath("//span[@id='"+val+"']"));
+			String s="//span[@id='"+val+"']";
+			System.out.println(s+"************************");
+			Actions.pause1(2);
+			Actions.verifyElement(By.xpath("//a[@title='"+appName+"']"),"Application "+appName);
+			Actions.pause1(2);*/
+			Actions.click_JS(By.xpath("//a[@title='"+appName+"']"), "Test Application Created");
+			Actions.verifyElement(By.xpath("//span[@title='"+appName+"']"), "Application launch");
+			Actions.verifyElement(By.xpath("//h1[text()='"+appName+"']"), "Verify presence of screen Name");
+			Actions.getText(By.xpath("//h1[text()='"+appName+"']"));
+			}
+			/*else{
+				
+				
+				Actions.pause1(2);
+				Actions.click(By.xpath("//a[@title='"+appName+"']"), "Test Application Created");
+				Actions.verifyElement(By.xpath("//span[@title='"+appName+"']"), "Application launch");
+				Actions.verifyElement(By.xpath("//h1[@class='ng-binding']"), "Verify presence of screen Name");
+				Actions.getText(By.xpath("//h1[@class='ng-binding']"));
+			}*/
+		
+		
+		public static void verify_NonProvisionedApp(String appName,String url,String screenData){
+			//Actions.moveTo(AppMenu.appMenu, "Click On App Menu");
+			HashMap<String, String> testData=Utility.getConfigData();
+			String env=testData.get("ENVIRONMENT").toUpperCase();
+			String test=url;
+			String[] testDetails=test.split("//");
+			System.out.println(testDetails[1]);
+			System.out.println(env);
+			switch(env)
+			{
+
+			case "CLOUD":
+			{
+				Actions.pause1(.5);
+				/*if(Actions.verifyElementPresent(By.xpath("//div[@class='dot-container']"), "Verify Presence of page size")){
+					WebElement el=Utility.getDriver().findElement(By.xpath("//div[@class='dot-container']"));
+					List<WebElement> menuItemsList = el.findElements(By.tagName("span"));
+					System.out.println(menuItemsList.size());
+					int size=menuItemsList.size()-1;
+					System.out.println(size+"Print eht esoz");
+					String val="go-to-page-"+size+"";
+					Actions.pause1(2);
+					Actions.click(By.xpath("//span[@id='"+val+"']"), "Click On the last paginator");
+					System.out.println(By.xpath("//span[@id='"+val+"']"));
+					String s="//span[@id='"+val+"']";
+					System.out.println(s+"************************");
+					Actions.pause1(2);
+					Actions.verifyElement(By.xpath("//a[@title='"+appName+"']"),"Application "+appName);
+					Actions.pause1(2);
+					Actions.click(By.xpath("//a[@title='"+appName+"']"), "Test Application Created");
+					Actions.verifyElement(By.xpath("//span[@title='"+appName+"']"), "Application launch");
+					 Utility.getDriver().manage().timeouts().pageLoadTimeout(8, TimeUnit.SECONDS); 
+					Actions.switchtoFrame(Global.EAMCLFrame, "Switch to EAM Frame");
+					//WebElement iFrame= Utility.getDriver().findElement(By.tagName("iframe"));
+					//Utility.getDriver().switchTo().frame(2);
+					
+					String heading=Actions.getText(By.xpath("//td[@valign='top']"));
+					System.out.println(heading+"*********Heading");
+					Actions.click(By.xpath("//a[text()='BusinessContext']"), "Click On Business Context");
+					Actions.scrollToElement(By.id("customMessage"));
+					Actions.type(By.id("customMessage"), screenData, "Context App"+screenData);
+					Actions.pause1(1);
+					String te=Actions.getAttribute(By.xpath("//textarea[@id='customMessage']/following::input[@value='Send Message']"),"value");
+					System.out.println(te);
+					//Actions.moveTo(By.xpath("//textarea[@id='customMessage']/following::input[@value='Send Message']"), "Move to Send Message");
+					Actions.click_JS(By.xpath("//textarea[@id='customMessage']/following::input[@value='Send Message']"), "Click On Send Message");
+					Actions.pause1(2);
+					Actions.alertAccept();
+					Actions.pause1(2);
+					Actions.switchToDefaultContent();
+					//Actions.refresh();
+					Actions.verifyElement(By.xpath("//h1[@class='ng-binding']"), "Verify presence of screen Name");
+					Actions.getText(By.xpath("//h1[@class='ng-binding']"));
+					}
+					else{
+						Actions.pause1(2);
+						Actions.verifyElement(By.xpath("//a[@title='"+appName+"']"),"Application "+appName);*/
+						Actions.pause1(2);
+						Actions.click_JS(By.xpath("//a[@title='"+appName+"']"), "Test Application Created");
+						Actions.verifyElement(By.xpath("//span[@title='"+appName+"']"), "Application launch");
+						// Utility.getDriver().manage().timeouts().pageLoadTimeout(8, TimeUnit.SECONDS); 
+						Actions.switchtoFrame(By.xpath("//iframe[contains(normalize-space(@src),'"+testDetails[1]+"')]"), "Switch to EAM Frame");
+						//WebElement iFrame= Utility.getDriver().findElement(By.tagName("iframe"));
+						//Utility.getDriver().switchTo().frame(2);
+						
+						String heading=Actions.getText(By.xpath("//td[@valign='top']"));
+						System.out.println(heading+"*********Heading");
+						Actions.click(By.xpath("//a[text()='BusinessContext']"), "Click On Business Context");
+						Actions.scrollToElement(By.id("customMessage"));
+						Actions.type(By.id("customMessage"), screenData, "Context App"+screenData);
+						Actions.pause1(1);
+						/*String te=Actions.getAttribute(By.xpath("//textarea[@id='customMessage']/following::input[@value='Send Message']"),"value");
+						System.out.println(te);*/
+						//Actions.moveTo(By.xpath("//textarea[@id='customMessage']/following::input[@value='Send Message']"), "Move to Send Message");
+						Actions.click_JS(By.xpath("//textarea[@id='customMessage']/following::input[@value='Send Message']"), "Click On Send Message");
+						Actions.pause1(2);
+						Actions.alertAccept();
+						Actions.pause1(2);
+						Actions.switchToDefaultContent();
+						//Actions.refresh();
+						Actions.verifyElement(By.xpath("//h1[text()='"+screenData+"']"), "Verify presence of screen Name");
+						Actions.getText(By.xpath("//h1[text()='"+screenData+"']"));
+					
+				break;
+			}
+			//}
+			case "OP":
+			{
+				Actions.pause1(.5);
+				/*if(Actions.verifyElementPresent(By.xpath("//div[@class='dot-container']"), "Verify Presence of page size")){
+					WebElement el=Utility.getDriver().findElement(By.xpath("//div[@class='dot-container']"));
+					List<WebElement> menuItemsList = el.findElements(By.tagName("span"));
+					System.out.println(menuItemsList.size());
+					int size=menuItemsList.size()-1;
+					System.out.println(size+"Print eht esoz");
+					String val="go-to-page-"+size+"";
+					Actions.pause1(2);
+					Actions.click(By.xpath("//span[@id='"+val+"']"), "Click On the last paginator");
+					System.out.println(By.xpath("//span[@id='"+val+"']"));
+					String s="//span[@id='"+val+"']";
+					System.out.println(s+"************************");
+					Actions.pause1(2);
+					Actions.verifyElement(By.xpath("//a[@title='"+appName+"']"),"Application "+appName);
+					Actions.pause1(2);
+					Actions.click(By.xpath("//a[@title='"+appName+"']"), "Test Application Created");
+					Actions.verifyElement(By.xpath("//span[@title='"+appName+"']"), "Application launch");
+					 Utility.getDriver().manage().timeouts().pageLoadTimeout(8, TimeUnit.SECONDS); 
+					Actions.switchtoFrame(Global.AdageCLFrame, "Switch to EAM Frame");
+					//WebElement iFrame= Utility.getDriver().findElement(By.tagName("iframe"));
+					//Utility.getDriver().switchTo().frame(2);
+					
+					String heading=Actions.getText(By.xpath("//td[@valign='top']"));
+					System.out.println(heading+"*********Heading");
+					Actions.click(By.xpath("//a[text()='BusinessContext']"), "Click On Business Context");
+					Actions.scrollToElement(By.id("customMessage"));
+					Actions.type(By.id("customMessage"), screenData, "Context App"+screenData);
+					Actions.pause1(1);
+					String te=Actions.getAttribute(By.xpath("//textarea[@id='customMessage']/following::input[@value='Send Message']"),"value");
+					System.out.println(te);
+					//Actions.moveTo(By.xpath("//textarea[@id='customMessage']/following::input[@value='Send Message']"), "Move to Send Message");
+					Actions.click_JS(By.xpath("//textarea[@id='customMessage']/following::input[@value='Send Message']"), "Click On Send Message");
+					Actions.pause1(2);
+					Actions.alertAccept();
+					Actions.pause1(2);
+					Actions.switchToDefaultContent();
+					//Actions.refresh();
+					Actions.verifyElement(By.xpath("//h1[@class='ng-binding']"), "Verify presence of screen Name");
+					Actions.getText(By.xpath("//h1[@class='ng-binding']"));
+					}
+					else{
+						Actions.pause1(2);
+						Actions.verifyElement(By.xpath("//a[@title='"+appName+"']"),"Application "+appName);*/
+						Actions.pause1(2);
+						Actions.click_JS(By.xpath("//a[@title='"+appName+"']"), "Test Application Created");
+						Actions.verifyElement(By.xpath("//span[@title='"+appName+"']"), "Application launch");
+						// Utility.getDriver().manage().timeouts().pageLoadTimeout(8, TimeUnit.SECONDS); 
+						Actions.switchtoFrame(Global.AdageCLFrame, "Switch to EAM Frame");
+						//WebElement iFrame= Utility.getDriver().findElement(By.tagName("iframe"));
+						//Utility.getDriver().switchTo().frame(2);
+						
+						String heading=Actions.getText(By.xpath("//td[@valign='top']"));
+						System.out.println(heading+"*********Heading");
+						Actions.click(By.xpath("//a[text()='BusinessContext']"), "Click On Business Context");
+						Actions.scrollToElement(By.id("customMessage"));
+						Actions.type(By.id("customMessage"), screenData, "Context App"+screenData);
+						Actions.pause1(1);
+						String te=Actions.getAttribute(By.xpath("//textarea[@id='customMessage']/following::input[@value='Send Message']"),"value");
+						System.out.println(te);
+						//Actions.moveTo(By.xpath("//textarea[@id='customMessage']/following::input[@value='Send Message']"), "Move to Send Message");
+						Actions.click_JS(By.xpath("//textarea[@id='customMessage']/following::input[@value='Send Message']"), "Click On Send Message");
+						Actions.pause1(2);
+						Actions.alertAccept();
+						Actions.pause1(2);
+						Actions.switchToDefaultContent();
+						//Actions.refresh();
+						Actions.verifyElement(By.xpath("//h1[text()='"+screenData+"']"), "Verify presence of screen Name");
+						Actions.getText(By.xpath("//h1[text()='"+screenData+"']"));
+					}
+				break;
+			//}
+			}	
+			
+		}
+		
+		
+		
+}

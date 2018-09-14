@@ -1,0 +1,22 @@
+/**
+ * 
+ */
+package objRepository.IFS;
+
+import org.openqa.selenium.By;
+
+
+public class ServiceAccounts {
+	/*
+	 * 
+	 * Objects In Service Accounts.
+	 
+	 * 
+	 */
+	public static final By serviceAccontDetails=By.id("txtDescription");
+	public static final By cancelSeriveAccounts=By.xpath("//button[text()='Cancel']");
+	public static final By downloadSeriveAccounts=By.xpath("//button[text()='Download']");
+	public static final By verifySeriveAccounts=By.xpath("//div[text()='test']");
+	public static final By selectServiceAccount=By.xpath("//span[text()='Secret Key']/../../../descendant::span[@role='checkbox']");
+	
+}

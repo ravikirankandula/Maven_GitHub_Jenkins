@@ -1,0 +1,28 @@
+package objRepository.Social;
+
+import org.openqa.selenium.By;
+
+import utility.Utility;
+
+
+public class Directory {
+	static String groupName=Utility.getTestData().get("GROUP_NAME");
+	public static final By header_Directory=By.xpath("//div[contains(text(),'Directory')]");
+	public static final By groupsTab=By.id("groupsTab");
+	//public static final By adminSetting_icon=By.xpath("//div[contains(@class,'admin_user_edit_Icon')]");////div[@id='directoryConnections']/descendant::div[contains(@class,'icn_admin-settings')]");//"//div[contains(@class,'icn_admin-settings')]");
+	public static final By adminSetting_icon=By.xpath("//div[@id='directoryGroupsContainer']/descendant::div[contains(@class,'icn_admin-settings') and contains(@data-inforprops,'\"GroupName\":\""+groupName+"')]");
+	public static final By administer_lnk=By.xpath("//span[contains(text(),'Administer')]");
+	public static final By groupDelete_Button=By.id("GroupDeleteBtn");
+	public static final By filterByNotConnected=By.id("filterByNotConnected");
+	public static final By filterByRequestMadeByYou=By.id("filterByRequestMadeByYou");
+	public static final By filterByFollowed=By.id("filterByFollowed");
+	public static final By filterByFollowing=By.id("filterByFollowing");
+	public static final By filterByConnected=By.id("filterByConnected");
+	public static final By sortBydropdown=By.xpath("//div[@class='m-select-dropdown-selected-opt-icn']");
+	public static final By sortByFirstName=By.xpath("//div[@class='m-select-dropdown-drop']/descendant::li[text()='First Name']");
+	public static final By sortByLastName=By.xpath("//div[@class='m-select-dropdown-drop']/descendant::li[text()='Last Name']");
+	public static final By SelectUser7=By.xpath("//div[@id='directoryColleaguesContainer']/descendant::div[@title='QAAuto Collab7']");
+	public static final By administrationSettings_ManagefeedsBtn=By.id("ManageUserFeeds");
+	
+
+}

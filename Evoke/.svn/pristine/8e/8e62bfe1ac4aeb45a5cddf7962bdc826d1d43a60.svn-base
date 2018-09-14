@@ -1,0 +1,882 @@
+package reusableMethods;
+
+
+
+import java.util.List;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
+
+import actions.Actions;
+import objRepository.Global;
+import objRepository.Social.ActivityFeed;
+import objRepository.Social.AppMenu;
+import objRepository.Social.Directory;
+import objRepository.Social.Groups;
+import objRepository.Social.Notifications;
+import objRepository.Social.ProfilePage;
+import objRepository.Social.ShellHeader;
+import objRepository.Social.ShellHeaderShareOverlay;
+import utility.Utility;
+
+
+public class RM_Social {
+	//############################ Share OverLay ########################################
+	public static void openShellHeaderShareOverlay()
+	{
+		Actions.verifyElement(ShellHeader.shareLink, "Share Link");
+		Actions.click(ShellHeader.shareLink, "Click On 'Share' link");
+		Actions.pause(5);
+		//Global.minglePageLoad_Social();
+		
+	}
+	public static void typeMessageInShellHeaderShareOverlay(String postMsg)
+	{
+		
+		Actions.type(ShellHeaderShareOverlay.textArea, postMsg, "Enter Share Message");
+		Actions.explicitWait_InVisibilityOfElement();
+		
+		
+	}
+	public static void selectPrivacyInShellHeaderShareOverlay(String privacy)
+	{
+		By xp=By.xpath("//div[@class='share-container']/descendant::*[contains(@title,'"+privacy+"')]");
+		//By xp1=By.xpath("//div[@class='share-container']/descendant::span[@title='"+privacy+"']");
+		//Actions.click(ShellHeaderShareOverlay.privacyLink, "Open Privacy List");
+		if(privacy.equalsIgnoreCase("Streams"))
+		{
+			Actions.pause(1);
+			Actions.scrollToElement(xp);
+			//Actions.pause(2);
+		}
+		if(privacy.equalsIgnoreCase("+ Start Stream"))
+		{
+			Actions.pause(1);
+			Actions.scrollToElement(xp);
+			
+			//Actions.pause(2);
+		}
+		
+		Actions.click(xp, "Privacy Level '"+privacy+"' is selected");
+	}
+	public static void selectPrivacyInShellHeaderShareOverlayToRunningStream(String TemplateName)
+	{
+		
+		By xpGrps=By.xpath("//div[@class='share-container']/descendant::span[@title='"+Utility.getTestData().get("PRIVACY_GROUPS")+"']");
+		By xpStreams=By.xpath("//div[@class='share-container']/descendant::span[@title='"+Utility.getTestData().get("PRIVACY_STREAMS")+"']");
+		By xpTemplate=By.xpath("//div[@class='share-container']/descendant::li[@title='"+TemplateName+"']");
+		Actions.click(ShellHeaderShareOverlay.privacyLink, "Open Privacy List");
+		Actions.click(xpGrps, "Click on 'Group' Privacy level");
+		Actions.pause(0.5);
+		Actions.scrollToElement(xpStreams);
+		Actions.click(xpStreams, "Click on 'Streams' Privacy level");
+		Actions.pause(0.5);
+		Actions.click(xpTemplate, "Privacy Level '"+TemplateName+"' is selected");
+	}
+	
+	public static void clickOnShareBtn()
+	{
+		Actions.click(ShellHeaderShareOverlay.shareBtn, "Click on 'Share' button");
+	}
+	
+	public static void tagUserInShellHeaderShareOverlay(String tagUserFullName)
+	{
+		By by=By.xpath("//div[@id='share_tag_overlay']/descendant::span[text()='"+tagUserFullName+"']");
+		//By by=By.xpath("//li[contains(@class,'active-result')]/descendant::span[text()='"+tagUserFullName+"']");
+		//li[contains(@class,'active-result')]
+				//By.xpath("//div[@class='live-result-pane']/descendant::div[@title='"+tagUserFullName+"']");
+		String s="@"+tagUserFullName;
+		typeMessageInShellHeaderShareOverlay(s);
+		Actions.pause(10);
+		Actions.explicitWait_InVisibilityOfElement();
+		Actions.waitUntill_PleaseWait();
+		Actions.click(by, "Select the user '"+tagUserFullName+"'");
+		Actions.pause(3);
+		
+		
+		
+	}
+	// ########################### Directory Page ######################################
+	public static void navigateToUserProfile(String userFullName)
+	{
+		By by=By.xpath("//div[@id='directoryColleaguesContainer']/descendant::div[@title='"+userFullName+"']/div");
+		Actions.pause(3);
+		Actions.click(by,"Click On '"+userFullName+"'");
+		Actions.verifyElement(ProfilePage.contactInfo, "Wating for 'Contact Info' Text");
+		
+	}
+	// ########################### MY NOTIFICATIONS #####################################
+	public static void verifyNotification(String expectedNotification)
+	{
+		Actions.click(ShellHeader.userMenu, "Click On 'User Menu'");
+		Actions.click(ShellHeader.userMenu_Notifications, "Click On 'Notifications'");
+		Actions.switchtoFrame(Global.socialCLFrame, "Switch to social Frame");
+		Global.minglePageLoad_Social();
+		Actions.verifyElement(Notifications.myNotifications, "Verify 'My Notifications' heading");
+		//Actions.verifyString(Actions.getText(Notifications.msgContainer), expectedNotification);
+		verifyMessage(expectedNotification);
+		
+	}
+	
+	//############################ Activity Feed Page ###################################
+	
+	public static void navigateToApplication(By appName)
+	{
+		//Actions.moveTo(AppMenu.appMenu, "Click on App Mneu");
+		Actions.click_JS(appName, "Click on "+appName);
+		
+	}
+	public static void clickOnActivityFeed()
+	{
+		Actions.click(ActivityFeed.lnk_Activityfeed, "Click on Activity Feed");
+		//Actions.pause(2);
+		Global.minglePageLoad_Social();
+		Actions.verifyElementPresent(ActivityFeed.header_MyFeed,"Verify My Feed Header ");
+		Global.minglePageLoad_Social();
+	}
+
+	/*public static void navigateToActivityPage()
+	{
+		Actions.switchToDefaultContent();
+		Actions.pause(1);
+		Actions.click(AppMenu.appMenu, "Click on AppMenu");
+		Actions.pause(1);
+		Actions.click(AppMenu.inforMingle, "Click on Infor Mingle");
+		Actions.impwait();
+		Actions.explicitWait_InVisibilityOfElement();
+		Actions.switchtoFrame(Global.socialCLFrame, "Switch to the Social Frame");
+		Actions.explicitWait_InVisibilityOfElement();
+		Global.minglePageLoad_Social();
+		Actions.verifyElementPresent(ActivityFeed.header_MyFeed,"Verify My Feed Header ");
+		Global.minglePageLoad_Social();		
+	}*/
+	public static void navigateToActivityPage()
+	{
+		boolean v=true;
+		if(Actions.verifyElementPresent(Global.socialCLFrame, "Verifying SocialFrame") )
+		{
+			Actions.switchtoFrame(Global.socialCLFrame, "Switch to the Frame");
+			if(Actions.verifyElementPresent(ActivityFeed.header_MyFeed, "Verifying MyFeedHeader") )
+			{
+				v=false;
+			}
+		}
+		if(v){
+			Actions.switchToDefaultContent();
+			Actions.pause(1);
+			//Actions.click(AppMenu.appMenu, "Click on AppMenu");
+			Actions.pause(1);
+			Actions.click_JS(AppMenu.inforMingle, "Click on Infor Mingle");
+			Actions.impwait();
+			Actions.switchtoFrame(Global.socialCLFrame, "Switch to the Frame");
+			Actions.refresh_MinglePage();
+			Global.minglePageLoad_Social();
+			Actions.verifyElementPresent(ActivityFeed.header_MyFeed,"Verify My Feed Header ");
+			Global.minglePageLoad_Social();
+		}
+	}
+	
+	public static void navigateToHomePage()
+	{
+		Actions.pause(2);
+		//Actions.click(AppMenu.appMenu, "Click on AppMenu");
+		Actions.pause(1);
+		Actions.click_JS(AppMenu.homePage, "Click on Home Page");
+		Actions.impwait();
+		
+	}
+	public static void navigateToDirectoryPage()
+	{
+		Actions.click(ActivityFeed.connections_Plusicon, "Click on Connection plus Icon");
+		//Actions.click(POMAppMenu.inforMingle, "Click on Infor Mingle");
+		//Actions.switchtoFrame(Global.socialFrame, "Switch to the Frame");
+		Actions.verifyElementPresent(Directory.header_Directory,"Verify Directory Header ");
+				
+	}
+	public static void filterByStatus(By status)
+	{
+		Actions.click(status, "Click on Fileter by Status '"+status+"'");
+	}
+	public static void filterBySort(By sort)
+	{
+		Actions.click(Directory.sortBydropdown, "Open drop down");
+		Actions.click(sort, "Click on Fileter by Sort '"+sort+"'");
+	}
+	public static void filterByAlphabet(char alphabet)
+	{
+		Actions.click(By.xpath("//a[@rel='"+alphabet+"']"), "Filter By Alphabet : " +alphabet );
+	}
+	public static void connectToUser(String userName)
+	{
+		Actions.click(By.xpath("//div[@id='directoryColleaguesContainer']/descendant::div[@title='"+userName+"']/../following-sibling::div/div"), "Click On " +userName+" Status Icon"  );
+		Actions.click(By.xpath("//span[@id='3']"), "Click On Connection");
+	}
+	public static void connectToGroup(String groupName)
+	{
+		Actions.click(By.xpath("//div[@id='directoryGroupsContainer']/descendant::div[@title='"+groupName+"']/../following-sibling::div/div"), "Click On " +groupName+" Status Icon"  );
+		Actions.click(By.xpath("//span[text()='Connect']"), "Click On Connection");
+	}
+	public static void followUser(String userName)
+	{
+		Actions.click(By.xpath("//div[@title='"+userName+"']/../following-sibling::div/div"), "Click On " +userName+" Status Icon"  );
+		Actions.click(By.xpath("//span[@id='4']"), "Click On Connection");
+		Global.acceptConfirmation();
+	}
+	
+	public static void disConnect(String userName)
+	{
+		Actions.click(By.xpath("//div[@id='directoryColleaguesContainer']/descendant::div[@title='"+userName+"']/../following-sibling::div/div"), "Click On " +userName+" Status Icon"  );
+		Actions.click(By.xpath("//span[@id='5']"), "Click On DisConnection");
+		Global.acceptConfirmation();
+	}
+	 
+		
+	public static void makeConnectionRequest(By status,By sort,char alphabet,String userName)
+	{
+		navigateToActivityPage();
+		navigateToDirectoryPage();
+		filterByStatus(status);
+		filterBySort(sort);
+		filterByAlphabet(alphabet);
+		connectToUser(userName);
+		Global.acceptConfirmation();
+		Actions.makeConnection=true;
+		
+	}
+	public static void acceptConnectionRequest()
+	{
+		navigateToActivityPage();
+		//Actions.verifyElementPresent(By.xpath("//div[@data-bind-id='infor-mingle-pageloader' and contains(@style,'display: none;')]"), "Page is Loaded");
+		Actions.pause(2);
+		Actions.click(ActivityFeed.accept, "Click On Accept");
+		Global.minglePageLoad_Social();
+		Actions.pause(2);
+		Global.acceptConfirmation();
+		Actions.AcceptConnection=true;
+	}
+	public static void declineConnectionRequest()
+	{
+		//navigateToActivityPage();
+		Actions.verifyElementPresent(By.xpath("//div[@data-bind-id='infor-mingle-pageloader' and contains(@style,'display: none;')]"), "Page is Loaded");
+		Actions.pause(2);
+		Actions.click(ActivityFeed.decline, "Click On Decline");
+		Actions.pause(1);
+		Global.acceptConfirmation();
+		Global.minglePageLoad_Social();
+		Actions.pause(1);
+		//Actions.AcceptConnection=false;
+	}
+	/*public static void navigateToUsersProfilePage(String userName)
+	{
+		By by=By.xpath("//div[contains(@title,'"+userName+"')]");
+		Actions.click(by, "Click On :"+userName);
+		Global.minglePageLoad_Social();
+		
+	}*/
+	//##################################### Code Related to Post Message in AF #######################################
+	public static void verifyMessage (String postMsg,String tagMsg)
+	{
+		//By by=By.xpath("//div[text()='"+msg+"']");
+		By by=By.xpath("//*[contains(text(),'"+postMsg+"')]/*[text()='"+tagMsg+"']");
+		//System.out.println(Actions.getText(By.xpath("//div[@class='infor-social-feedTextWrapper m-txt-f5']")));
+		
+		Actions.verifyElement(by, tagMsg+postMsg);
+		
+	}
+	public static void verifyMessage (String msg)
+	{
+		By by=By.xpath("//*[contains(normalize-space(text()),'"+msg+"')]");
+		//By by=By.xpath("//*[contains(text(),'"+postMsg+"')]/*[text()='"+tagMsg+"']");
+		//System.out.println(Actions.getText(By.xpath("//div[@class='infor-social-feedTextWrapper m-txt-f5']")));
+		
+		Actions.verifyElement(by, msg);
+		
+	}
+	public static void verifyMessage (String postMsg,String tagMsg1,String tagMsg2)
+	{
+		//By by=By.xpath("//div[text()='"+msg+"']");
+		//By by=By.xpath("//*[text()='"+" "+postMsg+"']/*[text()='"+tagMsg1+"']/following-sibling::*[text()='"+tagMsg2+"']");
+		By by=By.xpath("//*[contains(text(),'"+postMsg+"')]/*[text()='"+tagMsg1+"']/following-sibling::*[text()='"+tagMsg2+"']");
+		//System.out.println(Actions.getText(By.xpath("//div[@class='infor-social-feedTextWrapper m-txt-f5']")));
+		
+		Actions.verifyElement(by, tagMsg1+tagMsg2+postMsg);
+		
+	}
+	public static void verifyMessage_FPS (String postMsg,String tagMsg1,String tagMsg2)
+	{
+		//By by=By.xpath("//div[text()='"+msg+"']");
+		By by=By.xpath("//*[text()='"+" "+postMsg+"']/*[text()='"+tagMsg1+"']/following-sibling::*[text()='"+tagMsg2+"']");
+		//By by=By.xpath("//*[contains(text(),'"+postMsg+"')]/*[text()='"+tagMsg1+"']/following-sibling::*[text()='"+tagMsg2+"']");
+		//System.out.println(Actions.getText(By.xpath("//div[@class='infor-social-feedTextWrapper m-txt-f5']")));
+		
+		Actions.verifyElement(by, tagMsg1+tagMsg2+postMsg);
+		
+	}
+	/*public static void selectPrivacyLevel(String privacy)
+	{
+		//Actions.click(ActivityFeed.privacyLink, "Click on Privacy link");
+		Actions.click(By.xpath("//div[@id='inforPopupContainer_0']/descendant::span[contains(text(),'"+privacy+"')]"),"Privacy Level"+privacy+"is selected");
+	}*/
+	public static void clickOnShareInAFP()
+	{
+		Actions.click(ActivityFeed.shareLink, "Click On 'Share' link");
+		Actions.pause(5);
+		Actions.waitUntill_PleaseWait();
+		Actions.switchToDefaultContent();
+		Actions.verifyElement(ActivityFeed.afp_ShareOverlay_ShareHeading, "Share Heading");
+		
+	}
+	public static void clickOnShareInAFP(String postMsg)
+	{
+		By shareLnk=By.xpath("//div[contains(normalize-space(text()),'"+postMsg+"')]/ancestor::div[@data-bind-id='tbl-msg']/descendant::span[normalize-space(text())='Share']");
+		Actions.click(shareLnk, "Click On 'Share' link");
+		Actions.pause(5);
+		Actions.waitUntill_PleaseWait();
+		Actions.switchToDefaultContent();
+		Actions.verifyElement(ActivityFeed.afp_ShareOverlay_ShareHeading, "Share Heading");
+		
+	}
+	public static void typeMessageInAFP(String postMsg)
+	{
+		
+		Actions.type(ActivityFeed.textArea, postMsg, "Enter Message to post");
+		
+		
+		
+		
+	}
+	public static void selectPrivacyInAFP(String privacy)
+	{
+		By xp=By.xpath("//div[@id='inforPopupContainer_0']/descendant::li[@title='"+privacy+"']");
+		//Actions.click(ShellHeaderShareOverlay.privacyLink, "Open Privacy List");
+		if(privacy.equalsIgnoreCase("Streams"))
+		{
+			Actions.pause(1);
+			Actions.scrollToElement(xp);
+			//Actions.pause(2);
+		}
+		if(privacy.equalsIgnoreCase("+ Start Stream"))
+		{
+			Actions.pause(1);
+			Actions.scrollToElement(xp);
+			//Actions.pause(2);
+		}
+		Actions.click(xp, "Privacy Level '"+privacy+"' is selected");
+	}
+	public static void selectPrivacyInAFPToRunningStream(String TemplateName)
+	{
+		
+		By xpGrps=By.xpath("//div[@id='inforPopupContainer_0']/descendant::li[@title='"+Utility.getTestData().get("PRIVACY_GROUPS")+"']");
+		By xpStreams=By.xpath("//div[@id='inforPopupContainer_0']/descendant::li[@title='"+Utility.getTestData().get("PRIVACY_STREAMS")+"']");
+		By xpTemplate=By.xpath("//div[@id='inforPopupContainer_0']/descendant::li[@title='"+TemplateName+"']");
+		Actions.pause(2);
+		Actions.click(ActivityFeed.privacyLink, "Open Privacy List");
+		Actions.pause(1);
+		Actions.click(xpGrps, "Click on 'Group' Privacy level");
+		Actions.pause(1);
+		Actions.scrollToElement(xpStreams);
+		Actions.click(xpStreams, "Click on 'Streams' Privacy level");
+		Actions.pause(1);
+		Actions.click(xpTemplate, "Privacy Level '"+TemplateName+"' is selected");
+	} 
+	
+	public static void clickOnPostBtnInAFP()
+	{
+		Actions.click(ActivityFeed.postButton, "Click on 'POST' button");
+		Actions.postMessage=true;
+		Global.minglePageLoad_Social();
+	}
+	
+	public static void tagUserInAFP(String tagUserFullName)
+	{
+		By by=By.xpath("//div[@class='live-result-pane']/descendant::div[@title='"+tagUserFullName+"']");
+		typeMessageInAFP("@"+tagUserFullName);
+		Actions.click(by, "Select the user '"+tagUserFullName+"'");
+		
+		
+		
+	}
+	
+	public static void makeComment(String postMsg,String commMsg)
+	{
+		By by=By.xpath("//div[contains(normalize-space(text()),'"+postMsg+"')]/ancestor::div[@data-bind-id='tbl-msg']/descendant::textarea");
+		By reply_Btn=By.xpath("//div[contains(normalize-space(text()),'"+postMsg+"')]/ancestor::div[@data-bind-id='tbl-msg']/descendant::button[@title='Reply']");
+		Actions.type(by, commMsg, "Comment Entered is");
+		Actions.click(reply_Btn, "Click On Reply Button");
+		verifyComment(postMsg,commMsg);
+	}
+	public static void verifyComment(String postMsg,String commMsg)
+	{
+		By comment=By.xpath("//div[contains(normalize-space(text()),'"+postMsg+"')]/ancestor::div[@data-bind-id='tbl-msg']/descendant::div[contains(.,'"+commMsg+"')]");
+		Actions.verifyElement(comment, commMsg);
+	}
+	public static void deleteComment(String postMsg)
+	{
+		By showDetails=By.xpath("//div[contains(normalize-space(text()),'"+postMsg+"')]/ancestor::div[@data-bind-id='tbl-msg']/descendant::span[normalize-space(text())='Show Details']");
+		Actions.click(showDetails, "Click on Show Details");
+		Actions.click(ActivityFeed.showDetailsOverlay_DeleteComment, "Click on 'Delete Commment'");
+		Actions.click(ActivityFeed.showDetailsOverlay_CloseIcon, "Click On ShowDeatils 'Close' icon");
+		
+	}
+	
+	//#########################################################################################
+	//################################ AFP-Share Overlay ######################################
+	
+	public static void typeMessageInAFP_ShareOverlay(String postMsg)
+	{
+		
+		Actions.type(ActivityFeed.afp_ShareOverlay_textArea, postMsg, "Enter Message to post");
+		
+		
+		
+	}
+	public static void selectPrivacyInAFP_ShareOverlay(String privacy)
+	{
+		By xp=By.xpath("//div[@class='share-container']/descendant::li[@title='"+privacy+"']");
+		By xp1=By.xpath("//div[@class='share-container']/descendant::span[@title='"+privacy+"']");
+		
+		//Actions.click(ShellHeaderShareOverlay.privacyLink, "Open Privacy List");
+		
+		if(privacy.equalsIgnoreCase("Streams"))
+		{
+			Actions.pause(1);
+			Actions.scrollToElement(xp1);
+			//Actions.pause(2);
+		}
+		if(privacy.equalsIgnoreCase("+ Start Stream"))
+		{
+			Actions.pause(1);
+			Actions.scrollToElement(By.xpath("//div[@class='share-container']/descendant::li[@title=' "+privacy+"']"));
+			//Actions.pause(2);
+		}
+		if(privacy.equalsIgnoreCase("Groups") || privacy.equalsIgnoreCase("Streams"))
+		{
+			Actions.click(xp1, "Privacy Level '"+privacy+"' is selected");
+		}
+		else
+		{
+			if(privacy.equalsIgnoreCase("+ Start Stream"))
+			{
+				Actions.click(By.xpath("//div[@class='share-container']/descendant::li[@title=' "+privacy+"']"),"Privacy Level '"+privacy+"' is selected");
+				
+			}
+			else{
+			
+			Actions.click(xp, "Privacy Level '"+privacy+"' is selected");
+			}
+		}
+		
+	}
+	public static void selectPrivacyInAFP_ShareOverlayToRunningStream(String TemplateName)
+	{
+		
+		By xpGrps=By.xpath("//div[@class='share-container']/descendant::span[@title='"+Utility.getTestData().get("PRIVACY_GROUPS")+"']");
+		By xpStreams=By.xpath("//div[@class='share-container']/descendant::span[@title='"+Utility.getTestData().get("PRIVACY_STREAMS")+"']");
+		By xpTemplate=By.xpath("//div[@class='share-container']/descendant::li[@title='"+TemplateName+"']");
+		Actions.pause(2);
+		Actions.click(ActivityFeed.afp_ShareOvaerlay_PrivacyLink, "Open Privacy List");
+		Actions.pause(0.5);
+		Actions.click(xpGrps, "Click on 'Group' Privacy level");
+		Actions.pause(0.5);
+		Actions.scrollToElement(xpStreams);
+		Actions.click(xpStreams, "Click on 'Streams' Privacy level");
+		Actions.pause(0.5);
+		Actions.click(xpTemplate, "Privacy Level '"+TemplateName+"' is selected");
+	}
+	
+	public static void clickOnShareBtnInAFP_ShareOverlay()
+	{
+		Actions.click(ActivityFeed.afp_ShareOverlay_shareBtn, "Click on 'POST' button");
+		Global.minglePageLoad_Social();
+	}
+	
+	public static void tagUserInAFP_ShareOverlay(String tagUserFullName)
+	{
+		By by=By.xpath("//div[@id='share_tag_overlay']/descendant::span[text()='"+tagUserFullName+"']");
+		typeMessageInAFP_ShareOverlay("@"+tagUserFullName);
+		Actions.pause(10);
+		Actions.explicitWait_InVisibilityOfElement();
+		Actions.waitUntill_PleaseWait();
+		Actions.click(by, "Select the user '"+tagUserFullName+"'");
+		Actions.pause(3);
+		
+		
+		
+	}
+	
+	//######################################### Post Page #####################################
+	public static void navigateToPostPage()
+	{
+		//Actions.click(Directory.SelectUser7, description);
+	}
+	
+	
+	//#########################################################################################
+	public static void NavigateToAdministrationSettings(String userFullName)
+	{
+		By by=By.xpath("//div[@title='"+userFullName+"']/../following-sibling::div/div");
+		Actions.click(by, "Click on Admin Setting icon for the user :"+userFullName);
+		Actions.click(Directory.administer_lnk, "Click On Administer Link");
+	}
+	public static void verifyGroupInRecomendedGroupList(String groupName)
+	{
+		By by=By.xpath("//div[@id='RecommendedCommonGroupsList']/descendant::div[@title='"+groupName+"']");
+		Actions.verifyElement(by, groupName);
+	}
+	
+	public static void postMessageInFeadPage(String privacy, String postMsg)
+	{
+		navigateToActivityPage();
+		selectPrivacyInAFP(privacy);//
+		Actions.type(ActivityFeed.textArea, postMsg, "Enter post message");
+		Actions.click(ActivityFeed.postButton, "Click on post button");
+		Actions.postMessage=true;
+	}
+	
+	
+	public static void deleteMsg(String msg)
+	{
+		By xp=By.xpath("//div[contains(normalize-space(text()),'"+msg+"')]/ancestor::div[@data-bind-id='tbl-msg']/descendant::span[normalize-space(text())='Delete Post']");
+		
+			//if(Actions.verifyElementPresent(xp,"Verifyig Msg to delete in IF"))
+			if(Actions.verifyElementPresent(xp, "Message Delete button"))//Actions.postMessage)
+			{
+				Actions.pause(2);
+				//Actions.verifyElement(xp, "Delete button");
+				Actions.click(xp, "Click on Delete button");
+				Actions.pause(0.5);
+				Global.acceptConfirmation();
+				Actions.postMessage=false;
+			}
+		
+		
+	}
+	//This Is Useful to delete bulk Objects. So Kindly Provide Common Locator for all the Objects to be Delete
+	public static void deleteAll(By xp)
+	{
+		RM_Social.navigateToActivityPage();
+		//By xp=By.xpath("//span[text()='Delete Post']");
+		final int count=Actions.findElements(xp).size();
+		Actions.log4j.info("Total Number of Posts Which have the Delete links : "+count);
+		//Actions.logger.log(LogStatus.INFO, "Total Number of Posts Which have the Delete links : "+count);
+		
+		for(int i=1;Actions.verifyElementPresent(xp, "Looking for Message to delete");i++)
+		{
+			
+			
+			Actions.click1(xp, "Click on Delete Message : "+i);
+			Global.acceptConfirmation();
+			//Actions.pause(0.3);
+			
+		}
+			
+		
+		
+	}
+
+	
+	public static void disConnectUser(By status,By sort,char alphabet,String userName)
+	{
+		By value=By.xpath("//div[@id='directoryColleaguesContainer']/descendant::div[@title='"+userName+"']/../following-sibling::div/div");
+		//navigateToActivityPage();
+		navigateToDirectoryPage();
+		filterByStatus(status);
+		filterBySort(sort);
+		filterByAlphabet(alphabet);
+		System.out.println("Make Connection : "+Actions.makeConnection );
+		System.out.println("Make Accept Connection : "+Actions.AcceptConnection );
+		//if(Actions.verifyElementPresent(value, "Verifying Users availabulity Under Connected Users"))
+		if(Actions.makeConnection && Actions.AcceptConnection)
+		{
+		  disConnect(userName);
+		}
+		else
+		{
+			filterByStatus(Directory.filterByRequestMadeByYou);
+			//if(Actions.verifyElementPresent(value, "Verifying Users availabulity Under RequestMadeByYou Users"))
+				if(Actions.makeConnection && !Actions.AcceptConnection)
+				disConnect(userName);
+		}
+		
+	}
+	
+	// Make Connection request one time Activity
+	/*public static void sendConnectionRequest_OneTime(){
+		try {
+			
+			//Login to the application
+			Global.login(Utility.getConfigData().get("USER7"),Utility.getConfigData().get("PASSWORD"));
+			//Make Connection request
+			makeConnectionRequest(Directory.filterByNotConnected, Directory.sortByFirstName, 'Q',"QAAuto Test12");
+			//Navigate to Activity Feed
+			clickOnActivityFeed();
+			//Verify Connection request message
+			Actions.verify(ActivityFeed.msgContainer, Utility.getTestData().get("CONREQMSG_12"));
+			
+		} catch (Exception e) {
+			
+		}finally
+		{
+			Global.logOut();
+			Actions.driverClose();
+		}
+	}*/
+	//
+	public static void verifyMessageNotDisplayed(String message)
+	{
+		Actions.verifyElementNotPresent1(ActivityFeed.msgContainer, message);
+		
+	}
+	public static void likePost(String msg)
+	{
+		By likeBtn=By.xpath("//div[text()='"+msg+"']/ancestor::div[@data-bind-id='tbl-msg']/descendant::span[normalize-space(text())='Like']");
+		By unLikeBtn=By.xpath("//div[text()='"+msg+"']/ancestor::div[@data-bind-id='tbl-msg']/descendant::span[normalize-space(text())='Unlike']");
+		Actions.verifyElement(likeBtn, "Verify presence of 'Like' button");
+		Actions.click(likeBtn, "Click on 'Like' button");
+		Actions.pause(1);
+		Actions.verifyElement(unLikeBtn, "Verify presence of 'Unlike' button");
+	}
+	public static void unLikePost(String msg)
+	{
+		By likeBtn=By.xpath("//div[text()='"+msg+"']/ancestor::div[@data-bind-id='tbl-msg']/descendant::span[normalize-space(text())='Like']");
+		By unLikeBtn=By.xpath("//div[text()='"+msg+"']/ancestor::div[@data-bind-id='tbl-msg']/descendant::span[normalize-space(text())='Unlike']");
+		Actions.verifyElement(unLikeBtn, "Verify presence of 'Unlike' button");
+		Actions.click(unLikeBtn, "Click on 'Unlike' button");
+		Actions.pause(1);
+		Actions.verifyElement(likeBtn, "Verify presence of 'Like' button");
+	}
+	//######################## Groups ###############################
+	public static void createGroup(String groupName)
+	{
+		navigateToActivityPage();
+		Actions.click(ActivityFeed.createButton,"create button");
+        Global.minglePageLoad_Social();
+        Actions.type(Groups.groupName, groupName, "Enter group name");
+        Actions.type(Groups.department,"QA", "Enter department");
+        Actions.type(Groups.relatedSkill, "selenium", "Enter related skill");
+        Actions.type(Groups.description,"description", "Enter group description");
+        Actions.click(Groups.saveButton, "click save button");
+        Actions.verifyElementPresent(Groups.saveSuccessToolTip, "waiting for Group save 'Success' Message");
+      //  Actions.verifyElement(Groups.saveSuccessToolTip, "waiting for Group save 'Success' Message");
+	   
+	}
+	// Invite Member to the group
+	public static void inviteToGroup(String userFullName)
+	{
+		System.out.println("Full Name :"+userFullName);
+		By by=By.xpath("//div[@id='liveSearchResultContainer']/descendant::div[@title='"+userFullName+"']");
+		
+		//By by=By.xpath("//div[@id='liveSearchResultContainer']/descendant::span[text()='"+userFullName+"']");
+		Actions.click(Groups.inviteMem_Btn, "Click on 'Invite Member'");
+		Actions.type(Groups.inviteTextBox, userFullName.split(" ")[0], "Enter User Names to Invite");
+		Actions.pause(5);
+		Actions.click(by, "Select user to send invite Request");
+		
+		Actions.click(Groups.sendInvite_Btn, "Click on send Invite button");
+		 Actions.verifyElementPresent(Groups.inviteGroupSuccessToolTip, "Group Invite Msg");
+		//Actions.verifyElement(Groups.saveSuccessToolTip, "waiting for Invite send 'Success' Message");
+		
+	}
+	
+	// Delete Group
+	public static void deletegroup()
+	{
+	 
+	 navigateToDirectoryPage();
+	 Actions.click(Directory.groupsTab, "Click on 'Groups' tab");
+	 Actions.pause(1);
+	 Actions.click(Directory.filterByNotConnected, "Click on 'Not Connected' tab");
+	 filterByAlphabet('N');
+	 Actions.pause(10);
+	 for(;Actions.verifyElementPresent(Directory.adminSetting_icon, "Checking for the Groups");)
+	 {
+		Actions.click1(Directory.adminSetting_icon, "Click On 'Admin Settings' icon");
+		Actions.pause(0.5);
+		Actions.click1(Directory.administer_lnk, "Click on 'Administer' link");
+		Actions.pause(0.5);
+		Actions.click1(Directory.groupDelete_Button, "Click On 'Group delete' button");
+		Actions.pause(1);
+		filterByAlphabet('N');
+		Actions.pause(2);
+
+	 }
+	 
+	}
+	public static void navigateToGroupProfilepage(String groupName)
+	{
+		By by=By.xpath("//div[@id='connectionsPanel']/descendant::span[text()='"+groupName+"']");
+		By by2=By.xpath("//div[contains(text(),'Post something to "+groupName+"')]");
+		Actions.verifyElement(by, groupName);
+		Actions.click(by, "Click on the Group "+groupName);
+		Global.minglePageLoad_Social();
+		Actions.verifyElement(by2, "Post something to "+groupName);
+		
+	}
+	public static void typeMessageInGroupProfilePage(String postMessage)
+	{
+		
+		Actions.type(ProfilePage.textArea, postMessage, "Type Text in Post Area");
+	}
+	public static void selectPrivacyInShellHeaderShareOverlayToGroup(String groupName)
+	{
+		
+		By xpGrps=By.xpath("//div[@class='share-container']/descendant::span[@title='"+Utility.getTestData().get("PRIVACY_GROUPS")+"']");
+		By dsrdGroup=By.xpath("//div[@class='share-container']/descendant::li[@title='"+groupName+"']");
+		Actions.click(ShellHeaderShareOverlay.privacyLink, "Open Privacy List");
+		Actions.click(xpGrps, "Click on 'Group' Privacy level");
+		Actions.pause(0.5);
+		Actions.scrollToElement(dsrdGroup);
+		Actions.click(dsrdGroup, "Click on '"+groupName+"' Privacy level");
+		
+	}
+	public static void selectPrivacyInAFPToGroup(String groupName)
+	{
+		
+		By xpGrps=By.xpath("//div[@id='inforPopupContainer_0']/descendant::li[@title='"+Utility.getTestData().get("PRIVACY_GROUPS")+"']");
+		By dsrdGroup=By.xpath("//div[@id='inforPopupContainer_0']/descendant::li[@title='"+groupName+"']");
+		Actions.click(ActivityFeed.privacyLink, "Open Privacy List");
+		Actions.pause(1);
+		Actions.click(xpGrps, "Click on 'Group' Privacy level");
+		Actions.pause(1);
+		Actions.scrollToElement(dsrdGroup);
+		Actions.click(dsrdGroup, "Click on '"+groupName+"' in Privacy level");
+		
+	}
+	public static void selectPrivacyInAFP_ShareOverlayToGroup(String groupName)
+	{
+		
+		By xpGrps=By.xpath("//div[@class='share-container']/descendant::span[@title='"+Utility.getTestData().get("PRIVACY_GROUPS")+"']");
+		By dsrdGroup=By.xpath("//div[@class='share-container']/descendant::li[@title='"+groupName+"']");
+		Actions.pause(2);
+		Actions.click(ActivityFeed.afp_ShareOvaerlay_PrivacyLink, "Open Privacy List");
+		Actions.pause(0.5);
+		Actions.click(xpGrps, "Click on 'Group' Privacy level");
+		Actions.pause(0.5);
+		Actions.scrollToElement(dsrdGroup);
+		Actions.click(dsrdGroup, "Click on '"+groupName+"' Privacy level");
+		
+	}
+	
+	
+	public static void disable_PromptSettings(){
+		RM_Admin.navigateToMenu("User Settings");
+		Actions.click(ProfilePage.notification, "Click on Notoification settings");
+		Actions.scrollToElement(ProfilePage.disableNotification);
+			if(Actions.isChecked(ProfilePage.disableNotification))
+			{
+				Actions.click_JS(ProfilePage.disableNotification,"Disable Noticiaton");
+				Actions.click(ProfilePage.saveNotification, "Click On Save Notification");
+		
+			}
+		
+	}
+	public static void acceptConnectionRequest(String groupName)
+	{
+		By by=By.xpath("//div[contains(normalize-space(text()),'"+groupName+"')]/..//button[@id='acceptNotificationRequest']");
+		navigateToActivityPage();
+		//Actions.verifyElementPresent(By.xpath("//div[@data-bind-id='infor-mingle-pageloader' and contains(@style,'display: none;')]"), "Page is Loaded");
+		//Actions.pause(2);
+		Actions.click(by, "Click On Accept");
+		Global.minglePageLoad_Social();
+		//Actions.pause(2);
+		Global.acceptConfirmation();
+		//Actions.AcceptConnection=true;
+	} 
+	
+	
+	
+	//////////////////////////////////REGRESSION///////////////////////////////////
+	
+	public static void profilePic(String privacy, String postMsg,String commMsg,String username)
+	{
+		Actions.click(ShellHeader.userMenu, "Click On 'User Menu'");
+		Actions.verifyElement(ActivityFeed.usermenu_DP, "profile picture");
+		navigateToActivityPage();
+		Actions.type(ActivityFeed.textArea, postMsg, "Enter post message");
+		Actions.click(ActivityFeed.postButton, "Click on post button");
+		Actions.verifyElement(By.xpath("//div[text()='"+postMsg+"']/../../../descendant::img"), "post DP");
+		makeComment(postMsg,commMsg);
+		Actions.verifyElement(ActivityFeed.comment_DP, "comment DP");
+		Actions.switchToDefaultContent();
+		searchUser(username);
+		Actions.click(By.xpath("//a[@title='Close']"), "close search");
+	}
+	
+	
+	public static void searchUser(String username)
+	{
+	Actions.type(ShellHeader.search_ShellHeader, username, "search user");
+	Actions.enter();
+	Actions.verifyElementPresent(ActivityFeed.users_link, "users link in search page");
+	Actions.click(ActivityFeed.users_link, "users link");
+	Actions.verifyElementPresent(By.xpath("//span[text()='User']/following::span[text()='"+username+"']"), "user in search results");
+	}
+	
+	
+	public static void profilePage(String username)
+	{
+		searchUser(username);
+		Actions.click(By.xpath("//span[text()='User']/following::span[text()='"+username+"']"), "user profile page");
+		Actions.switchtoFrame(Global.socialCLFrame, "Switch to the Frame");
+		Actions.verifyElementPresent(ProfilePage.contactInfo, "profile page displayed");
+		Actions.verifyElement(ProfilePage.personalInfo_Open, "personal info is expanded by default");
+		Actions.click(ProfilePage.personalInfo_Open, "personal info collapse");
+		Actions.verifyElement(ProfilePage.personalInfo_Close, "personal info is collapsed");
+		Actions.verifyElement(ProfilePage.connections_Close, "contact info is collapsed by default");
+		Actions.click(ProfilePage.connections_Close, "connections expand");
+		Actions.verifyElement(ProfilePage.connections_Open, "personal info is expanded");
+	}
+	
+
+	public static void ufp_UI(String postMsg,String msgs)
+	{ 
+		
+		int i;
+		navigateToActivityPage();
+		Actions.verifyElement(ActivityFeed.connections_panel, "connections panel");
+		Actions.verifyElement(ActivityFeed.followuser_panel, "follow user panel");
+		Actions.verifyElement(ActivityFeed.connectionsHeading, "connections heading");
+		Actions.verifyElement(ActivityFeed.followingHeading, "following heading");
+		Actions.verifyElement(ActivityFeed.createGroupHeading, "create group heading");
+		Actions.verifyElement(ActivityFeed.textArea, "text area");
+		Actions.verifyElement(ActivityFeed.postButton, "post button");
+		Actions.verifyElement(ActivityFeed.addAttachments, "Add attachments button");
+		Actions.click(ActivityFeed.privacyLink, "privacy link");
+		Actions.verifyElement(By.xpath("//div[@id='inforPopupContainer_0']/descendant::li[@title='Tagged Users and Groups']"), "Tagged Users and Groups");
+		Actions.verifyElement(By.xpath("//div[@id='inforPopupContainer_0']/descendant::li[@title='Connected Users']"), "Connected Users");
+		Actions.verifyElement(By.xpath("//div[@id='inforPopupContainer_0']/descendant::li[@title='Public']"), "Public");
+		Actions.verifyElement(By.xpath("//div[@id='inforPopupContainer_0']/descendant::li[@title='Groups']"), "Groups");
+		Actions.scrollToElement(By.xpath("//div[@id='inforPopupContainer_0']/descendant::li[@title='Streams']"));
+		Actions.verifyElement(By.xpath("//div[@id='inforPopupContainer_0']/descendant::li[@title='Streams']"), "Streams");
+		Actions.type(ActivityFeed.textArea,postMsg, "Enter post message");
+		Actions.click(ActivityFeed.postButton, "Click on post button");
+		String date=Actions.getText(By.xpath("//div[@class='infor-social-timePost infor-social-timePostMargin floatRight m-txt-f14']"));
+		System.out.println(date+"Print");
+		Actions.postMessage=true;
+		for(i=0;i<=5;i++)
+		{
+		Actions.type(ActivityFeed.textArea, msgs, "Enter post messages");
+		Actions.click(ActivityFeed.postButton, "Click on post button");
+		}
+		Actions.scrollToElement(By.xpath("//div[contains(@class,'f5')]/div[text()='"+postMsg+"']"));
+		Actions.verifyElement(By.xpath("//div[contains(@class,'f5')]/div[text()='"+postMsg+"']"), "scrolled to last msg");
+		
+	}
+	
+	
+	public static void connections(By status)
+	{
+		navigateToActivityPage();
+		navigateToDirectoryPage();
+		filterByStatus(status);
+		//filterBySort(sort);
+		filterByAlphabet('Q');
+		Actions.scrollToElement(By.xpath("//div[@title='QA IONAPIAdmin']"));
+		Actions.verifyElement(By.xpath("//div[@title='QA IONAPIAdmin']"), "User present");
+		Actions.click(Directory.groupsTab, "Click on 'Groups' tab");
+		Actions.click(Directory.filterByNotConnected, "Click on 'Not Connected' tab");
+		filterByAlphabet('N');
+	}
+	
+	
+}

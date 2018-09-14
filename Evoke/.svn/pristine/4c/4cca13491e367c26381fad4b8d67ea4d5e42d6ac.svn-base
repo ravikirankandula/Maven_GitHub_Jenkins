@@ -1,0 +1,182 @@
+package scripts.ActivityFeed;
+
+import java.util.HashMap;
+
+import org.apache.commons.lang3.RandomStringUtils;
+import org.openqa.selenium.By;
+import org.testng.annotations.AfterClass;
+import org.testng.annotations.BeforeClass;
+import org.testng.annotations.Test;
+
+import com.relevantcodes.extentreports.ExtentTest;
+
+import actions.Actions;
+import objRepository.Global;
+import objRepository.Social.ShellHeader;
+import objRepository.Streams.Streams;
+import reusableMethods.RM_Admin;
+import reusableMethods.RM_Social;
+import reusableMethods.RM_Streams;
+import utility.Utility;
+
+
+public class Ts_PromptOnOFF_DeleteStreamStep_12760_3 {
+
+	ExtentTest logger;
+	Utility utl;
+	 HashMap<String, String> testData=Utility.getTestData();
+	 HashMap<String, String> configData=Utility.getConfigData();
+	 String templateName=testData.get("TEMPLATENAME");
+	 String templateDesc=testData.get("TEMPLAEDESC");
+	 String tag1=testData.get("TAG1");
+	 String tag2=testData.get("TAG2");
+	 String streamOwner=testData.get("STREAMOWNER");
+	 String internalParticipant=testData.get("STREAMPARTICIPANT");
+	 String stepName=testData.get("STEPNAME");
+	 String stepDesc=testData.get("STEPDESC");
+	 String tempName=templateName+RandomStringUtils.randomNumeric(3);
+		//TESTDATA
+		 /*String userName=configData.get("USER6");
+		 String pwd=configData.get("PASSWORD");*/
+		
+	
+	public static String className;
+	@BeforeClass
+	public void setUp()
+	{
+		utl=new Utility();
+		utl.initTest(this.getClass().getName().substring(this.getClass().getName().lastIndexOf(".")+1).trim());
+		className=this.getClass().getName().toString();
+		new Actions();
+	}
+	@AfterClass
+	public void tearDown() 
+	{
+		
+		Actions.logOutAndBrowserClose();
+	}
+	
+	@Test
+	public void getTitle() 
+	{
+		try{
+		//LOGIN INTO THE APPLICATION
+			Global.login(Utility.getConfigData().get("USER6"),Utility.getConfigData().get("PASSWORD"));
+			RM_Social.navigateToActivityPage();
+			//RM_Streams.navigateToStreams();
+			Actions.switchToDefaultContent();
+			RM_Admin.navigateToMenu("User Settings");
+			Actions.verifyElement(ShellHeader.userMenu_UserSettings_ProfileInformationHeading, "Profile Information");
+			Actions.pause(3);
+			Actions.click(By.xpath("//span[text()='Notifications and Prompts Settings']"),"Click on Notifications&Prompt Settings");
+			Actions.scrollToElement(ShellHeader.DeleteStreamStep_Switch_LabelTag);
+			System.out.println("@@@@@@@@@@@@@@@@ "+Actions.isChecked(ShellHeader.DeleteStreamStep_Switch_InputTag)+" @@@@@@@@@@@@@@@@@@@");
+			// Code to Make Post Prompt ON on First attempt
+			if(!Actions.isChecked(ShellHeader.DeleteStreamStep_Switch_InputTag))
+			{
+				Actions.scrollToElement(ShellHeader.DeleteStreamStep_Switch_LabelTag);
+				Actions.pause(2);
+				Actions.click(ShellHeader.DeleteStreamStep_Switch_LabelTag, "Turn ON the Delete Post Prompt Switch");
+				Actions.scrollToElement(ShellHeader.userMenu_UserSettings_SaveBtn);
+				Actions.click(ShellHeader.userMenu_UserSettings_SaveBtn, "Click on Save button");
+				Actions.click(ShellHeader.userMenu_UserSettings_OK_Prompt, "Click On OK in Prompt");
+			}
+			// Code to Verify Prompt is Displayed
+			
+			RM_Streams.createTemplateWithOneStep(tempName,templateDesc,tag1,tag2,streamOwner,internalParticipant,stepName,stepDesc);
+			RM_Streams.navigateToStreams();		
+			RM_Streams.startStreamInstance();
+			RM_Streams.select_CreatedTemplate(templateName);
+			RM_Streams.saveStream();
+			
+			/////////////////////////////////////////
+			Actions.pause(2);
+			Actions.scrollToElement(By.xpath("//div[@title='"+stepName+"']/following::button[@title='Edit']"));
+			Actions.pause(2);
+			////////////////////////////////////////
+			Actions.click_JS(By.xpath("//div[@title='"+stepName+"']/following::button[@title='Edit']"), "Edit step");
+			Actions.verifyElementPresent(Streams.deleteStep, "delete step");
+			Actions.scrollToElement(Streams.deleteStep);
+			Actions.click(Streams.deleteStep, "delete step");
+			Actions.verifyElementPresent(Global.yes, "Confirmatiom PopUp");
+			Global.declineConfirmation();
+			Global.minglePageLoad_Social();
+			
+			
+			//Code to Turn OFF Prompt Switch
+			Actions.switchToDefaultContent();
+			RM_Admin.navigateToMenu("User Settings");
+			Actions.verifyElement(ShellHeader.userMenu_UserSettings_ProfileInformationHeading, "Profile Information");
+			Actions.pause(3);
+			Actions.click(By.xpath("//span[text()='Notifications and Prompts Settings']"),"Click on Notifications&Prompt Settings");
+			Actions.scrollToElement(ShellHeader.DeleteStreamStep_Switch_LabelTag);
+			System.out.println("@@@@@@@@@@@@@@@@ "+Actions.isChecked(ShellHeader.DeleteStreamStep_Switch_InputTag)+" @@@@@@@@@@@@@@@@@@@");
+			// Code to Make Post Prompt ON on First attempt
+			if(Actions.isChecked(ShellHeader.DeleteStreamStep_Switch_InputTag))
+			{
+				Actions.scrollToElement(ShellHeader.DeleteStreamStep_Switch_LabelTag);
+				Actions.pause(2);
+				Actions.click(ShellHeader.DeleteStreamStep_Switch_LabelTag, "Turn ON the Delete Post Prompt Switch");
+				Actions.scrollToElement(ShellHeader.userMenu_UserSettings_SaveBtn);
+				Actions.click(ShellHeader.userMenu_UserSettings_SaveBtn, "Click on Save button");
+				Actions.click(ShellHeader.userMenu_UserSettings_OK_Prompt, "Click On OK in Prompt");
+			}
+		System.out.println(Actions.isChecked(ShellHeader.DeleteStreamStep_Switch_LabelTag));
+		
+			RM_Social.navigateToActivityPage();
+			RM_Streams.navigateToStreams();		
+			RM_Streams.startStreamInstance();
+			RM_Streams.select_CreatedTemplate(templateName);
+			RM_Streams.saveStream();
+			/////////////////////////////////////////
+			Actions.pause(2);
+			Actions.scrollToElement(By.xpath("//div[@title='"+stepName+"']/following::button[@title='Edit']"));
+			Actions.pause(2);
+			////////////////////////////////////////
+			Actions.click_JS(By.xpath("//div[@title='"+stepName+"']/following::button[@title='Edit']"), "Edit step");
+			Actions.verifyElementPresent(Streams.deleteStep, "delete step");
+			Actions.scrollToElement(Streams.deleteStep);
+			Actions.click(Streams.deleteStep, "delete step");
+			Global.minglePageLoad_Social();
+			Actions.verifyElementNotPresent(Global.yes, "Confirmatiom PopUp");
+			
+			Actions.switchToDefaultContent();
+			RM_Streams.delete_Template(tempName);
+			/*Actions.switchToDefaultContent();
+			RM_Social.navigateToActivityPage()*/;
+			/*RM_Streams.navigateToStreams();
+			RM_Streams.select_CreatedTemplate(tempName);
+			RM_Streams.deleteStream();
+			Global.acceptConfirmation();*/
+			
+			//Code to Turn ON Prompt Switch
+			Actions.switchToDefaultContent();
+			RM_Admin.navigateToMenu("User Settings");
+			Actions.verifyElement(ShellHeader.userMenu_UserSettings_ProfileInformationHeading, "Profile Information");
+			Actions.pause(3);
+			Actions.click(By.xpath("//span[text()='Notifications and Prompts Settings']"),"Click on Notifications&Prompt Settings");
+			Actions.scrollToElement(ShellHeader.DeleteStreamStep_Switch_LabelTag);
+			System.out.println("@@@@@@@@@@@@@@@@ "+Actions.isChecked(ShellHeader.DeleteStreamStep_Switch_InputTag)+" @@@@@@@@@@@@@@@@@@@");
+			// Code to Make Post Prompt ON on First attempt
+			if(!Actions.isChecked(ShellHeader.DeleteStreamStep_Switch_InputTag))
+			{
+				Actions.scrollToElement(ShellHeader.DeleteStreamStep_Switch_LabelTag);
+				Actions.pause(2);
+				Actions.click(ShellHeader.DeleteStreamStep_Switch_LabelTag, "Turn ON the Delete Post Prompt Switch");
+				Actions.scrollToElement(ShellHeader.userMenu_UserSettings_SaveBtn);
+				Actions.click(ShellHeader.userMenu_UserSettings_SaveBtn, "Click on Save button");
+				Actions.click(ShellHeader.userMenu_UserSettings_OK_Prompt, "Click On OK in Prompt");
+			}
+			System.out.println(Actions.isChecked(ShellHeader.DeleteStreamStep_Switch_InputTag));
+		} catch (Exception e) {
+		Utility.addClass(className);
+		
+	}
+		finally{
+		
+			
+			
+		}
+		
+	}
+}

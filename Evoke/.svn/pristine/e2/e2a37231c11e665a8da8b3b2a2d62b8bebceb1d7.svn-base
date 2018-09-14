@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+<suite name="suite1">
+	<!-- <listeners> <listener class-name="utility.RetryListener" /> </listeners> -->
+	<test name="SFDirectoryPage">
+		<classes>
+
+
+			<class name="utility.Utility" />
+			<class
+				name="scripts.ActivityFeed.Ts_AddCommentAndDeleteCommentToPost_12755" />
+			<class name="scripts.ActivityFeed.Ts_DeleteFeedByAdmin_13273" />
+			
+			<class
+				name="scripts.ActivityFeed.Ts_ShowPostDetailsFromActivityFeedPage_13266" />
+			
+			<class
+				name="scripts.ActivityFeed.Ts_VerifyConnectionsAndFollowingPanels_13277" />
+			<class name="scripts.ActivityFeed.Ts_VerifyDirectoryPageControls_13242" />
+			<class name="scripts.ActivityFeed.Ts_FollowUser_13239" />
+			<class name="scripts.ActivityFeed.Ts_CancelConReq_13240" />
+			<class name="scripts.ActivityFeed.Ts_DeletePostPromptONOFF_12760_0" />
+
+			
+			
+		</classes>
+
+
+	</test>
+
+
+
+
+
+</suite>

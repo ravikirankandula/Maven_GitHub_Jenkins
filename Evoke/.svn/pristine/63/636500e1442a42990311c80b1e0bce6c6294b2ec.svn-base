@@ -1,0 +1,23 @@
+package objRepository.IFS;
+
+import org.openqa.selenium.By;
+
+/*
+ * 
+ * Objects In  Group
+ * 
+ */
+
+
+public class DocumentAuthorizations
+{
+	public static final By accountingChart=By.xpath("//div[text()='BillOfMaterials']/../../descendant::button");
+	public static final By dataAdministrator=By.xpath("//div[text()='DataAdministrator']/../../descendant::span");
+	public static final By gridAdministrator=By.xpath("//div[text()='GRID-Administrator']/../../descendant::span");
+	public static final By add_Btn=By.id("btnBindSecurityRole");	
+	public static final By select_AllSecurityRoles=By.xpath("//span[text()='Security Roles']/../../../descendant::span[2]");
+	public static final By delete_Roles=By.id("deleteIFSItem");
+	public static final By accountingChart_MappedRoles=By.xpath("//div[text()='BillOfMaterials']/following::div");
+	public static final By check_Entity=By.xpath("//span[@aria-label='Accounting Entity']");
+	public static final By check_Location=By.xpath("//span[@aria-label='Location']");
+}

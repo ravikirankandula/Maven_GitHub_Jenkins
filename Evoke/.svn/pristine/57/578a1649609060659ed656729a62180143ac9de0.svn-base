@@ -1,0 +1,127 @@
+package scripts.IFS;
+
+import java.util.HashMap;
+
+import org.apache.commons.lang3.RandomStringUtils;
+import org.openqa.selenium.WebDriver;
+import org.testng.annotations.AfterClass;
+import org.testng.annotations.BeforeClass;
+
+import com.relevantcodes.extentreports.ExtentTest;
+
+import actions.Actions;
+import objRepository.Global;
+import reusableMethods.RM_IFS_Trial10;
+import utility.Utility;
+
+public class TS_ActionMenu_12686 {
+	WebDriver driver;
+	ExtentTest logger;
+	Global global;
+	
+	private Utility utl;
+	
+	public static String className;
+    static boolean rerun=false;
+	@BeforeClass
+	public void setUp()
+	{    
+		
+		 utl=new Utility();
+		 logger=utl.initTest(this.getClass().getName().substring(this.getClass().getName().lastIndexOf(".")+1).trim());
+		 className=this.getClass().getName().toString();
+		 new Actions();
+	}
+	@AfterClass
+	public void tearDown() 
+	{
+	if(rerun)
+
+		{
+		Utility.addClass(className);
+		}
+	Utility.report.endTest(logger);
+		
+	Utility.report.flush();
+	}
+	
+	
+	HashMap<String, String> configData=Utility.getConfigData();
+	 HashMap<String, String> testData=Utility.getTestData();
+		
+		//TESTDATA
+		 String userName=configData.get("USER1");	
+		 String blockUser=configData.get("USER15");
+	 String pwd=configData.get("PASSWORD");
+	 String emailID="test.test"+RandomStringUtils.randomNumeric(3)+"@gmail.com";
+	 String user=testData.get("FULLNAME_USER10");
+	 String password="Password123";
+	@org.testng.annotations.Test
+	public void test() {
+		 
+		
+		try {
+			//LOGIN
+			Global.login(userName,pwd);
+			
+			//UPDATE USER INFORMATION
+			RM_IFS_Trial10.userActions(emailID,user);
+		} catch (Exception e1) {
+			// TODO Auto-generated catch block
+			rerun=true;
+		}
+		try{
+		//LOGOUT
+		Global.logOut();
+		
+		}
+		catch (Exception e) {
+			// TODO: handle exception
+		}
+		finally{
+		//DRIVER CLOSE
+		Actions.driverClose();
+		}
+		
+	}
+	@org.testng.annotations.Test
+	public void test1() {
+		try {
+			for(int i=0;i<=2;i++){
+			Global.login(blockUser,password);
+			}
+		} catch (Exception e) {
+			rerun=true;
+		}
+		finally
+		{
+			
+			Actions.driverClose();
+		}
+	}
+	
+	@org.testng.annotations.Test
+	public void test2() {
+		try {
+			Global.login(userName,pwd);
+			RM_IFS_Trial10.disable_UserActions(blockUser);
+		} catch (Exception e) {
+			rerun=true;
+		}
+		finally
+		{
+			try{
+			Global.logOut();
+			}
+			catch (Exception e) {
+				// TODO: handle exception
+				
+			}
+			finally{
+			Actions.driverClose();
+			}
+		}
+	}
+	}
+	
+

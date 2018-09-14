@@ -1,0 +1,144 @@
+package scripts.IFS;
+
+import java.util.HashMap;
+
+import org.apache.commons.lang3.RandomStringUtils;
+import org.openqa.selenium.WebDriver;
+import org.testng.annotations.AfterClass;
+import org.testng.annotations.BeforeClass;
+
+import com.relevantcodes.extentreports.ExtentTest;
+
+import actions.Actions;
+import objRepository.Global;
+import reusableMethods.RM_IFS_Trial10;
+import utility.Utility;
+
+public class TS_ManageFeatures_13790 {
+	WebDriver driver;
+	ExtentTest logger;
+	Global global;
+	
+	private Utility utl;
+	
+	@BeforeClass
+	public void setup()
+	{
+		 utl=new Utility();
+		 logger=utl.initTest(this.getClass().getName().substring(this.getClass().getName().lastIndexOf(".")+1).trim());
+		 new Actions();
+		 System.out.println("**********"+System.getProperty("environment")+"*********************");
+		 System.out.println("**********"+System.getProperty("browser")+"*********************");
+	
+	}
+	@AfterClass
+	public void tearDown() throws Exception
+	{
+	
+	Utility.report.endTest(logger);
+	Utility.report.flush();
+	}
+	
+	
+	HashMap<String, String> configData=Utility.getConfigData();
+	 HashMap<String, String> testData=Utility.getTestData();
+		
+		//TESTDATA
+		 String userName=configData.get("USER1");	
+		 String userName14=configData.get("USER14");	
+
+	 String pwd=configData.get("PASSWORD");
+	
+	@org.testng.annotations.Test(priority=1)
+	public void test() throws InterruptedException{
+		 
+		
+		try {
+			//LOGIN
+			Global.login(userName,pwd);
+			RM_IFS_Trial10.manageFeatures();
+		} catch (Exception e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		
+		try{
+		//LOGOUT
+		Global.logOut();
+		
+		}
+		catch (Exception e) {
+			// TODO: handle exception
+		}
+		finally{
+		//DRIVER CLOSE
+		Actions.driverClose();
+		}
+		
+	}
+	@org.testng.annotations.Test(priority=2)
+	public void verify_BackEnd()
+	{
+		try {
+			Global.login(userName14,pwd);
+			RM_IFS_Trial10.verify_BackEndService();
+		} catch (Exception e) {
+			
+		}
+		finally
+		{
+			try{
+			Global.logOut();
+			}
+			catch(Exception e){
+				
+			}
+			finally{
+			Actions.driverClose();
+			}
+		}
+	}
+	
+	@org.testng.annotations.Test(priority=3)
+	public void test1() throws InterruptedException{
+		 
+		
+		//LOGIN
+		Global.login(userName,pwd);
+		RM_IFS_Trial10.manageFeatures();
+		
+		try{
+		//LOGOUT
+		Global.logOut();
+		
+		}
+		catch (Exception e) {
+			// TODO: handle exception
+		}
+		finally{
+		//DRIVER CLOSE
+		Actions.driverClose();
+		}
+		
+	}
+	@org.testng.annotations.Test(priority=4)
+	public void verify_BackEnd1()
+	{
+		try {
+			Global.login(userName14,pwd);
+			RM_IFS_Trial10.verify_BackEndService();
+		} catch (Exception e) {
+			
+		}
+		finally
+		{
+			try{
+			Global.logOut();
+			}
+			catch(Exception e){
+				
+			}
+			Actions.driverClose();
+		}
+	}
+}

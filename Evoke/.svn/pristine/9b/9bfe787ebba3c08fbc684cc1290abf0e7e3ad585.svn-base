@@ -1,0 +1,81 @@
+package scripts.ION;
+
+import java.util.HashMap;
+
+import org.openqa.selenium.By;
+import org.testng.annotations.AfterClass;
+import org.testng.annotations.BeforeClass;
+
+import com.relevantcodes.extentreports.ExtentTest;
+
+import actions.Actions;
+import objRepository.Global;
+import objRepository.IONDesk.WorkFlow;
+import reusableMethods.RM_IONDESK;
+import utility.Utility;
+
+public class WF_statuses_WFdetailsPage
+{
+	ExtentTest logger;
+	private Utility utl;
+	 HashMap<String, String> testData=Utility.getTestData();
+	 HashMap<String, String> configData=Utility.getConfigData();
+		
+		//TESTDATA
+		 String userName=configData.get("USER2");
+		 String pwd=configData.get("PASSWORD");
+		 String wfname=testData.get("WORKFLOW_NAME");
+		 
+	@BeforeClass
+	public void setUp()
+	{
+		 utl=new Utility();
+		 logger=utl.initTest(this.getClass().getName().substring(this.getClass().getName().lastIndexOf(".")+1).trim());
+		 new Actions();
+	
+	}
+	@AfterClass
+	public void tearDown()
+	{
+		Utility.report.endTest(logger);
+		//Actions.driverClose();
+	
+	}
+	
+
+
+	@org.testng.annotations.Test(priority =2)
+	public void start_WorkFlow()
+	 {
+		try {
+			
+	    //login
+		Global.login(userName,pwd);
+		RM_IONDESK.start_WorkFlowMingle(wfname);
+		Actions.click(By.xpath("//div[@title='"+wfname+"']"), "select Work flow");
+		Actions.scrollToElement(WorkFlow.runningstatusleft);
+		Actions.verifyElement(WorkFlow.runningstatusleft, "WF is in Running state");
+		//Global.minglePageLoad_Social();
+		Actions.click(WorkFlow.cancel_WFBtn, "cancel WF");
+		//Global.minglePageLoad_Social();
+		Actions.scrollToElement(WorkFlow.cancelledstatusleft);
+		Actions.verifyElement(WorkFlow.cancelledstatusleft, "WF is in Cancelled state");
+		Actions.click(WorkFlow.remove_WFBtn, "remove WF");
+    	Actions.verifyElement(WorkFlow.deleteWF_prompt, "Prompt when removing a Workflow");
+    	Actions.click(WorkFlow.no_Btn, "click no button");
+    	Actions.click(WorkFlow.remove_WFBtn, "remove WF");
+    	Actions.verifyElement(WorkFlow.deleteWF_prompt, "Prompt when removing a Workflow");
+    	Actions.click(WorkFlow.yes_Btn, "click yes button");
+		//RM_IONDESK.rb_WorkFlow(wfname);
+		
+		 
+         } catch (Exception e) {
+			
+		}finally
+		{
+			Global.logOut();
+			Actions.driverClose();
+		}
+		
+     }
+}

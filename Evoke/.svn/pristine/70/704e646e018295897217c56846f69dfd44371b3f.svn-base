@@ -1,0 +1,66 @@
+package scripts.ActivityFeed;
+
+import org.apache.commons.lang3.RandomStringUtils;
+import org.testng.annotations.AfterClass;
+import org.testng.annotations.AfterMethod;
+import org.testng.annotations.BeforeClass;
+import org.testng.annotations.Test;
+
+import actions.Actions;
+import objRepository.Global;
+import objRepository.Social.ActivityFeed;
+import objRepository.Social.Directory;
+import reusableMethods.RM_Social;
+import utility.Utility;
+
+public class Ts_VerifyDirectoryPageControls_13242 {
+	
+	private Utility utl;
+	//ExtentTest logger;
+
+		
+	public static String className;
+	@BeforeClass
+	public void setUp()
+	{
+		utl=new Utility();
+		utl.initTest(this.getClass().getName().substring(this.getClass().getName().lastIndexOf(".")+1).trim());
+		className=this.getClass().getName().toString();
+		new Actions();
+	}
+		@AfterMethod
+		public void logOutAndBrowserClose()
+		{
+			Actions.logOutAndBrowserCloseMU();
+		}
+		@AfterClass
+		public void endReport() 
+		{
+			Actions.endScriptReportMU();
+			
+			
+		}
+		String time=RandomStringUtils.randomNumeric(4);
+		@Test
+		public void postMsg()
+		{
+		
+			try {
+				Global.login(Utility.getConfigData().get("USER20"), Utility.getConfigData().get("PASSWORD"));
+				//Actions.pause(3);
+				RM_Social.navigateToActivityPage();
+				RM_Social.navigateToDirectoryPage();
+				Actions.verifyElement(Directory.filterByConnected, "Verify Filter By Connected");
+				Actions.verifyElement(Directory.filterByFollowing, "Verify Filter By Following");
+				Actions.verifyElement(Directory.filterByFollowed, "Verify Filter By Followed");
+				Actions.verifyElement(Directory.filterByRequestMadeByYou, "Verify Filter By Request Made By You");
+				Actions.verifyElement(Directory.filterByNotConnected, "Verify Filter By Not Connected");
+			} catch (Exception e) {
+				Utility.addClass(className);
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+	
+
+}

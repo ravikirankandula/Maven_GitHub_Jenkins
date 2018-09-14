@@ -1,0 +1,83 @@
+package scripts.Admin;
+
+import java.util.HashMap;
+
+import org.testng.annotations.AfterClass;
+import org.testng.annotations.BeforeClass;
+
+import com.relevantcodes.extentreports.ExtentTest;
+
+import actions.Actions;
+import objRepository.Global;
+import objRepository.Social.ShellHeader;
+import reusableMethods.RM_Admin;
+import utility.Utility;
+
+public class Ts_UserMenuOption_AdminSettings_MingleAdmin_12771_5 
+
+
+{
+	ExtentTest logger;
+	private Utility utl;
+	 HashMap<String, String> testData=Utility.getTestData();
+	 HashMap<String, String> configData=Utility.getConfigData();
+		
+		//TESTDATA
+		 String userName=configData.get("USER1");
+		 String pwd=configData.get("PASSWORD");
+		 String userName1=configData.get("USER6");
+		 String pwd1=configData.get("PASSWORD");
+		
+			
+	
+			@BeforeClass
+			public void setUp()
+			{
+				 utl=new Utility();
+				 logger=utl.initTest(this.getClass().getName().substring(this.getClass().getName().lastIndexOf(".")+1).trim());
+				 new Actions();
+			
+			}
+			@AfterClass
+			public void tearDown()
+			{
+				Utility.report.endTest(logger);
+				//Actions.driverClose();
+				Utility.report.flush();
+			
+			}
+			
+			@org.testng.annotations.Test(priority=1)
+			public void adminSettings(){
+				try {
+					
+					//LOGIN
+					Global.login(userName,pwd);
+					RM_Admin.verify_AdminSettings();
+					
+				} catch (Exception e) {
+					
+				}finally
+				{
+					Actions.driverClose();
+				}
+			}
+			
+			@org.testng.annotations.Test(priority=2)
+			public void adminsettingsNA(){
+				try {
+					
+					//LOGIN
+				
+					Global.login(userName1,pwd1);
+					RM_Admin.verify_AdminSettingsNotPresent();
+					
+				} catch (Exception e) {
+					
+				}finally
+				{
+					Actions.driverClose();
+					
+				}
+			}
+}

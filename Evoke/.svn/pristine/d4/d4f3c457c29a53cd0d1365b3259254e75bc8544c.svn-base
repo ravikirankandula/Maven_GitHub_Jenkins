@@ -1,0 +1,98 @@
+package scripts.Admin;
+
+import java.util.HashMap;
+
+import org.apache.commons.lang3.RandomStringUtils;
+import org.testng.annotations.AfterClass;
+import org.testng.annotations.BeforeClass;
+
+import com.relevantcodes.extentreports.ExtentTest;
+
+import actions.Actions;
+import objRepository.Global;
+import reusableMethods.RM_Admin;
+import reusableMethods.RM_Social;
+import utility.Utility;
+
+public class TS_MultipleNonInfor_12749 {
+	ExtentTest logger;
+	private Utility utl;
+	 HashMap<String, String> testData=Utility.getTestData();
+		
+	 HashMap<String, String> configData=Utility.getConfigData();
+		String lid=RandomStringUtils.randomNumeric(3);
+		//TESTDATA
+		 String userName=configData.get("USER5");	
+		 String pwd=configData.get("PASSWORD");
+		 String appType=testData.get("UTITLITYAPP");
+		 String name=testData.get("UTILITYAPP_NAME");
+		 String desc=testData.get("UTILITYAPP_DESC");
+		 String url=testData.get("UTLITYAPP_URL");
+		 String helpurl=testData.get("UTILTYAPP_HELPURL");
+		
+		 String appName=testData.get("APP_NONINFORAPPNAME");
+		 String user=testData.get("ALTMANAGERDETAILS");
+		
+		 String logicalID=testData.get("LOGICAL_ID")+lid;
+		 String deleteApp=testData.get("DELETE_APP");
+		 String selectApp=testData.get("UTILITY_APPSELECTION");
+		 String applicationName=name+RandomStringUtils.randomNumeric(3);
+	@BeforeClass
+	public void setUp()
+	{
+		 utl=new Utility();
+		 logger=utl.initTest(this.getClass().getName().substring(this.getClass().getName().lastIndexOf(".")+1).trim());
+		 new Actions();
+	
+	}
+	@AfterClass
+	public void tearDown()
+	{
+		Utility.report.endTest(logger);
+		//Actions.driverClose();
+		Utility.report.flush();
+	
+	}
+	
+	
+
+
+	@org.testng.annotations.Test(priority =1)
+	public void create_App(){
+		try {
+			
+			//LOGIN
+			Global.login(userName,pwd);
+			//RM_Admin.addContextOrUtitlityApp(appType, applicationName, desc, url, helpurl);
+			// RM_Social.disable_PromptSettings();
+			boolean condtion=RM_Admin.verifyPaginationInAppMenu();
+			if(condtion==true)
+			{
+				RM_Admin.navigateToMenu("Admin Settings");
+				for(int i=0;i<=6;i++){
+			RM_Admin.create_MulNonInforApp(applicationName+"_"+i,url);
+			
+			}
+			Actions.switchToDefaultContent();
+			RM_Admin.verifyPaginationInAppMenu();
+			Actions.refresh();
+			RM_Admin.delete_MulApps(name);
+			}
+			
+			//Global.logOut();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally
+		{
+			try{
+			Global.logOut();
+			}catch (Exception e) {
+				// TODO: handle exception
+			}
+			finally{
+			Actions.driverClose();
+			}
+		}
+	}
+
+}

@@ -1,0 +1,87 @@
+package scripts.IFS;
+
+import java.util.HashMap;
+
+import org.apache.commons.lang3.RandomStringUtils;
+import org.openqa.selenium.WebDriver;
+import org.testng.annotations.AfterClass;
+import org.testng.annotations.BeforeClass;
+
+import com.relevantcodes.extentreports.ExtentTest;
+
+import actions.Actions;
+import objRepository.Global;
+import reusableMethods.RM_IFS_Trial10;
+import utility.Utility;
+
+public class Ts_ActiveColumn_OP_14736 {
+	WebDriver driver;
+	ExtentTest logger;
+	Global global;
+	
+	private Utility utl;
+	
+	  public static String className;
+	    static boolean rerun=false;
+		@BeforeClass
+		public void setUp()
+		{    
+			
+			 utl=new Utility();
+			 logger=utl.initTest(this.getClass().getName().substring(this.getClass().getName().lastIndexOf(".")+1).trim());
+			 className=this.getClass().getName().toString();
+			 new Actions();
+		}
+	@AfterClass
+	public void tearDown() 
+	{
+	
+	Utility.report.endTest(logger);
+	Utility.report.flush();
+	}
+	
+	
+	HashMap<String, String> configData=Utility.getConfigData();
+	 HashMap<String, String> testData=Utility.getTestData();
+		
+		//TESTDATA
+	 String userName=configData.get("USER1");
+	 String email="test.test"+RandomStringUtils.randomNumeric(3)+"@gmail.com";
+	 String pwd=configData.get("PASSWORD");
+	 //String email=testData.get("USER1");
+	 String user=testData.get("FULLNAME_USER1");
+	 
+	@org.testng.annotations.Test
+	public void test() {
+		 
+		
+		//LOGIN
+		try {
+			Global.login(userName,pwd);
+			RM_IFS_Trial10.activeColumn();
+			RM_IFS_Trial10.add_ActiveColumnUser(email,user);
+			RM_IFS_Trial10.add_uncheckActiveColumnUser(email,user);
+			RM_IFS_Trial10.userAlias();
+		} catch (Exception e1) {
+			// TODO Auto-generated catch block
+			Utility.addClass(className);
+		}
+		
+		//UPDATE USER INFORMATION
+	
+		try{
+		//LOGOUT
+		Global.logOut();
+		
+		}
+		catch (Exception e) {
+			// TODO: handle exception
+		}
+		finally{
+		//DRIVER CLOSE
+		Actions.driverClose();
+		}
+		
+	}
+	
+}

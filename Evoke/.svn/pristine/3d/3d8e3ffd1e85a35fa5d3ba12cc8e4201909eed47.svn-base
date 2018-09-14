@@ -1,0 +1,27 @@
+package objRepository.IFS;
+
+import org.openqa.selenium.By;
+
+public class ERPPersonIDS {
+	/*
+	 * 
+	 * Objects In ERP PERSON IDS PAGE
+	 * 
+	 */
+	public static final By search_ERPUser=By.id("txtSelectuserSearch");
+	public static final By moveTo_ERPPersonID=By.xpath("//div[@id='searchUsersDataGrid']/descendant::td[4]/div");
+	public static final By enter_ERPPersonID=By.xpath("//div[@id='searchUsersDataGrid']/descendant::td[4]/div/input");
+	public static final By moveTo_ERPAccountingEntity=By.xpath("//div[@id='searchUsersDataGrid']/descendant::td[5]/div");
+	public static final By enter_ERPAccountingEntity=By.xpath("//div[@id='searchUsersDataGrid']/descendant::td[5]/div/input");
+	public static final By moveTo_ERPLogicalID=By.xpath("//div[@id='searchUsersDataGrid']/descendant::td[6]/div");
+	public static final By enter_ERPLogicalID=By.xpath("//div[@id='searchUsersDataGrid']/descendant::td[6]/div/input");
+	public static final By addAndCloseBtn=By.id("btnSearchSelectClose");
+	public static final By checkERP=By.xpath("//label[text()='Search for Users']/following::div[10]/span");
+	public static final By erp_SearchUser=By.xpath("//input[@id='txtSelectuserSearch']/following::button[2]");
+	
+	/*public static final By verify_FullName=By.xpath("//div[@class='grid-canvas grid-canvas-top grid-canvas-left']/descendant::div[7]");
+	public static final By verify_EmailAddress=By.xpath("//div[@class='grid-canvas grid-canvas-top grid-canvas-left']/descendant::div[9]");
+	public static final By verify_ERPIDS=By.xpath("//div[@class='grid-canvas grid-canvas-top grid-canvas-left']/descendant::div[10]");
+	public static final By verify_ERPEntity=By.xpath("//div[@class='grid-canvas grid-canvas-top grid-canvas-left']/descendant::div[11]");
+	public static final By verify_ERPLogicalID=By.xpath("//div[@class='grid-canvas grid-canvas-top grid-canvas-left']/descendant::div[12]");*/
+}

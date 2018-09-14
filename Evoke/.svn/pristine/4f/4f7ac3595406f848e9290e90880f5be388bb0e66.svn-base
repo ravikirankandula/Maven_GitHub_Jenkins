@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+<suite name="suite1">
+	<!-- <listeners> <listener class-name="utility.RetryListener" /> </listeners> -->
+	<test name="chrome">
+		<parameter name="Browser" value="IE" />
+		<classes>
+
+
+			<class name="utility.Utility" />
+
+		 <class name="scripts.IONAPI.TS_AndroidApp_12800_12807" />
+			<class name="scripts.IONAPI.TS_AvailableMobileApps_14111" />
+			<class name="scripts.IONAPI.TS_BackendService_12805_12812" />
+			<class name="scripts.IONAPI.TS_CloneFeatures_14119_14131" />
+			<class name="scripts.IONAPI.TS_InforNonProvisioned_12782_12784_12786_12788_12789" />
+			<class name="scripts.IONAPI.TS_IOSApp_12801_12808" />
+			<class name="scripts.IONAPI.TS_NonInfor_12783_12798_12793_12794" />
+			<class name="scripts.IONAPI.TS_OthersApp_12803_12810" />
+			<class name="scripts.IONAPI.TS_ProvisionedSuiteSwagger_13960" />
+			<class name="scripts.IONAPI.TS_WebApp_12804_12811" />
+			<class name="scripts.IONAPI.TS_WindowsApp_12802_12809" />
+			<class name="scripts.IONAPI.TS_APIMetaData_14113" />
+			<class name="scripts.IONAPI.TS_IssueRefreshToken_14132" /> 
+			
+			<class name="scripts.IONAPI.TS_ImportExportNonInforSuites_14401" /> 
+			<class name="scripts.IONAPI.Ts_IONAPIGeneralSettings_14766" /> 
+			<class name="scripts.IONAPI.Ts_IONAPIImport_14771" /> 
+
+			<class name="scripts.IONAPI.Ts_IONAPIExport_14770" /> 
+
+
+		</classes>
+
+
+	</test>
+
+
+
+
+
+</suite>

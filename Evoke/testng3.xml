@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+<suite name="suite1">
+
+	<test name="EVOKE TEST ">
+	<parameter name="browser" value="Chrome" />
+	 
+		<classes>
+		
+			 <class name="utility.Utility" />
+			  
+			  <!-- Tests --> 
+			
+			 
+			  <class name="scripts.Evoke.TS2_Evoke_Insights" />
+			  
+			  
+		</classes>
+	
+	
+	</test>
+
+
+  
+
+
+</suite>

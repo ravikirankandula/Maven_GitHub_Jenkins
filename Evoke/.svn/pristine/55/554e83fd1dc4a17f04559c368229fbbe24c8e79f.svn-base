@@ -1,0 +1,108 @@
+package scripts.Streams;
+
+import java.util.HashMap;
+
+import org.apache.commons.lang3.RandomStringUtils;
+import org.openqa.selenium.WebDriver;
+import org.testng.annotations.AfterClass;
+import org.testng.annotations.BeforeClass;
+
+import com.relevantcodes.extentreports.ExtentTest;
+
+import actions.Actions;
+import objRepository.Global;
+import reusableMethods.RM_Streams;
+import utility.Utility;
+
+public class TS_RoleBased_12741 {
+	WebDriver driver;
+	ExtentTest logger;
+	Global global;
+	
+	private Utility utl;
+	
+	 public static String className;
+	 static boolean rerun=false;
+		@BeforeClass
+		public void setUp()
+		{    
+			
+			 utl=new Utility();
+			 logger=utl.initTest(this.getClass().getName().substring(this.getClass().getName().lastIndexOf(".")+1).trim());
+			 className=this.getClass().getName().toString();
+			 new Actions();
+		}
+	@AfterClass
+	public void tearDown() 
+	{
+	
+	Utility.report.endTest(logger);
+	Utility.report.flush();
+	}
+	
+	
+	HashMap<String, String> configData=Utility.getConfigData();
+	 HashMap<String, String> testData=Utility.getTestData();
+		
+		//TESTDATA
+	 String userName=configData.get("USER6");
+	 String pwd=configData.get("PASSWORD");
+	 String userName8=configData.get("USER8");
+	 
+	@org.testng.annotations.Test
+	public void test() {
+		 
+		
+		//LOGIN
+		
+		//VERIFY STREAMS
+	try{
+		Global.login(userName,pwd);
+		RM_Streams.verify_TemplateOptions();
+		
+	}
+	catch (Exception e) {
+		Utility.addClass(className);
+	}
+	finally{
+		try{
+			
+		//LOGOUT
+		Global.logOut();
+		
+		}
+		catch (Exception e) {
+			// TODO: handle exception
+		}
+		finally{
+		//DRIVER CLOSE
+		Actions.driverClose();
+		delete_Template();
+		}
+	}	
+	}
+	//DELETE TEMPLATE
+
+		public  void delete_Template(){
+
+			try{
+			Global.login(userName8,pwd);		
+			RM_Streams.verify_TemplateOptionsNotPresent();
+			}
+		
+ catch (Exception e) {
+	
+}
+finally
+{
+	try{
+	Global.logOut();}
+	catch (Exception e) {
+		// TODO: handle exception
+	}
+	finally{
+	Actions.driverClose();
+	}
+}
+}
+}

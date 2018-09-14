@@ -1,0 +1,122 @@
+/**
+ * 
+ */
+package objRepository.Streams;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+
+
+public class Streams {
+	 WebDriver driver;
+	 
+		
+		/****************Locator***************/
+		 public static final By createNewTemplate=By.xpath("//span[contains(text(),'Create New Stream Template')]");
+		 public static final By templateName=By.id("templateName");
+		 public static final By templateDescription=By.id("templateDescription");
+		 public static final By tag=By.xpath("//label[contains(text(),'Tags')]/following::input");
+		 public static final By templateStreamOwner=By.xpath("//label[contains(text(),'Stream Owners:')]/following::input");
+		 public static final By templateInternalParticipant=By.xpath("//label[contains(text(),'Internal Participants:')]/following::input");
+		//public static final By selectStreamOwner=By.xpath("//div[@class='live-result-pane']/descendant::div[@title='QAAuto Test6']");
+		//public static final By selectInternalParticipant=By.xpath("//div[@class='live-result-pane']/descendant::div[@title='QAAuto Test12']");
+		 public static final By selectStreamOwner=By.xpath("//span[text()='QAAuto Template1']");
+		public static final By selectInternalParticipant=By.xpath("//div[@id='liveSearchResultContainer']/div[1]/descendant::span[text()='QAAuto Collab12']");//"//span[text()='QAAuto Test12']");
+		public static final By addAStep=By.id("addAStepDescription");
+		public static final By stepName=By.id("stepName");
+		public static final By stepDesc=By.name("Description");
+		public static final By calendar=By.xpath("//button[@title='Select a Date']");
+		public static final By dueDate=By.id("DueInPeriod");
+		public static final By singleLineText=By.xpath("//img[@title='Single Line Text']");
+		public static final By singleLineTextDestination=By.id("templateFormContainer");//By.xpath("//div[@id='templateFormContainer']//div[@class='accordion-spacer-30 not-sortable']");//
+		public static final By saveStep=By.name("Submit");
+		public static final By activate=By.id("activateTemplate");
+		public static final By deactivate=By.id("deactivateTemplate");
+		public static final By deleteTemplate=By.id("deleteTemplate");
+		public static final By saveTemplate=By.id("saveTemplate");
+		public static final By startStreamInstance=By.xpath("//span[text()='Start Stream']");//"//span[contains(text(),'Start Stream')]");
+		public static final By selectCreatedTemplate=By.xpath("//div[contains(text(),'NewTemplate')]");
+		public static final By saveStream=By.id("saveStreamBtn");
+		public static final By startStream=By.xpath("//button[@title='Start']");
+		public static final By restartStream=By.xpath("//button[@title='Restart']");
+		public static final By cancelStream=By.xpath("//button[@title='Cancel']");
+		public static final By cancelSep=By.xpath("//button[@name='Cancel']");
+		public static final By completeStream=By.xpath("//button[@title='Complete']");
+		public static final By deleteStream=By.xpath("//button[@title='Delete']");
+		public static final By selectStreamOptions=By.xpath("//div[@data-bind-id='select-dd-selected-opt-icn']");
+		public static final By runningFilterIcon=By.xpath("//div[@title='Running']");
+		public static final By completeFilterIcon=By.xpath("//div[@title='Completed']");
+		public static final By cancelFilterIcon=By.xpath("//div[@title='Canceled']");
+		public static final By notStartedFilterIcon=By.xpath("//div[@title='Not Started']");
+		public static final By verifyMyStreamOption=By.xpath("//li[text()='My Streams']");
+		public static final By verifyAllStreamOption=By.xpath("//li[text()='All Streams']");
+		public static final By verifyExport=By.xpath("//div[@title='Export']"); 
+		public static final By verifyImport=By.xpath("//div[@title='Import']"); 
+		public static final By selectTemplateOptions=By.id("templateHeaderFilterTemplatesDashDD");
+		public static final By verifyMyTemplates=By.xpath("//li[text()='My Templates']");
+		public static final By verifyAllTemplates=By.xpath("//li[text()='All Templates']");
+		public static final By verifyFilterBy=By.xpath("//div[contains(text(),'Filter by:')]");
+		public static final By verifyFilterRoundedOn=By.xpath("//div[contains(text(),'Filter by:')]/following::div[2]");
+		public static final By verifyFilterRoundedOff=By.xpath("//div[contains(text(),'Filter by:')]/following::div[3]");
+		public static final By verifyTemplateTableName=By.xpath("//td[contains(text(),'NAME')]");
+		public static final By verifyTemplateTableStatus=By.xpath("//td[contains(text(),'STATUS')]");
+		public static final By verifyTemplateTableOwner=By.xpath("//td[contains(text(),'OWNERS')]");
+		public static final By verifyTemplateTableSteps=By.xpath("//td[contains(text(),'#STEPS')]");
+		public static final By verifyTemplateTableInstances=By.xpath("//td[contains(text(),'#INSTANCES')]");
+		public static final By verifyTemplateTableLastUsed=By.xpath("//td[contains(text(),'LAST USED')]");
+		public static final By verifyTemplateTableLastModified=By.xpath("//td[contains(text(),'LAST MODIFIED')]");
+		public static final By cancel_StreamButton=By.id("returnStreamBtn");
+		public static final By retrieve_Owner=By.xpath(".//*[@id='streamOwners']/div/div[3]/span/label");
+		public static final By retrieve_InternalParticipant=By.xpath(".//*[@id='participants']/div/div[3]/span/label");
+		public static final By streams=By.xpath("//div[@id='streamMenuContainer']/descendant::span[contains(text(),'Streams')]");
+		public static final By streamsHeader=By.xpath("//li[@title='Streams']");
+		public static final By template=By.xpath("//span[contains(text(),'Templates')]");
+		public static final By viewAllActivities_icon=By.xpath("//div[@title='View All Activities']");
+		public static final By viewAllActivities_TextArea=By.xpath("//div[@data-bind-id='workflow-detail-center-panel']/descendant::div[@class='inlineBlock m-lp-activities-text']");
+		
+		public static final By paragraph=By.xpath("//img[@title='Paragraph Text']");
+		public static final By poll=By.xpath("//img[@title='Poll']");
+		public static final By checkBoxes=By.xpath("//img[@title='Check Boxes']");
+		public static final By number=By.xpath("//img[@title='Number']");
+		public static final By section=By.xpath("//img[@title='Section Break']");
+		public static final By label=By.xpath("//img[@title='Label']");
+		public static final By dropDown=By.xpath("//img[@title='Drop-down']");
+		
+		public static final By date=By.xpath("//img[@title='Date']");
+		public static final By dateAndTime=By.xpath("//img[@title='Date & Time']");
+		public static final By webSiteLink=By.xpath("//img[@title='Website Link']");
+		
+		public static final By radio=By.xpath("//img[@title='Radio']");
+		public static final By checkpoint=By.xpath("//img[@title='Checkpoint']");
+		public static final By canceledStream=By.xpath("//div[contains(text(),'Canceled')]");
+		
+		public static final By stepStartBtn=By.xpath("//button[text()='Start']");
+		public static final By yesBtn=By.xpath("//div[@id='confirmationModalDialogButtons']/button[text()='Yes']");
+		public static final By singleLineTxt_input=By.xpath("//label[text()='Default Label']/following::div[1]/input");
+		public static final By save_StepData=By.xpath("//div[@class='infor-mingle-streamstep-button-set']/button[text()='Save']");
+		public static final By complete_StepBtn=By.xpath("//div[@class='infor-mingle-streamstep-button-set']/button[text()='Complete']");
+		public static final By verify_Template=By.xpath("//span[contains(text(),'Templates')]");
+		public static final By edit_Button=By.xpath("//button[@title='Edit']");
+		public static final By deleteStep=By.xpath("//button[@name='Delete']");
+		public static final By export_Button=By.xpath("//div[@id='confirmationModalDialogButtons']/descendant::button[text()='Export']");
+		public static final By import_Button=By.xpath("//div[@id='confirmationModalDialogButtons']/descendant::button[text()='Import']");
+		public static final By closeimport_Button=By.xpath(" //span[@class='m-close-btn-icon']");
+		public static final By inherit_Participant=By.xpath("//label[@for='InheritStreamParticipants']");
+		public static final By errorMsg_InheritParticipant=By.xpath("//p[@class='mingle-error-desc']");
+		public static final By close_ErrorMsg=By.xpath("//span[@class='m-close-btn-icon']");
+		public static final By close_Inherit=By.xpath("//span[@data-bind-id='infor-social-remove-tag']");
+		public static final By show_dropdownIcon=By.xpath("//div[normalize-space(text())='Show:']/following::div[@data-bind-id='select-dd-selected-opt-icn']");
+		public static final By show_dropdown_AllSteps=By.xpath("//li[@id='allSteps']");
+		public static final By templateDueValue_input=By.xpath("//input[@id='TemplateDueInInputBoxDueIn']");
+		public static final By templateDuePeriod_dropDownValue=By.xpath("//div[@id='selectStreamTemplateDueInUnitsDD']//div[@data-bind-id='select-dd-selected-opt-txt']");
+		public static final By templateDuePeriod_dropDownArrow=By.xpath("//div[@id='selectStreamTemplateDueInUnitsDD']//div[@data-bind-id='select-dd-selected-opt-icn']");
+		public static final By templateStepDuePeriod_dropDownArrow=By.xpath("//div[@data-bind-id='select-dd-selected-opt-icn']");
+		public static final By streamDueDate_input=By.xpath("//input[@id='strDueDate']");
+		
+		
+		public static String templateDueValue;
+		public static String templateDuePeriod;
+		
+		
+		
+}

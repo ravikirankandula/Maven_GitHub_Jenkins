@@ -1,0 +1,306 @@
+package scripts.ShellHeader;
+
+import java.util.List;
+
+import org.apache.commons.lang3.RandomStringUtils;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
+import org.testng.annotations.AfterClass;
+import org.testng.annotations.BeforeClass;
+import org.testng.annotations.Test;
+
+import actions.Actions;
+import objRepository.Global;
+import objRepository.Social.ActivityFeed;
+import objRepository.Social.ShellHeader;
+import objRepository.Social.ShellHeaderShareOverlay;
+import objRepository.Streams.Streams;
+import reusableMethods.RM_Social;
+import reusableMethods.RM_Streams;
+import utility.Utility;
+
+public class Ts_ShellheaderSearch_12774 {
+	private Utility utl;
+	
+	static boolean rerun=false;
+	public static String className;
+	@BeforeClass
+	public void setUp()
+	{
+		utl=new Utility();
+		utl.initTest(this.getClass().getName().substring(this.getClass().getName().lastIndexOf(".")+1).trim());
+		className=this.getClass().getName().toString();
+		new Actions();
+	}
+	
+	@AfterClass
+	public void endReport() 
+	{
+		if(rerun)
+		{
+			Utility.addClass(className);
+		}
+		try {
+			Actions.switchtoFrame(Global.socialCLFrame, "SWITCH TO SOCIAL FRAME");
+			RM_Social.clickOnActivityFeed();
+			RM_Social.deleteAll(ActivityFeed.Delete_Post);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			//e.printStackTrace();
+		}
+		try {
+			rb();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		Actions.logOutAndBrowserClose();
+		
+	}
+	static String time=RandomStringUtils.randomNumeric(4);
+	static String user=Utility.getTestData().get("FULLNAME_USER9");
+	//static String user2=Utility.getTestData().get("FULLNAME_USER9");
+	static String groupName=Utility.getTestData().get("GROUP_NAME")+time;
+	static String postMsg=Utility.getTestData().get("POSTMSG")+time;
+	static String postMsg_tagUser=" "+Utility.getTestData().get("POSTMSG")+"_TagGedUser"+time;
+	static String postMsg_tagGroup=" "+Utility.getTestData().get("POSTMSG")+"_TaggedGroup"+time;
+	String templateName = Utility.getTestData().get("TEMPLATENAME")+time;
+	String commentMsg=Utility.getTestData().get("COMMENTMSG")+time;
+	@Test
+	public void predectiveTargetTaggedUser()
+	{
+		
+		try {
+		String templateDesc = Utility.getTestData().get("TEMPLAEDESC");
+		String tag1 = Utility.getTestData().get("TAG1");
+		String tag2 = Utility.getTestData().get("TAG2");
+		String streamOwner = Utility.getTestData().get("STREAMOWNER");
+		String internalParticipant = Utility.getTestData().get("STREAMPARTICIPANT");
+		String stepName = Utility.getTestData().get("STEPNAME");
+		String stepDesc = Utility.getTestData().get("STEPDESC");
+		
+		// Login Action
+		
+		Global.login(Utility.getConfigData().get("USER6"), Utility.getConfigData().get("PASSWORD"));
+		RM_Social.navigateToActivityPage();
+		/*RM_Streams.createTemplateWithOneStep(templateName, templateDesc, tag1, tag2, streamOwner, internalParticipant,
+				stepName, stepDesc);
+		// Create Stream & Start the Stream
+		RM_Streams.createStream(templateName);
+		//Create Ggroup
+		RM_Social.clickOnActivityFeed();
+		RM_Social.createGroup(groupName);*/
+		// Normal Post
+			RM_Social.clickOnActivityFeed();
+			Actions.pause(2);
+			Actions.click(ActivityFeed.privacyLink, "Open Privacy List");
+			RM_Social.selectPrivacyInAFP(Utility.getTestData().get("PRIVACY_CONNECTEDUSERS"));
+			RM_Social.typeMessageInAFP(postMsg);
+			RM_Social.clickOnPostBtnInAFP();
+			RM_Social.clickOnActivityFeed();
+			RM_Social.verifyMessage(postMsg);
+			/*// Post To Tagged User
+			RM_Social.tagUserInAFP(user);
+			RM_Social.typeMessageInAFP(postMsg_tagUser);
+			RM_Social.clickOnPostBtnInAFP();
+			RM_Social.verifyMessage(postMsg_tagUser, user);
+			// Post To Tagged Group
+			RM_Social.tagUserInAFP(groupName);
+			RM_Social.typeMessageInAFP(postMsg_tagGroup);
+			RM_Social.clickOnPostBtnInAFP();
+			RM_Social.verifyMessage(postMsg_tagGroup, groupName);*/
+			} 
+			catch (Exception e) {
+				rerun=true;
+			// TODO Auto-generated catch block
+				//e.printStackTrace();
+			}finally{
+				System.out.println("@@@@@@@@@@@@@@@ Going to Pause for 3 mins @@@@@@@@@@@@@@@@@@@@");
+			Actions.pause(180);
+			System.out.println("@@@@@@@@@@@@@@@ Pause is completed @@@@@@@@@@@@@@@@@@@@");
+			/*doSearchAndVerify(user, "user");
+			doSearchAndVerify(templateName, "template");
+			doSearchAndVerify(templateName, "Stream");
+			doSearchAndVerify(groupName, "Group");*/
+			doSearchAndVerify(postMsg, "Post");
+			actionsOnPostMsg(postMsg);
+			/*doSearchAndVerifyTagPost(postMsg_tagUser,user);
+			doSearchAndVerifyTagPost(postMsg_tagGroup,groupName);*/
+		}
+		
+	}
+	public void doSearchAndVerifyTagPost(String postMsg_tag, String profileName)
+	{
+		try {
+			Actions.switchToDefaultContent();
+			Actions.type(ShellHeader.search_ShellHeader, postMsg_tag, "Value Entered is ");
+			Actions.enter();
+			By post=By.xpath("//span[normalize-space(text())='Post']/../../descendant::*[contains(normalize-space(.),'"+profileName+postMsg_tag+"')]");
+			By link=By.xpath("//span[normalize-space(text())='Post']/../../descendant::*[contains(normalize-space(.),'"+profileName+postMsg_tag+"')]/a");
+			By profile_Name=By.xpath("//div[@data-bind-id='content-area']/descendant::div[@title='"+profileName+"']");
+			Actions.verifyElement(post, postMsg_tag);
+			Actions.click(link, "Click on TaggedUser/Group");
+			Actions.pause(2);
+			Actions.explicitWait_InVisibilityOfElement();
+			Actions.click(link, "Click on TaggedUser/Group");
+			Actions.explicitWait_InVisibilityOfElement();
+			Actions.switchtoFrame(Global.socialCLFrame, "Switch To Social Frame");
+			Actions.verifyElement(profile_Name, profileName);
+			Actions.switchToDefaultContent();
+		} catch (Exception e) {
+			rerun=true;
+			// TODO Auto-generated catch block
+			//e.printStackTrace();
+		}
+		//Actions.switchToDefaultContent();
+		/*Actions.click(by, description);
+		Actions.verifyElement(by, comments);*/
+	}
+	public void doSearchAndVerify(String content, String type)
+	{
+		//Actions.pause(2);
+		Actions.switchToDefaultContent();
+		Actions.type(ShellHeader.search_ShellHeader, content, "Value Entered is ");
+		Actions.enter();
+		type=type.toUpperCase();
+		switch(type)
+		{
+		case "USER":
+			try {
+				By user=By.xpath("//span[normalize-space(text())='User']/../../descendant::*[normalize-space(text())='"+content+"']");
+				Actions.verifyElement(user, content);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			break;
+		case "GROUP":
+			try {
+				By group=By.xpath("//span[normalize-space(text())='Group']/../../descendant::*[normalize-space(text())='"+content+"']");
+				Actions.verifyElement(group, content);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			break;
+		case "POST":
+			try {
+				By post=By.xpath("//span[normalize-space(text())='Post']/../../descendant::*[normalize-space(text())='"+content+"']");
+				Actions.verifyElement(post, content);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			break;
+		case "STREAM":
+			try {
+				By stream=By.xpath("//span[normalize-space(text())='Stream']/../../descendant::*[normalize-space(text())='"+content+"']");
+				Actions.verifyElement(stream, content);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			break;
+		case "TEMPLATE":
+			try {
+				By template=By.xpath("//span[normalize-space(text())='Stream Template']/../../descendant::*[normalize-space(text())='"+content+"']");
+				Actions.verifyElement(template, content);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			break;
+		/*case "ALERT":
+			By alert=By.xpath("");
+			break;
+		case "TASK":
+			By task=By.xpath("");
+			break;*/
+			default:
+				System.out.println("Enter valid Data.........");
+				break;
+			
+			
+		}
+		/*Actions.click(By.xpath("//a[@title='Close']"), "Click On 'Close' icon");
+		Actions.pause(1);*/
+		
+	}
+	public void rb() {
+		try {
+			Actions.switchToDefaultContent();
+			// Delete Stream
+			RM_Streams.delete_Template1(templateName);
+			// Delete Stream
+			RM_Streams.navigateToStreams();
+			Actions.click(Streams.completeFilterIcon, "Click On Complete Filter Icon");
+			RM_Streams.select_CreatedTemplate(templateName);
+			RM_Streams.deleteStream();
+			Global.acceptConfirmation();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	public void actionsOnPostMsg(String content)
+	{
+		By post=By.xpath("//span[normalize-space(text())='Post']/../../descendant::*[normalize-space(text())='"+content+"']");;
+		try {
+			Actions.click(By.xpath("//a[@title='Posts']"), "Click On Posts Tab");
+			
+			//Verify Post Under Posts Tab
+			Actions.verifyElement(post, content);
+			//Verify Not Liked Text
+			Actions.verifyElement(By.xpath("//span[normalize-space(text())='Post']/../../descendant::*[normalize-space(text())='"+postMsg+"']/ancestor::li/descendant::span[text()='Not Liked']"), "Not Liked");
+			// Click to Open Drop down
+			Actions.click(By.xpath("//span[normalize-space(text())='Post']/../../descendant::*[normalize-space(text())='"+postMsg+"']/ancestor::li/descendant::span[text()='Not Liked']"), "Click On 'Not Liked'");
+			//Verify Like in Drop down
+			Actions.verifyElement(By.xpath("//span[normalize-space(text())='Post']/../../descendant::*[normalize-space(text())='"+postMsg+"']/ancestor::li/descendant::a[normalize-space(text())='Like']"), "Liked");
+			//Verify Delete in Drop down
+			Actions.verifyElement(By.xpath("//span[normalize-space(text())='Post']/../../descendant::*[normalize-space(text())='"+postMsg+"']/ancestor::li/descendant::a[normalize-space(text())='Delete']"), "Delete");
+			// Click on Like
+			Actions.click(By.xpath("//span[normalize-space(text())='Post']/../../descendant::*[normalize-space(text())='"+postMsg+"']/ancestor::li/descendant::a[normalize-space(text())='Like']"), "Click On 'Like' in Drop Down");
+			//Verify Liked Text
+			Actions.verifyElement(By.xpath("//span[normalize-space(text())='Post']/../../descendant::*[normalize-space(text())='"+postMsg+"']/ancestor::li/descendant::span[text()='Liked']"), "Liked");
+			// Click on Liked to open drop down
+			Actions.click(By.xpath("//span[normalize-space(text())='Post']/../../descendant::*[normalize-space(text())='"+postMsg+"']/ancestor::li/descendant::span[text()='Liked']"), "Click On 'Liked'");
+			//Verify UnLike in Drop down
+			Actions.verifyElement(By.xpath("//span[normalize-space(text())='Post']/../../descendant::*[normalize-space(text())='"+postMsg+"']/ancestor::li/descendant::a[normalize-space(text())='Unlike']"), "Unliked");
+			// Click on Unlike in Drop Down		
+			Actions.click(By.xpath("//span[normalize-space(text())='Post']/../../descendant::*[normalize-space(text())='"+postMsg+"']/ancestor::li/descendant::a[normalize-space(text())='Unlike']"), "Click On 'Unlike'");
+			//Verify Not Liked Text
+			Actions.verifyElement(By.xpath("//span[normalize-space(text())='Post']/../../descendant::*[normalize-space(text())='"+postMsg+"']/ancestor::li/descendant::span[text()='Not Liked']"), "Not Liked");
+			// Click to Open Drop down
+			Actions.click(By.xpath("//span[normalize-space(text())='Post']/../../descendant::*[normalize-space(text())='"+postMsg+"']/ancestor::li/descendant::span[text()='Not Liked']"), "Click On 'Not Liked'");
+			//Verify Like in Drop down
+			Actions.verifyElement(By.xpath("//span[normalize-space(text())='Post']/../../descendant::*[normalize-space(text())='"+postMsg+"']/ancestor::li/descendant::a[normalize-space(text())='Like']"), "Liked");
+		} catch (Exception e) {
+			rerun=true;
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		try {
+			Actions.click(post, "Click on PostMessage");
+			//Click On Add Attachments icon
+			//Actions.click(By.xpath("//a[contains(@data-ngf-select,'addAttachcomments')]"), "Click On Add Attachments");
+			Actions.type(By.xpath("//div[@class='comment-section']/input"), commentMsg, "Enter Comment Message");
+			Actions.click(By.xpath("//button[@title='Reply']"), "Click On Reply button");
+			Actions.verifyElement(By.xpath("//span[normalize-space(text())='"+commentMsg+"']"), commentMsg);
+			Actions.click(By.xpath("//a[@title='Delete Comment']"), "Click on comments Delete icon ");
+			Actions.click(By.xpath("//a[@title='Back']"), "Click On Back Arrow");
+			Actions.click(By.xpath("//span[normalize-space(text())='Post']/../../descendant::*[normalize-space(text())='"+postMsg+"']/ancestor::li/descendant::span[text()='Not Liked']"), "Click On Not liked to Open Dropdown");
+			Actions.click(By.xpath("//span[normalize-space(text())='Post']/../../descendant::*[normalize-space(text())='"+postMsg+"']/ancestor::li/descendant::a[normalize-space(text())='Delete']"), "Click On Delete Post");
+		} catch (Exception e) {
+			rerun=true;
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		Actions.click(By.xpath("//a[@title='Close']"), "Click On 'Close' icon");
+		Actions.pause(1);
+		
+				
+	
+	}
+	
+
+}

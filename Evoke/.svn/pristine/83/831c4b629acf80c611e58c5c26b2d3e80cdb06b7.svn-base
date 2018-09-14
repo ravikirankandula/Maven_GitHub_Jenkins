@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+<suite name="suite1">
+<!-- <listeners>
+		<listener class-name="utility.RetryListener" />
+	</listeners> -->
+	<test name="SFStreams">
+		<classes>
+		
+	  
+			 <class name="utility.Utility" />
+			  
+			    
+			   <class name="scripts.ShellHeader.Ts_ShareMsgToRunningStream_13237" />
+			   <class name="scripts.ShellHeader.Ts_ShareMsgToNewStream_13461" />
+			   <class name="scripts.ActivityFeed.Ts_MakePostToRunningStreamFromActivityFeedPage_13263" />
+			   <class name="scripts.ActivityFeed.Ts_MakePostToNewStreamFromActivityFeedPage_13264" />
+			   <class name="scripts.ActivityFeed.Ts_SharePostToRunningStreamFromFeedPage_13270" />
+			   <class name="scripts.ActivityFeed.Ts_SharePostToNewStreamFromFeedPage_13400" />
+			   <class name="scripts.ActivityFeed.Ts_PromptOnOFF_DeleteStreamStep_12760_3" />
+			   <class name="scripts.ActivityFeed.Ts_PromptOnOFF_StartStream_12760_4" />
+			   
+			   <!-- <class name="scripts.ActivityFeed.Ts_PromptOnOFF_DeleteStreamStep_12760_3" /> -->
+			   
+			    
+			   
+			   
+			   		    
+			   
+		</classes>
+	
+	
+	</test>
+
+
+  
+
+
+</suite>

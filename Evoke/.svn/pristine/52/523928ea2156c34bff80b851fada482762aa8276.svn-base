@@ -1,0 +1,2000 @@
+package reusableMethods;
+
+import java.io.File;
+import java.io.IOException;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
+import java.util.concurrent.TimeUnit;
+
+import org.omg.Messaging.SyncScopeHelper;
+import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.WebElement;
+import org.sikuli.script.FindFailed;
+import org.sikuli.script.Match;
+import org.sikuli.script.Pattern;
+import org.sikuli.script.Screen;
+
+
+import actions.Actions;
+import objRepository.Global;
+import objRepository.IONDesk.Alerts;
+import objRepository.IONDesk.OOOsettings;
+import objRepository.IONDesk.WorkFlow;
+import objRepository.Social.ActivityFeed;
+import objRepository.Social.AppMenu;
+import objRepository.Social.ShellHeader;
+import objRepository.Streams.Streams;
+import utility.Utility;
+
+public class RM_IONDESK 
+
+{   
+
+
+	public final static String RpPath=System.getProperty("user.dir");
+
+
+	public static void navigateToActivityPage()
+	{
+		Actions.impwait();
+		Actions.switchtoFrame(Global.socialCLFrame, "Switch to the Frame");
+		Actions.pause(3);
+		Actions.impwait();
+		Actions.verifyElementPresent(ActivityFeed.header_MyFeed,"Verify My Feed Header ");	
+
+	}
+	
+	public static void navigateToActivityfeedfrmstreams()
+	{
+	Actions.verifyElement(WorkFlow.activityFeedHeader, "wait until page loads");
+	Actions.click(WorkFlow.activityFeedHeader, "click on activity feed");
+	Actions.verifyElementPresent(ActivityFeed.header_MyFeed,"Verify My Feed Header ");
+	}
+	
+	
+	
+	public static void navigateToActivityPagemingle()
+	{
+		boolean v=true;
+		if(Actions.verifyElementPresent(Global.socialCLFrame, "Verifying SocialFrame") )
+		{
+			Actions.switchtoFrame(Global.socialCLFrame, "Switch to the Frame");
+			if(Actions.verifyElementPresent(ActivityFeed.header_MyFeed, "Verifying MyFeedHeader") )
+			{
+				v=false;
+			}
+		}
+		if(v){
+			Actions.switchToDefaultContent();
+			//Actions.pause(1);
+			//Actions.click(AppMenu.appMenu, "Click on AppMenu");
+			//Actions.pause(1);
+			Actions.click_JS(AppMenu.inforMingle, "Click on Infor Mingle");
+			Actions.impwait();
+			Actions.switchtoFrame(Global.socialCLFrame, "Switch to the Frame");
+			Actions.refresh_MinglePage();
+			Global.minglePageLoad_Social();
+			Actions.verifyElementPresent(ActivityFeed.header_MyFeed,"Verify My Feed Header ");
+			Global.minglePageLoad_Social();
+		}
+	}
+	
+	/*{
+		//Actions.pause(2);
+		Actions.click_JS(AppMenu.inforMingle, "Click on mingle");
+		//Actions.pause(2);
+		Actions.switchtoFrame(Global.socialCLFrame, "Switch to the Frame");
+		//Actions.pause(3);
+		Actions.verifyElementPresent(ActivityFeed.header_MyFeed,"Verify My Feed Header ");	
+
+	}*/
+
+	/*******************Navigate to ION DESK***********************/
+
+	public static void navigateionDesk()
+	{
+		//Actions.click(WorkFlow.appMenu, "Click On 'App Menu'");
+		//Actions.pause(1);
+		//Actions.click(WorkFlow.ionDeskIcon, "click on IONDESK");
+		//Actions.makeElementVisible("none", WorkFlow.ionDeskIcon);
+		Actions.click_JS(WorkFlow.ionDeskIcon, "click on IONDESK");
+	}
+
+	/***************Navigate to worflow creation*******************/ 
+
+	public static void navigate_WorkFlow()
+	{
+		navigateionDesk();
+		Actions.switchtoFrame(WorkFlow.ionDeskCLFrame, "Switch to ION Desk Frame");
+		Actions.pause(5);
+		Actions.verifyElement(WorkFlow.statusOverview, "status over view");
+		Actions.moveTo(WorkFlow.iconMenu, "move to icon menu");
+		Actions.click(WorkFlow.iconMenu, "click to icon menu");
+		Actions.click(WorkFlow.model, "click on model");
+		Actions.click(WorkFlow.monitorsWorkflows, "click on Monitors & Workflows");
+		Actions.click(WorkFlow.WorkFlows, "click on Workflows");
+
+	}
+
+	/********************Add new WorkFlow*************************/
+
+	public static void add_NewWorkFlow(String wfname,String wfdesc)
+	{
+		//navigate_WorkFlow();
+		//Actions.switchtoFrame(WorkFlow.workflowdeskCLFrame, "Switch to workflow frame");
+		Actions.pause(1);
+		Actions.click(WorkFlow.add_NewWorkflow, "click on add new workflow");
+		Actions.pause(1);
+		Actions.type(WorkFlow.workFlowName,wfname,"enter Work flow name");
+		Actions.type(WorkFlow.workFlowDesc,wfdesc,"enter workflow description");
+		Actions.click_JS(WorkFlow.collapse,"collapse");
+		Actions.pause(3);
+		//createTask_AllParameters();
+		Actions.verifyElementPresent(WorkFlow.expandIcon,"expand");
+		Actions.click(WorkFlow.expandIcon,"click expand");
+		
+	}
+
+
+	/*******************Drag and Drop task in Workflow***************/
+
+	public static void dragAndDrop()
+	{
+		Screen s=new Screen();
+		Pattern task=new Pattern("C:\\sikuli.sikuli\\1483524262102.png");
+		Pattern taskserver=new Pattern(RpPath+"\\img\\1483524262102.png");
+		Pattern desti=new Pattern("C:\\sikuli.sikuli\\1483526252204.png");
+		Pattern destserver=new Pattern(RpPath+"\\img\\1483526252204.png");
+		try {
+			//s.dragDrop(task,desti);
+			s.dragDrop(taskserver,destserver);
+		} catch (FindFailed e) {
+			//TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	/*******************Drag and Drop 2 tasks,1 Notification in Workflow
+	 * @ ***************/
+
+	public static void create_2tasks1Notif() 
+	{
+
+		//ImagePath.setBundlePath(RpPath+"\\img");
+		/*Screen s=new Screen();
+		Match task=s.find("1483524262102.png");
+		Match desti=s.find("1483526252204.png");
+		Match notif=s.find("1483521813308.png");
+		Pattern taskserver=new Pattern(RpPath+"\\img\\1483524262102.png");
+		System.out.println(RpPath+"\\img\\1483524262102.png");
+		Pattern destserver=new Pattern(RpPath+"\\img\\1483526252204.png");
+		System.out.println(RpPath+"\\img\\1483526252204.png");
+		Pattern notifserver=new Pattern(RpPath+"\\img\\1483521813308.png");*/
+
+
+		Screen s=null;
+		Match task=null;
+		Match desti=null;
+		Match notif=null;
+		try {
+			//ImagePath.setBundlePath(RpPath+"\\img");
+			s = new Screen();
+			task = s.find("1483524262102.png");
+			desti = s.find("1483526252204.png");
+			notif = s.find("1483521813308.png");
+			Pattern taskserver=new Pattern(RpPath+"\\img\\1483524262102.png");
+			Pattern destserver=new Pattern(RpPath+"\\img\\1483526252204.png");
+			Pattern notifserver=new Pattern(RpPath+"\\img\\1483521813308.png");
+		} catch (Exception e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+
+		System.out.println(RpPath+"\\img\\1483521813308.png");
+		/*Pattern task=new Pattern(".\\sikuli\\1483524262102.png");
+    Pattern desti=new Pattern(".\\sikuli\\1483526252204.png");*/
+		//Pattern desti2 = new Pattern("C:\\sikuli.sikuli\\1483524760955.png"); 
+		/*Pattern notif = new Pattern(".\\sikuli\\1483521813308.png");*/
+	}
+
+	/*************************Verify data***************************/
+
+	public static void verify_Data(String user)
+	{
+		Actions.verifyElement(By.xpath("//div[text()='"+user+"']"), user);
+	}
+
+
+
+	/*******************Activate Work flow************************/
+
+	public static void activate_workFlow(String wfname)
+	{
+
+		/*Actions.pause(5);
+    	Actions.type(WorkFlow.workFlowName,"Test","enter Work flow name");
+    	Actions.pause(5);
+        Actions.type(WorkFlow.workFlowDesc,wfdesc,"enter workflow description");
+    	Actions.moveTo(WorkFlow.collapse, "move to Collpasse");
+    	Actions.pause(5);*/
+
+
+		Actions.pause(1);
+		Actions.click(WorkFlow.activate_WF, "Activate Work flow");
+		Actions.pause(1);
+		Global.minglePageLoad_Social();
+		Actions.switchToDefaultContent();
+		Actions.switchtoFrame(WorkFlow.ionDeskCLFrame, "Switch to ION Desk Frame");
+		Actions.pause(2);
+		Actions.click(WorkFlow.WorkFlows, "click on Workflows");
+		Actions.switchtoFrame(WorkFlow.workflowdeskCLFrame, "switch to work flow frame");
+		verify_Data(wfname);
+		verify_Data("Active");
+	}
+
+
+	/*********************De-Activate Work flow**********************/
+
+	public static void deactivate_workFlow(String wfname)
+	{
+		By by=By.xpath("//div[text()='"+wfname+"']");
+		Actions.moveTo(by, "move to created Work flow");
+		Actions.click(WorkFlow.deactivate_WF, "deactivate Work flow");
+	}
+
+	/**************************Create 1 task Workflow***************************/
+
+	public static void createworkFlow(String wfname,String wfdesc,String message,String user1)
+	{
+		Actions.click(WorkFlow.collapseIcon, "collapse");
+		Actions.pause(2);
+		Actions.click(WorkFlow.task1, "select task");
+		properties_WFSingleUser(message,user1);
+		save_WF();
+		Actions.pause(.5);
+		activate_workFlow(wfname);
+		workFlowAuth(wfname);
+		//delete_workFlowAuth(wfname);
+		//deactivate_workFlow(wfname);
+		//Actions.verifyElement(WorkFlow.delete_Btn, "delete icon");
+		//Actions.click(WorkFlow.delete_Btn,"delete workflow");
+
+	}
+
+
+
+
+	/**************************Create 2 tasks and 1 Notification Work flow***************************/
+
+	public static void create2tasks1Notif_WF(String multitaskwf,String multitaskdesc,String message,String message1,String message2,String user1,String user2,String user)
+	{
+		/*Actions.type(WorkFlow.workFlowName,multitaskwf,"enter Work flow name");
+    	Actions.type(WorkFlow.workFlowDesc,multitaskdesc,"enter workflow description");*/
+		Actions.pause(2);
+		Actions.click_JS(WorkFlow.collapseIcon, "collapse");
+		//createTask_AllParameters(multitaskwf,message1,user1,user2);
+		Actions.click(WorkFlow.task1, "select task");
+		properties_WFSingleUser(message,user2);
+		Actions.pause(.5);
+		Actions.click(WorkFlow.task2, "select Task 2");
+		Actions.type(WorkFlow.Message, message1,"enter task message");
+		Actions.click(WorkFlow.prop_Distribution, "click Distribution");
+		Add_Userprop(user);
+		Add_Userprop(user1);
+		//createTask_AllParameters(multitaskwf,message1,user1,user2);
+		//properties_WF(message1,user1,user2);
+		Actions.pause(.5);
+		Actions.click(WorkFlow.notification1, "select Notification 1");
+		properties_WFSingleUser(message2,user2);
+		Actions.click(WorkFlow.task2, "select Task 2");
+		Actions.click(WorkFlow.prop_content, "click content");
+		Actions.click(WorkFlow.type_chkBx, "select all parameters");
+		Actions.click(WorkFlow.addParameters_toTask,"Add parameters");
+		Actions.pause(1);
+		Global.minglePageLoad_Social();
+		save_WF();
+		Actions.pause(.5);
+		activate_workFlow(multitaskwf);
+		Global.minglePageLoad_Social();
+		workFlowAuth(multitaskwf);
+		//delete_workFlowAuth(wfname);
+		//deactivate_workFlow(wfname);
+		//Actions.verifyElement(WorkFlow.delete_Btn, "delete icon");
+		//Actions.click(WorkFlow.delete_Btn,"delete workflow");
+
+	}
+
+
+	/*****************Workflow Properties****************/
+
+	public static void properties_WF(String message,String user1,String user2)
+	{
+		//Actions.click(WorkFlow.prop_task,"task properties");
+		Actions.type(WorkFlow.Message, message,"enter task message");
+		Actions.click(WorkFlow.prop_Distribution, "click Distribution");
+		Add_Userprop(user1);
+		Add_Userprop(user2);
+	}
+
+
+	/*****************Workflow Properties****************/
+
+	public static void properties_WFSingleUser(String message,String user1)
+	{
+		//Actions.click(WorkFlow.prop_task,"task properties");
+		Actions.type(WorkFlow.Message, message,"enter task message");
+		Actions.click(WorkFlow.prop_Distribution, "click Distribution");
+		Add_Userprop(user1);
+		//Add_Userprop(user2);
+	}
+	public static void select_User(String mail){
+		Actions.click(By.xpath("//div[text()='"+mail+"']/../../descendant::span"), "Select User");
+	}
+	/*****************Workflow Properties****************/
+
+	public static void Add_Userprop(String mail)
+	{
+		Actions.click(WorkFlow.add_WF,"click on add");
+		Actions.pause(2);
+		Actions.scrollToElement(WorkFlow.dropDown);
+		Actions.click(WorkFlow.dropDown,"click on drop down");
+		Actions.click(WorkFlow.dropDown_User, "select Users");
+		Actions.pause(2);
+		Actions.type(WorkFlow.search,"QAAuto","enter user name");
+		Actions.pause(2);
+		Actions.click(WorkFlow.search_Btn, "click search button");
+		Actions.pause(1);
+		/*WebElement el=Utility.getDriver().findElement(By.className("icon-block-absolute"));
+		List<WebElement> menuItemsList = el.findElements(By.tagName("a"));
+		System.out.println(menuItemsList.size());
+		if(Actions.isChecked(WorkFlow.select_user))
+		{
+			System.out.println("in the if condition");
+		Actions.click(WorkFlow.select_user, "select first result");
+		}*/
+		select_User(mail);
+		Actions.pause(2);
+		Actions.scrollToElement(WorkFlow.ok_Btn);
+		Actions.pause(2);
+		Actions.click(WorkFlow.ok_Btn, "ok Button");
+		Actions.pause(2);
+	}
+
+	/*****************SAVE Workflow****************/
+
+	public static void save_WF()
+	{
+		Actions.click(WorkFlow.save_Btn, "save Work flow");
+	}
+
+	/*****************select Workflow Authorizations****************/
+
+	public static void workFlowAuth(String wfname)
+	{
+		Actions.switchToDefaultContent();
+		Actions.pause(2);
+		Actions.switchtoFrame(WorkFlow.ionDeskCLFrame, "Switch to ION Desk Frame");
+		Actions.moveTo(WorkFlow.settings, "move to settings");
+		Global.minglePageLoad_Social();
+		Actions.click(WorkFlow.settings, "click on settings");
+		Actions.click(WorkFlow.authorizations, "navigate to authorizations");
+		Actions.click(WorkFlow.workflowAuthorizations, "click on workflowAuthorizations ");
+		Actions.switchtoFrame(WorkFlow.workflowdeskCLFrame, "switch to work flow frame");
+		if(!Actions.verifyElementPresent(By.xpath("//div[text()='MingleIONEnabled']"), "Verify presence of Mingle ION Enable Role"))
+		{	
+		Actions.click(WorkFlow.addRole, "Add role");
+		Actions.type(WorkFlow.IONRole, "MingleIONEnabled", "enter IONEnabled Role");
+		Actions.click(WorkFlow.checkrole, "select Role");
+		Actions.click(WorkFlow.ok_Btn, "click OK");
+		}
+		Actions.click(WorkFlow.mingleIONEnabled, "select roles");
+		Actions.click(WorkFlow.authWF_AddBtn, "add Workflow");
+		Actions.click(By.xpath("//div[text()='"+wfname+"']/../../descendant::span"), "select woorkflow");
+		Actions.click(WorkFlow.ok_Btn, "click OK button");
+		Actions.pause(2);
+		Actions.click(WorkFlow.save_Btn, "click save");
+	}
+
+
+
+
+
+
+	/*********************Navigate to Streams-Workflows *******************/
+
+	public static void navigate_StreamsWF(){
+
+		//Global.minglePageLoad_Social();
+		Actions.click(Streams.streamsHeader, "Click On Streams Header");  
+		//Actions.pause(3);
+		//Global.minglePageLoad_Social();
+		Actions.verifyElement(Streams.streams, "waiting for 'Streams' heading");
+		Actions.click(WorkFlow.streamsworkFlows, "click on Workflows");
+		//Actions.pause(3);
+	} 
+
+
+	/*********************START WF from MINGLE*******************/
+	public static void start_WorkFlowMingle(String wfname)
+	{
+		navigateToActivityPagemingle();
+		navigate_StreamsWF();
+		//Actions.pause(2);
+		Actions.click(WorkFlow.addWorkFlows, "click on add work flows");
+		Actions.click(WorkFlow.select_WF, "click drop down to select Work flow");
+		Actions.click(By.xpath("//li[@data-value='"+wfname+"']"), "select created WF");
+		//Actions.pause(2);
+		Actions.click(WorkFlow.start_Btn, "click start button");
+		Actions.pause1(3);
+		String status=Actions.getText(By.xpath("//div[@title='"+wfname+"']/following::span"));
+		System.out.println("Work flow is "+status);
+		Actions.verifyString(status, "Running");
+	}
+
+	/*********************START WF from StreamsHeader*******************/
+	public static void start_WorkFlow(String wfname) 
+	{
+		navigateToActivityPagemingle();
+		navigate_StreamsWF();
+		//Actions.pause(2);
+		Actions.click(WorkFlow.addWorkFlows, "click on add work flows");
+		Actions.click(WorkFlow.select_WF, "click drop down to select Work flow");
+		Actions.click(By.xpath("//li[@data-value='"+wfname+"']"), "select created WF");
+		//Actions.pause(2);
+		Actions.click(WorkFlow.start_Btn, "click start button");
+		verifyWFStatuses(wfname);
+		/*Actions.switchToDefaultContent();
+		navigateToActivityPagemingle();*/
+	}
+	
+	/*********************START WF from StreamsHeader*******************/
+	public static void displayactivityWF(String wfname) 
+	{
+		navigateToActivityPagemingle();
+		navigate_StreamsWF();
+		//Actions.pause(2);
+		Actions.click(WorkFlow.addWorkFlows, "click on add work flows");
+		Actions.click(WorkFlow.select_WF, "click drop down to select Work flow");
+		Actions.click(By.xpath("//li[@data-value='"+wfname+"']"), "select created WF");
+		//Actions.pause(2);
+		Actions.click(WorkFlow.start_Btn, "click start button");
+		verifyWFStatuses(wfname);
+		Actions.verifyElement(WorkFlow.activityFeedHeader, "wait until page loads");
+		Actions.click(WorkFlow.activityFeedHeader, "click on activity feed");
+		Actions.verifyElementPresent(ActivityFeed.header_MyFeed,"Verify My Feed Header ");
+	}
+
+	/*********************COMPLETE WF from StreamsHeader*******************/
+	public static void complete_WorkFlow(String wfname) 
+	{
+		//Actions.switchToDefaultContent();
+		start_WorkFlow(wfname);
+		verify_WorkFlow(wfname);
+		//verify_Data("Work flow Message");
+	}
+
+
+
+	/*********************start Multiple tasks WF from StreamsHeader*******************/
+	public static void start_MultiWorkFlow(String multitaskwf) 
+	{
+		String file=RpPath+"\\img\\Workflow.docx";
+		//Actions.switchToDefaultContent();
+		navigateToActivityPagemingle();
+		navigate_StreamsWF();
+		//Actions.pause(2);
+		Actions.click(WorkFlow.addWorkFlows, "click on add work flows");
+		Actions.click(WorkFlow.select_WF, "click drop down to select Work flow");
+		Actions.click(By.xpath("//li[@data-value='"+multitaskwf+"']"), "select created WF");
+		Actions.pause(2);
+		//Actions.click(WorkFlow.addattchements, "click to add attachments");
+		WebElement elem = Utility.getDriver().findElement(By.id("fileToUploadWF"));
+        String js = "arguments[0].setAttribute('style', 'display: block;height:28px;width:125px;visibility:visible');";
+
+        ((JavascriptExecutor)Utility.getDriver()).executeScript(js, elem);
+        
+        //Actions.pause(2);
+        
+        Actions.type(By.id("fileToUploadWF"),file, "Upload File");
+        //Actions.pause(5);
+        WebElement elem1 = Utility.getDriver().findElement(By.id("fileToUploadWF"));
+        String js1 = "arguments[0].setAttribute('style', 'display: block;height:28px;width:125px;visibility:visible');";
+
+        ((JavascriptExecutor) Utility.getDriver()).executeScript(js1, elem1);
+        
+        //Actions.pause(2);
+        
+        Actions.type(By.id("fileToUploadWF"),file, "Upload File");
+		//Actions.pause(5);
+		/*Actions.pause(2);
+		Actions.uploadFile(file);
+		Actions.pause(2);Actions.click(WorkFlow.addattchements, "click to add attachments");
+		Actions.pause(2);
+		Actions.uploadFile(file);*/
+		//Actions.pause(5);
+		Actions.scrollToElement(WorkFlow.start_Btn);
+		Actions.click(WorkFlow.start_Btn, "click start button");
+		//Actions.pause(2);
+		verifyWFStatuses(multitaskwf);
+		Actions.click(By.xpath("//div[@title='"+multitaskwf+"']"), "select Work flow");
+		//Actions.pause(4);
+		WebElement el=Utility.getDriver().findElement(By.id("workflowAttachments"));
+		List<WebElement> menuItemsList = el.findElements(By.tagName("img"));
+		System.out.println(menuItemsList.size());
+		int expected=menuItemsList.size();
+		String str = Integer.toString(expected);
+		Actions.verifyString(str,"2");
+		/*Actions.click(WorkFlow.start_Btn, "click start button");
+		Global.minglePageLoad_Social();
+		Actions.verifyElement(WorkFlow.activityFeedHeader, "wait until page loads");
+		Actions.click(WorkFlow.activityFeedHeader, "click on activity feed");
+		Global.minglePageLoad_Social();
+		verify_taskscompletion(multitaskwf);
+		verify_Data("Work flow Message");*/
+	}
+
+	/****************** Verfiy the Tasks in Workflow******************/
+
+	public static void verifyWFStatuses(String wfname)
+	{
+		
+		Actions.pause1(2);
+		String status=Actions.getText(By.xpath("//div[@title='"+wfname+"']/following::span"));
+		//Actions.pause1(1);
+		System.out.println("Work flow is "+status);
+	}
+	/*  
+	 *//****************** cancel Workflow******************//*
+    public static void cancel_WorkFlow(String wfname)
+    {
+    	navigateToActivityPage();
+    	navigate_StreamsWF();
+    	Actions.pause(2);
+    	Actions.click(WorkFlow.addWorkFlows, "click on add work flows");
+    	Actions.click(WorkFlow.select_WF, "click drop down to select Work flow");
+    	Actions.click(By.xpath("//li[@data-value='"+wfname+"']"), "select created WF");
+    	Actions.pause(2);
+    	Actions.click(WorkFlow.start_Btn, "click start button");
+    	Global.minglePageLoad_Social();
+    	verifyWFStatuses(wfname);
+    	Actions.click(By.xpath("//div[@title='"+wfname+"']"), "select Work flow");
+    	Actions.click(WorkFlow.cancel_WFBtn, "cancel WF");
+    	Actions.click(WorkFlow.workflow_Link, "click on workflow link");
+    	verifyWFStatuses(wfname);
+
+    	remove_WorkFlow(wfname);
+    }*/
+
+
+
+	/****************** Roll Back Workflow(Cancel and Remove)******************/
+	public static void rb_WorkFlow(String wfname)
+	{
+		Actions.click(By.xpath("//div[@title='"+wfname+"']"), "select Work flow");
+		Global.minglePageLoad_Social();
+		Actions.click(WorkFlow.cancel_WFBtn, "cancel WF");
+		//Actions.pause(2);
+		Actions.click(WorkFlow.remove_WFBtn, "remove WF");
+		Actions.verifyElement(WorkFlow.deleteWF_prompt, "Prompt when removing a Workflow");
+		Actions.click(WorkFlow.yes_Btn, "click yes button");
+
+	}
+	/****************** remove Workflow******************/
+	public static void remove_WorkFlow(String wfname)
+	{
+		Actions.click(By.xpath("//div[@title='"+wfname+"']"), "select Work flow");
+		Actions.click(WorkFlow.remove_WFBtn, "remove WF");
+		Actions.verifyElement(WorkFlow.deleteWF_prompt, "Prompt when removing a Workflow");
+		Actions.click(WorkFlow.yes_Btn, "click yes button");
+
+	}
+
+
+	/****************** verify created Workflow ******************/
+
+	public static void verify_WorkFlow(String wfname) 
+	{
+
+		long differenceMinutes = getTime();
+		System.out.println(differenceMinutes + " minutes, ");
+		if(differenceMinutes<=2)
+		{
+			Actions.click(WorkFlow.showDetails_WF, "click on show details");
+			verify_assignToMe();
+			navigate_StreamsWF();
+			verifyWFStatuses(wfname);
+			remove_WorkFlow(wfname);
+
+		}
+		else
+			System.out.println("Workflow creation is Failed");
+	}
+	
+	
+	
+	/****************** verify created Workflow ******************/
+
+	public static void verify_taskfunctionality(String wfname) 
+	{
+		String file=RpPath+"\\img\\Workflow.docx";
+		long differenceMinutes = getTime();
+		System.out.println(differenceMinutes + " minutes, ");
+		if(differenceMinutes<=2)
+		{
+			Actions.click(WorkFlow.showDetails_WF, "click on show details");
+			String actual=Actions.getText(By.xpath("//div[@data-bind-id='detail-task-alert-msg']"));
+			/*String expected="Task 1 Message in Work flow";
+			Actions.verifyString(actual, expected);*/
+			System.out.println(actual);
+			Actions.verifyElementPresent(By.xpath("//div[@class='m-o-msg-info-text2 m-txt-f7']"), "date time of task created present");
+			Actions.verifyElementPresent(WorkFlow.assignToMe, "assign to me button present");
+			Actions.verifyElementPresent(WorkFlow.assign, "Assign button present");
+			Actions.verifyElementPresent(WorkFlow.done_Btn, "done button present");
+			Actions.verifyElementPresent(By.xpath("//a[@class='m-link m-txt-f19 cursorPointer']"), "# tag present");
+			Actions.verifyElementPresent(By.xpath("//span[contains(text(),'Parameters')]"), "verify parameters section");
+			Actions.verifyElementPresent(By.xpath("//div[@id='shareOverlayAttachments']"), "attachments present");
+			Actions.verifyElementPresent(By.xpath("//div[contains(text(),'Workflow')]"), "WF progress indicator present");
+			
+			Actions.verifyElement(WorkFlow.assignToMe, "Element present assign to Me");
+			Actions.click(WorkFlow.assignToMe, "click on assign to Me");
+			Actions.verifyElement(WorkFlow.done_Btn, "Verify presence of  'Done' button");
+			/*Actions.click(By.xpath("//span[@id='mto_attachfile']"), "click to add attachments");
+			Actions.pause(2);
+			Actions.uploadFile(file);*/
+			WebElement elem = Utility.getDriver().findElement(By.id("mto_fileToUpload"));
+            String js = "arguments[0].setAttribute('style', 'display: block;height:28px;width:125px;visibility:visible');";
+
+            ((JavascriptExecutor) Utility.getDriver()).executeScript(js, elem);
+            
+            //Actions.pause(2);
+            
+            Actions.type(By.id("mto_fileToUpload"),file, "Upload File");
+			//Actions.pause(5);
+			Actions.scrollToElement(WorkFlow.notes);
+			Actions.verifyElementPresent(WorkFlow.notes,"text area present");
+			Actions.type(WorkFlow.notes, "notes", "Add notes in task");
+			Actions.scrollToElement(WorkFlow.savenotes);
+			Actions.click(WorkFlow.savenotes, "Save note");
+			//Actions.pause(3);
+			Actions.scrollToElement(WorkFlow.done_Btn);
+			//Actions.pause(2);
+			Actions.click_JS(WorkFlow.done_Btn, "click on Done");
+			//verify_assignToMe();
+			navigate_StreamsWF();
+			verifyWFStatuses(wfname);
+			remove_WorkFlow(wfname);
+
+		}
+		else
+			System.out.println("Workflow creation is Failed");
+	}
+	/****************** verify task2 completion from streams USER 14 ******************/
+
+	public static void verify_task2completion() 
+	{
+		//navigateToActivityPage();
+		Actions.verifyElement(WorkFlow.activityFeedHeader, "wait until page loads");
+		Actions.click(WorkFlow.activityFeedHeader, "click on activity feed");
+		Actions.verifyElementPresent(ActivityFeed.header_MyFeed,"Verify My Feed Header ");
+		long differenceMinutes = getTime();
+		System.out.println(differenceMinutes + " minutes, ");
+		if(differenceMinutes<=2)
+		{
+			//completetask1();
+			completetask2();
+			//completeNotif1();
+			/*String finalmsg=Actions.getText(By.xpath(" //div[contains(text(),'Notification 1')]"));
+           System.out.println(finalmsg);
+           navigate_StreamsWF();
+           verifyWFStatuses(multitaskwf);
+           //Actions.verify(status, expected);
+           remove_WorkFlow(multitaskwf);*/
+
+		}
+		else
+			System.out.println("Workflow creation is Failed");
+	}
+
+	/****************** verify task1 completion from streams USER 4 ******************/
+
+	public static void verify_task1completion(String multitaskwf) 
+	{
+		navigateToActivityPagemingle();
+		Global.minglePageLoad_Social();
+		long differenceMinutes = getTime();
+		System.out.println(differenceMinutes + " minutes, ");
+		if(differenceMinutes<=2)
+		{
+			completetask1();
+		}
+		else
+			System.out.println("Workflow creation is Failed");
+	}
+
+	/****************** verify NOTIFICATION completion from streams USER 3 ******************/
+
+	public static void verify_Notifcompletion(String multitaskwf) 
+	{
+		navigateToActivityPagemingle();
+		Global.minglePageLoad_Social();
+		long differenceMinutes = getTime();
+		System.out.println(differenceMinutes + " minutes, ");
+		if(differenceMinutes<=3)
+		{
+			//completetask1();
+			//completetask2();
+			completeNotif1();
+			Actions.verifyElementPresent(ActivityFeed.header_MyFeed,"Verify My Feed Header ");
+			Actions.pause(3);
+			String finalmsg=Actions.getText(By.xpath(" //div[contains(text(),'Notification 1')]"));
+			System.out.println(finalmsg);
+			/*navigate_StreamsWF();
+			verifyWFStatuses(multitaskwf);
+			Actions.click(By.xpath("//div[@title='"+multitaskwf+"']"), "select Work flow");
+			Global.minglePageLoad_Social();
+			Actions.verifyElement(WorkFlow.completedstatus, "WF is in Completed state");
+			//Actions.verify(status, expected);
+			Actions.click(WorkFlow.remove_WFBtn, "remove WF");
+			Actions.verifyElement(WorkFlow.deleteWF_prompt, "Prompt when removing a Workflow");
+			Actions.click(WorkFlow.yes_Btn, "click yes button");
+			Global.minglePageLoad_Social();*/
+
+		}
+		else
+			System.out.println("Workflow creation is Failed");
+	}
+
+	/****************** verify task2 AUTO completion from streams USER 14 ******************/
+
+	public static void verify_autotask1Notifcompletion(String singletask) 
+	{
+		//navigateToActivityPage();
+		Actions.verifyElement(WorkFlow.activityFeedHeader, "wait until page loads");
+		Actions.click(WorkFlow.activityFeedHeader, "click on activity feed");
+		long differenceMinutes = getTime();
+		System.out.println(differenceMinutes + " minutes, ");
+		if(differenceMinutes<=2)
+		{
+			Autocompletetask1();
+			/*completetask2();
+			completeNotif1();
+			String finalmsg=Actions.getText(By.xpath(" //div[contains(text(),'Notification 1')]"));
+			System.out.println(finalmsg);*/
+			navigate_StreamsWF();
+			verifyWFStatuses(singletask);
+			Actions.click(By.xpath("//div[@title='"+singletask+"']"), "select Work flow");
+			Global.minglePageLoad_Social();
+			Actions.verifyElement(WorkFlow.completedstatus, "WF is in Completed state");
+			//Actions.verify(status, expected);
+			Actions.click(WorkFlow.remove_WFBtn, "remove WF");
+			Actions.verifyElement(WorkFlow.deleteWF_prompt, "Prompt when removing a Workflow");
+			Actions.click(WorkFlow.yes_Btn, "click yes button");
+			Actions.pause(2);
+			Global.minglePageLoad_Social();
+
+		}
+		else
+			System.out.println("Workflow creation is Failed");
+	}
+	/****************** verify tasks completion from streams ******************/
+
+	public static void verify_taskscompletion(String multitaskwf) 
+	{
+
+		long differenceMinutes = getTime();
+		System.out.println(differenceMinutes + " minutes, ");
+		if(differenceMinutes<=3)
+		{
+			completetask1();
+			completetask2();
+			completeNotif1();
+			String finalmsg=Actions.getText(By.xpath(" //div[contains(text(),'Notification 1')]"));
+			System.out.println(finalmsg);
+			navigate_StreamsWF();
+			verifyWFStatuses(multitaskwf);
+			//Actions.verify(status, expected);
+			remove_WorkFlow(multitaskwf);
+
+		}
+		else
+			System.out.println("Workflow creation is Failed");
+	}
+
+
+	/****************** Complete TASK 1 in Activity page ******************/
+
+	public static void completetask1()
+	{
+		String msg1=Actions.getText(By.xpath("//div[contains(text(),'Task 1')]"));
+		System.out.println(msg1);
+		Actions.click(WorkFlow.showDetails_WF, "click on show details");
+		verify_assignToMe();
+		Actions.click(WorkFlow.activityFeedHeader, "click on activity feed");
+		Global.minglePageLoad_Social();
+	}
+
+
+	/****************** Complete TASK 1 in Activity page ******************/
+
+	public static void Autocompletetask1()
+
+	{   
+		String msg1=Actions.getText(By.xpath("//div[contains(text(),'Task 1')]"));
+		System.out.println(msg1);
+		Actions.click(WorkFlow.showDetails_WF, "click on show details");
+		Actions.verifyElement(WorkFlow.done_Btn, "Verify presence of  'Done' button");
+		Actions.pause1(2);
+		Actions.click(WorkFlow.done_Btn, "click on Done");
+		Actions.pause1(2);
+		Actions.click(WorkFlow.activityFeedHeader, "click on activity feed");
+		Global.minglePageLoad_Social();
+	}
+
+	/****************** Complete TASK 2 in Activity page ******************/
+
+	public static void completetask2()
+	{
+		String msg1=Actions.getText(By.xpath("//div[contains(text(),'Task 2')]"));
+		System.out.println(msg1);
+		Actions.click(WorkFlow.showDetails_WF, "click on show details");
+		verify_assignToMe();
+		//Actions.click(WorkFlow.activityFeedHeader, "click on activity feed");
+	}
+
+	/****************** Complete NOTIFICATION 1 in Activity page ******************/
+
+	public static void completeNotif1()
+	{
+		String msg3=Actions.getText(By.xpath("//div[contains(text(),'Notification 1')]"));
+		System.out.println(msg3);
+		Actions.click(WorkFlow.showDetails_WF, "click on show details");
+		Actions.pause(.5);
+		Actions.click(WorkFlow.done_Btn, "click on Done");
+		Global.minglePageLoad_Social();
+		Actions.pause1(1);
+		Actions.click(WorkFlow.activityFeedHeader, "click on activity feed");
+		Global.minglePageLoad_Social();
+	}
+
+	/****************** verify assign to ME ******************/
+
+	public static void verify_assignToMe()
+	{
+		Actions.verifyElement(WorkFlow.assignToMe, "Element present assign to Me");
+		Actions.click(WorkFlow.assignToMe, "click on assign to Me");
+		Actions.verifyElement(WorkFlow.done_Btn, "Verify presence of  'Done' button");
+		Actions.pause(2);
+		Global.minglePageLoad_Social();
+		Actions.click(WorkFlow.done_Btn, "click on Done");
+		Global.minglePageLoad_Social();
+	}
+
+	/*********************Verify 'Assigned Himself/Assign to Other user*******************/
+	public static void start_WorkFlowOtherUser(String wfname,String user) 
+	{
+		//Actions.switchToDefaultContent();
+		navigateToActivityPage();
+		navigate_StreamsWF();
+		Actions.pause(2);
+		Actions.click(WorkFlow.addWorkFlows, "click on add work flows");
+		Actions.click(WorkFlow.select_WF, "click drop down to select Work flow");
+		Actions.click(By.xpath("//li[@data-value='"+wfname+"']"), "select created WF");
+		Actions.pause(2);
+		Actions.click(WorkFlow.start_Btn, "click start button");
+		Global.minglePageLoad_Social();
+		verifyWFStatuses(wfname);
+		Actions.verifyElement(WorkFlow.activityFeedHeader, "wait until page loads");
+		Actions.click(WorkFlow.activityFeedHeader, "click on activity feed");
+		Global.minglePageLoad_Social();
+		verify_AssigntoOtherUser();
+		//verify_Data("Work flow Message");
+	}
+
+
+
+	/*********************Complete task from Assign to Other user*******************/
+	public static void verify_AssigntoOtherUser() 
+	{
+		navigateToActivityPagemingle();
+		long differenceMinutes = getTime();
+		System.out.println(differenceMinutes + " minutes, ");
+		if(differenceMinutes<=2)
+		{
+			Actions.click(WorkFlow.showDetails_WF, "click on show details");
+			Actions.click(WorkFlow.assign, "click on assign");
+			Actions.click_JS(By.xpath("//button[@title='Assign']/following::div[@title='Assign']/descendant::div/span[contains(text(),'ION1')]"), "select user");
+			//Actions.pause(2);
+		}
+		else
+			System.out.println("Workflow creation is Failed");
+
+
+	}
+
+
+	/****************** verify Assign to Other user ******************/
+
+	public static void complete_WorkFlowOtherUser() 
+
+	{	
+
+		navigateToActivityPagemingle();
+		long differenceMinutes = getTime();
+		System.out.println(differenceMinutes + " minutes, ");
+		if(differenceMinutes<=4)
+		{
+
+			Actions.getText(By.xpath("//div[@class='infor-social-feedTextWrapper m-txt-f5']"));
+
+			Actions.click(WorkFlow.showDetails_WF, "click on show details");
+            Actions.click(WorkFlow.done_Btn, "click on Done");
+
+		}
+		else
+			System.out.println("Workflow creation is Failed");
+	}
+
+	/****************** REMOVE task after Assign to Other user ******************/
+
+	public static void remove_WorkFlowOtherUser(String wfname) 
+
+	{	
+		navigateToActivityPage();
+		navigate_StreamsWF();
+		Global.minglePageLoad_Social();
+		verifyWFStatuses(wfname);
+		remove_WorkFlow(wfname);
+
+	}
+
+	/****************** Navigate to TASKS window ******************/
+
+	public static void navigate_TasksWindow()
+	{
+		Actions.switchToDefaultContent();
+		Actions.click(ShellHeader.userMenu, "Click on User Mneu");
+		//Actions.verifyElement(WorkFlow.tasks, "Verify presence of 'Menu' Item");
+		Actions.click(WorkFlow.tasks, "Click on TASKS");
+		Actions.switchtoFrame(Global.socialCLFrame, "switch to social frame");
+		Actions.verifyElement(WorkFlow.Taskspage, "tasks page is displayed");
+		//Actions.verifyElementPresent(WorkFlow.Taskspage, "wait until tasks page loads");
+	}
+
+
+	/****************** complete tasks from TASKS window ******************/
+
+	public static void completetask_TasksWindow(String wfname) 
+	{
+		navigateToActivityPage();
+		navigate_StreamsWF();
+		Actions.pause(2);
+		Actions.click(WorkFlow.addWorkFlows, "click on add work flows");
+		Actions.click(WorkFlow.select_WF, "click drop down to select Work flow");
+		Actions.click(By.xpath("//li[@data-value='"+wfname+"']"), "select created WF");
+		Actions.pause(2);
+		Actions.click(WorkFlow.start_Btn, "click start button");
+		Global.minglePageLoad_Social();
+		verifyWFStatuses(wfname);
+		//Actions.switchToDefaultContent();
+		Actions.click(ActivityFeed.lnk_Activityfeed, "Click On Activity feed");
+		Global.minglePageLoad_Social();
+		//verify_WorkFlow(wfname);
+
+	}
+
+	/******************ADD parameters******************/
+	public static void add_parameters()
+	{
+		Actions.click(WorkFlow.addparameters_Btn, "click on add parameters");
+		Actions.pause(.5);
+		Actions.click(WorkFlow.parameterType, "click to select parameter type");
+	}
+
+	/******************select and Save parameters******************/
+	public static void save_parameters()
+	{
+		Actions.click(WorkFlow.input_ChkBox, "input check box");
+		Actions.click(WorkFlow.useInitialVal_ChkBox, "Use initial value if NUll check box");
+		Actions.click(WorkFlow.ok_Btn, "click OK button");
+		Actions.pause(.5);
+	}
+
+	/******************Create a Task with all parameters******************/
+
+	public static void createTask_AllParameters()
+	{
+		//Actions.click(WorkFlow.collapseIcon, "collapse icon");
+		//Actions.click(WorkFlow.add_WF,"click on add");
+		/*Actions.pause(2);
+    	Actions.scrollToElement(WorkFlow.addparameters_Btn);*/
+		Actions.click(WorkFlow.addparameters_Btn, "click on add parameters");
+		Actions.type(WorkFlow.parameterName,"string", "enter parameter name");
+		Actions.click(WorkFlow.input_ChkBox, "input check box");
+		Actions.click(WorkFlow.useInitialVal_ChkBox, "Use initial value if NUll check box");
+		Actions.type(WorkFlow.initialValue, "Automation test", "enter initial string value");
+		Actions.click(WorkFlow.ok_Btn, "click OK button");
+		Actions.pause(1);
+		add_parameters();
+		Actions.click(WorkFlow.type_boolean, "select type BOOLEAN");
+		Actions.type(WorkFlow.parameterName,"Boolean", "enter parameter name");
+		save_parameters();
+
+		add_parameters();
+		Actions.click(WorkFlow.type_Integer, "select type INTEGER");
+		Actions.type(WorkFlow.parameterName,"Integer", "enter parameter name");
+		save_parameters();
+
+		add_parameters();
+		Actions.click(WorkFlow.type_Decimal, "select type DECIMAL");
+		Actions.type(WorkFlow.parameterName,"Decimal", "enter parameter name");
+		save_parameters();
+
+		/*add_parameters();
+		Actions.pause(2);
+		Actions.click(WorkFlow.type_Code, "select type CODE");
+		Actions.pause(2);
+		Actions.type(WorkFlow.parameterName,"Code", "enter parameter name");
+		Actions.click(WorkFlow.input_ChkBox, "input check box");
+		//Actions.pause(.5);
+		//Actions.click(WorkFlow.useInitialVal_ChkBox, "Use initial value if NUll check box");
+		//Actions.click_JS(WorkFlow.select_code,"click dropdown");
+		Actions.pause(.5);
+		//Actions.click(WorkFlow.code_Approved, "select code approved");
+		Actions.click(WorkFlow.ok_Btn, "click OK button");
+		Actions.pause(.5);*/
+
+		add_parameters();
+		Actions.click(WorkFlow.type_Date, "select type DATE");
+		Actions.type(WorkFlow.parameterName,"Date", "enter parameter name");
+		save_parameters();
+
+		add_parameters();
+		Actions.click(WorkFlow.type_DateNTime, "select type DATE N TIME");
+		Actions.type(WorkFlow.parameterName,"DateTime", "enter parameter name");
+		save_parameters();
+
+		add_parameters();
+		Actions.click(WorkFlow.type_HyperLink, "select type Hyperlink");
+		Actions.type(WorkFlow.parameterName,"Hyperlink", "enter parameter name");
+		Actions.click(WorkFlow.input_ChkBox, "input check box");
+		Actions.click(WorkFlow.useInitialVal_ChkBox, "Use initial value if NUll check box");
+		Actions.type(WorkFlow.hyperLink_initialValue, "http://www.infor.com/", "Enter link");
+		Actions.click(WorkFlow.ok_Btn, "click OK button");
+		Actions.pause(1);
+
+		/*Actions.click(WorkFlow.task1, "select task");
+    	properties_WF(message,user1,user2);*/
+		/*Actions.click(WorkFlow.prop_content, "click content");
+    	Actions.click(WorkFlow.type_chkBx, "select all parameters");
+    	Actions.click(WorkFlow.addParameters_toTask,"Add parameters");
+    	save_WF();
+    	Actions.pause(.5);
+    	activate_workFlow(wfname);
+    	workFlowAuth(wfname);
+		 */
+	}
+
+	/******************Start a Task with all parameters in Streams page******************/
+
+	public static void startTask_AllParameters(String wfname) 
+	{
+		start_WorkFlow(wfname);
+		complete_Task_AllParameters(wfname);
+
+	}
+
+	/****************** verify task with all parameters in TASK overlay******************/
+
+	public static void complete_Task_AllParameters(String wfname) 
+
+	{	
+
+		navigateToActivityPagemingle();
+		long differenceMinutes = getTime();
+		System.out.println(differenceMinutes + " minutes, ");
+		if(differenceMinutes<=3)
+		{
+			Actions.click(WorkFlow.showDetails_WF, "click on show details");
+			//Actions.pause(1);
+			verify_parameters("string");
+			verify_parameters("Boolean");
+			verify_parameters("Integer");
+			verify_parameters("Decimal");
+			//verify_parameters("Code");
+			verify_parameters("Date");
+			verify_parameters("Date Time");
+			verify_parameters("Hyperlink");
+			/*Actions.click(WorkFlow.assignToMe, "click on assign to me");
+           Global.minglePageLoad_Social();
+           Actions.click(WorkFlow.done_Btn, "click on Done");
+           Global.minglePageLoad_Social();
+           navigate_StreamsWF();
+           verifyWFStatuses(wfname);
+           remove_WorkFlow(wfname);*/
+
+		}
+		else
+			System.out.println("Workflow creation is Failed");
+	}
+
+
+	/****************** verify all parameters in TASK overlay******************/
+
+	public static void verify_parameters(String parameter) 
+	{
+		Actions.verifyElement(By.xpath("//label[@title='"+parameter+"']"), "parameter name:"+parameter);
+
+	}
+
+
+
+	/******************GET TIME
+	 * @throws ParseException ******************/
+
+
+
+	public static long getTime() {
+		Actions.pause(3);
+		//Actions.verifyElementPresent(By.xpath("//div[@class='infor-social-timePost infor-social-timePostMargin floatRight m-txt-f14']"), "timestamp");
+		String date=Actions.getText(By.xpath("//div[@class='infor-social-timePost infor-social-timePostMargin floatRight m-txt-f14']"));
+		System.out.println(date+"Print");
+		String[] val1=date.split(" ");
+		System.out.println(val1[2]+" "+val1[3]);
+		String workFlowDate=val1[2];
+		Date date1=null;
+		try {
+			date1 = new SimpleDateFormat("HH:mm").parse(workFlowDate);
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		DateFormat df = new SimpleDateFormat("HH:mm");
+		Date dateobj = new Date();
+		long difference = dateobj.getTime() - date1.getTime();
+
+		long differenceMinutes = difference / (60 * 1000) % 60;
+		System.out.println(differenceMinutes + " minutes, ");
+		return differenceMinutes;
+	}
+
+	/******************Display of Activity Locator in Tasks,Activity feed page and Search ******************/
+
+	public static void display_ActivityLocator(String wfname) 
+	{
+		displayactivityWF(wfname);
+		long differenceMinutes = getTime();
+		System.out.println(differenceMinutes + " minutes, ");
+		if(differenceMinutes<=2)
+		{
+			/* Actions.click(WorkFlow.showDetails_WF, "click on show details");
+              Global.minglePageLoad_Social();*/
+			Actions.click(WorkFlow.activitylocator_Icon, "click on activity locator");
+			String taskid=Actions.getText(WorkFlow.taskID_WF);
+			Actions.verifyElement(By.xpath("//h2[contains(text(),'"+wfname+"')]"), "Activity loctor in activity feed page");
+			Actions.click(WorkFlow.activitylocator_Close, "close activity locator");
+			Actions.switchToDefaultContent();
+			//Actions.click(WorkFlow.searchIcon, "click on search Icon");
+			/*Actions.type(WorkFlow.startTyping, "Task 1 Message", "search for task");
+			Actions.enter();
+			String searchtaskID=Actions.getText(By.xpath("//a[@class='a_activity-locator ng-binding']"));
+			String[] s=searchtaskID.split(":");
+			String searchID=s[0]+": "+s[1];
+			System.out.println(searchID);
+			if(searchID.equalsIgnoreCase(taskid))
+			{
+				Actions.click(By.xpath("//a[@class='a_activity-locator ng-binding']"),"activity locator");
+				Actions.verifyElement(By.xpath("//h4[contains(text(),'"+wfname+"')]"), "Activity loctor in activity feed page");
+				Actions.click(WorkFlow.activitylocator_Close, "close activity locator");
+				Actions.click(WorkFlow.search_Close, "close search");
+			}
+
+			display_ActivityLocatorTask(wfname);
+*/
+		}
+		else
+			System.out.println("Workflow creation is Failed");
+
+	}
+
+	/******************Display of Activity Locator in Tasks page******************/
+
+	public static void display_ActivityLocatorTask(String wfname) 
+	{
+		navigate_TasksWindow();
+		long differenceMinutes = getTime();
+		System.out.println(differenceMinutes + " minutes, ");
+		if(differenceMinutes<=2)
+		{      
+			Actions.click(WorkFlow.activitylocator_Icon, "click on activity locator");
+			Actions.verifyElement(By.xpath("//h2[contains(text(),'"+wfname+"')]"), "Activity loctor in TASKS page");
+			Actions.click(WorkFlow.activitylocator_Close, "close activity locator");
+			Actions.click(WorkFlow.showDetails_WF, "click on show details");
+			verify_assignToMe();
+			/*Actions.verifyElement(WorkFlow.done_Btn, "Verify presence of  'Done' button");
+			Actions.pause(2);*/
+			navigate_StreamsWF();
+			verifyWFStatuses(wfname);
+			remove_WorkFlow(wfname);
+
+		}
+		else
+			System.out.println("Workflow creation is Failed");
+	}
+
+	/////////////////////////////////////////////////////O-O-O/////////////////////////////////////////////////////////////////////
+
+	public static void cannotAssignTaskto_OOOUser(String user1)
+	{
+		RM_Admin.navigateToMenu("User Settings");
+		//Actions.pause(10);
+		Actions.switchtoFrame(Global.socialCLFrame, "Switch to social");
+		Actions.verifyElement(ShellHeader.userMenu_UserSettings_ProfileInformationHeading, "Profile Information");
+		Global.minglePageLoad_Social();
+		addRule_ooosettings(user1);
+		ooo_enableooSwitch();
+		Actions.click(OOOsettings.ooo_SaveBtn, "save changes");
+		Global.minglePageLoad_Social();
+		Actions.click(OOOsettings.returnToProfile_Btn,"click on return to profile");
+		Global.minglePageLoad_Social();
+		String actual=Actions.getText(OOOsettings.profilePage_oooStatus);
+		Actions.verifyString(actual, "Out of office.");
+
+	}
+
+
+	/******************Multiple Rule_ooosettings ******************/
+
+	public static void multiplerules_OOOUser(String user)
+	{
+		RM_Admin.navigateToMenu("User Settings");
+		//Actions.pause(10);
+		Actions.switchtoFrame(Global.socialCLFrame, "Switch to social");
+		Actions.verifyElement(ShellHeader.userMenu_UserSettings_ProfileInformationHeading, "Profile Information");
+		Global.minglePageLoad_Social();
+		//addRule_ooosettings(user1);
+		Actions.click(OOOsettings.add_Rule, "click on add rule");
+		addRule_ooosettings(user);
+		ooo_enableooSwitch();
+		Actions.click(OOOsettings.ooo_SaveBtn, "save changes");
+		Global.minglePageLoad_Social();
+		Actions.click(OOOsettings.returnToProfile_Btn,"click on return to profile");
+		Global.minglePageLoad_Social();
+		Actions.getText(OOOsettings.profilePage_oooStatus);
+
+	}
+
+
+	/******************Multiple Rule_ooosettings ******************/
+
+	public static void Datetimerange_OOOUser()
+	{
+
+		RM_Admin.navigateToMenu("User Settings");
+		//Actions.pause(10);
+		Actions.switchtoFrame(Global.socialCLFrame, "Switch to social");
+		Actions.verifyElement(ShellHeader.userMenu_UserSettings_ProfileInformationHeading, "Profile Information");
+		Global.minglePageLoad_Social();
+		//addRule_ooosettings(user1);
+		Calendar c = Calendar.getInstance();
+
+		c.setTime(new Date()); // Now use today date.
+
+		c.add(Calendar.DATE, 2); // 
+		Date newDate = c.getTime();
+		Date newDate1 =new Date();
+		DateFormat dateFormat = new SimpleDateFormat("dd");
+		String startDate=dateFormat.format(newDate1);
+		String endDate=dateFormat.format(newDate);
+		System.out.println(startDate);
+		System.out.println(endDate);
+		Actions.click(OOOsettings.startDateandTime_Switch, "Enable Start date switch");
+		Actions.click(OOOsettings.startDate_input,"give present date");
+		//Actions.type(OOOsettings.startDate_input, startDate, "click present date");
+		Actions.click(OOOsettings.startdatepicker, "Start Date Cal");
+		Actions.pause(.5);
+		Global.minglePageLoad_Social();
+		Actions.click(OOOsettings.datepicker_todayDate, "Select Start Date Cal");
+		Actions.pause(2);
+		Actions.click(OOOsettings.endDateandTime_Switch, "Enable end date switch");
+		Actions.pause(2);
+		Actions.click(OOOsettings.startDate_input,"click present date");
+		Actions.click(OOOsettings.enddatepicker, "End Date Cal");
+		Actions.pause(.5);
+		Global.minglePageLoad_Social();
+		//Actions.type(OOOsettings.startDate_input, endDate, "give present date");
+		Actions.click(By.xpath("//a[text()='"+endDate+"']"), "Select End Date Date Cal");
+		Actions.pause(2);
+		String retreived_startDate=Actions.getAttribute(OOOsettings.startDate_input, "value");
+		String retreived_EndDate=Actions.getAttribute(OOOsettings.endDate_input, "value");
+		Actions.click(OOOsettings.ooo_SaveBtn, "save changes");
+		Actions.pause(1);
+		ooo_enableooSwitch();
+		Actions.click(OOOsettings.ooo_SaveBtn, "save changes");
+		Global.minglePageLoad_Social();
+		Actions.click(OOOsettings.returnToProfile_Btn,"click on return to profile");
+		Global.minglePageLoad_Social();
+		String dateDetails=Actions.getText(OOOsettings.profilePage_oooStatus);
+		String details[]=dateDetails.split(" ");
+		System.out.println(details[4]+" "+details[5]+" "+details[6]);
+		String returnProfileStartDate=details[4]+" "+details[5]+" "+details[6];
+		String[] val=details[10].split("\\.");
+		String returnProfileEndDate=details[8]+" "+details[9]+" "+val[0];
+		System.out.println(returnProfileStartDate+"*************"+returnProfileEndDate);
+		Actions.verifyString(retreived_startDate, returnProfileStartDate);
+		Actions.verifyString(retreived_EndDate, returnProfileEndDate);
+	}
+
+
+	/******************addRule_ooosettings ******************/
+
+	public static void addRule_ooosettings(String user1)
+	{
+		//Actions.click(OOOsettings.add_Rule, "click on add rule");
+		ooo_tasksSwitch();
+		ooo_activateruleSwitch();
+		Actions.type(OOOsettings.delegateto_Rule,"qa", "Enter User");
+		Actions.pause(1);
+		Actions.click(By.xpath("//div[@id='liveSearchResultContainer']/descendant::div[@title='"+user1+"']"), "select"+user1);
+		Global.minglePageLoad_Social();
+	}
+
+	/****************** rollback_OOOSettings for user 12 ******************/
+
+	public static void rollback_OOOSettings()
+	{
+
+		navigateToActivityPage();
+		//Global.minglePageLoad_Social();
+		if(Actions.verifyElementPresent(OOOsettings.popup_OOOsettings, "present")){
+			Actions.click(OOOsettings.popup_NoBtn, "click NO button");
+		}
+		Actions.switchToDefaultContent();
+		RM_Admin.navigateToMenu("User Settings");
+		//Global.minglePageLoad_Social();
+		//Actions.pause(10);
+		//Actions.explicitWait_VisibilityOfElement(ShellHeader.userMenu_UserSettings_ProfileInformationHeading);
+		Actions.switchtoFrame(Global.socialCLFrame, "Switch to social");
+		Actions.verifyElement(ShellHeader.userMenu_UserSettings_ProfileInformationHeading, "Profile Information");
+		Global.minglePageLoad_Social();
+		Actions.click(OOOsettings.enableooo_Switch, "Turn OFF OOO switch");
+		Actions.click(OOOsettings.ooo_SaveBtn, "save changes");
+		/*Global.minglePageLoad_Social();
+		Actions.switchToDefaultContent();
+		Global.minglePageLoad_Social();
+		Actions.click(OOOsettings.delete_Rule, "DELETE RULE");
+		Actions.click(OOOsettings.delete_RuleYesBtn, "click yes button");
+		Actions.click(OOOsettings.ooo_SaveBtn, "save changes");
+		if(Actions.verifyElementPresent(By.xpath("//div[@class='inlineBlock infor-mingle-outOfOfficeRulesErrorMsg']"),"Verify presence of ION Update")){
+			do{
+				Actions.refresh();
+				}while(!Actions.verifyElementPresent(By.xpath("//div[@class='inlineBlock infor-mingle-outOfOfficeRulesErrorMsg']"),"Verify presence of ION Update"));
+			Actions.click(OOOsettings.delete_Rule, "DELETE RULE");
+			Actions.click(OOOsettings.delete_RuleYesBtn, "click yes button");
+			Actions.click(OOOsettings.ooo_SaveBtn, "save changes");
+		}*/
+	}
+
+	public static void rollback_OOOSettings1(){
+		RM_Admin.navigateToMenu("User Settings");
+		Actions.switchtoFrame(Global.socialCLFrame, "Switch to social");
+		Actions.verifyElement(ShellHeader.userMenu_UserSettings_ProfileInformationHeading, "Profile Information");
+		Global.minglePageLoad_Social();
+		Actions.pause(3);
+		Actions.click(OOOsettings.startDateandTime_Switch, "switch off start date");
+		Actions.click(OOOsettings.endDateandTime_Switch, "switch off end date");
+		Actions.click(OOOsettings.delete_Rule, "DELETE RULE");
+		Actions.click(OOOsettings.delete_RuleYesBtn, "click yes button");
+		Actions.click(OOOsettings.ooo_SaveBtn, "save changes");
+		Global.minglePageLoad_Social();
+		Actions.click(OOOsettings.delete_Rule, "DELETE RULE");
+		Actions.click(OOOsettings.delete_RuleYesBtn, "click yes button");
+		Actions.click(OOOsettings.ooo_SaveBtn, "save changes");
+		Global.minglePageLoad_Social();
+	}
+	/****************** verify created Workflow ******************/
+
+	public static void verify_OOOmessage(String wfname) 
+	{
+
+		long differenceMinutes = getTime();
+		System.out.println(differenceMinutes + " minutes, ");
+		if(differenceMinutes<=2)
+		{
+			Actions.click(WorkFlow.showDetails_WF, "click on show details");
+			Actions.click(WorkFlow.assign, "click on assign");
+			Actions.click_JS(By.xpath("//button[@title='Assign']/following::div[@title='Assign']/descendant::div/span[contains(text(),'Test12')]"), "select user");
+			Global.minglePageLoad_Social();
+			Actions.pause(.5);
+			Actions.getText(By.xpath("//div[@class='infor-save-success-tooltip infor-save-error']"));
+			Actions.click(WorkFlow.close_taskpopup, "close task pop up");
+			//verify_assignToMe();
+			navigate_StreamsWF();
+			Actions.pause(2);
+			Actions.click(By.xpath("//div[@title='"+wfname+"']"), "select Work flow");
+			Actions.click(WorkFlow.cancel_WFBtn, "cancel WF");
+			Global.minglePageLoad_Social();
+			Actions.click(WorkFlow.remove_WFBtn, "remove WF");
+			Actions.verifyElement(WorkFlow.deleteWF_prompt, "Prompt when removing a Workflow");
+			Actions.click(WorkFlow.yes_Btn, "click yes button");
+			Actions.click(WorkFlow.workflow_Link, "click on workflow link");
+			verifyWFStatuses(wfname);
+			//remove_WorkFlow(wfname);
+
+		}
+		else
+			System.out.println("Workflow creation is Failed");
+	}
+
+	/******************verifydelegate_ooosettings 
+	 * @ ******************/
+
+	public static void verifydelegate_ooosettings(String wfname) 
+	{
+		long differenceMinutes = getTime();
+		System.out.println(differenceMinutes + " minutes, ");
+		if(differenceMinutes<=2)
+		{
+			Actions.click(WorkFlow.showDetails_WF, "click on show details");
+			Actions.click(WorkFlow.assign, "click on assign");
+			Actions.click_JS(By.xpath("//button[@title='Assign']/following::div[@title='Assign']/descendant::div/span[contains(text(),'Test11')]"), "select user");
+			Global.minglePageLoad_Social();
+			Actions.pause(.5);
+			//Actions.getText(By.xpath("//div[@class='infor-save-success-tooltip infor-save-error']"));
+			Actions.click(WorkFlow.done_Btn, "click done");
+			Global.minglePageLoad_Social();
+			verify_assignToMe();
+			navigate_StreamsWF();
+			Actions.pause(2);
+			Actions.click(By.xpath("//div[@title='"+wfname+"']"), "select Work flow");
+			/*Actions.click(WorkFlow.cancel_WFBtn, "cancel WF");
+    	          	  Global.minglePageLoad_Social();*/
+			Actions.click(WorkFlow.remove_WFBtn, "remove WF");
+			Actions.verifyElement(WorkFlow.deleteWF_prompt, "Prompt when removing a Workflow");
+			Actions.click(WorkFlow.yes_Btn, "click yes button");
+			Actions.click(WorkFlow.workflow_Link, "click on workflow link");
+			verifyWFStatuses(wfname);
+			//remove_WorkFlow(wfname);
+
+		}
+		else
+			System.out.println("Workflow creation is Failed");
+	}
+
+	/******************OOO TASKS Switch******************/
+
+	public static void ooo_tasksSwitch()
+	{
+		Actions.scrollToElement(OOOsettings.tasks_Switch);
+		Actions.makeElementVisible("", OOOsettings.tasks_Switch);
+		if(!Actions.isChecked(OOOsettings.tasks_Switch))
+		{
+			//Actions.pause(2);
+			Actions.scrollToElement(OOOsettings.tasks_Switch);
+			Actions.pause(2);
+			Actions.click(OOOsettings.tasks_Switch, "Turn ON Tasks Switch");
+		}
+		else
+			System.out.println(Actions.isChecked(OOOsettings.tasks_Switch));
+	}
+
+	/******************OOO TASKS Switch OFF******************/
+
+	public static void ooo_tasksSwitchOff()
+	{
+		Actions.scrollToElement(OOOsettings.tasks_Switch);
+		Actions.makeElementVisible("", OOOsettings.tasks_Switch);
+		if(Actions.isChecked(OOOsettings.tasks_Switch))
+		{
+			//Actions.pause(2);
+			Actions.scrollToElement(OOOsettings.tasks_Switch);
+			Actions.pause(2);
+			Actions.click(OOOsettings.tasks_Switch, "Turn OFF Tasks Switch");
+		}
+		System.out.println(Actions.isChecked(OOOsettings.tasks_Switch));
+	}
+
+	/******************OOO Activate this rule Switch******************/
+
+	public static void ooo_activateruleSwitch()
+	{
+		Actions.scrollToElement(OOOsettings.activatethisrule_Switch);
+		Actions.makeElementVisible("",OOOsettings.activatethisrule_Switch);
+		if(!Actions.isChecked(OOOsettings.activatethisrule_Switch))
+		{
+			//Actions.pause(2);
+			Actions.scrollToElement(OOOsettings.activatethisrule_Switch);
+			Actions.pause(2);
+			Actions.click(OOOsettings.activatethisrule_Switch, "Turn ON Activate this rule Switch");
+		}
+		else
+			System.out.println(Actions.isChecked(OOOsettings.activatethisrule_Switch));
+	}
+
+	/******************OOO Activate this rule Switch OFF******************/
+
+	public static void ooo_activateruleSwitchOff()
+	{
+		Actions.scrollToElement(OOOsettings.activatethisrule_Switch);
+		Actions.makeElementVisible("",OOOsettings.activatethisrule_Switch);
+		if(Actions.isChecked(OOOsettings.activatethisrule_Switch))
+		{
+			//Actions.pause(2);
+			Actions.scrollToElement(OOOsettings.activatethisrule_Switch);
+			Actions.pause(2);
+			Actions.click(OOOsettings.activatethisrule_Switch, "Turn OFF Activate this rule Switch");
+		}
+		System.out.println(Actions.isChecked(OOOsettings.activatethisrule_Switch));
+	}
+
+	/******************Enable OOO Switch******************/
+	public static void ooo_enableooSwitch()
+	{
+		Actions.scrollToElement(OOOsettings.enableooo_Switch);
+		Actions.makeElementVisible("",OOOsettings.enableooo_Switch);
+		if(!Actions.isChecked(OOOsettings.enableooo_Switch))
+		{
+			//Actions.pause(2);
+			Actions.scrollToElement(OOOsettings.enableooo_Switch);
+			Actions.pause(2);
+			Actions.click(OOOsettings.enableooo_Switch, "Enable OOO switch");
+		}
+		else
+			System.out.println(Actions.isChecked(OOOsettings.enableooo_Switch));
+	}
+
+
+
+	/******************Enable OOO Switch OFF******************/
+	public static void ooo_enableooSwitchoff()
+	{
+		//Actions.scrollToElement(OOOsettings.enableooo_Switch);
+		//Actions.makeElementVisible("",OOOsettings.enableooo_Switch);
+		//if(Actions.isChecked(OOOsettings.enableooo_Switch))
+		//{
+		/*//Actions.pause(2);
+			Actions.scrollToElement(OOOsettings.enableooo_Switch);
+			Actions.pause(2);*/
+		Actions.click(OOOsettings.enableooo_Switch, "Turn OFF OOO switch");
+		// }
+		System.out.println(Actions.isChecked(OOOsettings.enableooo_Switch));
+	}
+
+
+	/******************AUTO ASSIGN******************/
+
+	public static void checkAutoAssign()
+	{
+
+		navigateionDesk();
+		Actions.pause(5);
+		Actions.switchtoFrame(WorkFlow.ionDeskCLFrame, "Switch to ION Desk Frame");
+		Actions.verifyElement(WorkFlow.statusOverview, "status over view");
+		Actions.moveTo(WorkFlow.iconMenu, "move to icon menu");
+		Actions.pause(5);
+		Actions.click(WorkFlow.iconMenu, "click to icon menu");
+		Actions.moveTo(WorkFlow.settings, "move to settings");
+		Actions.click(WorkFlow.settings, "click on settings");
+		Actions.click(WorkFlow.configurations, "click on configuration");
+		Actions.click(WorkFlow.ionService, "click on ION service");
+		Actions.pause(2);
+		Global.minglePageLoad_Social();
+		Actions.switchtoFrame(WorkFlow.configurationUIFrame, "Switch to configurations frame");
+		Actions.click(WorkFlow.pulseEngine, "expand pulse engine");
+		Actions.click(WorkFlow.autoAssignActivities, "check Auto Assign activities");
+		Actions.pause(2);
+		Actions.click(WorkFlow.save_Btn, "click save button");
+		Actions.pause(2);
+		Actions.click(WorkFlow.ok_Btn, "click ok button");
+		Actions.switchToDefaultContent();
+
+	}
+
+
+
+	/******************COMPLETE AUTO ASSIGN TASK ******************/
+
+	public static void verify_AutoAssign(String wfname) 
+	{
+
+		long differenceMinutes = getTime();
+		System.out.println(differenceMinutes + " minutes, ");
+		if(differenceMinutes<=2)
+		{
+			Actions.click(WorkFlow.showDetails_WF, "click on show details");
+			Actions.verifyElement(WorkFlow.done_Btn, "Verify presence of  'Done' button");
+			Actions.pause(2);
+			Actions.click(WorkFlow.done_Btn, "click on Done");
+			Global.minglePageLoad_Social();
+			navigate_StreamsWF();
+			verifyWFStatuses(wfname);
+			remove_WorkFlow(wfname);
+
+		}
+		else  
+			System.out.println("Workflow creation is Failed");
+	}
+
+
+	///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+	/******************delete Work flow authorization**************/
+
+	public static void delete_workFlowAuth(String wfname)
+	{
+		Actions.click(By.xpath("//div[text()='"+wfname+"']"), "select work flow");
+		Actions.click(WorkFlow.delete_Btn, "delete ");
+		Actions.click(WorkFlow.save_Btn, "click save");
+	}
+
+
+	/******************DEactivate and delete WF**************/
+
+	public static void hover_deactivate_deleteWF(String wfname)
+	{
+		Actions.moveTo(By.xpath("//div[@title='"+wfname+"']"), "move to WF");
+		Actions.click(By.xpath("//div[@title='"+wfname+"']/following::button[@title='Deactivate']"), "de-activate");
+	}
+
+	//public final static String RpPath=System.getProperty("user.dir");
+
+	/*public static void uploadWorkFlow(String uploadedFile){
+		String jacobDllVersionToUse;
+		   if (System.getProperty("sun.arch.data.model").contains("32")){
+		      jacobDllVersionToUse = "jacob-1.18-x86.dll";
+		   }
+		   else {
+		      jacobDllVersionToUse = "jacob-1.18-x64.dll";
+		   }
+		   File file = new File("lib", jacobDllVersionToUse);
+		   System.setProperty(LibraryLoader.JACOB_DLL_PATH, file.getAbsolutePath());
+		  
+		
+		   
+		 System.out.println(uploadedFile+"*******************");
+		   AutoItX x1 = new AutoItX();
+		   if(x1.winWaitActive("Open", "", 15)){
+		   x1.winActivate("Open"); //File Upload, title of windows UI
+		   x1.ControlSetText("Open", "", "1148", uploadedFile); //Textbox for path, id is 1148
+		   x1.controlClick("Open", "", "1") ; //Open button, id is 1
+		   }
+	
+		   if(x1.winWaitActive("Open", "", 10)){
+			   if(x1.winExists("Open")){
+			   x1.sleep(500);
+			   x1.send(uploadedFile);
+			   x.controlClick("Open", "", "1") ;
+			   
+		  }           
+		  }	   
+	}
+*/
+
+
+	/******************IMPORT MULTIPLE TASK WF
+	 * @ **************/
+
+
+	public static void importmultiWF(String wfname) 
+	{
+		String file=RpPath+"\\img\\AutoMutlipletasksWF.xml";
+		Actions.click(WorkFlow.import_WF, "click on IMport WF");
+		Actions.click(WorkFlow.importBrowse_WF,"browse WF");
+		Actions.pause(5);
+		try {
+			Runtime.getRuntime().exec(RpPath+"\\chrome.exe"+" "+file);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}  
+		Actions.pause(5);
+		Actions.click(WorkFlow.ok_Btn, "click OK");
+		Global.minglePageLoad_Social();
+		String expected=Actions.getText(By.xpath("//div[@title='Import of ‘"+wfname+"’ successful.']"));
+		Actions.verifyString("Import of ‘"+wfname+"’ successful.", expected);
+		Actions.click(WorkFlow.ok_Btn, "click OK");
+		Actions.verifyElementPresent(By.xpath("//div[@title='"+wfname+"']"), "WF present");
+		Actions.click(By.xpath("//div[@title='"+wfname+"']"), "WF present");
+		Actions.pause(5);
+		activate_workFlow(wfname);
+		Actions.pause(5);
+
+	}
+
+	public static void importsingleWF(String wfname) 
+	{
+		String file=RpPath+"\\img\\AutoSingleTask.xml";
+		Actions.click(WorkFlow.import_WF, "click on IMport WF");
+		Actions.click(WorkFlow.importBrowse_WF,"browse WF");
+		Actions.pause(5);
+		try {
+			Runtime.getRuntime().exec(RpPath+"\\chrome.exe"+" "+file);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}  
+		Actions.pause(5);
+		Actions.click(WorkFlow.ok_Btn, "click OK");
+		Global.minglePageLoad_Social();
+		String expected=Actions.getText(By.xpath("//div[@title='Import of ‘"+wfname+"’ successful.']"));
+		Actions.verifyString("Import of ‘"+wfname+"’ successful.", expected);
+		Actions.click(WorkFlow.ok_Btn, "click OK");
+		Actions.verifyElementPresent(By.xpath("//div[@title='"+wfname+"']"), "WF present");
+		Actions.click(By.xpath("//div[@title='"+wfname+"']"), "WF present");
+		Actions.pause(5);
+		activate_workFlow(wfname);
+		Actions.pause(5);
+
+	}
+	/********************Add new WorkFlow after check*************************/
+
+	public static void add_NewWorkFlowaftercheck(String wfname,String wfdesc)
+	{
+		navigate_WorkFlow();
+		Actions.switchtoFrame(WorkFlow.workflowdeskCLFrame, "Switch to workflow frame");
+		Actions.pause(1);
+
+		if(Actions.verifyElementPresent(By.xpath("//div[@title='"+wfname+"']"),"Workflow present"))
+		{
+			System.out.println("Req WF is present");
+		}
+		else{
+
+			System.out.println("Rq WF not present");
+			/*Actions.click(WorkFlow.add_NewWorkflow, "click on add new workflow");
+	    	Actions.pause(1);
+	    	Actions.type(WorkFlow.workFlowName,wfname,"enter Work flow name");
+	    	Actions.type(WorkFlow.workFlowDesc,wfdesc,"enter workflow description");
+	    	Actions.click_JS(WorkFlow.collapse,"collapse");
+	    	Actions.pause(3);
+	    	Actions.verifyElementPresent(WorkFlow.expandIcon,"expand");
+	    	Actions.click(WorkFlow.expandIcon,"click expand");*/
+		}
+	}
+
+	/**********************************************ALERTS*******************************************************************/
+
+
+	public static void navigate_Alerts()
+	
+	{
+        Actions.switchToDefaultContent();
+		RM_Admin.navigateToMenu("Alerts");
+		Actions.switchtoFrame(Global.socialCLFrame, "Switch to the Frame");
+		//Actions.verifyElement(Alerts.loading, "Loading");
+		Actions.verifyElement(Alerts.myAlerts, "My Alerts");
+
+	}
+
+	
+	
+	
+	public static void navigate_Monitors()
+	{
+		navigateionDesk();
+		Actions.switchtoFrame(WorkFlow.ionDeskCLFrame, "Switch to ION Desk Frame");
+		Actions.pause(5);
+		Actions.verifyElement(WorkFlow.statusOverview, "status over view");
+		Actions.moveTo(WorkFlow.iconMenu, "move to icon menu");
+		Actions.click(WorkFlow.iconMenu, "click to icon menu");
+		Actions.click(WorkFlow.model, "click on model");
+		Actions.click(WorkFlow.monitorsWorkflows, "click on Monitors & Workflows");
+		Actions.click(Alerts.monitors, "click on Monitors");
+
+	}
+	public static void create_Monitors(String Monitor,String MonitorDec,String filter,String condition,String message,String user)
+	{
+		navigate_Monitors();
+		Actions.pause(2);
+		Actions.switchtoFrame(Alerts.monitorsFrame, "Switch to monitors frame");
+		Actions.click(Alerts.add_NewMonitor, "Add new Monitor");
+		Actions.pause(1);
+		Actions.type(Alerts.monitorName, Monitor, "Enter monitor name"); //
+		Actions.pause(1);
+		Actions.type(Alerts.monitorDesc, MonitorDec, "Enter monitor Decsrption");
+		Actions.click(WorkFlow.collapse_svg, "clollapse");
+		Actions.click(Alerts.add, "click add");
+		Actions.type(Alerts.filter, filter, "select filter");  //SecurityUserMaster
+		Actions.enter();
+		Actions.click(By.xpath("//div[text()='"+filter+"']/../../descendant::td"), "select"+filter);
+		Actions.click(Alerts.ok_Btn,"select OK button");
+		Actions.pause(2);
+		Actions.click(Alerts.attributes, "click Attributes tab");
+		Actions.pause(1);
+		Actions.click(Alerts.add_Attributes, "add button");
+		Actions.verifyElement(Alerts.selectAttributes, "select Attributes present");
+		Actions.pause(1);
+		Actions.click(Alerts.tree1, "click on tree 1");
+		Actions.pause(2);
+		Actions.click(Alerts.tree2, "click on tree 2");
+		Actions.pause(2);
+		Actions.click(Alerts.tree3_IDS, "tree ID");
+		Actions.pause(1);
+		Actions.click(Alerts.ID,"select ID");
+		Actions.pause(1);
+		Actions.click(Alerts.ok_Btn, "click ok button");
+		Actions.pause(2);
+		Actions.click(Alerts.conditions, "Conditions tab");
+		Actions.click(Alerts.add_Condition, "add button");
+		Actions.pause(1);
+		Actions.type(Alerts.condition_Name, condition, "filter condition");
+		Actions.click(Alerts.condition_Attribute, "click Attribute Drop down");
+		Actions.click(Alerts.Attribute_dropdownID, "select drop down ID");
+		Actions.click(Alerts.condition_operator , "click operator Drop down");
+		Actions.click(Alerts.condition_lessgreater, "select condition");
+		Actions.scrollToElement(Alerts.ok_Btn);
+		Actions.click(Alerts.ok_Btn, "click ok button");
+		Actions.click(Alerts.Rule, "click on Rule Tab");
+		Actions.click(Alerts.rule_condition, "click condition drop down");
+		Actions.click(By.xpath("//td[text()='"+condition+"']"), "select condition name");
+		Actions.click(Alerts.alertSettings, "click on Alert settings tab");
+		Actions.type(Alerts.alertSettings_msg, message, "enter message"); //message
+		//Actions.click(Alerts.add, "add button");
+		Add_Userprop(user);
+		Actions.click(WorkFlow.save_Btn, "Save MONITOR");
+		Actions.pause(2);
+		Actions.click(WorkFlow.activate_WF, "Activate monitor");
+		
+	}
+	
+	
+	/******************COMPLETE ALERTS in ALERTS Window ******************/
+
+	public static void verify_Alerts(String message) 
+	{
+		String file=RpPath+"\\img\\Workflow.docx";
+		long differenceMinutes = getTime();
+		System.out.println(differenceMinutes + " minutes, ");
+		if(differenceMinutes<=3)
+		{   
+		
+	    /*String expectedAlertmsg=Actions.getText(By.xpath("//div[@class='infor-social-feedTextWrapper m-txt-f5']"));
+		Actions.verifyString(message,expectedAlertmsg);*/
+		Actions.click(WorkFlow.showDetails_WF, "click on show details");
+        //Actions.verifyElement(Alerts.loading, "Loading");
+		Actions.pause(2);
+		Actions.verifyElementPresent(WorkFlow.assignToMe, "assign to me button present");
+		Actions.verifyElementPresent(WorkFlow.assign, "Assign button present");
+		Actions.verifyElementPresent(WorkFlow.done_Btn, "done button present");
+        Actions.click(WorkFlow.assignToMe, "click assign to me");
+        Actions.pause(2);
+		Actions.verifyElementPresent(By.xpath("//div[@class='m-o-msg-info-text2 m-txt-f7']"), "date time of task created present");
+		Actions.verifyElementPresent(By.xpath("//a[@class='m-link m-txt-f19 cursorPointer']"), "# tag present");
+		Actions.verifyElementPresent(By.xpath("//div[@id='shareOverlayAttachments']"), "attachments present");
+		WebElement elem = Utility.getDriver().findElement(By.id("mto_fileToUpload"));
+        String js = "arguments[0].setAttribute('style', 'display: block;height:28px;width:125px;visibility:visible');";
+        ((JavascriptExecutor) Utility.getDriver()).executeScript(js, elem);
+        Actions.pause(2);
+        Actions.type(By.id("mto_fileToUpload"),file, "Upload File");
+		Actions.pause(5);
+		Actions.scrollToElement(WorkFlow.notes);
+		Actions.verifyElementPresent(WorkFlow.notes,"text area present");
+		Actions.type(WorkFlow.notes, "notes", "Add notes in task");
+		Actions.scrollToElement(WorkFlow.alertssavenotes);
+		Actions.click(WorkFlow.alertssavenotes, "Save note");
+		Actions.pause(3);
+		Actions.scrollToElement(WorkFlow.Alertsdone_Btn);
+		Actions.pause(2);
+		Actions.click_JS(WorkFlow.Alertsdone_Btn, "click on Done");
+		}
+		else  
+			System.out.println("Workflow creation is Failed");
+	}
+	
+	
+	
+	
+	/******************COMPLETE ALERTS in ALERTS Window ******************/
+
+	public static void verify_Alertsfeedpage(String message) 
+	{
+
+		long differenceMinutes = getTime();
+		System.out.println(differenceMinutes + " minutes, ");
+		if(differenceMinutes<=3)
+		{   
+		
+	    String expectedAlertmsg=Actions.getText(By.xpath("//div[@class='infor-social-feedTextWrapper m-txt-f5']"));
+		Actions.verifyString(message,expectedAlertmsg);
+		Actions.verifyElementPresent(By.xpath("//span[@class='infor-mingle-feedpage-completed2']"), "Alert completed");
+		Actions.verifyElementPresent(By.xpath("//div[@class='infor-social-feedTextWrapper m-txt-f5']/following::img[contains(@class,'attachment-icon')]"), "attachement present");
+        
+		
+		}
+		else  
+			System.out.println("Workflow creation is Failed");
+	}
+	/******************COMPLETE ALERTS in ALERTS Window ******************/
+
+	public static void verify_AutoAlerts(String message) 
+	{
+
+		long differenceMinutes = getTime();
+		System.out.println(differenceMinutes + " minutes, ");
+		if(differenceMinutes<=3)
+		{   
+		
+	    /*String expectedAlertmsg=Actions.getText(By.xpath("//div[@class='infor-social-feedTextWrapper m-txt-f5']"));
+		Actions.verifyString(message,expectedAlertmsg);*/
+		Actions.click(WorkFlow.showDetails_WF, "click on show details");
+        Actions.pause(2);
+        Actions.click(WorkFlow.Alertsdone_Btn, "click on done");
+        
+		}
+		else  
+			System.out.println("Workflow creation is Failed");
+	}
+	
+	
+	///////////////////////////////NOTES IN WF VIEW///////////////////////////////////////
+	
+	
+	
+	/****************** verify notes in Workflow view ******************/
+
+	public static String verify_notesinWFView() 
+	{
+		
+		String notestime = null;
+		long differenceMinutes = getTime();
+		System.out.println(differenceMinutes + " minutes, ");
+		if(differenceMinutes<=2)
+		{
+			Actions.click(WorkFlow.showDetails_WF, "click on show details");
+			Actions.verifyElement(WorkFlow.assignToMe, "Element present assign to Me");
+			Actions.click(WorkFlow.assignToMe, "click on assign to Me");
+			Actions.verifyElementPresent(WorkFlow.done_Btn, "done button present");
+			Actions.scrollToElement(WorkFlow.notes);
+			//Actions.verifyElementPresent(WorkFlow.notes,"text area present");
+			Actions.type(WorkFlow.notes, "notes", "Add notes in task");
+			Actions.scrollToElement(WorkFlow.savenotes);
+			Actions.click_JS(WorkFlow.savenotes, "Save note");
+			Actions.pause(3);
+			notestime=Actions.getText(By.xpath("//div[contains(text(),'notes')]/following::span[@class='m-o-note-msg-date']"));
+			Actions.scrollToElement(WorkFlow.done_Btn);
+			Actions.pause(2);
+			Actions.click_JS(WorkFlow.done_Btn, "click on Done");
+			//verify_assignToMe();
+
+		}
+		else
+			System.out.println("Workflow creation is Failed");
+		return notestime;
+		
+	}
+	
+	/****************** add comments in completed task******************/
+	
+	
+	public static String addcommentsincompletedtask(String wfname) 
+	{
+		String commenttime = null;
+		long differenceMinutes = getTime();
+		System.out.println(differenceMinutes + " minutes, ");
+		if(differenceMinutes<=3)
+		{
+			Actions.verifyElementPresent(By.xpath("//span[@class='infor-mingle-feedpage-completed']"), "task completed");
+			Actions.type(WorkFlow.comment, "comment", "Add comment");
+			Actions.click(WorkFlow.reply_Btn, "click reply button");
+			commenttime=Actions.getText(By.xpath("//div[contains(.,'comment')]/descendant::div[@id='dateSentText'][5]"));
+			
+		}
+		else
+			System.out.println("Workflow creation is Failed");
+		return commenttime;
+		
+		
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+}

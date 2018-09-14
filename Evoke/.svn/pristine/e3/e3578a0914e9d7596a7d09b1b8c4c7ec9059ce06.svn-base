@@ -1,0 +1,90 @@
+package scripts.IFS;
+
+import java.util.HashMap;
+
+import org.apache.commons.lang3.RandomStringUtils;
+import org.openqa.selenium.WebDriver;
+import org.testng.annotations.AfterClass;
+import org.testng.annotations.BeforeClass;
+
+import com.relevantcodes.extentreports.ExtentTest;
+
+import actions.Actions;
+import objRepository.Global;
+import reusableMethods.RM_IFS_Trial10;
+import utility.Utility;
+
+public class TS_Contact_12697 {
+	WebDriver driver;
+	ExtentTest logger;
+	Global global;
+	
+	private Utility utl;
+	
+	 public static String className;
+	    static boolean rerun=false;
+		@BeforeClass
+		public void setUp()
+		{    
+			
+			 utl=new Utility();
+			 logger=utl.initTest(this.getClass().getName().substring(this.getClass().getName().lastIndexOf(".")+1).trim());
+			 className=this.getClass().getName().toString();
+			 new Actions();
+		}
+	@AfterClass
+	public void tearDown() throws Exception
+	{
+	
+	Utility.report.endTest(logger);
+	Utility.report.flush();
+	}
+	
+	
+	HashMap<String, String> configData=Utility.getConfigData();
+	 HashMap<String, String> testData=Utility.getTestData();
+		
+		//TESTDATA
+	 String userName=configData.get("USER1");
+	 String pwd=configData.get("PASSWORD");
+	 String email=configData.get("USER7");
+	 String fullName=testData.get("CONTACT_FULLNAME");
+	 String contactID=testData.get("CONTACT_ID")+RandomStringUtils.randomNumeric(3);
+	 String groupname=testData.get("CONTACT_GROUPNAME")+RandomStringUtils.randomNumeric(3);
+	 String desc=testData.get("CONTACT_GROUPDESC");
+	@org.testng.annotations.Test
+	public void test() throws InterruptedException{
+		 
+		
+		//LOGIN
+		Global.login(userName,pwd);
+		try{
+		//CONTACT GROUP
+		RM_IFS_Trial10.create_ContactGroups(groupname, desc);
+		Actions.switchToDefaultContent();
+		RM_IFS_Trial10.create_SingleContact(fullName,email,contactID,groupname);
+		//RM_IFS_Trial10.assosciate_ContactGroup(fullName, groupname);
+		//Actions.switchToDefaultContent();
+		RM_IFS_Trial10.verify_ContactsinContactGroup(email, groupname);
+		}
+		catch (Exception e) {
+			// TODO: handle exception
+			Utility.addClass(className);
+		}
+		finally{
+		try{
+		//LOGOUT
+		Global.logOut();
+		
+		}
+		catch (Exception e) {
+			// TODO: handle exception
+		}
+		finally{
+		//DRIVER CLOSE
+		Actions.driverClose();
+		}
+		
+	}
+	}	
+}

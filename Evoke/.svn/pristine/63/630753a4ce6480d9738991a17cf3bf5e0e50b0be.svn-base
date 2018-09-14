@@ -1,0 +1,67 @@
+package scripts.IONAPI_V_13;
+
+import java.util.HashMap;
+
+import org.testng.annotations.AfterClass;
+import org.testng.annotations.BeforeClass;
+import org.testng.annotations.Test;
+
+import com.relevantcodes.extentreports.ExtentTest;
+
+import actions.Actions;
+import objRepository.Global;
+import reusableMethods.RM_IONAPI;
+import reusableMethods.RM_IONAPI_V_13;
+import utility.Utility;
+
+public class TS_AvailableMobileApps_14111 {
+	ExtentTest logger;
+	Utility utl;
+	HashMap<String, String> testData=Utility.getTestData();
+	HashMap<String, String> configData=Utility.getConfigData();
+
+	//TESTDATA
+	String userName=configData.get("USER14");	
+	String pwd=configData.get("PASSWORD");
+	public static String className;
+	@BeforeClass
+	public void setUp()
+	{    
+
+		utl=new Utility();
+		logger=utl.initTest(this.getClass().getName().substring(this.getClass().getName().lastIndexOf(".")+1).trim());
+		className=this.getClass().getName().toString();
+		new Actions();
+	}
+	@AfterClass
+	public void tearDown()
+	{
+		Utility.report.endTest(logger);
+		//Actions.driverClose();
+		Utility.report.flush();
+	}
+
+	@Test
+	public void getTitle()
+	{
+		try{
+			//LOGIN INTO THE APPLICATION
+			Global.login(userName,pwd);
+			//VERIFY MOBILE APPS
+			RM_IONAPI_V_13.verify_MobileApps();
+		} catch (Exception e) {
+			Utility.addClass(className);
+		}
+		finally
+		{
+			try{
+				Global.logOut();
+			}
+			catch (Exception e) {
+				// TODO: handle exception
+			}
+			finally{
+				Actions.driverClose();
+			}
+		}}
+}

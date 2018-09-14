@@ -1,0 +1,124 @@
+package scripts.ActivityFeed;
+
+import org.apache.commons.lang3.RandomStringUtils;
+import org.openqa.selenium.WebDriver;
+import org.testng.annotations.AfterMethod;
+import org.testng.annotations.BeforeClass;
+import org.testng.annotations.Test;
+
+import com.relevantcodes.extentreports.ExtentTest;
+
+import actions.Actions;
+import objRepository.Global;
+import objRepository.Social.ActivityFeed;
+import objRepository.Social.AppMenu;
+import objRepository.Streams.Streams;
+import reusableMethods.RM_Social;
+import reusableMethods.RM_Streams;
+import utility.Utility;
+
+public class Ts_SharePostToNewStreamFromFeedPage_13400 {
+	
+	WebDriver driver;
+	ExtentTest logger;
+	Global global;
+	AppMenu homePage;
+	Streams streams;
+	private Utility utl;
+	// ExtentTest logger;
+
+	@BeforeClass
+	public void setUp() {
+		utl = new Utility();
+		// logger=
+		utl.initTest(this.getClass().getName().substring(this.getClass().getName().lastIndexOf(".")+1).trim());
+		new Actions();
+
+	}
+
+	@AfterMethod
+	public void logOutAndBrowserClose() {
+		try {
+			rb();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+
+		}
+		Actions.logOutAndBrowserClose();
+	}
+	String time=RandomStringUtils.randomNumeric(4);
+	String templateName = Utility.getTestData().get("TEMPLATENAME")+time;
+	@Test
+	public void createStream() throws InterruptedException {
+		try {
+			//String time = Utility.getTime();
+			String templateDesc = Utility.getTestData().get("TEMPLAEDESC");
+			String tag1 = Utility.getTestData().get("TAG1");
+			String tag2 = Utility.getTestData().get("TAG2");
+			String streamOwner = Utility.getTestData().get("STREAMOWNER");
+			String internalParticipant = Utility.getTestData().get("STREAMPARTICIPANT");
+			String stepName = Utility.getTestData().get("STEPNAME");
+			String stepDesc = Utility.getTestData().get("STEPDESC");
+			Global.login(Utility.getConfigData().get("USER6"), Utility.getConfigData().get("PASSWORD"));
+			// Create Template with One step and Save
+			RM_Streams.createTemplateWithOneStep(templateName, templateDesc, tag1, tag2, streamOwner, internalParticipant,
+					stepName, stepDesc);
+			
+			// Share Post to New Stream
+			RM_Social.clickOnActivityFeed();
+			Actions.click(ActivityFeed.privacyLink, "Open Privacy dropdown");
+			RM_Social.selectPrivacyInAFP(Utility.getTestData().get("PRIVACY_CONNECTEDUSERS"));
+			RM_Social.typeMessageInAFP(Utility.getTestData().get("POSTMSG") + time);
+			RM_Social.clickOnPostBtnInAFP();
+			RM_Social.clickOnActivityFeed();
+			Actions.verify(ActivityFeed.msgContainer, Utility.getTestData().get("POSTMSG")+time);
+			// Code to Share Message
+			RM_Social.clickOnShareInAFP();
+			Actions.click(ActivityFeed.afp_ShareOvaerlay_PrivacyLink, "Open Privacy List");
+			RM_Social.selectPrivacyInAFP_ShareOverlay(Utility.getTestData().get("PRIVACY_GROUPS"));
+			RM_Social.selectPrivacyInAFP_ShareOverlay(Utility.getTestData().get("PRIVACY_STREAMS"));
+			RM_Social.selectPrivacyInAFP_ShareOverlay(Utility.getTestData().get("PRIVACY_STARTSTREAM"));
+			Actions.click(ActivityFeed.afp_ShareOverlay_textArea, "Click On Text Area");
+			Actions.clearText(ActivityFeed.afp_ShareOverlay_textArea, "Clear Message");
+			RM_Social.typeMessageInAFP_ShareOverlay(Utility.getTestData().get("AFP_ShareMsg") + time);
+			RM_Social.clickOnShareBtnInAFP_ShareOverlay();
+			Actions.switchtoFrame(Global.socialCLFrame, "Switch to Social Frame");
+			// Create Stream & Start the Stream
+			RM_Streams.createStream(templateName);
+			RM_Social.clickOnActivityFeed();
+			RM_Streams.navigateToStreams();
+			RM_Streams.click_Streams();
+			//Newly Added
+					Actions.click(Streams.completeFilterIcon, "Click On Complete Filter Icon");
+			RM_Streams.select_CreatedTemplate(templateName);
+			Actions.click(Streams.viewAllActivities_icon, "Click On 'View All Activities' icon");
+			String actualMsg = Actions.getText(Streams.viewAllActivities_TextArea);
+			Actions.verifyString(actualMsg, Utility.getTestData().get("AFP_ShareMsg") + time);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+
+	}
+
+	public void rb() {
+		try {
+			Actions.switchToDefaultContent();
+			// Delete Template
+			RM_Streams.delete_Template1(templateName);
+			// Delete Stream
+			RM_Streams.navigateToStreams();
+			//Newly Added
+			Actions.click(Streams.completeFilterIcon, "Click On Complete Filter Icon");
+			RM_Streams.select_CreatedTemplate(templateName);
+			RM_Streams.deleteStream();
+			Global.acceptConfirmation();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+}

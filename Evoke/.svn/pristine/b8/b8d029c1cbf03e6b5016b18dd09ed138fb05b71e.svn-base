@@ -1,0 +1,107 @@
+package scripts.ION;
+
+import java.util.HashMap;
+
+import org.testng.annotations.AfterClass;
+import org.testng.annotations.BeforeClass;
+import org.testng.annotations.Test;
+
+import com.relevantcodes.extentreports.ExtentTest;
+
+import actions.Actions;
+import objRepository.Global;
+import reusableMethods.RM_IONDESK;
+import utility.Utility;
+
+public class Start_TaskWithAllParameters
+{
+	ExtentTest logger;
+	private Utility utl;
+	 HashMap<String, String> testData=Utility.getTestData();
+	 HashMap<String, String> configData=Utility.getConfigData();
+		
+		//TESTDATA
+		 String userName=configData.get("USER2");
+		 String user3=configData.get("USER3");
+		 String pwd=configData.get("PASSWORD");
+		 String multitaskwf=testData.get("WORKFLOW_NAME1");
+		 
+	@BeforeClass
+	public void setUp()
+	{
+		 utl=new Utility();
+		 logger=utl.initTest(this.getClass().getName().substring(this.getClass().getName().lastIndexOf(".")+1).trim());
+		 new Actions();
+	
+	}
+	@AfterClass
+	public void tearDown()
+	{
+		Utility.report.endTest(logger);
+		//Actions.driverClose();
+	
+	}
+	
+
+
+	@org.testng.annotations.Test(priority =151)
+	public void start_allparameters()
+	 {
+		try {
+			
+	    //login
+		Global.login(userName,pwd);
+		RM_IONDESK.start_WorkFlowMingle(multitaskwf);
+		//RM_IONDESK.complete_Task_AllParameters(multitaskwf);
+		 
+         } catch (Exception e) {
+			
+		}finally
+		{
+			Global.logOut();
+			Actions.driverClose();
+		}
+		
+     }
+	@org.testng.annotations.Test(priority=152)
+	public void start_allparametersuser14()
+	 {
+		try {
+			
+	    //login
+		Global.login(user3,pwd);
+		RM_IONDESK.complete_Task_AllParameters(multitaskwf);
+		
+		 
+         } catch (Exception e) {
+			
+		}finally
+		{
+			Global.logOut();
+			Actions.driverClose();
+		}
+		
+     }
+	
+	@org.testng.annotations.Test(priority=155)
+	public void rdWFuser12()
+	 {
+		try {
+			
+	    //login
+		Global.login(userName,pwd);
+		RM_IONDESK.navigateToActivityPagemingle();
+		RM_IONDESK.navigate_StreamsWF();
+		RM_IONDESK.rb_WorkFlow(multitaskwf);
+		
+		 
+         } catch (Exception e) {
+			
+		}finally
+		{
+			Global.logOut();
+			Actions.driverClose();
+		}
+		
+     }
+}

@@ -1,0 +1,603 @@
+package reusableMethods;
+
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+
+import org.openqa.selenium.By;
+
+import actions.Actions;
+import objRepository.Global;
+import objRepository.IONDesk.OOOsettings;
+import objRepository.IONDesk.WorkFlow;
+import objRepository.Social.ActivityFeed;
+import objRepository.Social.AppMenu;
+import objRepository.Social.ShellHeader;
+import objRepository.Streams.Streams;
+import utility.Utility;
+
+public class RM_OOO 
+{
+	public static void cannotAssignTaskto_OOOUser(String user1,String wfname)
+	{
+		RM_Admin.navigateToMenu("User Settings");
+		//Actions.pause1(10);
+		//Actions.switchtoFrame(Global.socialCLFrame, "Switch to social");
+		Actions.verifyElement(OOOsettings.personalinfo, "personal Info");
+		Actions.pause1(3);
+		Global.minglePageLoad_Social();
+		Actions.verifyElement(OOOsettings.oooSettings, "OOO settings");
+		Actions.click(OOOsettings.oooSettings, "click on OOO settings");
+		Global.minglePageLoad_Social();
+		addRule_ooosettings(user1);
+		Actions.scrollToElement(OOOsettings.enableooo_10);
+		Actions.click(OOOsettings.enableooo_10, "ON enable OOO switch");
+		Actions.pause1(2);
+		Actions.scrollToElement(OOOsettings.saveBtn_10);
+		Actions.click(OOOsettings.saveBtn_10, "save changes");
+		Actions.pause1(10);
+		Actions.click(OOOsettings.OKBtn_10, "click OK button");
+		/*RM_Social.navigateToActivityPage();
+		navigate_StreamsWF();
+		Actions.pause1(2);
+		Actions.click(WorkFlow.addWorkFlows, "click on add work flows");
+		Actions.click(WorkFlow.select_WF, "click drop down to select Work flow");
+		Actions.click(By.xpath("//li[@data-value='"+wfname+"']"), "select created WF");
+		Actions.pause1(2);
+		Actions.click(WorkFlow.start_Btn, "click start button");
+		Global.minglePageLoad_Social();
+		String status=Actions.getText(By.xpath("//div[@title='"+wfname+"']/following::span"));
+		System.out.println("Work flow is "+status);
+		Actions.verifyString(status, "Running");*/
+		//Global.minglePageLoad_Social();
+		/*Actions.click(OOOsettings.returnToProfile_Btn,"click on return to profile");
+		Global.minglePageLoad_Social();
+		String actual=Actions.getText(OOOsettings.profilePage_oooStatus);
+		Actions.verifyString(actual, "Out of office.");*/
+
+	}
+  
+	 public static void minglePageLoad_WF()
+	 {
+		 Actions.pause1(2);
+		 Actions.verifyElementPresent(WorkFlow.loading_WF, "Waiting for page to load");
+	 }
+
+
+	/******************delegate OOO warning message******************/
+
+	public static void delegateooo()
+	{
+		//Actions.click(OOOsettings.add_Rule, "click on add rule");
+		String warningmsg=Actions.getText(OOOsettings.ooowarning_10);
+		System.out.println(warningmsg);
+		Actions.verifyString("The delegate is out of office.", warningmsg);
+	}
+	/******************addRule_ooosettings ******************/
+
+	public static void addRule_ooosettings(String user1)
+	{
+		//Actions.click(OOOsettings.add_Rule, "click on add rule");
+		Actions.scrollToElement(OOOsettings.oootasks_10);
+		Actions.click(OOOsettings.oootasks_10, "check TASKS switch");
+		Actions.scrollToElement(OOOsettings.oooActivatethisRule_10);
+		Actions.click(OOOsettings.oooActivatethisRule_10, "ON Activate this rule Switch");
+		Actions.pause1(2);
+		Actions.click(By.xpath("//label[text()='Containing']/following::input"), "click to enable colour");
+		if(!Actions.isChecked(OOOsettings.oooActivatethisRule_10check))
+		{
+			
+			Actions.click(OOOsettings.oooActivatethisRule_10, "Click on Add rule Check box");
+		}
+		String status=Boolean.toString(Actions.isChecked(OOOsettings.oooActivatethisRule_10check));
+		Actions.verifyString(status,"true");
+		
+		/*Actions.click(By.xpath("//label[text()='Containing']/following::input"), "click to enable colour");
+		String s=Utility.getDriver().findElement(By.xpath("//label[@title='Activate this rule']")).getCssValue("background-color");
+	    //label[text()='Apply this rule to']/following::div/div[@class='switch']
+		System.out.println(s+"Print the color");
+		String[] hexValue = s.replace("rgba(", "").replace(")", "").split(",");
+		 
+		int hexValue1=Integer.parseInt(hexValue[0]);
+		hexValue[1] = hexValue[1].trim();
+		int hexValue2=Integer.parseInt(hexValue[1]);
+		hexValue[2] = hexValue[2].trim();
+		int hexValue3=Integer.parseInt(hexValue[2]);
+		 
+		String actualColor = String.format("#%02x%02x%02x", hexValue1, hexValue2, hexValue3);
+		Actions.verifyString(actualColor,"#368ac0");*/
+		Actions.scrollToElement(OOOsettings.delegateTo_10);
+		Actions.type(OOOsettings.delegateTo_10,user1, "Enter User");
+		Actions.pause1(4);
+		Actions.click(By.xpath("//div[@class='search-results']/descendant::span[text()='"+user1+"']"), "select"+user1);
+	}
+
+
+
+	/******************Enable OOO Switch******************/
+	public static void ooo_enableooSwitch()
+	{
+		Actions.scrollToElement(OOOsettings.enableooo_Switch);
+		Actions.makeElementVisible("",OOOsettings.enableooo_Switch);
+		if(!Actions.isChecked(OOOsettings.enableooo_Switch))
+		{
+			//Actions.pause1(2);
+			Actions.scrollToElement(OOOsettings.enableooo_Switch);
+			Actions.pause1(2);
+			Actions.click(OOOsettings.enableooo_Switch, "Enable OOO switch");
+		}
+		else
+			System.out.println(Actions.isChecked(OOOsettings.enableooo_Switch));
+	}
+
+	/******************OOO TASKS Switch******************/
+
+	public static void ooo_tasksSwitch()
+	{
+		Actions.scrollToElement(OOOsettings.tasks_Switch);
+		Actions.makeElementVisible("", OOOsettings.tasks_Switch);
+		if(!Actions.isChecked(OOOsettings.tasks_Switch))
+		{
+			//Actions.pause1(2);
+			Actions.scrollToElement(OOOsettings.tasks_Switch);
+			Actions.pause1(2);
+			Actions.click(OOOsettings.tasks_Switch, "Turn ON Tasks Switch");
+		}
+		else
+			System.out.println(Actions.isChecked(OOOsettings.tasks_Switch));
+	}
+
+	/******************OOO Activate this rule Switch******************/
+
+	public static void ooo_activateruleSwitch()
+	{
+		Actions.scrollToElement(OOOsettings.activatethisrule_Switch);
+		Actions.makeElementVisible("",OOOsettings.activatethisrule_Switch);
+		if(!Actions.isChecked(OOOsettings.activatethisrule_Switch))
+		{
+			//Actions.pause1(2);
+			Actions.scrollToElement(OOOsettings.activatethisrule_Switch);
+			Actions.pause1(2);
+			Actions.click(OOOsettings.activatethisrule_Switch, "Turn ON Activate this rule Switch");
+		}
+		else
+			System.out.println(Actions.isChecked(OOOsettings.activatethisrule_Switch));
+	}
+
+	/****************** complete tasks from TASKS window ******************/
+
+	public static void completetask_TasksWindow(String wfname) throws ParseException
+	{
+		navigateToActivityPage();
+		navigate_StreamsWF();
+		Actions.pause1(2);
+		Actions.click(WorkFlow.addWorkFlows, "click on add work flows");
+		Actions.click(WorkFlow.select_WF, "click drop down to select Work flow");
+		Actions.click(By.xpath("//li[@data-value='"+wfname+"']"), "select created WF");
+		Actions.pause1(2);
+		Actions.click(WorkFlow.start_Btn, "click start button");
+		Global.minglePageLoad_Social();
+		verifyWFStatuses(wfname);
+		//Actions.switchToDefaultContent();
+		Actions.click(ActivityFeed.lnk_Activityfeed, "Click On Activity feed");
+		Global.minglePageLoad_Social();
+		//verify_WorkFlow(wfname);
+
+	}
+
+
+	/*********************Navigate to Streams-Workflows *******************/
+
+	public static void navigate_StreamsWF(){
+
+		Global.minglePageLoad_Social();
+		Actions.click(Streams.streamsHeader, "Click On Streams Header");  
+		Global.minglePageLoad_Social();
+		Actions.verifyElement(Streams.streams, "waiting for 'Streams' heading");
+		Actions.click(WorkFlow.streamsworkFlows, "click on Workflows");
+		Global.minglePageLoad_Social();
+	}
+
+	public static void navigateToActivityPage()
+	{
+		/*Actions.pause1(2);
+  		Actions.click(AppMenu.appMenu, "Click on AppMenu");
+  		Actions.pause1(2);
+  		Global.minglePageLoad_Social();	
+  		Actions.click(AppMenu.inforMingle, "Click on Infor Mingle");*/
+		Actions.impwait();
+		Actions.switchtoFrame(Global.socialCLFrame, "Switch to the Frame");
+		Actions.pause1(2);
+		Global.minglePageLoad_Social();
+		Actions.verifyElementPresent(ActivityFeed.header_MyFeed,"Verify My Feed Header ");
+		Global.minglePageLoad_Social();	
+
+	}
+	
+	
+	public static void navigateToActivityPagemingle()
+	{
+		//Actions.pause1(2);
+  		//Actions.moveTo(AppMenu.appMenu, "Click on AppMenu");
+  		Actions.pause1(2);
+  		Global.minglePageLoad_Social();	
+  		Actions.click_JS(AppMenu.inforMingle, "Click on Infor Mingle");
+		Actions.impwait();
+		Actions.switchtoFrame(Global.socialCLFrame, "Switch to the Frame");
+		Actions.pause1(2);
+		Global.minglePageLoad_Social();
+		Actions.verifyElementPresent(ActivityFeed.header_MyFeed,"Verify My Feed Header ");
+		Global.minglePageLoad_Social();	
+
+	}
+
+	/****************** Verfiy the Tasks in Workflow******************/
+
+	public static void verifyWFStatuses(String wfname)
+	{
+		String status=Actions.getText(By.xpath("//div[@title='"+wfname+"']/following::span"));
+		System.out.println("Work flow is "+status);
+	}
+
+
+	public static void verify_OOOmessage(String wfname) throws ParseException
+	{
+
+		navigateToActivityPage();
+		long differenceMinutes = getTime();
+		System.out.println(differenceMinutes + " minutes, ");
+		if(differenceMinutes<=2)
+		{
+			Actions.click(WorkFlow.showDetails_WF, "click on show details");
+			Actions.click(WorkFlow.assign, "click on assign");
+			Actions.click_JS(By.xpath("//button[@title='Assign']/following::div[@title='Assign']/descendant::div/span[contains(text(),'Test12')]"), "select user");
+			Global.minglePageLoad_Social();
+			Actions.pause1(.5);
+			Actions.getText(By.xpath("//div[@class='infor-save-success-tooltip infor-save-error']"));
+			Actions.click(WorkFlow.close_taskpopup, "close task pop up");
+			//verify_assignToMe();
+			navigate_StreamsWF();
+			Actions.pause1(2);
+			Actions.click(By.xpath("//div[@title='"+wfname+"']"), "select Work flow");
+			Actions.click(WorkFlow.cancel_WFBtn, "cancel WF");
+			Global.minglePageLoad_Social();
+			Actions.click(WorkFlow.remove_WFBtn, "remove WF");
+			Actions.verifyElement(WorkFlow.deleteWF_prompt, "Prompt when removing a Workflow");
+			Actions.click(WorkFlow.yes_Btn, "click yes button");
+			Actions.click(WorkFlow.workflow_Link, "click on workflow link");
+			verifyWFStatuses(wfname);
+			//remove_WorkFlow(wfname);
+
+		}
+		else
+			System.out.println("Workflow creation is Failed");
+	}
+    
+	
+	
+	/****************** Verfiy the Tasks in Workflow******************/
+
+	public static void removeWF(String wfname)
+	{
+    navigateToActivityPagemingle();
+	navigate_StreamsWF();
+	Actions.pause1(2);
+	Actions.click(By.xpath("//div[@title='"+wfname+"']"), "select Work flow");
+	//Actions.click(WorkFlow.cancel_WFBtn, "cancel WF");
+	Global.minglePageLoad_Social();
+	Actions.click(WorkFlow.remove_WFBtn, "remove WF");
+	Actions.verifyElement(WorkFlow.deleteWF_prompt, "Prompt when removing a Workflow");
+	Actions.click(WorkFlow.yes_Btn, "click yes button");
+	//Actions.click(WorkFlow.workflow_Link, "click on workflow link");
+	//verifyWFStatuses(wfname);
+	}
+	
+
+	/******************GET TIME******************/
+
+
+	public static long getTime() throws ParseException{
+		Actions.pause1(3);
+		//Actions.verifyElementPresent(By.xpath("//div[@class='infor-social-timePost infor-social-timePostMargin floatRight m-txt-f14']"), "timestamp");
+		String date=Actions.getText(By.xpath("//div[@class='infor-social-timePost infor-social-timePostMargin floatRight m-txt-f14']"));
+		System.out.println(date+"Print");
+		String[] val1=date.split(" ");
+		System.out.println(val1[2]+" "+val1[3]);
+		String workFlowDate=val1[2];
+		Date date1=new SimpleDateFormat("HH:mm").parse(workFlowDate);
+		DateFormat df = new SimpleDateFormat("HH:mm");
+		Date dateobj = new Date();
+		long difference = dateobj.getTime() - date1.getTime();
+
+		long differenceMinutes = difference / (60 * 1000) % 60;
+		System.out.println(differenceMinutes + " minutes, ");
+		return differenceMinutes;
+	}
+
+
+	/******************verifydelegate_ooosettings 
+	 * @throws ParseException ******************/
+
+	public static void verifydelegate_ooosettings(String wfname) throws ParseException
+	{         
+		navigateToActivityPagemingle();
+		long differenceMinutes = getTime();
+		System.out.println(differenceMinutes + " minutes, ");
+		if(differenceMinutes<=4)
+		{
+			Actions.click(WorkFlow.showDetails_WF, "click on show details");
+			verify_assignToMe();
+
+		}
+		else
+			System.out.println("Workflow creation is Failed");
+	}
+
+
+
+	/****************** verify assign to ME ******************/
+
+	public static void verify_assignToMe()
+	{
+		Actions.verifyElement(WorkFlow.assignToMe, "Element present assign to Me");
+		Actions.click(WorkFlow.assignToMe, "click on assign to Me");
+		Actions.verifyElement(WorkFlow.done_Btn, "Verify presence of  'Done' button");
+		Actions.pause1(2);
+		Global.minglePageLoad_Social();
+		Actions.click(WorkFlow.done_Btn, "click on Done");
+		Global.minglePageLoad_Social();
+	}
+	/****************** rollback_OOOSettings for user 12 ******************/
+
+	public static void rollback_OOOSettings()
+	{
+
+		//navigateToActivityPage();
+		//Global.minglePageLoad_Social();
+		if(Actions.verifyElementPresent(OOOsettings.popup_OOOsettings_10, "present")){
+			Actions.click(OOOsettings.popup_NoBtn_10, "click NO button");
+			Actions.click(WorkFlow.ok_Btn, "click OK button");
+		}
+		Actions.switchToDefaultContent();
+		RM_Admin.navigateToMenu("User Settings");
+		Actions.verifyElement(OOOsettings.personalinfo, "personal Info");
+		Actions.pause1(2);
+		Actions.verifyElement(OOOsettings.oooSettings, "OOO settings");
+		Actions.click(OOOsettings.oooSettings, "click on OOO settings");
+		Actions.pause1(2);
+		Actions.click(OOOsettings.enableooo_10, "Turn OFF OOO switch");
+		Actions.scrollToElement(OOOsettings.saveoooBtn_10);
+		Actions.click(OOOsettings.saveoooBtn_10, "save changes");
+		Actions.click(OOOsettings.OKBtn_10, "click OK button");
+		navigateToActivityPagemingle();
+		Actions.switchToDefaultContent();
+		RM_Admin.navigateToMenu("User Settings");
+		Actions.verifyElement(OOOsettings.personalinfo, "personal Info");
+		Global.minglePageLoad_Social();
+		Actions.verifyElement(OOOsettings.oooSettings, "OOO settings");
+		Actions.click(OOOsettings.oooSettings, "click on OOO settings");
+		Actions.pause1(2);
+		//Actions.click(OOOsettings.OKBtn_10, "click OK button");
+		Actions.click(OOOsettings.oooDeleteRule_10, "delete Rule");
+		Actions.click(OOOsettings.YesBtn_10, "YES");
+		Actions.pause1(80);
+		Actions.click(OOOsettings.saveoooBtn_10, "save changes");
+		Actions.click(OOOsettings.OKBtn_10, "click OK button");
+		/*Global.minglePageLoad_Social();
+	//Actions.switchToDefaultContent();
+	Global.minglePageLoad_Social();
+	Actions.click(OOOsettings.delete_Rule, "DELETE RULE");
+	Actions.click(OOOsettings.delete_RuleYesBtn, "click yes button");
+	Actions.click(OOOsettings.ooo_SaveBtn, "save changes");
+	if(Actions.verifyElementPresent(By.xpath("//div[@class='inlineBlock infor-mingle-outOfOfficeRulesErrorMsg']"),"Verify presence of ION Update")){
+		do{
+			Actions.refresh();
+			}while(!Actions.verifyElementPresent(By.xpath("//div[@class='inlineBlock infor-mingle-outOfOfficeRulesErrorMsg']"),"Verify presence of ION Update"));
+		Actions.click(OOOsettings.delete_Rule, "DELETE RULE");
+		Actions.click(OOOsettings.delete_RuleYesBtn, "click yes button");
+		Actions.click(OOOsettings.ooo_SaveBtn, "save changes");
+	}*/
+	}
+
+
+	public static void rollback_OOOSettings1()
+	{
+		if(Actions.verifyElementPresent(OOOsettings.popup_OOOsettings_10, "present")){
+			Actions.click(OOOsettings.YesBtn_10, "click YES button");
+		}
+		Actions.switchToDefaultContent();
+		RM_Admin.navigateToMenu("User Settings");
+		Actions.verifyElement(OOOsettings.personalinfo, "personal Info");
+		Global.minglePageLoad_Social();
+		Actions.verifyElement(OOOsettings.oooSettings, "OOO settings");
+		Actions.click(OOOsettings.oooSettings, "click on OOO settings");
+		Actions.pause1(2);
+		/*Actions.click(OOOsettings.enableooo_10, "Turn OFF OOO switch");
+		Actions.scrollToElement(OOOsettings.saveoooBtn_10);
+		Actions.click(OOOsettings.saveoooBtn_10, "save changes");
+		Actions.click(OOOsettings.OKBtn_10, "click OK button");
+		RMnavigateToActivityPage();
+		Actions.switchToDefaultContent();
+		RM_Admin.navigateToMenu("User Settings");
+		Actions.verifyElement(OOOsettings.personalinfo, "personal Info");
+		Global.minglePageLoad_Social();
+		Actions.verifyElement(OOOsettings.oooSettings, "OOO settings");
+		Actions.click(OOOsettings.oooSettings, "click on OOO settings");
+		Actions.pause1(2);*/
+		//Actions.click(OOOsettings.OKBtn_10, "click OK button");
+		Actions.click(OOOsettings.startDateooo_10, "Enable Start date switch");
+		Actions.click(OOOsettings.endDateooo_10, "Enable Start date switch");
+		Actions.scrollToElement(OOOsettings.oooDeleteRule_10);
+		Actions.click(OOOsettings.oooDeleteRule_10, "delete Rule");
+		Actions.click(OOOsettings.YesBtn_10, "YES");
+		Actions.pause1(5);
+		Actions.click(OOOsettings.oooDeleteRule_10, "delete Rule");
+		Actions.click(OOOsettings.YesBtn_10, "YES");
+		Actions.pause1(60);
+		Actions.scrollToElement(OOOsettings.saveoooBtn_10);
+		Actions.click(OOOsettings.saveoooBtn_10, "save changes");
+		Actions.click(OOOsettings.OKBtn_10, "click OK button");
+		/*Actions.click(OOOsettings.startDateooo_10, "Enable Start date switch");
+		Actions.click(OOOsettings.endDateooo_10, "Enable Start date switch");
+		Actions.scrollToElement(OOOsettings.saveoooBtn_10);
+		Actions.click(OOOsettings.saveoooBtn_10, "save changes");
+		Actions.click(OOOsettings.OKBtn_10, "click OK button");*/
+		
+	}
+
+
+
+	
+
+	/******************Multiple Rule_ooosettings ******************/
+
+	public static void multiplerules_OOOUser(String user)
+	{
+		if(Actions.verifyElementPresent(OOOsettings.popup_OOOsettings_10, "present")){
+			Actions.click(OOOsettings.YesBtn_10, "click YES button");
+		}
+		Actions.switchToDefaultContent();
+		RM_Admin.navigateToMenu("User Settings");
+		//Actions.pause1(10);
+		//Actions.switchtoFrame(Global.socialCLFrame, "Switch to social");
+		Actions.verifyElement(OOOsettings.personalinfo, "personal Info");
+		Actions.pause1(3);
+		Global.minglePageLoad_Social();
+		Actions.verifyElement(OOOsettings.oooSettings, "OOO settings");
+		Actions.click(OOOsettings.oooSettings, "click on OOO settings");
+		Global.minglePageLoad_Social();
+		//addRule_ooosettings(user1);
+		Actions.click(OOOsettings.oooAddRule_10, "click on add rule");
+		addRule_ooosettings(user);
+		Actions.scrollToElement(OOOsettings.enableooo_10);
+		Actions.click(OOOsettings.enableooo_10, "enable OOO");
+		Actions.scrollToElement(OOOsettings.saveoooBtn_10);
+		Actions.pause1(100);
+		Actions.click(OOOsettings.saveoooBtn_10, "save changes");
+		Actions.pause1(1);
+		Actions.click(OOOsettings.OKBtn_10, "click OK button");
+		Actions.pause1(1);
+		Actions.switchToDefaultContent();
+		/*Global.minglePageLoad_Social();
+		Actions.click(OOOsettings.returnToProfile_Btn,"click on return to profile");
+		Global.minglePageLoad_Social();
+		Actions.getText(OOOsettings.profilePage_oooStatus);
+*/
+	}
+
+	/*********************START WF from MINGLE*******************/
+	public static void start_WorkFlowMingle(String wfname)
+	{
+		navigateToActivityPage();
+		navigate_StreamsWF();
+		Actions.pause1(2);
+		Actions.click(WorkFlow.addWorkFlows, "click on add work flows");
+		Actions.click(WorkFlow.select_WF, "click drop down to select Work flow");
+		Actions.click(By.xpath("//li[@data-value='"+wfname+"']"), "select created WF");
+		Actions.pause1(2);
+		Actions.click(WorkFlow.start_Btn, "click start button");
+		Global.minglePageLoad_Social();
+		String status=Actions.getText(By.xpath("//div[@title='"+wfname+"']/following::span"));
+		System.out.println("Work flow is "+status);
+		Actions.verifyString(status, "Running");
+	}
+
+
+	/*********************START WF from MINGLE*******************/
+	public static void start_WorkFlowMingleAppmenu(String wfname)
+	{
+		navigateToActivityPagemingle();
+		navigate_StreamsWF();
+		Actions.pause1(2);
+		Actions.click(WorkFlow.addWorkFlows, "click on add work flows");
+		Actions.click(WorkFlow.select_WF, "click drop down to select Work flow");
+		Actions.click(By.xpath("//li[@data-value='"+wfname+"']"), "select created WF");
+		Actions.pause1(2);
+		Actions.click(WorkFlow.start_Btn, "click start button");
+		Global.minglePageLoad_Social();
+		Actions.pause1(2);
+		String status=Actions.getText(By.xpath("//div[@title='"+wfname+"']/following::span"));
+		System.out.println("Work flow is "+status);
+		Actions.verifyString(status, "Running");
+	}
+    
+	
+	/******************Multiple Rule_ooosettings ******************/
+
+	public static void Datetimerange_OOOUser()
+	{
+		if(Actions.verifyElementPresent(OOOsettings.popup_OOOsettings_10, "present")){
+			Actions.click(OOOsettings.YesBtn_10, "click YES button");
+		}
+		Actions.switchToDefaultContent();
+		RM_Admin.navigateToMenu("User Settings");
+		//Actions.pause1(10);
+		//Actions.switchtoFrame(Global.socialCLFrame, "Switch to social");
+		Actions.verifyElement(OOOsettings.personalinfo, "personal Info");
+		Actions.pause1(3);
+		Global.minglePageLoad_Social();
+		Actions.verifyElement(OOOsettings.oooSettings, "OOO settings");
+		Actions.click(OOOsettings.oooSettings, "click on OOO settings");
+		Global.minglePageLoad_Social();
+		//addRule_ooosettings(user1);
+		Calendar c = Calendar.getInstance();
+		c.setTime(new Date()); // Now use today date.
+		c.add(Calendar.DATE, 1); // 
+		Date newDate = c.getTime();
+		Date newDate1 =new Date();
+		DateFormat dateFormat = new SimpleDateFormat("dd");
+		String startDate=dateFormat.format(newDate1);
+		String endDate=dateFormat.format(newDate);
+		System.out.println(startDate);
+		System.out.println(endDate);
+		Actions.click(OOOsettings.startDateooo_10, "Enable Start date switch");
+		//Actions.click(OOOsettings.startDate_input,"give present date");
+		//Actions.type(OOOsettings.startDate_input, startDate, "click present date");
+		Actions.click(OOOsettings.startdatePicker_10, "Start Date Cal");
+		Actions.pause1(.5);
+		Global.minglePageLoad_Social();
+		Actions.click(OOOsettings.datepicker_todayDate_10, "Select Start Date Cal");
+		Actions.pause1(4);
+		Actions.click(OOOsettings.endDateooo_10, "Enable end date switch");
+		Actions.pause1(2);
+		//Actions.click(OOOsettings.startDate_input,"click present date");
+		Actions.click(OOOsettings.enddatePicker_10, "End Date Cal");
+		Actions.pause1(.5);
+		if(endDate.startsWith("0")){
+			String[] end=endDate.split("0");
+			System.out.println(end[1]);
+			Actions.click(By.xpath("//a[text()='"+end[1]+"']"), "Select End Date Date Cal");
+		}
+		//Global.minglePageLoad_Social();
+		//Actions.type(OOOsettings.startDate_input, endDate, "give present date");
+		else{
+		Actions.click(By.xpath("//a[text()='"+endDate+"']"), "Select End Date Date Cal");
+		}
+		Actions.pause1(2);
+		//String retreived_startDate=Actions.getAttribute(OOOsettings.startDate_input, "value");
+		//String retreived_EndDate=Actions.getAttribute(OOOsettings.endDate_input, "value");
+		Actions.click(OOOsettings.enableooo_10, "enable OOO");
+		Actions.scrollToElement(OOOsettings.saveoooBtn_10);
+		Actions.pause1(100);
+		Actions.click(OOOsettings.saveoooBtn_10, "save changes");
+		Actions.click(OOOsettings.OKBtn_10, "click OK button");
+		/*Actions.pause1(1);
+		ooo_enableooSwitch();
+		Actions.click(OOOsettings.ooo_SaveBtn, "save changes");
+		Global.minglePageLoad_Social();
+		Actions.click(OOOsettings.returnToProfile_Btn,"click on return to profile");
+		Global.minglePageLoad_Social();
+		String dateDetails=Actions.getText(OOOsettings.profilePage_oooStatus);
+		String details[]=dateDetails.split(" ");
+		System.out.println(details[4]+" "+details[5]+" "+details[6]);
+		String returnProfileStartDate=details[4]+" "+details[5]+" "+details[6];
+		String[] val=details[10].split("\\.");
+		String returnProfileEndDate=details[8]+" "+details[9]+" "+val[0];
+		System.out.println(returnProfileStartDate+"*************"+returnProfileEndDate);
+		Actions.verifyString(retreived_startDate, returnProfileStartDate);
+		Actions.verifyString(retreived_EndDate, returnProfileEndDate);*/
+	}
+
+}

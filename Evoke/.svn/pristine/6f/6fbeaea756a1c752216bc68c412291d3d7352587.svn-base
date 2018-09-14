@@ -1,0 +1,74 @@
+package scripts.ActivityFeed;
+
+import org.apache.commons.lang3.RandomStringUtils;
+import org.testng.annotations.AfterClass;
+import org.testng.annotations.AfterMethod;
+import org.testng.annotations.BeforeClass;
+import org.testng.annotations.Test;
+
+import actions.Actions;
+import objRepository.Global;
+import objRepository.Social.ActivityFeed;
+import objRepository.Social.Directory;
+import reusableMethods.RM_Social;
+import utility.Utility;
+
+public class Ts_CancelConReq_13240 {
+	
+	
+
+	private Utility utl;
+	//ExtentTest logger;
+
+		
+	public static String className;
+	@BeforeClass
+	public void setUp()
+	{
+		utl=new Utility();
+		utl.initTest(this.getClass().getName().substring(this.getClass().getName().lastIndexOf(".")+1).trim());
+		className=this.getClass().getName().toString();
+		new Actions();
+	}
+		@AfterMethod
+		public void logOutAndBrowserClose()
+		{
+			Actions.logOutAndBrowserCloseMU();
+		}
+		@AfterClass
+		public void endReport() 
+		{
+			Actions.endScriptReportMU();
+			
+			
+		}
+		String time=RandomStringUtils.randomNumeric(4);
+		public static String user21=Utility.getTestData().get("FULLNAME_USER21");
+		
+		@Test
+		public void sendConreq()
+		{
+		
+			try {
+				Global.login(Utility.getConfigData().get("USER20"), Utility.getConfigData().get("PASSWORD"));
+				//Actions.pause(3);
+				RM_Social.makeConnectionRequest(Directory.filterByNotConnected, Directory.sortByFirstName, 'Q',user21);
+				RM_Social.clickOnActivityFeed();
+				//Actions.switchtoFrame(Global.socialCLFrame, "Switch to Social Frame");
+				//Actions.verify(ActivityFeed.msgContainer, Utility.getTestData().get("CONREQMSG_10"));
+				RM_Social.verifyMessage(Utility.getTestData().get("CONREQMSG_21"));
+				RM_Social.navigateToDirectoryPage();
+				RM_Social.filterByStatus(Directory.filterByRequestMadeByYou);
+				RM_Social.filterBySort(Directory.sortByFirstName);
+				RM_Social.filterByAlphabet('Q');
+				RM_Social.disConnect(user21);
+			} catch (Exception e) {
+				Utility.addClass(className);
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			
+		}
+
+}
