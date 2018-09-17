@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="SeleniumAutomation_Suites">
+<listeners>
+   <listener class-name="mypackage1.TestNG_Listners"/>
+</listeners>
+  <test name="DummyTests">
+  
+  
+    <classes>
+      <class name="mypackage1.Testng_Selenium1"/>
+      <class name="mypackage1.Testng_Selenium2"/>
+    </classes>
+  </test> <!-- Test -->
+</suite> <!-- Suite -->

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite guice-stage="DEVELOPMENT" name="Failed suite [SeleniumAutomation_Suites]">
+  <listeners>
+    <listener class-name="mypackage1.TestNG_Listners"/>
+  </listeners>
+  <test thread-count="5" name="DummyTests(failed)">
+    <classes>
+      <class name="mypackage1.Testng_Selenium2">
+        <methods>
+          <include name="testnglisternetsfailed"/>
+          <include name="BeforeTest1"/>
+          <include name="beforemethod1"/>
+          <include name="afterSuite"/>
+          <include name="afterclass1"/>
+          <include name="afterTest1"/>
+          <include name="beforeclass1"/>
+          <include name="AfterMethod1"/>
+          <include name="BeforeSuite"/>
+        </methods>
+      </class> <!-- mypackage1.Testng_Selenium2 -->
+    </classes>
+  </test> <!-- DummyTests(failed) -->
+</suite> <!-- Failed suite [SeleniumAutomation_Suites] -->
