@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="WARN">
+
+<Properties>
+<Property name="basePath">./lo4j2_Results</Property>
+</Properties>
+  <Appenders>
+  
+  <RollingFile name="File" fileName="${basePath}/output_log4j2.log" filePattern="${basePath}/output_log4j2_NewResult-%d{yyyy-dd-mm-hh-mm-ss}.log">
+     <PatternLayout pattern="%d{dd-mm-yyyy HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"/>
+       <SizeBasedTriggeringPolicy size="50 MB" /> 
+  </RollingFile>
+          
+    <Console name="Console" target="SYSTEM_OUT">
+      <PatternLayout pattern="%d{dd-mm-yyyy HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"/>
+    </Console>
+  </Appenders>
+  
+  <Loggers>
+    <Root level="trace">
+      <AppenderRef ref="Console"/>
+      <AppenderRef ref="File"/>
+    </Root>
+  </Loggers>
+</Configuration>
