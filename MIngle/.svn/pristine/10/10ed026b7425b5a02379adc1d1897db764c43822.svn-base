@@ -1,0 +1,62 @@
+/**
+ * 
+ */
+package scripts.IONAPI;
+
+import java.util.HashMap;
+
+import org.testng.annotations.AfterClass;
+import org.testng.annotations.BeforeClass;
+import org.testng.annotations.Test;
+
+import com.relevantcodes.extentreports.ExtentTest;
+
+import actions.Actions;
+import objRepository.Global;
+import reusableMethods.RM_IONAPI;
+import utility.Utility;
+
+
+
+public class Ts_VerifyMobileApps_13390 {
+	ExtentTest logger;
+	Utility utl;
+	 HashMap<String, String> testData=Utility.getTestData();
+	 HashMap<String, String> configData=Utility.getConfigData();
+		
+		//TESTDATA
+		 String userName=configData.get("USER14");	
+		 String pwd=configData.get("PASSWORD");
+	@BeforeClass
+	public void setUp()
+	{
+		 utl=new Utility();
+		 logger=utl.initTest(this.getClass().getName().substring(this.getClass().getName().lastIndexOf(".")+1).trim());
+		 new Actions();
+	
+	}
+	@AfterClass
+	public void tearDown() throws Exception
+	{
+		/*Utility.report.endTest(logger);
+		//Actions.driverClose();
+		Utility.report.flush();*/
+		Actions.logOutAndBrowserClose();
+		
+		//Utility.execute("C:\\Mingle_Project\\MIngle\\Mingle\\zipdemo.zip");
+	}
+	
+	@Test
+	public void getTitle()
+	{
+		try{
+		//LOGIN INTO THE APPLICATION
+			Global.login(userName,pwd);
+			//VERIFY MOBILE APPS
+			RM_IONAPI.verify_MobileApps();
+	} catch (Exception e) {
+		
+		
+	}
+	}
+}

@@ -1,0 +1,62 @@
+package scripts.ActivityFeed;
+
+import org.apache.commons.lang3.RandomStringUtils;
+import org.testng.annotations.AfterClass;
+import org.testng.annotations.AfterMethod;
+import org.testng.annotations.BeforeClass;
+import org.testng.annotations.Test;
+
+import actions.Actions;
+import objRepository.Global;
+import objRepository.Social.ActivityFeed;
+import reusableMethods.RM_Social;
+import utility.Utility;
+
+public class Ts_LikeAndUnlikePostFromActivityFeedPage_13265 {
+
+	private Utility utl;
+	//ExtentTest logger;
+
+		@BeforeClass
+		public void setUp()
+		{
+			 utl=new Utility();
+			 //logger=
+			 utl.initTest(this.getClass().getName().substring(this.getClass().getName().lastIndexOf(".")+1).trim());
+			 new Actions();
+		
+		}
+		@AfterMethod
+		public void logOutAndBrowserClose()
+		{
+			Actions.logOutAndBrowserCloseMU();
+		}
+		@AfterClass
+		public void endReport() throws Exception
+		{
+			Actions.endScriptReportMU();
+			
+			
+		}
+		String time=RandomStringUtils.randomNumeric(4);
+		@Test
+		public void postMsg()
+		{
+		
+			Global.login(Utility.getConfigData().get("USER7"), Utility.getConfigData().get("PASSWORD"));
+			//Actions.pause(3);
+			RM_Social.navigateToActivityPage();
+			Actions.click(ActivityFeed.privacyLink, "Open Privacy List");
+			RM_Social.selectPrivacyInAFP(Utility.getTestData().get("PRIVACY_CONNECTEDUSERS"));
+			RM_Social.typeMessageInAFP(Utility.getTestData().get("POSTMSG")+time);
+			RM_Social.clickOnPostBtnInAFP();
+			RM_Social.clickOnActivityFeed();
+			//Actions.switchtoFrame(Global.socialCLFrame, "Switch to Social Frame");
+			Actions.verify(ActivityFeed.msgContainer, Utility.getTestData().get("POSTMSG")+time);
+			RM_Social.likePost();
+			RM_Social.unLikePost();
+			
+		}
+	
+	
+}

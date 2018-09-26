@@ -1,0 +1,71 @@
+package scripts.ActivityFeed;
+
+import org.apache.commons.lang3.RandomStringUtils;
+import org.testng.annotations.AfterClass;
+import org.testng.annotations.AfterMethod;
+import org.testng.annotations.BeforeClass;
+import org.testng.annotations.Test;
+
+import actions.Actions;
+import objRepository.Global;
+import objRepository.Social.ActivityFeed;
+import objRepository.Social.Directory;
+import reusableMethods.RM_Social;
+import utility.Utility;
+
+public class Ts_VerifyNotificationForConReqOnNotificationPage_13260 {
+	
+	private Utility utl;
+	//ExtentTest logger;
+
+		@BeforeClass
+		public void setUp()
+		{
+			 utl=new Utility();
+			 //logger=
+			 utl.initTest(this.getClass().getName().substring(this.getClass().getName().lastIndexOf(".")+1).trim());
+			 new Actions();
+		
+		}
+		@AfterMethod
+		public void logOutAndBrowserClose()
+		{
+			Actions.logOutAndBrowserCloseMU();
+		}
+		@AfterClass
+		public void endReport() throws Exception
+		{
+			Actions.endScriptReportMU();
+			
+			
+		}
+		String time=RandomStringUtils.randomNumeric(4);
+		@Test
+		public void sendConreq()
+		{
+		
+			Global.login(Utility.getConfigData().get("USER7"), Utility.getConfigData().get("PASSWORD"));
+			//Actions.pause(3);
+			RM_Social.makeConnectionRequest(Directory.filterByNotConnected, Directory.sortByFirstName, 'Q', "QAAuto Test10");
+			RM_Social.clickOnActivityFeed();
+			//Actions.switchtoFrame(Global.socialCLFrame, "Switch to Social Frame");
+			Actions.verify(ActivityFeed.msgContainer, Utility.getTestData().get("CONREQMSG_10"));
+			
+		}
+		@Test(dependsOnMethods={"sendConreq"})
+		public void verifyPostMsg()
+		{
+			
+				
+				Global.login(Utility.getConfigData().get("USER10"),Utility.getConfigData().get("PASSWORD"));
+				RM_Social.verifyNotification(Utility.getTestData().get("Gl_TD_VerfConnReqMsgBy_7"));
+				RM_Social.clickOnActivityFeed();
+				Actions.verify(ActivityFeed.msgContainer, Utility.getTestData().get("Gl_TD_VerfConnReqMsgBy_7"));
+				RM_Social.declineConnectionRequest();
+				Actions.verifyString(Actions.getText(ActivityFeed.msgContainer),Utility.getTestData().get("Gl_TD_ConReqDeclineMsg"));
+				
+		
+		}
+
+
+}

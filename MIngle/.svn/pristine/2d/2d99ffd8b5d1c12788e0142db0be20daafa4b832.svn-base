@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+<suite name="suite1">
+<!-- <listeners>
+		<listener class-name="utility.RetryListener" />
+	</listeners>
+	 --><test name="chrome">
+	<parameter name="Browser" value="chrome" />
+		<classes>
+		
+	  
+			 <class name="utility.Utility" />
+			 <class name="scripts.IFS.Ts_UpdateUserInfor_13285" />  
+    		   <class name="scripts.IFS.Ts_UserImportAndExport_13291" /> 
+    		   <class name="scripts.IFS.Ts_VerifyEntriesFromActivityTabUnderUserScreen_13290" />  
+    		    <class name="scripts.IFS.Ts_ERPPersonID_13295" />
+    		     <class name="scripts.IFS.Ts_ServiceAccounts_13292" /> 
+    		        <class name="scripts.IFS.Ts_UpdateSecurityRole_13286" />
+    		          <class name="scripts.IFS.Ts_DocumentAuthorization_13308" />
+      		   <class name="scripts.IFS.Ts_DocumentAuthorizationsAndAddMultipleRoles_13309" />
+      		     <class name="scripts.IFS.Ts_CreateDGAndAssignUsers_13294" />
+      		       <class name="scripts.IFS.Ts_CreateMultipleContactGroups_13312" />
+       		   <class name="scripts.IFS.Ts_DGExportAndImport_13293" />
+       		   <class name="scripts.IFS.Ts_CreateContactGroup_13307" />
+       		    <class name="scripts.IFS.Ts_AddContactsToContactGroup_13304" /> 
+       		  
+ 	   		  <class name="scripts.IFS.Ts_CreateContactGroupAndAssignContacts_13310" /> 
+      		     
+    		    
+    		    
+   			  
+    		
+   			 		</classes>
+	
+	
+	</test>
+
+
+  
+
+
+</suite>

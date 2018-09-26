@@ -1,0 +1,79 @@
+package scripts.IFS;
+
+import java.util.HashMap;
+
+import org.testng.annotations.AfterClass;
+import org.testng.annotations.BeforeClass;
+
+import com.relevantcodes.extentreports.ExtentTest;
+
+import actions.Actions;
+import objRepository.Global;
+import reusableMethods.RM_IFS;
+import utility.Utility;
+
+public class Ts_DeactivateMultipleExternalUsers_13300 {
+
+	ExtentTest logger;
+	private Utility utl;
+	 HashMap<String, String> testData=Utility.getTestData();
+	 HashMap<String, String> configData=Utility.getConfigData();
+		
+		//TESTDATA
+		 String userName=configData.get("USER1");
+		 String pwd=configData.get("PASSWORD");
+		 String email=testData.get("EXTERNALUSER1");
+		 String email2=testData.get("EXTERNALUSER2");
+	
+	
+	@BeforeClass
+	public void setUp()
+	{
+		 utl=new Utility();
+		 logger=utl.initTest(this.getClass().getName().substring(this.getClass().getName().lastIndexOf(".")+1).trim());
+		 new Actions();
+	
+	}
+	@AfterClass
+	public void tearDown()
+	{
+		Utility.report.endTest(logger);
+		//Actions.driverClose();
+	
+	}
+	
+
+
+	@org.testng.annotations.Test(priority =1)
+	public void create_ExternalUser(){
+		try {
+			
+			//LOGIN
+			Global.login(userName,pwd);
+			RM_IFS.deactivate_MultipleExternalUser(email,email2);
+			
+		} catch (Exception e) {
+			
+		}finally
+		{
+			Global.logOut();
+			Actions.driverClose();
+			rb_ExternalUser();
+		}
+	}
+	//@org.testng.annotations.Test(priority =2, dependsOnMethods ="dgImport_Export")
+	public void rb_ExternalUser()
+	{
+		try {
+			Global.login(userName,pwd);
+			RM_IFS.rb_ExternalUser(email);
+		} catch (Exception e) {
+			
+		}
+		finally
+		{
+			Global.logOut();
+			Actions.driverClose();
+		}
+	}
+}

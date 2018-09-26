@@ -1,0 +1,353 @@
+/**
+ * 
+ */
+package reusableMethods;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.WebElement;
+
+import actions.Actions;
+import objRepository.Global;
+import objRepository.Admin.Admin_Context;
+import objRepository.Admin.Admin_ManageApp;
+import objRepository.Admin.ProfileInformation;
+import objRepository.IFS.IFSUSERS;
+import objRepository.Social.ActivityFeed;
+import objRepository.Social.AppMenu;
+import objRepository.Social.ShellHeader;
+import utility.Utility;
+
+public class RM_Admin {
+	//NAVIGATE TO USER MENU
+	public static void navigateToMenu(String menu)
+	{
+		Actions.click(ShellHeader.userMenu, "Click on User Mneu");
+		Actions.verifyElement(By.xpath("//span[text()='"+menu+"']"), "Verify presence of 'Menu' Item"+menu);
+		Actions.click(By.xpath("//span[text()='"+menu+"']"), "Click on Menu Details"+menu);
+	}
+
+	//NAVIGATE TO Manage Context
+	public static void navigateToManageContext()
+	{
+		Actions.verifyElement(Admin_Context.manage_Context_UtitlityApp, "Verify presence of 'Context/Utility Link' ");
+		Actions.click(Admin_Context.manage_Context_UtitlityApp, "Click on Context/Utility App");
+
+	}		
+
+	//NAVIGATE TO Manage App
+	public static void navigateToManageApp()
+	{
+		Actions.verifyElement(Admin_ManageApp.manageApp, "Verify presence of 'Manage Application Link' ");
+		Actions.pause(1);
+		Actions.click(Admin_ManageApp.manageApp, "Click on Manage Application");
+	}
+
+	//NAVIGATE TO Manage App
+	public static void navigateToAddApp()
+	{
+		Actions.verifyElement(Admin_ManageApp.addApp, "Verify presence of 'Add Application' button");
+		Actions.click(Admin_ManageApp.addApp, "Click on Add Application");
+	}
+	//NAVIGATE TO Add Context
+	public static void navigateToAddContext()
+	{
+		Actions.verifyElement(Admin_Context.add_Context_UtitlityApp, "Verify presence of 'Context/Utility App' button");
+		Actions.click(Admin_Context.add_Context_UtitlityApp, "Click on Add Context/Utility App Button");
+	}
+	
+	//Create Context Type
+	public static void createContext(String type,String appName,String desc,String url,String hepUrl)
+	{
+		Actions.verifyElement(Admin_Context.add_Context_UtitlityApp_Type, "Verify presence of ' App type' button");
+		Actions.select(Admin_Context.add_Context_UtitlityApp_Type, type, "Select the app type");
+		Actions.type(Admin_Context.add_Context_UtitlityApp_Name,appName,"Context/Utilityp App Name");
+		Actions.type(Admin_Context.add_Context_UtitlityApp_Desc,desc,"Context/Utilityp App Desc");
+		Actions.type(Admin_Context.add_Context_UtitlityApp_URL,url,"Context/Utilityp App URL");
+		Actions.type(Admin_Context.add_Context_UtitlityApp_HelpURL,hepUrl,"Context/Utilityp App Help URL");
+		Actions.click(Admin_Context.add_Context_UtitlityApp_Save, "Click on Add Context/Utility Save");
+		Actions.click(Admin_Context.ok, "Click on Ok");
+	}
+	//ADD NEW APPLICATION
+	public static void add_InforNonProvisonedApp(String appName,String host,String logical,String context,String tenanat){
+		Actions.verifyElementPresent(Admin_ManageApp.appType_NonProvisioned, " Verify presence of 'Non Provisioned Radio Button'");
+		Actions.click_JS(Admin_ManageApp.appType_NonProvisioned, "Select Infor Non Provisioned");
+		Actions.verifyElementPresent(Admin_ManageApp.nonProvisoned_AppName, " Verify presence of 'Select App Name'");
+		Actions.select(Admin_ManageApp.nonProvisoned_AppName, appName, "Select the app Name");
+		Global.minglePageLoad_Admin();
+		Actions.click(Admin_ManageApp.nonProvisioned_ChooseIcon, "Click On Choose Icon button");
+		Actions.click(Admin_ManageApp.nonProvisioned_SelectIcon, "Select Icon from the list");
+		Actions.click(Admin_ManageApp.nonProvisioned_ChooseIcon_Done, "Done button");
+		Actions.type(Admin_ManageApp.nonProvisioned_Host,host,"Host Details:");
+		Actions.type(Admin_ManageApp.nonProvisoned_LogicalID,logical,"Logical Id Details:");
+		Actions.type(Admin_ManageApp.nonProvisoned_context,logical,"Context Details:");
+		Actions.type(Admin_ManageApp.nonProvisoned_Tenant,logical,"Tenant Details:");
+		save();
+	}
+	//SAVE Admin
+	public static void save(){
+		Actions.click(Admin_Context.save, "Click on Save");
+		Actions.click(Admin_Context.ok, "Click on Ok");
+	}
+	//APPLICATIONS PERMISSSION TAB
+	public static void applicationDetails_PermssionsTab(String user){
+		Actions.pause(1.5);
+		Actions.verifyElement(Admin_ManageApp.nonProvisioned_PermisssionsTab, "Verify presence of 'Permission' Tab");
+		Actions.click(Admin_ManageApp.nonProvisioned_PermisssionsTab, "Click on Permissions Tab");
+		Actions.verifyElement(Admin_ManageApp.nonProvisoned_Permsiions_AddUser, "Verify presence of 'Add Users' button");
+		Actions.pause(2);
+		Actions.click(Admin_ManageApp.nonProvisoned_Permsiions_AddUser, "Click on Permissions Add User");
+		Actions.type(Admin_ManageApp.nonProvisoned_enterUserName,user,"Enter User Details:");
+		Actions.pause(2);
+		Actions.click(Admin_ManageApp.nonProvisoned_selectUser, "Click on Select User Check Box");
+		Actions.click(Admin_Context.done, "Click on Done");
+		save();
+	}
+	//APPLICATIONS Context TAB
+	public static void applicationDetails_ContextTab(String app){
+		Actions.verifyElement(Admin_ManageApp.nonProvisioned_ContextTab, "Verify presence of 'Context' Tab");
+		Actions.click(Admin_ManageApp.nonProvisioned_ContextTab, "Click on Context Tab");
+		Actions.verifyElement(Admin_ManageApp.nonProvisioned_AddRemove, "Verify presence of 'Add Remove' button");
+		Actions.click(Admin_ManageApp.nonProvisioned_AddRemove, "Click on Context Add Remove");
+		Actions.click(By.xpath("//div[@title='"+app+"']"), "Click on Available User");
+		Actions.pause(1);	
+		Actions.makeElementVisible("block;height:10px;width:10px", Admin_ManageApp.nonProvisioned_rightArrow);
+		Actions.pause(1);
+		Actions.click_JS(Admin_ManageApp.nonProvisioned_rightArrow, "Click on Right Arrow ");
+		Actions.click(Admin_Context.done, "Click on Done");
+		save();
+	}
+
+	//APPLICATIONS Context TAB
+	public static void applicationDetails_CustomeTab(String name,String value){
+		Actions.verifyElement(Admin_ManageApp.nonProvisioned_customParamteres, "Verify presence of 'Custome Parameter' Tab");
+		Actions.click(Admin_ManageApp.nonProvisioned_customParamteres, "Click on CustomParameters Tab");
+		Actions.click(Admin_ManageApp.nonProvisioned_AddcustomParamteres, "Click on Add New Custome Parameters");
+		Actions.type(Admin_ManageApp.nonProvisioned_ParameterName,name,"Enter Parameter Name:");
+		Actions.type(Admin_ManageApp.nonProvisioned_ParameterValue,value,"Enter Parameter Value:");
+		Actions.click(Admin_Context.done, "Click on Done");
+		save();
+	}
+
+	//APPLICATIONS Context TAB
+	public static void applicationDetails_LogicalIDTab(String logicalID){
+		Actions.verifyElement(Admin_ManageApp.nonProvisioned_logicalIDTab, "Verify presence of 'Logical' Tab");
+		Actions.click(Admin_ManageApp.nonProvisioned_logicalIDTab, "Click on LogicalID Tab");
+		Actions.click(Admin_ManageApp.nonProvisioned_logicalID_Add, "Click on Add New Logical ID");
+		Actions.type(Admin_ManageApp.nonProvisioned_logicalID,logicalID,"Enter LogicalID:");
+		Actions.click(Admin_Context.done, "Click on Done");
+		save();
+	}
+
+	//ADD INFOR PROVISIONED APP
+	public static void addInforProvisonedApp(String app,String appName){
+		navigateToMenu("Admin Settings");
+		navigateToManageApp();
+		if(Actions.verifyElementPresent(By.xpath("//ul[@class='icon-block-absolute-admin']/descendant::li/a[@title='"+app+"']"), "Verify presence of 'Application'")){
+			
+		
+		Actions.click(By.xpath("//ul[@class='icon-block-absolute-admin']/descendant::li/a[@title='"+app+"']"), "Select  App");
+		Actions.click(Admin_ManageApp.delete_App, "Click on Delete Application");
+		Actions.click(Global.yes, "Click On Yes");
+		}
+		navigateToAddApp();
+		Actions.impwait();
+		Actions.verifyElement(Admin_ManageApp.appType_InforProvisioned, " Verify presence of 'Infor Provisioned' button");
+		Global.minglePageLoad_Admin();
+		Actions.click(Admin_ManageApp.appType_InforProvisioned, "Click on  Infor Provisioned");
+		Actions.select(Admin_ManageApp.inforProvisioned_AppName, appName, "Select the app Name");
+		Actions.getAttribute(By.xpath("//input[@data-infor-validator='display_name']"), "value");
+		Actions.click(Admin_ManageApp.nonProvisioned_ChooseIcon, "Click On Choose Icon button");
+		Actions.click(Admin_ManageApp.nonProvisioned_SelectIcon, "Select Icon from the list");
+		Actions.click(Admin_ManageApp.nonProvisioned_ChooseIcon_Done, "Done button");
+		save();
+	}
+	//ADD NON INOFR APP
+	public static void addNonInforApp(String appName,String appUrl){
+		Actions.impwait();
+		Actions.verifyElement(Admin_ManageApp.appType_NonInfor, "Verify presence of 'Non Infor Provisoined' button");
+		Global.minglePageLoad_Admin();
+		Actions.click(Admin_ManageApp.appType_NonInfor, "Click on Non Infor App Type");
+		Actions.type(Admin_ManageApp.nonInfor_AppName,appName,"Enter appName:");
+		Actions.type(Admin_ManageApp.nonInfor_AppRUL,appUrl,"Enter appUrl:");
+		Global.minglePageLoad_Admin();
+		Actions.click(Admin_ManageApp.nonProvisioned_ChooseIcon, "Click On Choose Icon button");
+		Actions.click(Admin_ManageApp.nonProvisioned_SelectIcon, "Select Icon from the list");
+		Actions.click(Admin_ManageApp.nonInfor_SubIcon, "Select  Sub Icon from the list");
+		Actions.click(Admin_ManageApp.nonProvisioned_ChooseIcon_Done, "Done button");
+		save();
+	}
+	//ADD CONTEXT OR UTILITY APP
+	public static void addContextOrUtitlityApp(String type,String name,String description,String url,String helpURL){
+		navigateToMenu("Admin Settings");
+		Actions.impwait();
+		navigateToManageContext();
+		navigateToAddContext();
+		createContext(type,name,description,url,helpURL);
+
+	}
+	//CREATE  INFOR NonPROVISIONED 
+	public static void create_InforNonPropvisioned(String appName,String host,String logical,String context,String tenanat,String user,String ocntextApp,String name,String value,String logicaID){
+		Actions.pause(1);
+		navigateToManageApp();
+		navigateToAddApp();
+		Global.minglePageLoad_Admin();
+		add_InforNonProvisonedApp(appName,host,logical,context,tenanat);
+		applicationDetails_PermssionsTab(user);
+		applicationDetails_ContextTab(ocntextApp);
+		applicationDetails_CustomeTab(name,value);
+		applicationDetails_LogicalIDTab(logicaID);
+
+	}
+
+	//CREATE  Non Infor App
+	public static void create_NonInforApp(String appName,String url,String user,String logicaID){
+		navigateToManageApp();
+		navigateToAddApp();
+		addNonInforApp(appName,url);
+		applicationDetails_PermssionsTab(user);
+		applicationDetails_ContextTab(appName);
+		applicationDetails_LogicalIDTab(logicaID);
+	}
+	//Delete Context/Utility
+	public static void delete_ContextOrUtitlityApp(String app){
+		navigateToMenu("Admin Settings");
+		Actions.impwait();
+		navigateToManageContext();
+		Actions.pause(.5);
+		Actions.verifyElement(By.xpath("//label[text()='"+app+"']"), "Verify presence of 'Application'");
+		Actions.click(By.xpath("//label[text()='"+app+"']"), "Select"+app+ " :App");
+		Actions.click(Admin_Context.delete_UtilityApp, "Delete Utility App");
+		Actions.click(Global.yes, "Click On Yes");
+	}
+
+	public static void delete_Application(String appName){
+		navigateToManageApp();
+		Actions.pause(.5);
+		Actions.verifyElement(By.xpath("//ul[@class='icon-block-absolute-admin']/descendant::li/a[@title='"+appName+"']"), "Verify presence of 'Application'");
+		Actions.click(By.xpath("//ul[@class='icon-block-absolute-admin']/descendant::li/a[@title='"+appName+"']"), "Select  App");
+		Actions.click(Admin_ManageApp.delete_App, "Click on Delete Application");
+		Actions.click(Global.yes, "Click On Yes");
+	}
+
+	public static void select_ProvisionedApp(String appName){
+		navigateToMenu("Admin Settings");
+		delete_Application(appName);
+	}
+	//VERIFY ADMIN ROLE
+	public static void verify_AdminRole(){
+		Actions.click(ShellHeader.userMenu, "Click on User  Menu");
+		Actions.verifyElement(ShellHeader.user_admin_settings, "User Admin Settings");
+		verify_CommonSettingsInUserMenu();
+		Actions.click(ShellHeader.signOut, "Click on SignOut");
+	}
+
+	//VERIFY ADMIN ROLE
+	public static void verify_SecuritySeetingRole(){
+		Actions.click(ShellHeader.userMenu, "Click on User  Menu");
+		Actions.verifyElement(ShellHeader.userMenu_UserSecurity, "User Security Settings");
+		verify_CommonSettingsInUserMenu();
+		Actions.click(ShellHeader.signOut, "Click on SignOut");
+	}
+	//Common Verifications in User Menu
+	public static void verify_CommonSettingsInUserMenu(){
+		Actions.verifyElement(ShellHeader.userMenu_Help, "Help Settings");
+		Actions.verifyElement(ShellHeader.userMenu_About, "About");
+		Actions.verifyElement(ShellHeader.userMenu_Notifications, "Notification");
+		Actions.verifyElement(ShellHeader.userMenu_Post, "Post");
+		Actions.verifyElement(ShellHeader.mobileApps, "Mobile Apps");
+		Actions.verifyElement(ShellHeader.signOut, "Sign Out");
+
+	}
+	//VERIFY MINGLE ION 
+	public static void verify_MingleION(){
+		Actions.click(ShellHeader.userMenu, "Click on User  Menu");
+		Actions.verifyElement(ShellHeader.userMenu_Alerts,"Alerts");
+		Actions.verifyElement(ShellHeader.userMenu_Tasks, "Tasks");
+		verify_CommonSettingsInUserMenu();
+		Actions.click(ShellHeader.signOut, "Click on SignOut");
+	}
+
+	//VERIFY MINGLE ENTERPRISE
+	public static void verify_MingleEnterprise(){
+		Actions.click(ShellHeader.userMenu, "Click on User  Menu");
+		verify_CommonSettingsInUserMenu();
+		Actions.click(ShellHeader.signOut, "Click on SignOut");
+	}
+	//CREATE TESTAPPLICATION
+
+	public static void create_TestApp(String appName,String url){
+		navigateToMenu("Admin Settings");
+		navigateToManageApp();
+		navigateToAddApp();
+		Actions.impwait();
+		addNonInforApp(appName,url);
+		Actions.click(AppMenu.appMenu, "Click On App Menu");
+		Actions.verifyElement(By.xpath("//a[@title='"+appName+"']"),"Application "+appName);
+		Actions.click(By.xpath("//a[@title='"+appName+"']"), "Test Application Created");
+		Actions.verifyElement(By.xpath("//span[@title='"+appName+"']"), "Application launch");
+		RM_BookMarks.createBookMark(appName);
+
+	}
+	//Delete Test Application
+
+	public static void delete_TestApp(String appName){
+		navigateToMenu("Admin Settings");
+		navigateToManageApp();
+		Actions.pause(1.5);
+		delete_Application(appName);
+		Actions.switchToDefaultContent();
+		RM_BookMarks.deleBookMarks();
+	}
+
+	//VERIFY AND UPDATE CONTACT INFO
+	public static void update_ContactInfo(String office,String mobile){
+		Actions.switchtoFrame(Global.socialCLFrame, "Switch To Socail Frame");
+		Actions.verifyElement(ProfileInformation.verify_ProfilePage, "Verify presence of 'Profile Page' from User Settings");
+		Actions.type(ProfileInformation.office_Details,office,"Enter Office Details:");
+		Actions.type(ProfileInformation.mobile_Details,mobile,"Enter Mobile Details:");
+		Actions.click(ProfileInformation.save_ProifleInfo, "Save Contact Information");
+		String officedetails=Actions.getAttribute(ProfileInformation.office_Details, "value");
+		String mobiledetails=Actions.getAttribute(ProfileInformation.mobile_Details, "value");
+		Actions.verifyString(officedetails, office);
+		Actions.verifyString(mobiledetails, mobile);
+	}
+
+	//VERIFY AND UPDATE PERSONAL INFOR
+	public static void update_PersonalInfo(String nickName,String location){
+		Actions.type(ProfileInformation.nickName,nickName,"Enter Nick Name Details:");
+		Actions.type(ProfileInformation.location,location,"Enter Location Details:");
+		Actions.pause(.9);
+		Actions.verifyElement(ProfileInformation.save_PersonalInfo, "Verify presence of save profile button");
+		Actions.click(ProfileInformation.save_PersonalInfo, "Save Personal Information");
+		String officedetails=Actions.getAttribute(ProfileInformation.nickName, "value");
+		String mobiledetails=Actions.getAttribute(ProfileInformation.location, "value");
+		Actions.verifyString(officedetails, nickName);
+		Actions.verifyString(mobiledetails, location);
+
+	}
+	//UPDATE USER SETTINGS PROFILE INFORMATION
+	public static void update_ProfileInfo(String office,String mobile,String nickName,String location){
+		navigateToMenu("User Settings");
+		update_ContactInfo(office,mobile);
+		update_PersonalInfo(nickName,location);
+	}
+		
+	    //USER MENU OPTION ADMIN SETTINGS VERIFICATION
+		public static void verify_AdminSettings()
+		{
+			Actions.click(ShellHeader.userMenu, "Click on User  Menu");
+			Actions.verifyElement(ShellHeader.user_admin_settings, "Admin Settings");
+			Actions.click(ShellHeader.signOut, "Click On Sign Out");
+		}
+		
+		//USER MENU OPTION ADMIN SETTINGS NOT PRESENT VERIFICATION
+		public static void verify_AdminSettingsNotPresent()
+		{
+			Actions.click(ShellHeader.userMenu, "Click on User  Menu");
+			Actions.verifyElementNotPresent(ShellHeader.user_admin_settings, "Admin Settings");
+			Actions.click(ShellHeader.signOut, "Click On Sign Out");
+		}
+				
+	
+}

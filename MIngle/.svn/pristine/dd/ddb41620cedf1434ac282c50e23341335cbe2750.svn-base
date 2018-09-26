@@ -1,0 +1,76 @@
+package scripts.iondesk;
+
+import java.util.HashMap;
+
+import org.sikuli.script.FindFailed;
+import org.sikuli.script.Pattern;
+import org.sikuli.script.Screen;
+import org.testng.annotations.AfterClass;
+import org.testng.annotations.BeforeClass;
+
+import com.relevantcodes.extentreports.ExtentTest;
+
+import actions.Actions;
+import objRepository.Global;
+
+import reusableMethods.RM_IONDESK;
+import utility.Utility;
+
+public class Create_TaskWithAllParameters 
+
+{
+	ExtentTest logger;
+	private Utility utl;
+	 HashMap<String, String> testData=Utility.getTestData();
+	 HashMap<String, String> configData=Utility.getConfigData();
+		
+		//TESTDATA
+		 String userName=configData.get("USER12");
+		 String pwd=configData.get("PASSWORD");
+		 String wfname=testData.get("WORKFLOW_NAME2");
+		 String wfdesc=testData.get("WORKFLOW_DESC2");
+		 String message=testData.get("WORKFLOW_MSG3");
+		 String user=testData.get("WORKFLOW_USER");
+		 String user1=testData.get("WORKFLOW_USER14");
+		 String user2=testData.get("WORKFLOW_USER12");
+		 
+	@BeforeClass
+	public void setUp()
+	{
+		 utl=new Utility();
+		 logger=utl.initTest(this.getClass().getName().substring(this.getClass().getName().lastIndexOf(".")+1).trim());
+		 new Actions();
+	
+	}
+	@AfterClass
+	public void tearDown()
+	{
+		Utility.report.endTest(logger);
+		//Actions.driverClose();
+	
+	}
+	
+
+
+	@org.testng.annotations.Test(priority =1)
+	public void create_WorkFlowParameters()
+	 {
+		try {
+			
+	    //login
+		Global.login(userName,pwd);
+		RM_IONDESK.add_NewWorkFlow(wfname,wfdesc);
+		RM_IONDESK.dragAndDrop();
+		RM_IONDESK.createTask_AllParameters(wfname,message,user1,user2);
+		
+		 
+         } catch (Exception e) {
+			
+		}finally
+		{
+			Global.logOut();
+			Actions.driverClose();
+		}
+		
+     }
+}

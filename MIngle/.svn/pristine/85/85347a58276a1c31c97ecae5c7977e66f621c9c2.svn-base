@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+<suite name="suite1">
+<!-- <listeners>
+		<listener class-name="utility.RetryListener" />
+	</listeners>
+	 --><test name="chrome">
+	<parameter name="Browser" value="IE" />
+		<classes>
+		
+	  
+			 <class name="utility.Utility" />
+
+   <class name="scripts.Admin.Ts_CreateNonInforApp_13280" /> 
+                 <class name="scripts.Admin.Ts_CreateUtilityApp_13283" /> 
+                 <class name="scripts.Admin.Ts_MenuOptionsForMingleAdminRole_13394" /> 
+                 <class name="scripts.Admin.Ts_MenuOptionsForInforSysAdminRole_13395" />  
+                 <class name="scripts.Admin.Ts_MenuOptionsForMingleEnterpriseRole_13396" /> 
+                 <class name="scripts.Admin.Ts_MenuOptionsForMingleIONEnabledRole_13397" /> 
+                 <class name="scripts.Admin.Ts_CreateBookMarkForTestApp_13398" /> 
+                 <class name="scripts.Admin.Ts_UpdateUserSettingsProfileInfo_13380" />
+                 <class name="scripts.Admin.Ts_CreateContextApp_13284" />    
+                 <class name="scripts.Admin.Ts_CreateInforProvisionedApp_13282" />  
+                 <class name="scripts.Admin.Ts_CreateInforNonProvisonedApp_13279" /> 
+                  <class name="scripts.Admin.Ts_UserMenuOption_AdminSettings_MingleAdmin" /> 
+		</classes>
+	
+	
+	</test>
+
+
+  
+
+
+</suite>

@@ -1,0 +1,59 @@
+/**
+ * 
+ */
+package objRepository.IFS;
+
+import org.openqa.selenium.By;
+
+
+public class IFSUSERS {
+	/*
+	 * 
+	 * Objects In IFS Page.
+	 * 
+	 *
+	 */
+	
+	public static final By user_Management=By.xpath("//span[text()='User Management']");
+	public static final By propertyDrpoDown=By.xpath("//button[@class='inforTriggerButton inforDropDownListButton']");
+	public static final By selectEmailAddressFromProperty=By.xpath("//a[contains(text(),'Email Address')]");
+	public static final By enterEmailAddress=By.id("inforSearchField");
+	public static final By searchProperty=By.xpath("//button[@title='Search']");
+	public static final By drillDownUser=By.xpath("//div[text()='Active']/../descendant::div[5]/a/span");
+	public static final By manager=By.id("lookupManager");
+	public static final By managerDetails=By.id("txtManagerSearch");
+	public static final By closePopUp=By.id("btnPopupClose");
+	public static final By altManager=By.id("lookupAlternativeManager");
+	public static final By saveIFS=By.id("saveIFSItems");
+	public static final By searchContainer=By.xpath("//div[@id='txtManagerSearchContainer']/descendant::button[2]");
+	public static final By addSecurityButton=By.id("btnAddSecurityRoles");
+	public static final By enterSecurityRole=By.xpath("//div[@id='divAddSecurityRole']/descendant::div[2]/descendant::input");
+	public static final By searchSecurityRole=By.xpath("//div[@id='divAddSecurityRole']/descendant::div[2]/descendant::input/following::button[@title='Search']");
+	public static final By addRole=By.xpath("//div[@id='inforDataGridAddSecurityRoles']/descendant::div/div[2]/div[2]");
+	public static final By saveRole=By.id("SaveButton");
+	public static final By saveSecurityRole=By.id("btnSaveSecurityRoles");
+	public static final By deleteSecurityRole=By.id("btnDeleteSecurityRoles");
+	public static final By department=By.id("txtDepartment");
+	public static final By activityTab=By.xpath("//ul[@class='inforTabset inforNormalTabs']/li/a[text()='Activity']");
+	public static final By selectUsers=By.xpath("//span[text()='Full Name']/../../descendant::div[2]/descendant::span[2]");
+	public static final By importUsers=By.id("importIFSItems");
+	public static final By exportUsers=By.id("exportIFSItems");
+	public static final By closeImport=By.xpath("//div[text()='Import Users']/following::button[@class='inforCloseButton']");
+	public static final By closeExport=By.xpath("//button[text()='No']");
+	public static final By manage=By.id("manage");
+	public static final By serviceAccounts=By.id("serviceaccounts");
+	public static final By addIFSItem=By.id("addIFSItem");
+	public static final By deleteIFSItem=By.id("deleteIFSItem");
+	public static final By yesButton=By.xpath("//button[contains(text(),'Yes')]");
+	public static final By distributionTab=By.xpath("//ul[@class='inforTabset inforNormalTabs']/li/a[text()='Distribution Groups']");
+	public static final By erpTab=By.xpath("//ul[@class='inforTabset inforNormalTabs']/li/a[text()='ERP Person IDs']");
+	public static final By check_Users=By.xpath("//span[text()='Full Name']/../../descendant::div[2]/descendant::span[2]");
+	public static final By emailOptOut=By.xpath("//input[@id='chkEmailOptOut']");
+		public static final By configure=By.id("configure"); 
+		public static final By submenuVisible=By.xpath("//li[@id='groups']/ul"); 
+		public static final By emailOpt=By.xpath("//label[text()='Email Opt Out']/following::input");
+	public static final By activity_info=By.xpath("//div[@id='inforActivityDataGrid']/descendant::div[2]/following::div[1]/following::div[2]/following::div[2]/descendant::div[5]");
+	public static final By activity_timeStamp=By.xpath("//div[@id='inforActivityDataGrid']/descendant::div[2]/following::div[1]/following::div[2]/following::div[2]/descendant::div[6]");
+	public static final By activity_performedby=By.xpath("//div[@id='inforActivityDataGrid']/descendant::div[2]/following::div[1]/following::div[2]/following::div[2]/descendant::div[8]");
+
+}

@@ -1,0 +1,19 @@
+package objRepository.Admin;
+
+import org.openqa.selenium.By;
+
+public class ProfileInformation {
+	/*
+	 * 
+	 * Objects In Profile Information Page.
+	 * 
+	 *
+	 */
+	public static final By verify_ProfilePage=By.xpath("//span[@title='Profile Information']");
+	public static final By office_Details=By.id("OfficePhone");
+	public static final By mobile_Details=By.id("MobilePhone");
+	public static final By save_ProifleInfo=By.xpath("//form[@id='ContactInfo']/following::button[@title='Save']");
+	public static final By nickName=By.id("nickname");
+	public static final By location=By.id("Location");
+	public static final By save_PersonalInfo=By.xpath("//form[@id='PersonalInfo']/following::button[@title='Save']");
+}

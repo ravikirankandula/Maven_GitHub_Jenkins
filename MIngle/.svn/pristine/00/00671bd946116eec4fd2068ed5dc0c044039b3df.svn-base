@@ -1,0 +1,20 @@
+package objRepository.IONAPI;
+
+import org.openqa.selenium.By;
+
+public class MobileApps {
+	/*
+	 * 
+	 * Objects In MobileApps.
+	 * 
+	 * 
+	 */
+	public static final By select_MobileDevice=By.xpath("//select[@data-ng-model='selectedApplicationType']");
+	public static final By heading_MobileAndroid=By.xpath("//h5[@data-infor-translate='mobile_android_app']");
+	public static final By img_MobileAndroid=By.xpath("//h5[@data-infor-translate='mobile_android_app']/../img");
+	public static final By backButton=By.xpath("//button[@data-ng-click='goBack()']");
+	public static final By img_MobileIOS=By.xpath("//h5[@data-infor-translate='mobile_ios_app']/../img");
+	public static final By heading_MobileIOS=By.xpath("//h5[@data-infor-translate='mobile_ios_app']");
+	public static final By img_MobileWindows=By.xpath("//h5[@data-infor-translate='mobile_windows_app']/../img");
+	public static final By heading_MobileWindows=By.xpath("//h5[@data-infor-translate='mobile_windows_app']");
+}

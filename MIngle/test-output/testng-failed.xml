@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite guice-stage="DEVELOPMENT" name="Failed suite [suite1]">
+  <parameter name="Browser" value="chrome"/>
+  <test name="chrome(failed)">
+    <parameter name="Browser" value="chrome"/>
+    <classes>
+      <class name="utility.Utility">
+        <methods>
+          <include name="endReport"/>
+          <include name="startReport"/>
+          <include name="setUpBrowser"/>
+        </methods>
+      </class> <!-- utility.Utility -->
+      <!-- <class name="scripts.ActivityFeed.ConnectedUsersProfilePage_PostMessage_13274"> -->
+        <methods>
+          <include name="verifyMsg"/>
+          <include name="endReport"/>
+          <include name="setUp"/>
+          <include name="logOutAndBrowserClose"/>
+          <include name="postMsg"/>
+        </methods>
+      </class> <!-- scripts.ActivityFeed.ConnectedUsersProfilePage_PostMessage_13274 -->
+    </classes>
+  </test> <!-- chrome(failed) -->
+</suite> <!-- Failed suite [suite1] -->

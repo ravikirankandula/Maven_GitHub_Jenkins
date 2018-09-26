@@ -1,0 +1,10 @@
+package objRepository.Social;
+
+import org.openqa.selenium.By;
+
+public class ProfilePage {
+	public static final By contactInfo=By.xpath("//div[@title='Contact Info']");
+	public static final By group_TextArea=By.id("dialogDivContentareaContentsTxtarea");
+	
+
+}

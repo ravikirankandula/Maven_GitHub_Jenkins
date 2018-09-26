@@ -1,0 +1,41 @@
+package scripts.ActivityFeed;
+
+import org.testng.annotations.AfterClass;
+import org.testng.annotations.AfterMethod;
+import org.testng.annotations.BeforeClass;
+import org.testng.annotations.Test;
+
+import actions.Actions;
+import objRepository.Global;
+import reusableMethods.RM_Social;
+import utility.Utility;
+
+
+public class DeleteGroup {
+	private Utility utl;
+	//ExtentTest logger;
+
+		@BeforeClass
+		public void setUp()
+		{
+			 utl=new Utility();
+			 //logger=
+			 utl.initTest(this.getClass().getName().substring(this.getClass().getName().lastIndexOf(".")+1).trim());
+			 new Actions();
+		
+		}
+		@AfterMethod
+		public void logOutAndBrowserClose()
+		{
+			Actions.logOutAndBrowserClose();
+		}
+		@Test(priority=888888)
+		public void delete()
+		{
+			Global.login(Utility.getConfigData().get("USER1"),Utility.getConfigData().get("PASSWORD"));
+			
+			RM_Social.navigateToActivityPage();
+			RM_Social.deletegroup();
+		}
+
+}

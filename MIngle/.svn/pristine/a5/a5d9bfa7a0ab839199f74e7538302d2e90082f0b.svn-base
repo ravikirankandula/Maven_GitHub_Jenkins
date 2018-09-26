@@ -1,0 +1,16 @@
+/**
+ * 
+ */
+package objRepository.IFS;
+
+import org.openqa.selenium.By;
+
+
+public class Group {
+	/*
+	 * 
+	 * Objects In  Group
+	 * 
+	 */
+	public static final By dist_Name=By.id("txtName");
+}

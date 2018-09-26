@@ -1,0 +1,123 @@
+package scripts.iondesk;
+
+import java.sql.Date;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+
+public class Sample {
+
+	public static void main(String[] args) {
+		/*Calendar c = Calendar.getInstance();
+
+           c.setTime(new Date(0)); // Now use today date.
+
+           c.add(Calendar.DATE, 2); // 
+           Date newDate = (Date) c.getTime();
+           Date newDate1 =new Date(0);
+           DateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
+           String startDate=dateFormat.format(newDate1);
+           String endDate=dateFormat.format(newDate);
+           System.out.println(startDate);
+           System.out.println(endDate);*/
+           
+           String dateDetails="Out of office from 1/24/2017 4:29 PM to 1/26/2017 4:21 PM. ";
+           String details[]=dateDetails.split(" ");
+           System.out.println(details[4]+" "+details[5]+" "+details[6]);
+           String returnProfileStartDate=details[4]+" "+details[5]+" "+details[6];
+           String[] val=details[10].split("\\.");
+           String returnProfileEndDate=details[8]+" "+details[9]+" "+val[0];
+           System.out.println(returnProfileStartDate+"*************"+returnProfileEndDate);
+           
+	}
+
+}
+
+
+/*package scripts.iondesk;
+
+import java.util.HashMap;
+import org.testng.annotations.AfterClass;
+import org.testng.annotations.BeforeClass;
+
+import com.relevantcodes.extentreports.ExtentTest;
+
+import actions.Actions;
+import objRepository.Global;
+
+import reusableMethods.RM_IONDESK;
+import utility.Utility;
+
+public class Sample 
+
+{
+	ExtentTest logger;
+	private Utility utl;
+	 HashMap<String, String> testData=Utility.getTestData();
+	 HashMap<String, String> configData=Utility.getConfigData();
+		
+		//TESTDATA
+		 String userName=configData.get("USER12");
+		 String user14=configData.get("USER14");
+		 String pwd=configData.get("PASSWORD");
+		 String wfname=testData.get("WORKFLOW_NAME");
+		 String wfdesc=testData.get("WORKFLOW_DESC");
+		 String message=testData.get("WORKFLOW_MSG");
+		 String user=testData.get("WORKFLOW_USER11");
+		 String user1=testData.get("WORKFLOW_USER14");
+		 
+	@BeforeClass
+	public void setUp()
+	{
+		 utl=new Utility();
+		 logger=utl.initTest(this.getClass().getName().substring(this.getClass().getName().lastIndexOf(".")+1).trim());
+		 new Actions();
+	
+	}
+	@AfterClass
+	public void tearDown()
+	{
+		Utility.report.endTest(logger);
+		//Actions.driverClose();
+	
+	}
+	
+	@org.testng.annotations.Test(priority =1)
+	public void rb_OOOsettings()
+	 {
+		try {
+			
+	    //login
+		Global.login(userName,pwd);
+		RM_IONDESK.rollback_OOOSettings();
+			 
+         } catch (Exception e) {
+			
+		}finally
+		{
+			Global.logOut();
+			Actions.driverClose();
+		}
+		
+     }
+	
+	@org.testng.annotations.Test(priority =1)
+	public void rb_OOOsettings1()
+	 {
+		try {
+			
+	    //login
+		Global.login(userName,pwd);
+		RM_IONDESK.rollback_OOOSettings1();
+			 
+         } catch (Exception e) {
+			
+		}finally
+		{
+			Global.logOut();
+			Actions.driverClose();
+		}
+		
+     }
+}
+*/

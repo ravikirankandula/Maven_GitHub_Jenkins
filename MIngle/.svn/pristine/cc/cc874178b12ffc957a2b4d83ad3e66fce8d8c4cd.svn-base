@@ -1,0 +1,107 @@
+/**
+ * 
+ */
+package scripts.IONAPI;
+
+import java.util.HashMap;
+
+import org.apache.commons.lang3.RandomStringUtils;
+import org.openqa.selenium.WebDriver;
+import org.testng.annotations.AfterClass;
+import org.testng.annotations.BeforeClass;
+import com.relevantcodes.extentreports.ExtentTest;
+
+import actions.Actions;
+import objRepository.Global;
+import reusableMethods.RM_IONAPI;
+import utility.Utility;
+
+
+
+public class Ts_CreateNonProvisionedSuite_13392 {
+	WebDriver driver;
+	ExtentTest logger;
+	Global global;
+	 HashMap<String, String> testData=Utility.getTestData();
+	 HashMap<String, String> configData=Utility.getConfigData();
+		
+		//TESTDATA
+		 String userName=configData.get("USER14");	
+		 String pwd=configData.get("PASSWORD");
+		 String appName=testData.get("TD_IONAPI_PROVISONEDSUITE_APPNAME");
+		 String version=testData.get("TD_IONAPI_PROVISIONEDSUITE_VERSION");
+		 String suite=testData.get("TD_IONAPI_PROVISIONEDSUITE_NAME");
+		 String hostName=testData.get("TD_IONAPI_PROVISIONEDSUITE_HOSTNAME");
+		 String accessKey=testData.get("TD_IONAPI_PROVISIONEDSUITE_ACCESSKEY");
+		 String secreteKey=testData.get("TD_IONAPI_PROVISIONEDSUITE_SECRETEKEY");
+		 String depName=testData.get("TD_IONAPI_PROVISIONEDSUITE_ENDPOINT_DEPLOYMENT");
+		 String hostNameDetails=testData.get("TD_IONAPI_PROVISIONEDSUITE_ENDPOINT_DEPLOYMENTHOST");
+		 String port=testData.get("TD_IONAPI_PROVISIONEDSUITE_ENDPOINT_DEPLOYMENTPORT");
+		 String context=testData.get("TD_IONAPI_PROVISIONEDSUITE_ENDPOINT_DEPLOYMENTCONTEXT");
+		 String tenantID=testData.get("TD_IONAPI_PROVISIONEDSUITE_ENDPOINT_DEPLOYMENTTENANTID");		 
+		
+		 String editDepDetails=testData.get("TD_IONAPI_EDITPROVISIONEDSUITE_EDITENDPONT_HOST");
+		// String applicationName=appName+RandomStringUtils.randomNumeric(3);
+		
+	
+	private Utility utl;
+	
+	@BeforeClass
+	public void setup()
+	{
+		 utl=new Utility();
+		 logger=utl.initTest(this.getClass().getName().substring(this.getClass().getName().lastIndexOf(".")+1).trim());
+		 new Actions();
+	
+	}
+	@AfterClass
+	public void tearDown()
+	{
+	
+	Utility.report.endTest(logger);
+	}
+	
+	String app;
+
+	@org.testng.annotations.Test
+	public void test() throws InterruptedException{
+		try{
+		
+		
+		System.out.println(appName+"*****************");
+		//LOGIN
+		Global.login(userName,pwd);
+		app=RM_IONAPI.create_Suite(appName,version,suite,hostName,accessKey,secreteKey,depName,hostNameDetails,port,context,tenantID,accessKey,secreteKey,editDepDetails);
+		
+		
+		}
+		catch (Exception e) {
+			// TODO: handle exception
+		}
+		finally{
+		//LOGOUT
+		Global.logOut();
+		//DRIVER CLOSE
+		Actions.driverClose();
+		rb_DeleteApp();
+		}
+		
+
+	}
+	public void rb_DeleteApp()
+	{
+		try {
+			Global.login(userName,pwd);
+			RM_IONAPI.delete_Suite(app);
+			//Global.logOut();
+		} catch (Exception e) {
+			
+		}
+		finally
+		{
+			Global.logOut();
+			Actions.driverClose();
+		}
+	}
+	}
+

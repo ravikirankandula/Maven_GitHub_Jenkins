@@ -1,0 +1,99 @@
+package objRepository.IONDesk;
+
+import org.openqa.selenium.By;
+
+public class WorkFlow 
+{
+	 public static final By appMenu=By.xpath("//button[@title='App Menu']");
+	 public static final By ionDeskIcon=By.xpath("//a[@title='ION Desk']");
+	 public static final By statusOverview=By.xpath("//div[@title='Status Overview']");
+	 public static final By ionDeskCLFrame=By.xpath("//iframe[contains(@name,'iondesk_')]");
+	 public static final By iconMenu=By.cssSelector("svg g[id='icon-menu']");
+	 public static final By iconsearchList=By.cssSelector("svg g[id='icon-searchlist']");
+	 public static final By model=By.xpath("//div[@title='Model']");
+	 public static final By monitorsWorkflows=By.xpath("//div[@title='Monitors & Workflows']");
+	 public static final By WorkFlows=By.xpath("//div[text()='Workflows']");
+	 public static final By settings=By.xpath("//div[@title='Settings']");
+	 public static final By authorizations=By.xpath("//div[@title='Authorizations']");
+	 public static final By workflowAuthorizations=By.xpath("//div[@title='Workflow Authorizations']");
+	 public static final By workflowdeskCLFrame=By.name("workflowdesk");
+	 public static final By WorkflowUICLFrame=By.id("WorkflowUI");
+	 public static final By add_NewWorkflow=By.xpath("//div[@title='Add new workflow']");
+	 public static final By workFlowName=By.xpath("//input[@title='Name value is required.']");
+	 public static final By workFlowDesc=By.xpath("//div[text()='Description']/following::tr/td[1]/textarea");
+	 public static final By save_Btn=By.xpath("//button[@title='Save']");
+	 public static final By collapse=By.xpath("//button[@class='GKNTG1VCFEB-com-infor-ion-desk-workflow-ui-client-view-impl-ConfigureWorkflowDetailsViewImpl_ConfigureWorkflowDetailsViewImplUiBinderImpl_GenCss_style-expandcollapseHorizontal']");
+	 public static final By task1=By.xpath("//div[text()='Task 1']/../..");
+	 public static final By task2=By.xpath("//div[text()='Task 2']/../..");
+	 public static final By notification1=By.xpath("//div[text()='Notification 1']/../..");
+	 public static final By prop_content=By.xpath("//div[text()='Content']");
+	 public static final By prop_task=By.xpath("//div[@class='gwt-Label' and text()='Task']");
+	 public static final By prop_Distribution=By.xpath("//div[text()='Distribution']");
+	 public static final By Message=By.xpath("//div[text()='Message']/following::div/input");
+	 public static final By type_chkBx=By.xpath("//span[@title='Type']/../../descendant::span");
+	 public static final By addParameters_toTask=By.xpath("//button[@title='Add']");
+	 public static final By add_WF=By.xpath("//button[text()='Edit']/../descendant::button[text()='Add']");
+	 public static final By ok_Btn=By.xpath("//button[text()='OK']");
+	 public static final By dropDown=By.xpath("//td[text()='Group']/following::div");
+	 public static final By dropDown_User=By.xpath("//td[text()='User']");
+	 public static final By search=By.xpath("//div[text()='Search']/following::input");
+	 public static final By search_Btn=By.xpath("//button[text()='Search']");
+	 public static final By activate_WF=By.xpath("//button[@title='Activate']");
+	 public static final By deactivate_WF=By.xpath("//button[@title='Deactivate']");
+	 public static final By delete_Btn=By.xpath("//button[@title='Delete']");
+	 public static final By mingleIONEnabled=By.xpath("//div[text()='MingleIONEnabled']");
+	 public static final By authWF_AddBtn=By.xpath("//div[contains(text(),'Authorized')]/following::button[@title='Add']");
+	 public static final By addparameters_Btn=By.xpath("//button[text()='Add']");
+	 public static final By parameterName=By.xpath("//div[text()='Input ']/ancestor::table/descendant::div[text()='Name']/following::input");
+	 public static final By input_ChkBox=By.xpath("//div[text()='Input ']/../../descendant::button");
+	 public static final By useInitialVal_ChkBox=By.xpath("//div[text()='Use Initial Value if Null']/../../descendant::button[2]");
+	 public static final By initialValue=By.xpath("//div[text()='Initial Value']/following::textarea");
+	 public static final By parameterType=By.xpath("//div[text()='Type ']/following::td[text()='STRING']/following::div");
+	 public static final By type_boolean=By.xpath("//td[text()='BOOLEAN']");
+	 public static final By type_Decimal=By.xpath("//td[text()='DECIMAL']");
+	 public static final By type_Code=By.xpath("//td[text()='CODE']");
+	 public static final By select_code=By.xpath("//div[text()='Initial Value']/following::td[contains(@class,'ComboboxDropDown')]/*");//("//div[text()='Initial Value']/following::div[contains(@class,'DownImage')]");
+	 public static final By code_Approved=By.xpath("//td[text()='Approved']");
+	 public static final By type_DateNTime=By.xpath("//td[text()='DATE AND TIME']");
+	 public static final By type_Date=By.xpath("//td[text()='DATE']");
+	 public static final By type_User=By.xpath("//td[text()='USER']");
+	 public static final By type_HyperLink=By.xpath("//td[text()='HYPERLINK']");
+	 public static final By type_Integer=By.xpath("//td[text()='INTEGER']");
+	 public static final By type_DistGrp=By.xpath("//td[text()='DISTRIBUTION GROUP']");
+	 public static final By hyperLink_initialValue=By.xpath("//div[text()='Initial Value']/following::table[6]/descendant::input");
+	 public static final By expandIcon=By.xpath("//div[text()='Workflow Properties']/following::div/*");//("//*[name()='svg']/*[name()='g']/*[name()='g' and @id='expand']/*[name()='path']");
+	 public static final By collapseIcon=By.xpath("//div[text()='Workflow Properties']/following::div/*/*/*/following::*");//("//*[name()='svg']/*[name()='g']/*[name()='g' and @id='collapse']/*[name()='path']");
+	 
+	 
+	 
+	 
+	 public static final By streamsworkFlows=By.xpath("//div[@id='streamMenuContainer']/descendant::span[contains(text(),'Workflows')]");
+	 public static final By addWorkFlows=By.xpath("//span[text()='Start Workflow']");
+	 public static final By select_WF=By.xpath("//div[@title='Select Workflow']");
+	 public static final By start_Btn=By.xpath("//button[@data-id='createWorkflowSaveBtn']");
+	 public static final By activityFeedHeader=By.xpath("//li[@title='Activity Feed']");
+	 // public static final By statuses_WF=By.xpath("//div[@title='automationWF3']/following::span");
+	 public static final By cancel_WFBtn=By.xpath("//button[@title='Cancel']");
+	 public static final By remove_WFBtn=By.xpath("//button[@title='Remove']");
+	 public static final By assignToMe=By.xpath("//button[@title='Assign to me']");
+	 public static final By assign=By.xpath("//button[@title='Assign']");
+	 //public static final By select_UserTest12=By.xpath("//div[@data-bind-id='overlay-dialog']/descendant::button[2]/following::div[@ data-bind-id='filtering-popup']/descendant::span[2][contains(.,'Test12')]");
+	 public static final By done_Btn=By.xpath("//button[text()='Done']");
+	 public static final By yes_Btn=By.xpath("//button[text()='Yes']");
+	 public static final By workflow_Link=By.xpath("//span[contains(.,'Workflows')]");
+	 public static final By showDetails_WF=By.xpath("//span[contains(.,'Show Details')]");
+	 public static final By deleteWF_prompt=By.xpath("//div[contains(text(),'workflow?')]");
+	 public static final By tasks=By.xpath("//span[text()='TASKS']");
+	 public static final By Taskspage=By.xpath("//div[@title='My Tasks']");
+	 public static final By activitylocator_Icon=By.xpath("//span[@class='icon']");
+	 public static final By activitylocator_Close=By.xpath("//span[@title='Close']");
+	 public static final By searchIcon=By.xpath("//button[@title='Search']");
+	 public static final By taskID_WF=By.xpath("//div[@class='WorkFlowTaskId']");
+	 public static final By startTyping=By.xpath("//input[@placeholder='Start Typing']");
+	 public static final By search_Close=By.xpath("//a[@title='Close']");
+	 public static final By close_taskpopup=By.xpath("//span[@class='m-close-btn-icon cursorPointer']");
+	 
+
+	 //public static final By select_WF=By.xpath("//li[@data-value='automationWF1']");
+	 
+}

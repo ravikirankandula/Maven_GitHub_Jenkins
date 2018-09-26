@@ -1,0 +1,32 @@
+package objRepository.IONDesk;
+
+import org.openqa.selenium.By;
+
+public class OOOsettings 
+
+{
+	public static final By userMenu_UserSettings=By.xpath("//span[@data-infor-translate='User_Menu_Settings']");
+	public static final By ooo_SaveBtn=By.xpath("//form[@id='OutOfOffice']/descendant::button[@title='Save']");
+	public static final By add_Rule=By.xpath("//label[contains(text(),'Rules')]/following::div[@class='infor-social-plusIcon']");
+	public static final By containing_Rule=By.xpath("//label[text()='Containing:']/following::input");
+	public static final By delegateto_Rule=By.xpath("//label[text()='Delegate to:']/following::input");
+	public static final By delete_Rule=By.xpath("//div[@data-bind-id='out-of-office-rules']/descendant::div");
+	public static final By delete_RuleYesBtn=By.xpath("//div[contains(text(),'rule?')]/following::button[text()='Yes']");
+	public static final By popup_NoBtn=By.xpath("//button[text()='No']");
+	public static final By popup_OOOsettings=By.xpath("//label[contains(@title,'Out of Office Settings')]");
+	//div[@id='liveSearchResultContainer']/descendant::div[@title='QAAuto Test14']
+	public static final By enableooo_Switch=By.xpath("//label[contains(text(),'Enable')]/../descendant::label[@class='inforSwitchLabel']");
+	public static final By startDateandTime_Switch=By.xpath("//label[contains(text(),'Start Date')]/../../descendant::label[@class='inforSwitchLabel']");
+	public static final By endDateandTime_Switch=By.xpath("//label[contains(text(),'End Date')]/../../descendant::label[@class='inforSwitchLabel']");
+	public static final By startDate_input=By.xpath("//input[@id='StartDatePlugin']");
+	public static final By endDate_input=By.xpath("//input[@id='EndDatePlugin']");
+	public static final By unassignandDelegate_Switch=By.xpath("//label[contains(text(),'Unassign')]/../descendant::label[@class='inforSwitchLabel']");
+	public static final By tasks_Switch=By.xpath("//label[contains(text(),'Tasks')]/../descendant::label[@class='inforSwitchLabel']");
+	public static final By alerts_Switch=By.xpath("//label[contains(text(),'Alerts')]/../descendant::label[@class='inforSwitchLabel']");
+	public static final By activatethisrule_Switch=By.xpath("//label[contains(text(),'Activate this rule')]/../descendant::label[@class='inforSwitchLabel']");
+	public static final By returnToProfile_Btn=By.xpath("//button[@title='Return to profile']");
+	public static final By profilePage_oooStatus=By.xpath("//div[@id='profilePageOOOStatus']");
+	public static final By startdatepicker=By.xpath("//div[@id='formDateStartDate']/descendant::button[@class='inforTriggerButton inforDatePickerButton']");
+	public static final By enddatepicker=By.xpath("//div[@id='formDateEndDate']/descendant::button[@class='inforTriggerButton inforDatePickerButton']");
+	public static final By datepicker_todayDate=By.xpath("//td[@class='  inforDatePicker-current-day inforDatePicker-today']/descendant::a");
+}

@@ -1,0 +1,36 @@
+package objRepository.Social;
+
+import org.openqa.selenium.By;
+
+public class ShellHeader {
+	
+	
+	 public static final	 By mobileApps=By.xpath("//span[@data-infor-translate='User_Menu_Mobile_App']");	
+	 public static final	 By user_admin_settings=By.xpath("//span[@data-infor-translate='User_Menu_Admin']");
+	 public static final     By userMenu_Notifications=By.xpath("//span[@title='NOTIFICATIONS']");
+	 public static final     By userMenu_Post=By.xpath("//span[@title='POSTS']");
+	 public static final     By userMenu_UserSettings=By.xpath("//span[@data-infor-translate='User_Menu_Settings']");
+	 public static final     By userMenu_UserSettings_ProfileInformationHeading=By.xpath("//span[@title='Profile Information']");
+	 public static final     By userMenu_UserSettings_SaveBtn=By.xpath("//form[@id='Settings']/descendant::button[@title='Save']");
+	 public static final     By userMenu_UserSettings_deletePostSwitch_InputTag=By.xpath("//label[contains(text(),'Delete post')]/../descendant::input[@id='PersonalizationConfigList[1].PersonalizationValue']");
+	 public static final     By userMenu_UserSettings_deletePostSwitch_LabelTag=By.xpath("//label[contains(text(),'Delete post')]/../descendant::label[@class='inforSwitchLabel']");
+	 public static final     By userMenu_UserSecurity=By.xpath("//span[@data-infor-translate='User_Menu_Security_Settings']");
+	 public static final     By userMenu_Help=By.xpath("//a[@target='helpPage']");
+	 public static final     By userMenu_About=By.xpath("//span[@data-infor-translate='User_Menu_About']");
+	 public static final     By userMenu_About_InforHeading=By.xpath("//div[contains(text(),'Infor Ming.le ™')]");
+	 public static final     By userMenu_About_CloseIcon=By.xpath("//button[@title='Close']");
+	 public static final     By userMenu_Help_Version=By.xpath("//a[@title='v12.0']");
+	 public static final     By userMenu_About_CloseIcon2=By.xpath("//div[@data-ng-controller='AboutController']/descendant::button");
+	 public static final     By inforIcon=By.xpath("//a[@href='http://www.infor.com/']");
+	 public static final     By newPage=By.xpath("//button[@class='btn-tertiary e2e-createNewPage-btn ng-binding']");
+	 public static final	 By userMenu=By.xpath("//button[@title='User Menu']");
+	 public static final	 By signOut=By.xpath("//div[@class='drop-down-container']/descendant::span[contains(text(),'Sign Out')]");
+	 public static final	 By bookMarks=By.xpath("//li/button[@title='Bookmarks']");
+	 public static final     By bookmarks_bookMarkThisPage=By.xpath("//a[@data-infor-translate='Bookmark_this_page']");
+	 public static final	 By bookMarks_Save=By.xpath("//button[@data-infor-translate='save']");
+	 public static final	 By bookmarks_manageBookMarks=By.xpath("//a[@data-infor-translate='Manage_Bookmarks']");
+	 public static final	 By shareLink=By.xpath("//button[@title='Share']");
+	 public static final     By userMenu_Alerts=By.xpath("//span[@data-infor-translate='User_Menu_ALERTS_caps']");
+	 public static final     By userMenu_Tasks=By.xpath("//span[@data-infor-translate='User_Menu_TASKS_caps']");
+
+}

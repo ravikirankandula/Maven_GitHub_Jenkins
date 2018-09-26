@@ -1,0 +1,75 @@
+package scripts.ShellHeader;
+
+import org.apache.commons.lang3.RandomStringUtils;
+import org.testng.annotations.AfterClass;
+import org.testng.annotations.AfterMethod;
+import org.testng.annotations.BeforeClass;
+import org.testng.annotations.Test;
+
+import actions.Actions;
+import objRepository.Global;
+import objRepository.Social.ActivityFeed;
+import objRepository.Social.ShellHeaderShareOverlay;
+import reusableMethods.RM_Social;
+import utility.Utility;
+
+
+public class Ts_ShareMsgToConUsersFromShellShare_13233 {
+	
+	private Utility utl;
+	//ExtentTest logger;
+
+		@BeforeClass
+		public void setUp()
+		{
+			 utl=new Utility();
+			 //logger=
+			 utl.initTest(this.getClass().getName().substring(this.getClass().getName().lastIndexOf(".")+1).trim());
+			 new Actions();
+		
+		}
+		@AfterMethod
+		public void logOutAndBrowserClose()
+		{
+			Actions.logOutAndBrowserCloseMU();
+		}
+		@AfterClass
+		public void endReport() throws Exception
+		{
+			Actions.endScriptReportMU();
+			
+			
+		}
+		String time=RandomStringUtils.randomNumeric(4);
+		@Test
+		public void shareMsgToConUsersFromShellShare()
+		{
+		
+			Global.login(Utility.getConfigData().get("USER7"), Utility.getConfigData().get("PASSWORD"));
+			//Actions.pause(3);
+			RM_Social.openShellHeaderShareOverlay();
+			Actions.switchtoFrame(Global.mingleCLFrame, "Switch to Mingle Frame");
+			Actions.click(ShellHeaderShareOverlay.privacyLink, "Open Privacy List");
+			RM_Social.selectPrivacyInShellHeaderShareOverlay(Utility.getTestData().get("PRIVACY_CONNECTEDUSERS"));
+			RM_Social.typeMessageInShellHeaderShareOverlay(Utility.getTestData().get("POSTMSG")+time);
+			RM_Social.clickOnShareBtn();
+			Actions.switchToDefaultContent();
+			RM_Social.navigateToActivityPage();
+			//Actions.switchtoFrame(Global.socialCLFrame, "Switch to Social Frame");
+			Actions.verify(ActivityFeed.msgContainer, Utility.getTestData().get("POSTMSG")+time);
+			
+		}
+		@Test(dependsOnMethods={"shareMsgToConUsersFromShellShare"})
+		public void verifyShareMsg()
+		{
+			
+				
+				Global.login(Utility.getConfigData().get("USER12"),Utility.getConfigData().get("PASSWORD"));
+				RM_Social.navigateToActivityPage();
+				Actions.pause(2);
+				Actions.verify(ActivityFeed.msgContainer, Utility.getTestData().get("POSTMSG")+time);
+				
+		
+		}
+
+}

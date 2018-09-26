@@ -1,0 +1,58 @@
+package objRepository.Social;
+
+import org.openqa.selenium.By;
+
+import actions.Actions;
+import utility.Utility;
+
+public class ActivityFeed {
+	
+	/*
+	 * 
+	 * Objects In Activity Feed Page.
+	 *
+	 * 
+	 */
+	public static final By header_MyFeed=By.xpath("//div[@title='My Feed']");
+	public static final By lnk_Activityfeed=By.xpath("//li[@title='Activity Feed']");
+	public static final By connectionsHeading=By.xpath("//span[contains(text(),'Connections')]");
+	public static final By followingHeading=By.xpath("//span[contains(text(),'Following')]");
+	public static final By createGroupHeading=By.xpath("//div[@id='inforCreateGroupButton']");
+	public static final By connections_Plusicon=By.xpath("//span[contains(text(),'Connections')]"
+			+ "/following-sibling::div[@class='infor-social-plusIcon']");
+	public static final By msgContainer=By.xpath("//div[@class='infor-social-feedTextWrapper m-txt-f5']");
+	public static final By accept=By.xpath("//button[contains(text(),'Accept')]");
+	public static final By decline=By.xpath("//button[contains(text(),'Decline')]");
+	public static final By privacyLink=By.xpath("//div[@data-bind-id='privacy-link']");
+	public static final By privacytoConnectedUsers=By.xpath("//div[@id='inforPopupContainer_0']/descendant::span[contains(text(),'Connected Users')]");
+	public static final By postButton=By.id("dialogPostBtn");
+	public static final By textArea=By.id("dialogDivContentareaContentsTxtarea");
+	public static final By posMsgObject=By.xpath("//div[text()='"+Utility.getValuesFromPropertiesFile("TestData", "POSTMSG")+"']");
+	public static final By Delete_Post=By.xpath("//span[text()='Delete Post']");
+	public static final By createButton=By.id("inforCreateGroupButton");
+	public static final By shareLink=By.xpath("//span[contains(text(),'Share')]");
+	public static final By afp_ShareOverlay_ShareHeading=By.xpath("//span[text()='Share']");
+	public static final By afp_ShareOvaerlay_PrivacyLink=By.xpath("//div[@class='post-actions']/descendant::div[@data-bind-id='privacy-link']");
+	public static final By afp_ShareOverlay_textArea=By.xpath("//form[@id='overlayPost']/descendant::textarea[@data-bind-id='contents-txtarea']");
+	public static final By afp_ShareOverlay_shareBtn=By.xpath("//div[@class='post-actions']/descendant::button[@title='Share']");
+	public static final By RecomandedGroupsHeading=By.xpath("//div[@title='Recommended Groups']");
+	public static final By likeBtn=By.xpath("//span[contains(text(),'Like')]");
+	public static final By unLikeBtn=By.xpath("//span[contains(text(),'Unlike')]");
+	public static final By addAttachments=By.id("attachFileReplyMsg");
+	public static final By showdetailsBtn=By.xpath("//span[contains(text(),'Show Details')]");
+	public static final By showDetailsOverlay_PostHeading=By.xpath("//span[text()='Post']");
+	public static final By showDetailsOverlay_MsgContainer=By.xpath("//div[@class='m-o-msg-body-text']");
+	public static final By showDetailsOverlay_CloseIcon=By.xpath("//span[@data-bind-id-close-icn='close-btn-icon']");
+	
+	/*
+	 * 
+	 * Actions in Activity Feed Page
+	 * 
+	 * 
+	 */
+	public void verifyMyFeed(String expected)
+	{
+		Actions.verifyElementPresent(header_MyFeed, "MyFeed Header is verified");
+	}
+
+}

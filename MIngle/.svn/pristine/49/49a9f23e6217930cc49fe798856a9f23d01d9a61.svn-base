@@ -1,0 +1,51 @@
+/**
+ * 
+ */
+package objRepository.IONAPI;
+
+import org.openqa.selenium.By;
+
+
+public class IONAPIAuthorizedApps {
+	/*
+	 * 
+	 * Objects In IONAPIAuthorizedApps Page.
+	 * 
+	 * 
+	 */
+	public static final By authorized_mobileAndroidType=By.xpath("//span[@data-infor-translate='mobile_android']/../input");
+	public static final By authorized_mobileIOSType=By.xpath("//span[@data-infor-translate='mobile_ios']/../input");
+	public static final By authorized_mobileWindowsType=By.xpath("//span[@data-infor-translate='mobile_windows']/../input");
+	public static final By authorized_mobileOthersType=By.xpath("//span[@data-infor-translate='mobile_others']/../input");
+	public static final By authorized_mobileWebType=By.xpath("//span[@data-infor-translate='web']/../input");
+	public static final By authorized_mobileBackendType=By.xpath("//span[@data-infor-translate='backend_service']/../input");
+	public static final By authorized_mobileAppName=By.xpath("//input[@data-infor-validator='name']");
+	public static final By authorized_mobileAndroidDescription=By.xpath("//textarea[@data-ng-model='AUTHAPPDETAILS.Description']");
+	public static final By authorized_mobileAndroidRedirectURL=By.xpath("//input[@data-ng-model='AUTHAPPDETAILS.RedirectURL']");
+	public static final By authorized_mobileAndroidDownloadURL=By.xpath("//input[@data-ng-model='AUTHAPPDETAILS.DownloadURL']");
+	public static final By authorized_mobileAndroidLoadCertificate=By.xpath("//button[@ng-model='AUTHAPPDETAILS.CertificateFile']");
+	public static final By authorized_mobileAndroidSigningCertificate=By.id("SigningCertificate");
+	//public static final By authorized_mobileSave=By.xpath("//button[contains(text(),'Save')]");
+	public static final By authorized_mobileOK=By.xpath("//button[contains(text(),'Ok')]");
+	public static final By authorized_mobileResetSecret=By.xpath("//button[@data-infor-translate='reset_secret']");
+	public static final By authorized_mobileDownloadCredentials=By.xpath("//button[@data-infor-translate='download_credentials']");
+	public static final By authorized_mobileEmailQRCode=By.xpath("//button[@data-infor-translate='email_qr_code_to_users']");
+	public static final By authorized_verifyResetSecret=By.xpath("//span[@data-infor-translate='infor_resetsceret']/following::span");
+	public static final By authorized_verifyDownloadCredentials=By.xpath("//span[@data-infor-translate='infor_credentials_downloaded']/following::span");
+	public static final By authorized_mobileQRCodeUser=By.id("searchInput");
+	public static final By authorized_mobileEmailQRCodeModelContainer=By.xpath("//div[@class='modal-btn-contnr ng-scope']/button[@data-infor-translate='email_qr_code_to_users']");
+	public static final By authorized_verifyEmailQRCode=By.xpath("//span[@data-infor-translate='infor_qrcode_emailsent']/following::span");
+	public static final By authorized_mobileCancel=By.xpath("//button[@data-infor-translate='cancel']");
+	public static final By authorized_selectCreatedApp=By.xpath("//label[@title='Test App']");
+	public static final By authorized_packageName=By.xpath("//input[@data-ng-model='AUTHAPPDETAILS.PackageName']");
+	public static final By authorized_bundleID=By.xpath("//input[@data-ng-model='AUTHAPPDETAILS.BundleId']");
+	public static final By authorized_javaScriptOrigins=By.xpath("//input[@data-ng-model='AUTHAPPDETAILS.JavascriptOriginList']");
+	public static final By authorized_backendDownload=By.id("searchInput");
+	public static final By authorized_backendDownloadButton=By.xpath("//a[@data-infor-translate='download']");
+	public static final By authorized_DeleteSuite=By.xpath("//button[@data-infor-translate='delete_api_suite']");
+	
+	
+	
+	
+	
+}

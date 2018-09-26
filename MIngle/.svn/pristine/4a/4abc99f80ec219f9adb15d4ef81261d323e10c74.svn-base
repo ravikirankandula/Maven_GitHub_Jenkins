@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+<suite name="suite1">
+<!-- <listeners>
+		<listener class-name="utility.RetryListener" />
+	</listeners>
+	 --><test name="chrome">
+	<parameter name="Browser" value="chrome" />
+		<classes>
+		
+	  
+			 <class name="utility.Utility" />
+			   <class name="scripts.IFS.Ts_UserImportAndExport_13291" /> 
+			                                <class name="scripts.IFS.Ts_VerifyEntriesFromActivityTabUnderUserScreen_13290" />  
+			                                <class name="scripts.IFS.Ts_ActivateDeactivatedExternalUsers_13298" /> 
+			                                <class name="scripts.IFS.Ts_AddContactsToContactGroup_13304" />
+			                                  <class name="scripts.IFS.Ts_CreateExernalUsers_13296" /> 
+			                                   <class name="scripts.IFS.Ts_AddMultipleExternalUsers_13299" />
+                                                <class name="scripts.IFS.Ts_ActivateDeactivatedMultipleUsers_13311" /> 
+                                               <class name="scripts.IFS.Ts_CreateContactGroupAndAssignContacts_13310" />
+			                                    <class name="scripts.IFS.Ts_DeactivateExternalUsers_13297" />
+			                                  <class name="scripts.IFS.Ts_DeactivateMultipleExternalUsers_13300" />
+			                                   <class name="scripts.IFS.Ts_DeleteActiveMultipleUsers_13301" />
+			                                    <class name="scripts.IFS.Ts_DeleteDctivatedMultipleUsers_13313" />
+			                                     <class name="scripts.IFS.Ts_CreateNewContact_13302" /> 
+			                                      <class name="scripts.IFS.Ts_CreateNewMultipleContacts_13303" />
+			                                        <class name="scripts.IFS.Ts_DeleteMultipleNewContacts_13306" />
+			                                          <class name="scripts.IFS.Ts_DeleteNewContact_13305" /> 
+			                                          <class name="scripts.IFS.Ts_ERPPersonID_13295" />
+			                                           <class name="scripts.IFS.Ts_ServiceAccounts_13292" /> 
+			                                            <class name="scripts.IFS.Ts_UpdateSecurityRole_13286" />
+			                                            <class name="scripts.IFS.Ts_CreateMultipleContactGroups_13312" />
+			                                             <class name="scripts.IFS.Ts_DGExportAndImport_13293" />
+			                                             <class name="scripts.IFS.Ts_CreateContactGroup_13307" />
+			                                              <class name="scripts.IFS.Ts_DocumentAuthorization_13308" />
+			                                               <class name="scripts.IFS.Ts_DocumentAuthorizationsAndAddMultipleRoles_13309" />
+
+
+		</classes>
+	
+	
+	</test>
+
+
+  
+
+
+</suite>

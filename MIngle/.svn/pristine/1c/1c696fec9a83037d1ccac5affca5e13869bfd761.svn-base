@@ -1,0 +1,62 @@
+/**
+ * 
+ */
+package scripts.Streams;
+
+import java.util.HashMap;
+
+import org.testng.annotations.AfterClass;
+import org.testng.annotations.BeforeClass;
+import org.testng.annotations.Test;
+
+import com.relevantcodes.extentreports.ExtentTest;
+
+import actions.Actions;
+import objRepository.Global;
+import reusableMethods.RM_Streams;
+import utility.Utility;
+
+
+
+public class Ts_VerifyFiltersOnSteramPage_13245 {
+	ExtentTest logger;
+	Utility utl;
+	 HashMap<String, String> configData=Utility.getConfigData();
+		
+		//TESTDATA
+		 String userName=configData.get("USER6");	
+		 String pwd=configData.get("PASSWORD");
+	@BeforeClass
+	public void setUp()
+	{
+		 utl=new Utility();
+		 logger=utl.initTest(this.getClass().getName().substring(this.getClass().getName().lastIndexOf(".")+1).trim());
+		 new Actions();
+	
+	}
+	@AfterClass
+	public void tearDown() throws Exception
+	{
+		/*Utility.report.endTest(logger);
+		//Actions.driverClose();
+		Utility.report.flush();*/
+		Actions.logOutAndBrowserClose();
+		
+		//Utility.execute("C:\\Mingle_Project\\MIngle\\Mingle\\zipdemo.zip");
+	}
+	
+	@Test
+	public void getTitle()
+	{
+		try{
+		//LOGIN INTO THE APPLICATION
+			Global.login(userName,pwd);
+			//VERIFY STREAMS
+			RM_Streams.verify_Streams();
+		
+	} catch (Exception e) {
+		
+		
+	}
+	}
+}

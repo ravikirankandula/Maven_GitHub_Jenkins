@@ -1,0 +1,9 @@
+package objRepository.Social;
+
+import org.openqa.selenium.By;
+
+public class Posts {
+	public static final	 By myPosts=By.xpath("//div[@title='My Posts']");
+	
+
+}

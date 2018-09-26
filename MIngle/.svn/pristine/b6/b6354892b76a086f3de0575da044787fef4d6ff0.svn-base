@@ -1,0 +1,9 @@
+package objRepository.Admin;
+
+import org.openqa.selenium.By;
+
+
+public class UserSettings {
+	public static final By profileInformation=By.xpath("//span[@title='Profile Information']");
+
+}

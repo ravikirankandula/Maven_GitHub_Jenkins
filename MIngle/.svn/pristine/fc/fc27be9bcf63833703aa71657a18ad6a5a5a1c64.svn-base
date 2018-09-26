@@ -1,0 +1,89 @@
+package scripts.ActivityFeed;
+
+import org.apache.commons.lang3.RandomStringUtils;
+import org.testng.annotations.AfterClass;
+import org.testng.annotations.AfterMethod;
+import org.testng.annotations.BeforeClass;
+import org.testng.annotations.Test;
+
+import actions.Actions;
+import objRepository.Global;
+import objRepository.Social.ActivityFeed;
+import reusableMethods.RM_Social;
+import utility.Utility;
+
+public class Ts_PostToTagUserFromFeedPage_13261 {
+	
+	private Utility utl;
+	//ExtentTest logger;
+
+		@BeforeClass
+		public void setUp()
+		{
+			 utl=new Utility();
+			 //logger=
+			 utl.initTest(this.getClass().getName().substring(this.getClass().getName().lastIndexOf(".")+1).trim());
+			 new Actions();
+		
+		}
+		@AfterMethod
+		public void logOutAndBrowserClose()
+		{
+			Actions.logOutAndBrowserCloseMU();
+		}
+		@AfterClass
+		public void endReport() throws Exception
+		{
+			Actions.endScriptReportMU();
+			
+			
+		}
+		String time=RandomStringUtils.randomNumeric(4);
+		String verifyMsg="QAAuto Test9QAAuto Test10"+Utility.getTestData().get("POSTMSG")+time;
+		@Test
+		public void postMessgae()
+		{
+		
+			Global.login(Utility.getConfigData().get("USER7"), Utility.getConfigData().get("PASSWORD"));
+			//Actions.pause(3);
+			RM_Social.navigateToActivityPage();
+			Actions.click(ActivityFeed.privacyLink, "Open Privacy dropdown");
+			RM_Social.selectPrivacyInAFP(Utility.getTestData().get("PRIVACY_TAGGEDUSERSANDGROUPS"));
+			RM_Social.tagUserInAFP(Utility.getTestData().get("FULLNAME_USER9"));
+			RM_Social.tagUserInAFP(Utility.getTestData().get("FULLNAME_USER10"));
+			RM_Social.typeMessageInAFP(Utility.getTestData().get("POSTMSG")+time);
+			RM_Social.clickOnPostBtnInAFP();
+			Actions.switchToDefaultContent();
+			RM_Social.navigateToActivityPage();
+			//Actions.switchtoFrame(Global.socialCLFrame, "Switch to Social Frame");
+			Actions.verify(ActivityFeed.msgContainer, verifyMsg);
+			
+		}
+		@Test(dependsOnMethods={"postMessgae"})
+		public void verifyPostMsg()
+		{
+			
+				
+				Global.login(Utility.getConfigData().get("USER9"),Utility.getConfigData().get("PASSWORD"));
+				RM_Social.navigateToActivityPage();
+				Actions.pause(2);
+				Actions.verify(ActivityFeed.msgContainer, verifyMsg);
+				
+				
+		
+		}
+		@Test(dependsOnMethods={"postMessgae"})
+		public void verifyPostMsg2()
+		{
+			
+				
+				Global.login(Utility.getConfigData().get("USER10"),Utility.getConfigData().get("PASSWORD"));
+				RM_Social.navigateToActivityPage();
+				Actions.pause(2);
+				Actions.verify(ActivityFeed.msgContainer, verifyMsg);
+				
+				
+		
+		}
+
+}

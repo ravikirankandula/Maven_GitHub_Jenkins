@@ -1,0 +1,39 @@
+/**
+ * 
+ */
+package objRepository.IONAPI;
+
+import org.openqa.selenium.By;
+
+
+public class IONAPI {
+	/*
+	 * 
+	 * Objects In IONAPI Page.
+	 *
+	 * 
+	 */
+	
+	public static final By add_NewApiSuite=By.xpath("//button[@data-infor-translate='add_new_apisuite']");
+	public static final By authorized_Apps=By.xpath("//a[@data-infor-translate='authorized_apps']");
+	public static final By addNew_AuthorizedApp=By.xpath("//button[@data-infor-translate='add_new_app']");
+	public static final By authorized_AppName=By.xpath("//input[@data-ng-model='AUTHAPPDETAILS.Name']");
+	public static final By availableAPIs=By.xpath("//a[text()='Available APIs']");
+
+	public static final By mcc_img1=By.xpath("//h3[text()='Available APIs']/following::img[1]/../descendant::h3");
+	public static final By mcc_img2=By.xpath("//h3[text()='Available APIs']/following::img[2]/../descendant::h3");
+	public static final By mcc_img1_Resource=By.xpath("//button[@data-ng-click='onClickResources(item)']");
+	public static final By mcc_img1_Documentation=By.xpath("//button[@data-ng-click='onClickProxy(item)']");
+	public static final By mcc_img1_verifyResource=By.xpath("//button[@data-infor-translate='resources']");
+	public static final By mcc_img1_verifyDocumentation=By.xpath("//button[@data-infor-translate='documentation']");
+	public static final By mcc_Back=By.xpath("//button[@data-ng-click='onBack()']");
+	
+	public static final By mcc_img1_verifySwaggerDocumentation_Device=By.xpath("//div[@class='heading']");
+	public static final By mcc_img1_verifySwaggerDocumentation_DeviceDetails=By.xpath("//div[@class='heading']/h3");
+	public static final By mcc_img1_verifySwaggerDocumentation_ION=By.xpath("//a[@data-id='IONData']");
+	public static final By mcc_img1_verifySwaggerDocumentation_IONDetails=By.xpath("///a[@data-id='IONData']/following::h3");
+	public static final By mcc_img1_verifySwaggerDocumentation_Social=By.xpath("//a[@data-id='SocialData']");
+	public static final By mcc_img1_verifySwaggerDocumentation_SocialData=By.xpath("//a[@data-id='SocialData']/following::h3");
+	
+	
+}

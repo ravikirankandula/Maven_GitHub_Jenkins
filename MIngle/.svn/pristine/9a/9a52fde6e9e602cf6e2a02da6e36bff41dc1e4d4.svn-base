@@ -1,0 +1,85 @@
+package scripts.IFS;
+
+import java.util.HashMap;
+
+import org.testng.annotations.AfterClass;
+import org.testng.annotations.BeforeClass;
+
+import com.relevantcodes.extentreports.ExtentTest;
+
+import actions.Actions;
+import objRepository.Global;
+import reusableMethods.RM_IFS;
+import utility.Utility;
+
+public class Ts_DeleteMultipleNewContacts_13306
+{
+	ExtentTest logger;
+	private Utility utl;
+	 HashMap<String, String> testData=Utility.getTestData();
+	 HashMap<String, String> configData=Utility.getConfigData();
+		
+		//TESTDATA
+		 String userName=configData.get("USER1");
+		 String pwd=configData.get("PASSWORD");
+		 String email=configData.get("USER7");
+		 String fullName=testData.get("CONTACT_FULLNAME");
+		 String contactID=testData.get("CONTACT_ID");
+		 String email1=configData.get("USER8");
+		 String fullName1=testData.get("CONTACT_FULLNAME1");
+		 String contactID1=testData.get("CONTACT_ID1");
+	
+	
+	@BeforeClass
+	public void setUp()
+	{
+		 utl=new Utility();
+		 logger=utl.initTest(this.getClass().getName().substring(this.getClass().getName().lastIndexOf(".")+1).trim());
+		 new Actions();
+	
+	}
+	@AfterClass
+	public void tearDown()
+	{
+		Utility.report.endTest(logger);
+		//Actions.driverClose();
+	
+	}
+	
+
+
+	@org.testng.annotations.Test(priority =1)
+	public void create_ExternalUser()
+	 {
+		try {
+			
+	    //login
+		Global.login(userName,pwd);
+		RM_IFS.create_MultipleContacts(fullName,email,contactID,fullName1,email1,contactID1);
+		
+         } catch (Exception e) {
+			
+		}finally
+		{
+			Global.logOut();
+			Actions.driverClose();
+			rb_Contacts();
+		}
+		
+     }
+	//@org.testng.annotations.Test(priority =2, dependsOnMethods ="dgImport_Export")
+		public void rb_Contacts()
+		{
+			try {
+				 Global.login(userName,pwd);
+				 RM_IFS.rb_Contacts(fullName,email,contactID);
+			} catch (Exception e) {
+				
+			}
+			finally
+			{
+				Global.logOut();
+				Actions.driverClose();
+			}
+		}
+}

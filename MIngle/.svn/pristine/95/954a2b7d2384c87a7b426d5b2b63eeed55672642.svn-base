@@ -1,0 +1,18 @@
+package objRepository.Social;
+
+import org.openqa.selenium.By;
+
+public class ShellHeaderShareOverlay {
+	
+	
+	public static final By privacyLink=By.xpath("//div[@class='post-actions']/descendant::div[@data-bind-id='privacy-link']");
+	public static final By textArea=By.xpath("//form[@id='overlayPost']/descendant::textarea[@data-bind-id='contents-txtarea']");
+	public static final By shareBtn=By.xpath("//div[@class='post-actions']/descendant::button[@title='Share']");
+	//public static final By
+	//public static final By
+	
+	
+	
+	
+	
+}

@@ -1,0 +1,9 @@
+package scripts.IFS;
+
+public class Sample {
+public static void main(String args[]){
+	String mail="qaautotest10@pmm.com";
+	String[] s=mail.split("@");
+	System.out.println(s[0]);
+}
+}

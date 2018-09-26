@@ -1,0 +1,498 @@
+/**
+ * 
+ */
+package reusableMethods;
+
+import org.openqa.selenium.By;
+
+import actions.Actions;
+import objRepository.Global;
+
+import objRepository.Social.AppMenu;
+import objRepository.Streams.Streams;
+
+
+
+public class RM_Streams {
+
+	/****************Click On Templates ***************/
+	public static void click_Templates(){
+		Actions.click(Streams.template, "Click On Templates");
+		Actions.pause(1);
+		Global.minglePageLoad_Social();
+	}
+
+
+	/****************Click On Streams ***************/
+	public static void click_Streams(){
+		Actions.click(Streams.streams, "Click On Streams");
+		Global.minglePageLoad_Social();
+	}
+
+	/****************Click On StreamsHeader ***************/
+	public static void navigateToStreams(){
+
+		Actions.click(Streams.streamsHeader, "Click On Streams Header");  
+		Global.minglePageLoad_Social();
+		Actions.verifyElement(Streams.streams, "waiting for 'Streams' heading");
+	} 
+
+	/****************Create New Template***************/
+	public static void click_CreateNewTemplate(){
+		Actions.click(Streams.createNewTemplate, "Click On Create New Template"); 
+		Global.minglePageLoad_Social();
+	}
+
+	/****************Create New Template
+	 * @throws InterruptedException ***************/
+	public static void enterTemplateDetails(String name,String templateDesc,String tag1,String tag2) throws InterruptedException{
+		Actions.type(Streams.templateName, name, "Template Name");
+		Actions.type(Streams.templateDescription, templateDesc, "Template Desc");
+		Thread.sleep(2000);
+		Actions.type(Streams.tag, tag1, "Template Tag1");
+		Actions.space();
+		Actions.type(Streams.tag, tag2, "Template Tag2");
+		Actions.space();
+	}
+
+	/****************Stream Owner
+	 * @throws InterruptedException ***************/
+	public static void enterStreamOwner(String streamOwner) /*throws InterruptedException*/{
+		Actions.type(Streams.templateStreamOwner, streamOwner, "Stream Owner");
+		Actions.click(Streams.selectStreamOwner, "Stream Owner Selected");
+
+	}
+
+	/****************Stream Participant
+	 * @throws InterruptedException ***************/
+	public static void enterInternalParticipant(String internalParticiPant) /*throws InterruptedException*/{
+		Actions.type(Streams.templateInternalParticipant, internalParticiPant, "Internal Participant");
+		Actions.click(By.xpath("//div[@id='liveSearchResultContainer']/div[1]/descendant::span[text()='"+internalParticiPant+"']"), "Internal Participent Selected");
+	}
+
+	/****************Save Template***************/
+	public static void click_saveTemplate(){
+		Actions.pause(1);
+		Actions.click(Streams.saveTemplate, "Click On Save Template");  
+		Global.minglePageLoad_Social();
+		Actions.pause(2);
+	}
+
+	/****************Save Template
+	 * @throws InterruptedException ***************/
+	public static void click_addStep() throws InterruptedException{
+		Actions.click(Streams.addAStep, "Click On Add A Step"); 
+		Global.minglePageLoad_Social();
+	}
+
+	/****************Step Details***************/
+	public static void enterStepDetails(String stepName1,String stepDesc1){
+		Actions.type(Streams.stepName, stepName1, "Step Name");
+		Actions.type(Streams.stepDesc, stepDesc1, "Step Description");
+		Actions.clearText(Streams.dueDate, "Clear Due Date");
+		Actions.type(Streams.dueDate, "25", "Due Date:25");
+
+	}
+
+	/****************Drag and Drop***************/
+	public static void dragAndDrop(){
+		Actions.dragAndDrop(Streams.singleLineText, Streams.singleLineTextDestination,"Drag elemnt from source to destination");
+
+	}
+
+	/****************Drag and Drop***************/
+	public static void dragAndDropToStep1(){
+		Actions.dragAndDrop(Streams.paragraph, Streams.singleLineTextDestination,"Drag Paragraph elemnt from source to destination");
+		Actions.dragAndDrop(Streams.poll, Streams.singleLineTextDestination,"Drag Poll elemnt from source to destination");
+		Actions.dragAndDrop(Streams.checkBoxes, Streams.singleLineTextDestination,"Drag checkBoxes elemnt from source to destination");
+		Actions.dragAndDrop(Streams.number, Streams.singleLineTextDestination,"Drag number elemnt from source to destination");
+	}
+
+	/****************Drag and Drop***************/
+	public static void dragAndDropToStep2(){
+		Actions.dragAndDrop(Streams.section, Streams.singleLineTextDestination,"Drag section elemnt from source to destination");
+		Actions.dragAndDrop(Streams.label, Streams.singleLineTextDestination,"Drag label elemnt from source to destination");
+		Actions.dragAndDrop(Streams.dropDown, Streams.singleLineTextDestination,"Drag dropdown elemnt from source to destination");
+		Actions.dragAndDrop(Streams.date, Streams.singleLineTextDestination,"Drag date elemnt from source to destination");
+
+	}
+
+	/****************Drag and Drop***************/
+	public static void dragAndDropToStep3(){
+		Actions.dragAndDrop(Streams.dateAndTime, Streams.singleLineTextDestination,"Drag dateAndTime section elemnt from source to destination");
+		Actions.dragAndDrop(Streams.webSiteLink, Streams.singleLineTextDestination,"Drag webSiteLink elemnt from source to destination");
+		Actions.dragAndDrop(Streams.radio, Streams.singleLineTextDestination,"Drag radio elemnt from source to destination");
+		Actions.dragAndDrop(Streams.checkpoint, Streams.singleLineTextDestination,"Drag checkpoint elemnt from source to destination");
+
+	}
+
+	/***************Save Step***************/
+	public static void save_Step(){
+		Actions.click(Streams.saveStep, "Click On Save Add Step");  
+		Global.minglePageLoad_Social();
+
+	}
+
+	/***************Activate***************/
+	public static void activate(){
+		Global.minglePageLoad_Social();
+		Actions.click(Streams.activate, "Click On Activate Button");
+		Global.minglePageLoad_Social();
+
+	}
+
+	/***************DeActivate
+	 * @throws InterruptedException ***************/
+	public static void deActivate() /*throws InterruptedException*/{
+		Actions.pause(1);
+		Actions.scrollToElement(Streams.deactivate);
+		Actions.click(Streams.deactivate, "Click On DeActivate Button");
+		Global.minglePageLoad_Social();
+		Actions.verifyElementPresent(By.xpath("//div[text()='Template has been deactivated successfully']"), "Waiting for Deactivate Confirmation Message");
+
+	}
+	/***************Delete
+	 * @throws InterruptedException ***************/
+	public static void deletTemplate() /*throws InterruptedException*/{
+		Actions.pause(1);
+		Actions.scrollToElement(Streams.deleteTemplate);
+		Actions.click(Streams.deleteTemplate, "Click On Delete Button"); 
+		Global.minglePageLoad_Social();
+
+	}
+
+	/***************Start Stream***************/
+	public static void startStreamInstance(){
+		Actions.click(Streams.startStreamInstance, "Click On Start Stream");   
+		Global.minglePageLoad_Social();
+
+	}
+
+	/***************Select Created Template ***************/
+	public static void select_CreatedTemplate(String templateName){
+		Actions.pause(2.5);
+		By by=By.xpath("//div[contains(text(),'"+templateName+"')]");
+		Actions.click(by, "Click On Selected Template : "+templateName);
+		Actions.pause(1);
+		Global.minglePageLoad_Social();
+
+	}
+
+	/***************Save Stream ***************/
+	public static void saveStream(){
+		Actions.click(Streams.saveStream, "Click On Save Stream"); 
+		Global.minglePageLoad_Social();
+	}
+
+	/***************Start Stream ***************/
+	public static void startStream(){
+		Actions.click(Streams.startStream, "Click On Start Stream");  
+		Global.minglePageLoad_Social();
+		Global.acceptConfirmation();
+		Global.minglePageLoad_Social();
+
+	}
+
+	/***************Start Stream ***************/
+	public static void delete_CanceledStream(String templateName){
+		Actions.verifyElement(Streams.cancelFilterIcon, "Verify Cancel Filter Icon");
+		Actions.click(Streams.cancelFilterIcon, "Click on Cancel Filter Icon");
+		select_CreatedTemplate(templateName);
+		RM_Streams.deleteStream();
+		Global.acceptConfirmation();
+	}
+
+	/***************Start Stream ***************/
+	public static void delete_CompletedStream(String templateName){
+		Actions.verifyElement(Streams.completeFilterIcon, "Verify Complete Filter Icon");
+		Actions.click(Streams.completeFilterIcon, "Click On Complete Filter Icon");
+		select_CreatedTemplate(templateName);
+		RM_Streams.deleteStream();
+		Global.acceptConfirmation();
+	}
+	/***************Cancel Stream ***************/
+	public static void cancelStream(){
+		Actions.verifyElement(Streams.cancelStream, "Verify presence of  Cancel Stream");  
+		Actions.click(Streams.cancelStream, "Click On Cancel Stream");  
+		Global.minglePageLoad_Social();
+		Global.acceptConfirmation();
+		Global.minglePageLoad_Social();
+
+	}
+	/***************Complete Stream ***************/
+	public static void completeStream(){
+		Actions.click(Streams.completeStream, "Click On Complete Stream"); 
+		Global.minglePageLoad_Social();
+		Global.acceptConfirmation();
+		Global.minglePageLoad_Social();
+	}
+
+	/***************Delete Stream ***************/
+	public static void deleteStream(){
+		Actions.click(Streams.deleteStream, "Click On Delete Stream");   
+
+	}
+	//VERIFY STREAMS
+	public static void verify_StreamsDetails(){
+		Actions.verifyElementPresent(Streams.runningFilterIcon, "Verify Running Filter Icon");
+		Actions.verifyElementPresent(Streams.completeFilterIcon, "Verify Complete Filter Icon");
+		Actions.verifyElementPresent(Streams.cancelFilterIcon, "Verify Cancel Filter Icon");
+		Actions.verifyElementPresent(Streams.notStartedFilterIcon, "Verify Not Started Filter Icon");
+		Actions.click(Streams.selectStreamOptions, "Select Stream Option"); 
+		Actions.verifyElementPresent(Streams.verifyAllStreamOption, "Verify All Stream Option");
+		Actions.verifyElementPresent(Streams.verifyMyStreamOption, "Verify My Stream Option");
+
+	}
+
+
+	//VERIFY STREAMS
+	public static void verify_TemplateDetails(){
+		Actions.verifyElementPresent(Streams.verifyExport, "Verify Export Icon");
+		Actions.verifyElementPresent(Streams.verifyImport, "Verify Import Icon");
+		Actions.verifyElementPresent(Streams.verifyFilterBy, "Verify Filter By:");
+		Actions.verifyElementPresent(Streams.verifyFilterRoundedOn, "Verify Filter By Rounded On");
+		Actions.verifyElementPresent(Streams.verifyFilterRoundedOff, "Verify Filter By Rounded Off");
+		Actions.verifyElementPresent(Streams.verifyTemplateTableName, "Verify Template Table Name");
+		Actions.verifyElementPresent(Streams.verifyTemplateTableStatus, "Verify Template Table Status");
+		Actions.verifyElementPresent(Streams.verifyTemplateTableOwner, "Verify Template Table Owner");
+		Actions.verifyElementPresent(Streams.verifyTemplateTableSteps, "Verify Template Table Steps");
+		Actions.verifyElementPresent(Streams.verifyTemplateTableInstances, "Verify Template Table Instances");
+		Actions.verifyElementPresent(Streams.verifyTemplateTableLastUsed, "Verify Template Table Last Used");
+		Actions.verifyElementPresent(Streams.verifyTemplateTableLastModified, "Verify Template Table Last Modified");
+		Actions.click(Streams.selectTemplateOptions, "Select Template Options");		
+		Actions.verifyElementPresent(Streams.verifyMyTemplates, "Verify My Template Option");
+		Actions.verifyElementPresent(Streams.verifyAllTemplates, "Verify My Stream Option");
+
+
+	}
+	public static void createTemplateWithOneStep(String templateName,String templateDesc,String tag1,String tag2,String streamOwner,String internalParticipant,String stepName,String stepDesc) throws InterruptedException{
+		RM_Social.navigateToActivityPage();
+		Actions.pause(1);
+		navigateToStreams();		
+		click_Templates();
+		click_CreateNewTemplate();
+		enterTemplateDetails(templateName, templateDesc, tag1, tag2);
+		enterStreamOwner(streamOwner);
+		enterInternalParticipant(internalParticipant);
+		click_saveTemplate();
+		click_addStep();
+		enterStepDetails(stepName, stepDesc);
+		dragAndDrop();
+		save_Step();
+		Global.minglePageLoad_Social();
+		activate();
+		Global.minglePageLoad_Social();
+	}
+
+	public static void createTemplateWithAllWidgets(String templateName,String templateDesc,String tag1,String tag2,String streamOwner,String internalParticipant,String stepName,String stepDesc) throws InterruptedException{
+
+
+		RM_Social.navigateToActivityPage();
+		Actions.pause(1);
+		navigateToStreams();		
+		click_Templates();	
+		click_CreateNewTemplate();
+		enterTemplateDetails(templateName, templateDesc, tag1, tag2);
+		enterStreamOwner(streamOwner);
+		enterInternalParticipant(internalParticipant);
+		click_saveTemplate();
+		click_addStep();
+		enterStepDetails(stepName, stepDesc);
+		dragAndDropToStep1();
+		save_Step();
+		click_addStep();
+		enterStepDetails(stepName, stepDesc);
+		dragAndDropToStep2();
+		save_Step();
+		Global.minglePageLoad_Social();
+		activate();
+		Global.minglePageLoad_Social();
+	}
+
+
+	public static void create_Streams(String templteName) {
+
+		Actions.pause(2);
+		navigateToStreams();		
+		startStreamInstance();
+		select_CreatedTemplate(templteName);
+		saveStream();
+		startStream();
+		Global.acceptConfirmation();
+		completeStream();
+		Global.acceptConfirmation();
+		deleteStream();
+		Global.acceptConfirmation();
+	}
+
+	//Start Stream
+	public static void start_Stream(String templteName){
+		navigateToStreams();		
+		startStreamInstance();
+		select_CreatedTemplate(templteName);
+		saveStream();
+		startStream();
+		Global.acceptConfirmation();
+	}
+
+	public static void delete_Stream(String templateName,String steps){
+		navigateToStreams();		
+		click_Streams();
+		Actions.click(By.xpath("//div[@title='"+templateName+"']/../descendant::div[contains(text(),'"+steps+"')]"), "Select Completed Stream");
+		deleteStream();
+		Global.acceptConfirmation();
+	}
+	public static void delete_Template(String templteName){
+		RM_Social.navigateToActivityPage();
+		navigateToStreams();		
+		click_Templates();	
+		select_CreatedTemplate(templteName);
+		deActivate();
+		deletTemplate();
+		Global.acceptConfirmation();
+		Global.minglePageLoad_Social();
+
+	}
+	//VERIFY FILTERS ON STREAMS
+	public static void verify_Streams(){
+		RM_Social.navigateToActivityPage();
+		Actions.pause(1);
+		navigateToStreams();	
+		verify_StreamsDetails();
+	}
+
+	//VERIFY TEMPLATES
+	public static void verify_Templates(){
+		RM_Social.navigateToActivityPage();
+		Actions.pause(1);
+		navigateToStreams();	
+		click_Templates();	
+		verify_TemplateDetails();
+	}
+	//VERIFY STREAM OWNER AND PARTICIPANT
+	public static void verify_StreamOwnerAndParticipant(String streamOwner,String participant){
+		String owner=Actions.getText(Streams.retrieve_Owner);
+		if(streamOwner.equals(owner)){
+			Actions.verifyElementPresent(Streams.retrieve_Owner,"Verify Owner");
+		}
+		String streamparticipant=Actions.getText(Streams.retrieve_InternalParticipant);
+		if(streamparticipant.equals(participant)){
+			Actions.verifyElementPresent(Streams.retrieve_InternalParticipant,"Verify Participant");
+		}
+
+	}
+	//VERIFY START STREAM
+	public static void verify_StartStream(String templateName){
+		navigateToStreams();		
+		startStreamInstance();
+		Global.minglePageLoad_Social();
+		By by=By.xpath("//div[contains(text(),'"+templateName+"')]");
+		Actions.verifyElement(by, templateName);
+	}
+	// It Creates Stream only And Another method is there for Start a Stream
+	public static void createStream(String templteName)
+	{
+		navigateToStreams();		
+		startStreamInstance();
+		select_CreatedTemplate(templteName);
+		saveStream();
+		startStream();
+	}
+	public static void verify_CanceledStream(String val){
+		String verify=Actions.getText(By.xpath("//div[contains(text(),'"+val+"')]"));
+		Actions.verifyString(verify, val);
+	}
+	public static void cancelStreamInstance(){
+		cancelStream();
+		verify_CanceledStream("Canceled");
+	}
+	public static void completeStreamInstance(){
+		completeStream();
+		verify_CanceledStream("Completed On");
+	}
+	public static void deleteStreamInstance(){
+		deleteStream();
+	}
+
+	public static void verify_TemplateOptions(){
+		RM_Social.navigateToActivityPage();
+		Actions.pause(1);
+		navigateToStreams();
+
+		click_Templates();
+		Actions.verifyElement(Streams.createNewTemplate, "Verify presence of template options");
+		Actions.verifyElement(Streams.verify_Template, "Verify Presence of 'Template'");
+
+	}
+
+	/**********************DEC 20-2016************************/
+
+	//start a step
+	public static void start_Step()
+	{
+		Actions.click(Streams.stepStartBtn, "start the step");
+	}
+
+
+	//Save step data
+	public static void save_StepData()
+	{
+		Actions.click(Streams.save_StepData, "Step data saved");
+	}
+
+	//Save step data
+	public static void complete_Step()
+	{
+		Actions.pause(1);
+		Actions.verifyElement(Streams.complete_StepBtn, "Verify presence of  complete step button");
+		Actions.click(Streams.complete_StepBtn, "click complete step button");
+	}
+
+
+	//click yes button
+	public static void clickYes()
+	{
+		Actions.click(Streams.yesBtn, "click on yes");
+	}
+
+	// start and complete a stream
+	public static void internal_startAndComplete(String templateName,String stepName,String defaultLabel)
+	{
+		RM_Social.navigateToActivityPage();
+		Actions.pause(1);
+
+		navigateToStreams();
+		Actions.click(By.xpath("//div[@title='"+templateName+"']"), "click created template");
+		Actions.verifyElement(By.xpath("//div[contains(text(),'"+stepName+"')]/../descendant::span[@data-bind-id='mingle-collapser']"), "Verify presence of drill down step");
+		Actions.click(By.xpath("//div[contains(text(),'"+stepName+"')]/../descendant::span[@data-bind-id='mingle-collapser']"), "click step drill down");
+		start_Step();
+		clickYes();
+	
+		Actions.pause(2);
+		save_StepData();
+		complete_Step();
+		clickYes();
+		if(Actions.verifyElementPresent(By.xpath("//div[@class='infor-save-success-tooltip']"), "Tool Tip"))
+		{
+			String msg=Actions.getText(By.xpath("//div[@class='infor-save-success-tooltip']"));
+			System.out.println(msg);
+			Actions.verifyElement(By.xpath("//div[@class='infor-save-success-tooltip']"), "Tool Tip Message");
+		}
+	}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+}

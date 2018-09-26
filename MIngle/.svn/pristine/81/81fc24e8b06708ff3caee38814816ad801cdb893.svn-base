@@ -1,0 +1,98 @@
+package scripts.ShellHeader;
+
+import org.testng.annotations.AfterClass;
+import org.testng.annotations.BeforeClass;
+import org.testng.annotations.Test;
+
+import com.relevantcodes.extentreports.ExtentTest;
+
+import actions.Actions;
+import objRepository.Global;
+import objRepository.Admin.UserSettings;
+import objRepository.Social.AppMenu;
+import objRepository.Social.Notifications;
+import objRepository.Social.Posts;
+import objRepository.Social.ShellHeader;
+import reusableMethods.RM_Social;
+import utility.Utility;
+
+public class Ts_VerifyUserMenu_13226 {
+	private Utility utl;
+	ExtentTest logger;
+
+	
+		@BeforeClass
+		public void setUp()
+		{
+			 utl=new Utility();
+			 utl.initTest(this.getClass().getName().substring(this.getClass().getName().lastIndexOf(".")+1).trim());
+			 new Actions();
+		
+		}
+		@AfterClass
+		public void tearDown() throws Exception
+		{
+			/*Utility.report.endTest(logger);
+			//Actions.driverClose();
+			Utility.report.flush();*/
+			Actions.logOutAndBrowserClose();
+			
+			//Utility.execute("C:\\Mingle_Project\\MIngle\\Mingle\\zipdemo.zip");
+		}
+		
+		@Test
+		public void VerifyUserMenu()
+		{
+			Global.login(Utility.getConfigData().get("USER7"), Utility.getConfigData().get("PASSWORD"));
+			//Actions.pause(3);
+			//RActivityFeed.navigateToActivityPage();
+			//Verify Notifications Sections in UserMenu
+			Actions.click(ShellHeader.userMenu, "Click on UserMenu");
+			Actions.verifyElement(ShellHeader.userMenu_Notifications, "Notifications");
+			Actions.click(ShellHeader.userMenu_Notifications, "Click On Notifications");
+			Actions.switchtoFrame(Global.socialCLFrame, "Switch To Social Frame");
+			Actions.verifyElement(Notifications.myNotifications, "'My Notifications'");
+			Actions.switchToDefaultContent();
+			//Verify Posts Section in UserMenu
+			Actions.click(ShellHeader.userMenu, "Click on UserMenu");
+			Actions.verifyElement(ShellHeader.userMenu_Post, "'Post'");
+			Actions.click(ShellHeader.userMenu_Post, "Click On 'Post'");
+			Actions.switchtoFrame(Global.socialCLFrame, "Switch To Social Frame");
+			Actions.verifyElement(Posts.myPosts, "'My Posts'");
+			Actions.switchToDefaultContent();
+			//Verify UserSettings Section in UserMenu
+			Actions.click(ShellHeader.userMenu, "Click on UserMenu");
+			Actions.verifyElement(ShellHeader.userMenu_UserSettings, "'User Settings'");
+			Actions.click(ShellHeader.userMenu_UserSettings, "Click On 'User Settings'");
+			Actions.switchtoFrame(Global.socialCLFrame, "Switch To Social Frame");
+			Actions.verifyElement(UserSettings.profileInformation, "'Profile Information'");
+			Actions.switchToDefaultContent();
+			//Verify Help Section in UserMenu
+			Actions.click(ShellHeader.userMenu, "Click on UserMenu");
+			String url=Actions.getAttribute(ShellHeader.userMenu_Help, "href");
+			Actions.verifyString(url, Utility.getTestData().get("HELP_URL"));
+			String pid=Actions.getParentWindowID();
+			Actions.click(ShellHeader.userMenu_Help, "Click On 'Help'");
+			String cid=Actions.getChildWindowID(pid);
+			Actions.switchToWindow(cid);
+			Actions.verifyElement(ShellHeader.userMenu_Help_Version, "'App Version'");
+			Utility.getDriver().close();
+			Actions.switchToWindow(pid);
+			
+			//Verify About Section in UserMenu
+			Actions.click(ShellHeader.userMenu, "Click on UserMenu");
+			Actions.verifyElement(ShellHeader.userMenu_About, "'About'");
+			Actions.click(ShellHeader.userMenu_About, "Click On 'About'");
+			Actions.verifyElement(ShellHeader.userMenu_About_InforHeading, "'Infor Ming.le ™'");
+			Actions.click(ShellHeader.userMenu_About_CloseIcon, "Click On 'CloseIcon'");
+			Actions.switchToDefaultContent();
+			
+			
+			
+			
+			
+			
+			
+		}
+
+}

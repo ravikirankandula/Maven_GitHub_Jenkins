@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+<suite name="suite1">
+<!-- <listeners>
+		<listener class-name="utility.RetryListener" />
+	</listeners> -->
+	<test name="chrome">
+	<parameter name="Browser" value="ie" />
+		<classes>
+		
+	  
+			 <class name="utility.Utility" />
+			 
+			<!-- <class name="scripts.ActivityFeed.Ts_MakeConReqAndAcceptConnectionRequest_13238" />
+ 			<class name="scripts.IONAPI.Ts_CreateNonProvisionedSuite_13392" />  
+  			<class name="scripts.IONAPI.Ts_CreateAndroidMobileApp_13383" /> 
+  			<class name="scripts.IONAPI.Ts_CreateBackendDownloadServices_13387" />  
+			<class name="scripts.IONAPI.Ts_CreateIOSMobileApp_13385" />    
+			<class name="scripts.IONAPI.Ts_CreateMobileBackendServiceApp_13388" />    
+			<class name="scripts.IONAPI.Ts_CreateNonInforSuite_13393" />    
+			<class name="scripts.IONAPI.Ts_CreateOtherMobileApp_13386" />    
+			<class name="scripts.IONAPI.Ts_CreateWebApp_13389" />    
+			<class name="scripts.IONAPI.Ts_CreateWindowsMobileApp_13384" />     
+			<class name="scripts.IONAPI.Ts_VerifyMobileApps_13390" />    
+			<class name="scripts.IONAPI.Ts_VerifyProvisionedAPISuite_13391" />   
+			<class name="scripts.Admin.Ts_CreateContextApp_13284" /> 
+			<class name="scripts.Admin.Ts_CreateInforNonProvisonedApp_13279" /> 
+			<class name="scripts.Admin.Ts_CreateInforProvisionedApp_13282" /> 
+			<class name="scripts.Admin.Ts_CreateNonInforApp_13280" /> 
+			<class name="scripts.Admin.Ts_CreateUtilityApp_13283" /> 
+ 			<class name="scripts.Admin.Ts_MenuOptionsForMingleAdminRole_13394" /> 
+			<class name="scripts.Admin.Ts_MenuOptionsForInforSysAdminRole_13395" />  
+ 			<class name="scripts.Admin.Ts_MenuOptionsForMingleEnterpriseRole_13396" /> 
+			<class name="scripts.Admin.Ts_MenuOptionsForMingleIONEnabledRole_13397" /> 
+			<class name="scripts.Admin.Ts_CreateBookMarkForTestApp_13398" /> 
+
+
+    		   <class name="scripts.ShellHeader.Ts_VerifyIconOnSh_13224" />
+			   <class name="scripts.ShellHeader.Ts_VerifyAppSwitchIconOnSh_13225" /> 
+			   <class name="scripts.ShellHeader.Ts_VerifyUserMenu_13226" /> 
+			   <class name="scripts.ShellHeader.Ts_CreateBookmark_13227" /> 
+			   <class name="scripts.ShellHeader.Ts_EditBookmarkName_13229" /> 
+			   <class name="scripts.ShellHeader.Ts_CreateBookmarkForStreamsPage_13231" /> 
+			   <class name="scripts.ShellHeader.Ts_ShareMsgToConUsersFromShellShare_13233" /> 
+			   <class name="scripts.ShellHeader.Ts_ShareMsgToPublicUsersFromShellShare_13234" /> 
+			   <class name="scripts.ShellHeader.Ts_SharePostToTaggedUsers_13235" /> 
+			   <class name="scripts.ShellHeader.Ts_SharePostToTaggedGroup_13236" />  
+			   <class name="scripts.ShellHeader.Ts_ShareMsgToRunningStream_13237" />
+			   <class name="scripts.ShellHeader.Ts_ShareMsgToNewStream_13461" />
+			   
+			   <class name="scripts.ActivityFeed.Ts_VerifyNotificationOnTaggedUsersNotificationPage_13259" />
+			   <class name="scripts.ActivityFeed.Ts_VerifyNotificationForConReqOnNotificationPage_13260" />
+			   <class name="scripts.ActivityFeed.Ts_CreateGroupAndInviteMember_13272" />
+			   <class name="scripts.ActivityFeed.Ts_PostToConnectedUsers_13257" />
+			   <class name="scripts.ActivityFeed.Ts_PostToPublicUsers_13258" />
+			   <class name="scripts.ActivityFeed.Ts_PostToTagUserFromFeedPage_13261" />
+			   <class name="scripts.ActivityFeed.Ts_PostToTagGroupFromFeedPage_13262" />
+			   <class name="scripts.ActivityFeed.Ts_MakePostToRunningStreamFromActivityFeedPage_13263" />
+			   <class name="scripts.ActivityFeed.Ts_MakePostToNewStreamFromActivityFeedPage_13264" />
+			   <class name="scripts.ActivityFeed.Ts_SharePostToConUsersFromFeedPage_13267" />
+			   <class name="scripts.ActivityFeed.Ts_SharePostToPublicUsersFromFeedPgae_13268" />
+			   <class name="scripts.ActivityFeed.Ts_SharePostToTaggedUsersFromFeedPage_13269" />
+			   <class name="scripts.ActivityFeed.Ts_SharePostFromFeedPageToTaggedGroup_13271" />
+			   <class name="scripts.ActivityFeed.Ts_SharePostToRunningStreamFromFeedPage_13270" />
+			   <class name="scripts.ActivityFeed.Ts_SharePostToNewStreamFromFeedPage_13400" />
+			   <class name="scripts.ActivityFeed.Ts_DeleteFeedByAdmin_13273" />
+			   <class name="scripts.ActivityFeed.Ts_VerifyGroupOnRecGroupsFromFeedPage_13401" />
+			   <class name="scripts.ActivityFeed.Ts_LikeAndUnlikePostFromActivityFeedPage_13265" />
+			   <class name="scripts.ActivityFeed.Ts_ShowPostDetailsFromActivityFeedPage_13266" />
+			   <class name="scripts.ActivityFeed.Ts_MakePostWithAttachmentOnFeedPage_13276" />
+			   <class name="scripts.ActivityFeed.Ts_VerifyConnectionsAndFollowingPanels_13277" />
+			   <class name="scripts.ActivityFeed.Ts_VerifyDirectoryPageControls_13242" />
+			   <class name="scripts.ActivityFeed.Ts_FollowUser_13239" />
+			   <class name="scripts.ActivityFeed.Ts_MakePostOnGroupProfilePage_13278" />
+			   <class name="scripts.ActivityFeed.Ts_CancelConReq_13240" />
+			   <class name="scripts.ActivityFeed.Ts_ConnectedUsersProfilePage_PostMessage_13274" />
+			   <class name="scripts.ActivityFeed.Ts_VerifyPostOnConnectedUsersPostPage_13772" />
+			   <class name="scripts.ActivityFeed.Ts_VerifyPostOnPublicUsersPostPage_13773" />
+			   <class name="scripts.ActivityFeed.Ts_DeletePostPromptONOFF_13277" />
+			   
+			   		
+			   <class name="scripts.ActivityFeed.DisconnectUser_13241" />
+			   <class name="scripts.ActivityFeed.DeleteGroup" /> -->
+			   
+			   <class name="scripts.america_Srch.Ts1_Serach" />
+			   
+		</classes>
+	
+	
+	</test>
+
+
+  
+
+
+</suite>

@@ -1,0 +1,64 @@
+package scripts.ActivityFeed;
+
+import org.apache.commons.lang3.RandomStringUtils;
+import org.testng.annotations.AfterClass;
+import org.testng.annotations.AfterMethod;
+import org.testng.annotations.BeforeClass;
+import org.testng.annotations.Test;
+
+import actions.Actions;
+import objRepository.Global;
+import objRepository.Social.ActivityFeed;
+import reusableMethods.RM_Social;
+import utility.Utility;
+
+public class Ts_VerifyGroupOnRecGroupsFromFeedPage_13401 {
+	private Utility utl;
+	//ExtentTest logger;
+
+		@BeforeClass
+		public void setUp()
+		{
+			 utl=new Utility();
+			 //logger=
+			 utl.initTest(this.getClass().getName().substring(this.getClass().getName().lastIndexOf(".")+1).trim());
+			 new Actions();
+		
+		}
+		@AfterMethod
+		public void logOutAndBrowserClose()
+		{
+			Actions.logOutAndBrowserCloseMU();
+		}
+		@AfterClass
+		public void endReport() throws Exception
+		{
+			Actions.endScriptReportMU();
+			
+			
+		}
+		String time=RandomStringUtils.randomNumeric(4);
+		
+		private String groupName="TestGroup"+time;
+		@Test(priority=2)
+		public void createGroup(){
+			Global.login(Utility.getConfigData().get("USER7"), Utility.getConfigData().get("PASSWORD"));
+			//Actions.pause(3);
+			RM_Social.createGroup(groupName);
+			/*Actions.pause(3);
+			RM_Social.inviteToGroup(Utility.getTestData().get("FULLNAME_USER9"));*/
+			
+		}
+		
+		@Test(dependsOnMethods={"createGroup"})
+		public void postMessage()
+		{
+			Global.login(Utility.getConfigData().get("USER5"), Utility.getConfigData().get("PASSWORD"));
+			//Actions.pause(3);
+			RM_Social.navigateToActivityPage();
+			RM_Social.verifyGroupInRecomendedGroupList(groupName);
+			
+		}
+		
+
+}

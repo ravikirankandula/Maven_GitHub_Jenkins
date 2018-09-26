@@ -1,0 +1,72 @@
+/**
+ * 
+ */
+package scripts.IFS;
+
+import java.io.IOException;
+import java.util.HashMap;
+
+
+import org.openqa.selenium.WebDriver;
+import org.testng.annotations.AfterClass;
+import org.testng.annotations.BeforeClass;
+
+import com.relevantcodes.extentreports.ExtentTest;
+
+import actions.Actions;
+import objRepository.Global;
+import reusableMethods.RM_IFS;
+import utility.Utility;
+
+
+public class Ts_UpdateUserInfor_13285 {
+	WebDriver driver;
+	ExtentTest logger;
+	Global global;
+	
+	private Utility utl;
+	
+	@BeforeClass
+	public void setup()
+	{
+		 utl=new Utility();
+		 logger=utl.initTest(this.getClass().getName().substring(this.getClass().getName().lastIndexOf(".")+1).trim());
+		 new Actions();
+	
+	}
+	@AfterClass
+	public void tearDown() throws Exception
+	{
+	
+	Utility.report.endTest(logger);
+	
+	}
+	
+	
+
+	@org.testng.annotations.Test
+	public void test() throws InterruptedException{
+		 HashMap<String, String> configData=Utility.getConfigData();
+			
+			//TESTDATA
+			 String userName=configData.get("USER1");	
+	
+		 String pwd=configData.get("PASSWORD");
+		 String emailID=configData.get("USER8");
+		
+		
+		//LOGIN
+		Global.login(userName,pwd);
+		
+		//UPDATE USER INFORMATION
+		RM_IFS.update_UserInfor_EmailCheckOut(emailID);
+		//LOGOUT
+		Global.logOut();
+		//DRIVER CLOSE
+		Actions.driverClose();
+		
+	}
+	
+
+	
+}

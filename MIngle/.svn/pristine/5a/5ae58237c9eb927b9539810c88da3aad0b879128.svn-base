@@ -1,0 +1,90 @@
+/**
+ * 
+ */
+package scripts.Admin;
+
+import java.util.HashMap;
+import com.relevantcodes.extentreports.ExtentTest;
+
+import actions.Actions;
+import objRepository.Global;
+import reusableMethods.RM_Admin;
+import utility.Utility;
+
+import org.apache.commons.lang3.RandomStringUtils;
+import org.testng.annotations.AfterClass;
+import org.testng.annotations.BeforeClass;
+
+public class Ts_CreateContextApp_13284 {
+	ExtentTest logger;
+	private Utility utl;
+	 HashMap<String, String> testData=Utility.getTestData();
+	 HashMap<String, String> configData=Utility.getConfigData();
+		
+		//TESTDATA
+		 String userName=configData.get("USER5");	
+		 String pwd=configData.get("PASSWORD");
+		 String appType=testData.get("CONTEXTAPP");
+		 String name=testData.get("CONTEXTAPP_NAME");
+		 String desc=testData.get("UTILITYAPP_DESC");
+		 String url=testData.get("UTLITYAPP_URL");
+		 String helpurl=testData.get("UTILTYAPP_HELPURL");
+		 String selectApp=testData.get("CONTEXT_APPSELECTION");
+		
+		 String applicationName=name+RandomStringUtils.randomNumeric(3);
+	
+	@BeforeClass
+	public void setUp()
+	{
+		 utl=new Utility();
+		 logger=utl.initTest(this.getClass().getName().substring(this.getClass().getName().lastIndexOf(".")+1).trim());
+		 new Actions();
+	
+	}
+	@AfterClass
+	public void tearDown()
+	{
+		Utility.report.endTest(logger);
+		//Actions.driverClose();
+	
+	}
+	
+	
+
+
+	@org.testng.annotations.Test(priority =1)
+	public void create_App(){
+		try {
+			
+			//LOGIN
+			Global.login(userName,pwd);
+			RM_Admin.addContextOrUtitlityApp(appType, applicationName, desc, url, helpurl);
+			
+			
+			//Global.logOut();
+		} catch (Exception e) {
+			
+		}finally
+		{
+			Global.logOut();
+			Actions.driverClose();
+			rb_DeleteApp();
+		}
+	}
+	//@org.testng.annotations.Test(priority =2, dependsOnMethods ="create_App")
+	public void rb_DeleteApp()
+	{
+		try {
+			Global.login(userName,pwd);
+			RM_Admin.delete_ContextOrUtitlityApp(applicationName);
+			//Global.logOut();
+		} catch (Exception e) {
+			
+		}
+		finally
+		{
+			Global.logOut();
+			Actions.driverClose();
+		}
+	}
+}

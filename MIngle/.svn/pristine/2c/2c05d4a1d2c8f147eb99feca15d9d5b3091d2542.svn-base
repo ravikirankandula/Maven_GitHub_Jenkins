@@ -1,0 +1,151 @@
+package scripts.ActivityFeed;
+
+import java.util.HashMap;
+
+import org.apache.commons.lang3.RandomStringUtils;
+import org.testng.annotations.AfterClass;
+import org.testng.annotations.BeforeClass;
+import org.testng.annotations.Test;
+
+import com.relevantcodes.extentreports.ExtentTest;
+
+import actions.Actions;
+import objRepository.Global;
+import objRepository.Social.ActivityFeed;
+import objRepository.Social.ShellHeader;
+import reusableMethods.RM_Admin;
+import reusableMethods.RM_Social;
+import utility.Utility;
+
+
+public class Ts_DeletePostPromptONOFF_13277 {
+
+	ExtentTest logger;
+	Utility utl;
+	 HashMap<String, String> testData=Utility.getTestData();
+	 HashMap<String, String> configData=Utility.getConfigData();
+		//TESTDATA
+		 String userName=configData.get("USER6");
+		 String pwd=configData.get("PASSWORD");
+		
+	@BeforeClass
+	public void setUp()
+	{
+		 utl=new Utility();
+		 utl.initTest(this.getClass().getName().substring(this.getClass().getName().lastIndexOf(".")+1).trim());
+		 new Actions();
+	
+	}
+	@AfterClass
+	public void tearDown() throws Exception
+	{
+		/*Utility.report.endTest(logger);
+		//Actions.driverClose();
+		Utility.report.flush();*/
+		Actions.logOutAndBrowserClose();
+		
+		//Utility.execute("C:\\Mingle_Project\\MIngle\\Mingle\\zipdemo.zip");
+	}
+	String time=RandomStringUtils.randomNumeric(4);
+	String msg=Utility.getTestData().get("POSTMSG")+time;
+	@Test
+	public void getTitle() throws InterruptedException
+	{
+		try{
+		//LOGIN INTO THE APPLICATION
+			Global.login(Utility.getConfigData().get("USER7"),Utility.getConfigData().get("PASSWORD"));
+			RM_Social.navigateToActivityPage();
+			// Code to Post Message
+			RM_Social.typeMessageInAFP(msg);
+			RM_Social.clickOnPostBtnInAFP();
+			RM_Social.verifyMessage(msg);
+			//Navigate to User Settings
+			Actions.switchToDefaultContent();
+		RM_Admin.navigateToMenu("User Settings");
+		//Actions.pause(10);
+		Actions.switchtoFrame(Global.socialCLFrame, "Switch to social");
+		Global.minglePageLoad_Social();
+		Actions.verifyElement(ShellHeader.userMenu_UserSettings_ProfileInformationHeading, "Profile Information");
+		Actions.scrollToElement(ShellHeader.userMenu_UserSettings_deletePostSwitch_LabelTag);
+		Actions.makeElementVisible("", ShellHeader.userMenu_UserSettings_deletePostSwitch_InputTag);
+		// Code to Make Post Prompt ON on First attempt
+		if(!Actions.isChecked(ShellHeader.userMenu_UserSettings_deletePostSwitch_InputTag))
+		{
+			//Actions.pause(2);
+			Actions.scrollToElement(ShellHeader.userMenu_UserSettings_deletePostSwitch_LabelTag);
+			Actions.pause(2);
+			Actions.click(ShellHeader.userMenu_UserSettings_deletePostSwitch_LabelTag, "Turn ON the Delete Post Prompt Switch");
+			Actions.click(ShellHeader.userMenu_UserSettings_SaveBtn, "Click on Save button");
+			Global.minglePageLoad_Social();
+			Global.verifySaveSuccesstooltipMsg();
+		}
+		System.out.println(Actions.isChecked(ShellHeader.userMenu_UserSettings_deletePostSwitch_InputTag));
+		
+		// Code to Verify Prompt is Displayed
+		RM_Social.clickOnActivityFeed();
+		Actions.click(ActivityFeed.Delete_Post, "Click On Delete Button");
+		Actions.verifyElement(Global.yes, "Confirmatiom PopUp");
+		Global.declineConfirmation();
+		Actions.pause(1);
+		
+		//Code to Turn OFF Prompt Switch
+		Actions.switchToDefaultContent();
+		RM_Admin.navigateToMenu("User Settings");
+		Actions.switchtoFrame(Global.socialCLFrame, "Switch to social");
+		Global.minglePageLoad_Social();
+		
+		Actions.verifyElement(ShellHeader.userMenu_UserSettings_ProfileInformationHeading, "Profile Information");
+		Actions.scrollToElement(ShellHeader.userMenu_UserSettings_deletePostSwitch_LabelTag);
+		if(Actions.isChecked(ShellHeader.userMenu_UserSettings_deletePostSwitch_InputTag))
+		{
+			//Actions.pause(10);
+			//Actions.scrollToElement(ShellHeader.userMenu_UserSettings_deletePostSwitch_LabelTag);
+			Actions.pause(2);
+			Actions.click(ShellHeader.userMenu_UserSettings_deletePostSwitch_LabelTag, "Turn OFF the Delete Post Prompt Switch");
+			Actions.click(ShellHeader.userMenu_UserSettings_SaveBtn, "Click on Save button");
+			Global.minglePageLoad_Social();
+			Global.verifySaveSuccesstooltipMsg();
+		}
+		System.out.println(Actions.isChecked(ShellHeader.userMenu_UserSettings_deletePostSwitch_InputTag));
+		RM_Social.clickOnActivityFeed();
+		Actions.click(ActivityFeed.Delete_Post, "Click On Delete Button");
+		Actions.verifyElementNotPresent(Global.yes, "Confirmatiom PopUp");
+		//Global.declineConfirmation();
+		Actions.pause(1);
+		
+		//Code to Turn ON Prompt Switch
+				Actions.switchToDefaultContent();
+				RM_Admin.navigateToMenu("User Settings");
+				
+				Actions.switchtoFrame(Global.socialCLFrame, "Switch to social");
+				Global.minglePageLoad_Social();
+				
+				Actions.scrollToElement(ShellHeader.userMenu_UserSettings_deletePostSwitch_LabelTag);
+		if(!Actions.isChecked(ShellHeader.userMenu_UserSettings_deletePostSwitch_InputTag))
+		{
+			//Actions.pause(10);
+			//Actions.scrollToElement(ShellHeader.userMenu_UserSettings_deletePostSwitch_LabelTag);
+			Actions.pause(2);
+			Actions.click(ShellHeader.userMenu_UserSettings_deletePostSwitch_LabelTag, "Turn ON the Delete Post Prompt Switch");
+			Actions.click(ShellHeader.userMenu_UserSettings_SaveBtn, "Click on Save button");
+			Global.minglePageLoad_Social();
+			Global.verifySaveSuccesstooltipMsg();
+		}
+		System.out.println(Actions.isChecked(ShellHeader.userMenu_UserSettings_deletePostSwitch_InputTag));
+		
+
+
+		
+
+	} catch (Exception e) {
+		
+		
+	}
+		finally{
+		
+			
+			
+		}
+		
+	}
+}

@@ -1,0 +1,96 @@
+package scripts.Directory;
+
+import java.awt.AWTException;
+import java.util.List;
+import java.util.concurrent.TimeUnit;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.ie.InternetExplorerDriver;
+import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.remote.DesiredCapabilities;
+import org.sikuli.script.FindFailed;
+import org.sikuli.script.Pattern;
+import org.sikuli.script.Screen;
+import org.testng.annotations.Test;
+
+public class sikuli {
+	@Test
+	public void test() throws InterruptedException, AWTException{
+		System.out.println("inthe ,main");
+		DesiredCapabilities capabilities = DesiredCapabilities.internetExplorer();
+	     /*capabilities.setCapability(InternetExplorerDriver.INTRODUCE_FLAKINESS_BY_IGNORING_SECURITY_DOMAINS, true);
+	     capabilities.setCapability("requireWindowFocus", true);*/
+		capabilities.setCapability("nativeEvents", false);    
+		capabilities.setCapability("unexpectedAlertBehaviour", "accept");
+		capabilities.setCapability("ignoreProtectedModeSettings", true);
+		capabilities.setCapability("disable-popup-blocking", false);
+		capabilities.setCapability("enablePersistentHover", false); 
+
+		System.setProperty("webdriver.ie.driver",".\\lib\\IEDriverServer.exe");
+		WebDriver d=new InternetExplorerDriver(capabilities);
+		d.get("https://mingletrial06-portal.mingledev.infor.com/AUTODEMOQA_TST");
+		Thread.sleep(3000);
+		//d.findElement(By.xpath("//div[@tabindex='1']")).click();
+		//Thread.sleep(3000);
+		d.manage().window().maximize();
+		d.findElement(By.id("name")).sendKeys("mingleqatest12@gmail.com");
+		d.findElement(By.id("password")).sendKeys("Password1!");
+		d.findElement(By.id("submit")).click();
+		Thread.sleep(10000);
+		d.findElement(By.xpath("//button[@title='App Menu']")).click();
+		Thread.sleep(8000);
+		d.findElement(By.xpath("//a[@title='ION Desk']")).click();
+		Thread.sleep(38000);
+		List<WebElement> frameList=d.findElements(By.tagName("iframe"));
+		System.out.println(frameList.size());
+	/*	WebElement iframe3=d.findElement(By.id("emptyFrame"));
+		d.switchTo().frame(iframe3);*/
+		 d.manage().timeouts().implicitlyWait(15, TimeUnit.SECONDS);
+		WebElement iframe1=d.findElement(By.xpath("//iframe[contains(@name,'iondesk_')]"));
+		d.switchTo().frame(iframe1);
+				
+		String text=d.findElement(By.xpath("//div[@title='Status Overview']")).getText();
+		System.out.println(text+"Print hte value");
+		WebElement youButton = d.findElement(By.cssSelector("svg g[id='icon-menu']"));
+		// WebElement youButton1 = d.findElement(By.cssSelector("//*[local-name()='svg' and namespace-uri()='http://www.w3.org/2000/svg']//*[local-name()='g'][@id='icon-menu']")); 
+		// youButton.click();
+		// ((JavascriptExecutor) d).executeScript("arguments[0].click();", youButton);
+		 Actions builder = new Actions(d);
+			builder.moveToElement(youButton).click(youButton).build().perform();
+		Thread.sleep(1000);
+		d.findElement(By.xpath("//div[@title='Model']")).click();
+		Thread.sleep(1000);
+		d.findElement(By.xpath("//div[@title='Monitors & Workflows']")).click();
+		Thread.sleep(1000);
+		d.findElement(By.xpath("//div[text()='Workflows']")).click();
+		Thread.sleep(15000);
+		//d.switchTo().defaultContent();
+		WebElement iframe2=d.findElement(By.name("workflowdesk"));
+		d.switchTo().frame(iframe2);
+		d.findElement(By.xpath("//div[@title='Add new workflow']")).click();
+				
+Screen s=new Screen();
+Pattern task=new Pattern(".\\sikuli\\1483524262102.png");
+Pattern desti=new Pattern(".\\sikuli\\1483526252204.png");
+//Pattern desti2 = new Pattern("C:\\sikuli.sikuli\\1483524760955.png"); 
+Pattern notif = new Pattern(".\\sikuli\\1483521813308.png");
+try {
+	s.dragDrop(task,desti);
+	Thread.sleep(4000);
+	s.dragDrop(notif,desti);
+	Thread.sleep(2000);
+	s.dragDrop(task,desti);
+	Thread.sleep(2000);
+	s.dragDrop(task,desti);
+} catch (FindFailed e) {
+	// TODO Auto-generated catch block
+	e.printStackTrace();
+}
+
+
+	}
+}
+
+

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testng-results skipped="0" failed="0" ignored="0" total="1" passed="1">
+  <reporter-output>
+  </reporter-output>
+  <suite name="suite1" duration-ms="156783" started-at="2017-05-18T06:41:49Z" finished-at="2017-05-18T06:44:25Z">
+    <groups>
+    </groups>
+    <test name="chrome" duration-ms="156783" started-at="2017-05-18T06:41:49Z" finished-at="2017-05-18T06:44:25Z">
+      <class name="scripts.america_Srch.Ts1_Serach">
+        <test-method status="PASS" signature="setUp()[pri:0, instance:scripts.america_Srch.Ts1_Serach@5b87ed94]" name="setUp" is-config="true" duration-ms="7" started-at="2017-05-18T12:11:49Z" finished-at="2017-05-18T12:11:49Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- setUp -->
+        <test-method status="PASS" signature="create_App()[pri:1, instance:scripts.america_Srch.Ts1_Serach@5b87ed94]" name="create_App" duration-ms="156744" started-at="2017-05-18T12:11:49Z" finished-at="2017-05-18T12:14:25Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- create_App -->
+        <test-method status="PASS" signature="tearDown()[pri:0, instance:scripts.america_Srch.Ts1_Serach@5b87ed94]" name="tearDown" is-config="true" duration-ms="2" started-at="2017-05-18T12:14:25Z" finished-at="2017-05-18T12:14:25Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- tearDown -->
+      </class> <!-- scripts.america_Srch.Ts1_Serach -->
+      <class name="utility.Utility">
+        <test-method status="PASS" signature="startReport()[pri:0, instance:utility.Utility@7fac631b]" name="startReport" is-config="true" duration-ms="1136" started-at="2017-05-18T12:11:48Z" finished-at="2017-05-18T12:11:49Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- startReport -->
+        <test-method status="PASS" signature="setUpBrowser(java.lang.String)[pri:0, instance:utility.Utility@7fac631b]" name="setUpBrowser" is-config="true" duration-ms="1" started-at="2017-05-18T12:11:49Z" finished-at="2017-05-18T12:11:49Z">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[ie]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- setUpBrowser -->
+        <test-method status="PASS" signature="endReport()[pri:0, instance:utility.Utility@7fac631b]" name="endReport" is-config="true" duration-ms="882" started-at="2017-05-18T12:14:25Z" finished-at="2017-05-18T12:14:26Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- endReport -->
+      </class> <!-- utility.Utility -->
+    </test> <!-- chrome -->
+  </suite> <!-- suite1 -->
+</testng-results>

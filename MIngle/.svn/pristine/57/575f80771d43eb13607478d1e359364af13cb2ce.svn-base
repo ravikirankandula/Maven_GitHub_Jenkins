@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite guice-stage="DEVELOPMENT" name="Failed suite [Failed suite [suite1]]">
+  <parameter name="Browser" value="firefox"/>
+  <listeners>
+    <listener class-name="utility.RetryListener"/>
+  </listeners>
+  <test name="Chrome(failed)(failed)">
+    <parameter name="Browser" value="firefox"/>
+    <classes>
+      <class name="utility.Utility">
+        <methods>
+          <include name="endReport"/>
+          <include name="startReport"/>
+          <include name="setUpBrowser"/>
+        </methods>
+      </class> <!-- utility.Utility -->
+      <class name="mingle.ActivityFeed.CreateStreamAndDelete">
+        <methods>
+          <include name="setup"/>
+          <include name="test"/>
+          <include name="tearDown"/>
+        </methods>
+      </class> <!-- mingle.ActivityFeed.CreateStreamAndDelete -->
+      <class name="mingle.ActivityFeed.Browser">
+        <methods>
+          <include name="setUpBrowser"/>
+        </methods>
+      </class> <!-- mingle.ActivityFeed.Browser -->
+    </classes>
+  </test> <!-- Chrome(failed)(failed) -->
+</suite> <!-- Failed suite [Failed suite [suite1]] -->

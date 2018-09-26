@@ -1,0 +1,67 @@
+/**
+ * 
+ */
+package scripts.IFS;
+
+import java.util.HashMap;
+
+import org.openqa.selenium.WebDriver;
+import org.testng.annotations.AfterClass;
+import org.testng.annotations.BeforeClass;
+
+import com.relevantcodes.extentreports.ExtentTest;
+
+import actions.Actions;
+import objRepository.Global;
+import reusableMethods.RM_IFS;
+import utility.Utility;
+
+
+
+public class Ts_VerifyEntriesFromActivityTabUnderUserScreen_13290 {
+	WebDriver driver;
+	ExtentTest logger;
+	Global global;
+	
+	private Utility utl;
+	
+	@BeforeClass
+	public void setup()
+	{
+		 utl=new Utility();
+		 logger=utl.initTest(this.getClass().getName().substring(this.getClass().getName().lastIndexOf(".")+1).trim());
+		 new Actions();
+	
+	}
+	@AfterClass
+	public void tearDown()
+	{
+	
+	Utility.report.endTest(logger);
+	}
+	
+	
+
+	@org.testng.annotations.Test
+	public void test() throws InterruptedException{
+		 HashMap<String, String> testData=Utility.getTestData();
+		 HashMap<String, String> configData=Utility.getConfigData();
+			
+			//TESTDATA
+			 String userName=configData.get("USER1");	
+		 String pwd=configData.get("PASSWORD");
+		 String emailID=configData.get("USER8");
+		 /*String altManager=configData.get("USER1");
+		 String expectedAltManager=testData.get("EXPALTMANAGER");
+		 String altManagerDetails=testData.get("ALTMANAGERDETAILS");*/
+		//LOGIN
+		Global.login(userName,pwd);
+		RM_IFS.verify_ActiviytTab(emailID);
+		
+		//LOGOUT
+		Global.logOut();
+		//DRIVER CLOSE
+		Actions.driverClose();
+	}
+	
+}

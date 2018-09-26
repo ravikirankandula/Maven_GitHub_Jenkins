@@ -1,0 +1,79 @@
+package scripts.IFS;
+
+import java.util.HashMap;
+
+import org.testng.annotations.AfterClass;
+import org.testng.annotations.BeforeClass;
+
+import com.relevantcodes.extentreports.ExtentTest;
+
+import actions.Actions;
+import objRepository.Global;
+import reusableMethods.RM_IFS;
+import utility.Utility;
+
+public class Ts_DocumentAuthorization_13308
+{
+	ExtentTest logger;
+	private Utility utl;
+	 HashMap<String, String> testData=Utility.getTestData();
+	 HashMap<String, String> configData=Utility.getConfigData();
+		
+		//TESTDATA
+		 String userName=configData.get("USER1");
+		 String pwd=configData.get("PASSWORD");
+		 String role1=testData.get("DOC_SECURITYROLE1");
+		 String doctypes=testData.get("DOC_DOCTYPES");
+		 
+	@BeforeClass
+	public void setUp()
+	{
+		 utl=new Utility();
+		 logger=utl.initTest(this.getClass().getName().substring(this.getClass().getName().lastIndexOf(".")+1).trim());
+		 new Actions();
+	
+	}
+	@AfterClass
+	public void tearDown()
+	{
+		Utility.report.endTest(logger);
+		//Actions.driverClose();
+	
+	}
+	
+
+
+	@org.testng.annotations.Test(priority =1)
+	public void accountingChart_AddRole(){
+		try {
+			
+			//LOGIN
+			Global.login(userName,pwd);
+			RM_IFS.accountingChart_AddRole(role1);
+			RM_IFS.verify_MappedRoles(doctypes,"1");
+			
+		} catch (Exception e) {
+			
+		}finally
+		{
+			Global.logOut();
+			Actions.driverClose();
+			rb_AddRole();
+		}
+	}
+	//@org.testng.annotations.Test(priority =2, dependsOnMethods ="dgImport_Export")
+	public void rb_AddRole()
+	{
+		try {
+			Global.login(userName,pwd);
+			RM_IFS.rb_accountingChart_AddRole();
+		} catch (Exception e) {
+			
+		}
+		finally
+		{
+			Global.logOut();
+			Actions.driverClose();
+		}
+	}
+}

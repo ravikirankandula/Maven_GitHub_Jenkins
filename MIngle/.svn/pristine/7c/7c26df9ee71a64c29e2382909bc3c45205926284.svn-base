@@ -1,0 +1,101 @@
+package scripts.ActivityFeed;
+
+import org.apache.commons.lang3.RandomStringUtils;
+import org.testng.annotations.AfterClass;
+import org.testng.annotations.AfterMethod;
+import org.testng.annotations.BeforeClass;
+import org.testng.annotations.Test;
+
+import actions.Actions;
+import objRepository.Global;
+import objRepository.Social.ActivityFeed;
+import objRepository.Social.Directory;
+import reusableMethods.RM_Social;
+import utility.Utility;
+
+public class Ts_SharePostToPublicUsersFromFeedPgae_13268 {
+	
+	private Utility utl;
+	//ExtentTest logger;
+
+		@BeforeClass
+		public void setUp()
+		{
+			 utl=new Utility();
+			 //logger=
+			 utl.initTest(this.getClass().getName().substring(this.getClass().getName().lastIndexOf(".")+1).trim());
+			 new Actions();
+		
+		}
+		@AfterMethod
+		public void logOutAndBrowserClose()
+		{
+			Actions.logOutAndBrowserCloseMU();
+		}
+		@AfterClass
+		public void endReport() throws Exception
+		{
+			Actions.endScriptReportMU();
+			
+			
+		}
+		String time=RandomStringUtils.randomNumeric(4);
+		@Test
+		public void postMsg()
+		{
+		
+			Global.login(Utility.getConfigData().get("USER7"), Utility.getConfigData().get("PASSWORD"));
+			//Actions.pause(3);
+			RM_Social.navigateToActivityPage();
+			Actions.click(ActivityFeed.privacyLink, "Open Privacy List");
+			RM_Social.selectPrivacyInAFP(Utility.getTestData().get("PRIVACY_PUBLICUSERS"));
+			RM_Social.typeMessageInAFP(Utility.getTestData().get("POSTMSG")+time);
+			RM_Social.clickOnPostBtnInAFP();
+			RM_Social.clickOnActivityFeed();
+			Actions.verify(ActivityFeed.msgContainer, Utility.getTestData().get("POSTMSG")+time);
+			RM_Social.clickOnShareInAFP();
+			Actions.click(ActivityFeed.afp_ShareOvaerlay_PrivacyLink, "Open Privacy List");
+			RM_Social.selectPrivacyInAFP_ShareOverlay(Utility.getTestData().get("PRIVACY_PUBLICUSERS"));
+			Actions.click(ActivityFeed.afp_ShareOverlay_textArea, "Click On Text Area");
+			Actions.clearText(ActivityFeed.afp_ShareOverlay_textArea, "Clear Message");
+			RM_Social.typeMessageInAFP_ShareOverlay(Utility.getTestData().get("AFP_ShareMsg")+time);
+			RM_Social.clickOnShareBtnInAFP_ShareOverlay();
+			RM_Social.clickOnActivityFeed();
+			//Actions.switchtoFrame(Global.socialCLFrame, "Switch to Social Frame");
+			Actions.verify(ActivityFeed.msgContainer, Utility.getTestData().get("AFP_ShareMsg")+time);
+			
+		}
+		@Test(dependsOnMethods={"postMsg"})
+		public void verifymsg()
+		{
+			
+				
+			Global.login(Utility.getConfigData().get("USER12"), Utility.getConfigData().get("PASSWORD"));
+				RM_Social.navigateToActivityPage();
+				Actions.pause(2);
+				Actions.verify(ActivityFeed.msgContainer, Utility.getTestData().get("AFP_ShareMsg")+time);
+				
+		
+		}
+		@Test(dependsOnMethods={"verifymsg"})
+		public void verifyPostMsgByPublicUser()
+		{
+			
+				
+			    Global.login(Utility.getConfigData().get("USER9"), Utility.getConfigData().get("PASSWORD"));
+				RM_Social.navigateToActivityPage();
+				RM_Social.navigateToDirectoryPage();
+				RM_Social.filterBySort(Directory.sortByFirstName);
+				RM_Social.filterByStatus(Directory.filterByNotConnected);
+				RM_Social.filterByAlphabet('Q');
+				RM_Social.navigateToUserProfile(Utility.getTestData().get("FULLNAME_USER7"));
+				Actions.verify(ActivityFeed.msgContainer, Utility.getTestData().get("AFP_ShareMsg")+time);
+				RM_Social.clickOnActivityFeed();
+				Actions.verifyTextNotPresent(ActivityFeed.msgContainer,Utility.getTestData().get("AFP_ShareMsg")+time);
+				
+				
+				
+		
+		}
+
+}

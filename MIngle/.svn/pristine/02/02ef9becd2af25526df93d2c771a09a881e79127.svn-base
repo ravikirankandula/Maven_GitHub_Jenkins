@@ -1,0 +1,79 @@
+package scripts.ActivityFeed;
+
+import org.apache.commons.lang3.RandomStringUtils;
+import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.WebElement;
+import org.testng.annotations.AfterClass;
+import org.testng.annotations.AfterMethod;
+import org.testng.annotations.BeforeClass;
+import org.testng.annotations.Test;
+
+import actions.Actions;
+import objRepository.Global;
+import objRepository.Social.ActivityFeed;
+import reusableMethods.RM_Social;
+import utility.Utility;
+
+public class Ts_MakePostWithAttachmentOnFeedPage_13276 {
+
+	
+	private Utility utl;
+	//ExtentTest logger;
+
+		@BeforeClass
+		public void setUp()
+		{
+			 utl=new Utility();
+			 //logger=
+			 utl.initTest(this.getClass().getName().substring(this.getClass().getName().lastIndexOf(".")+1).trim());
+			 new Actions();
+		
+		}
+		@AfterMethod
+		public void logOutAndBrowserClose()
+		{
+			Actions.logOutAndBrowserCloseMU();
+		}
+		@AfterClass
+		public void endReport() throws Exception
+		{
+			Actions.endScriptReportMU();
+			
+			
+		}
+		String time=RandomStringUtils.randomNumeric(4);
+		String imgUrl=Utility.RpPath+"\\TestImage.jpg";
+		@Test
+		public void postMsg()
+		{
+		
+			Global.login(Utility.getConfigData().get("USER7"), Utility.getConfigData().get("PASSWORD"));
+			//Actions.pause(3);
+			RM_Social.navigateToActivityPage();
+			System.out.println(imgUrl);
+			Actions.pause(4);
+			Actions.click(ActivityFeed.privacyLink, "Open Privacy List");
+			RM_Social.selectPrivacyInAFP(Utility.getTestData().get("PRIVACY_CONNECTEDUSERS"));
+			Actions.pause(2);
+			/*Actions.click(ActivityFeed.addAttachments, "Click on add Attachments");
+			Actions.pause(2);
+			Actions.uploadFile(imgUrl);*/
+			WebElement elem = Utility.getDriver().findElement(By.id("fileToUpload"));
+			String js = "arguments[0].setAttribute('style', 'display: block;height:28px;width:125px;visibility:visible');";
+
+			((JavascriptExecutor) Utility.getDriver()).executeScript(js, elem);
+			Actions.pause(2);
+			//Actions.makeElementVisible("block", By.id("fileToUpload"));
+			Actions.type(By.id("fileToUpload"),imgUrl, "Upload File"); 
+			Actions.pause(4);
+			Actions.verifyElement(By.xpath("//img[@title='TestImage.jpg']"), "TestImage.jpg");
+			RM_Social.typeMessageInAFP(Utility.getTestData().get("POSTMSG")+time);
+			RM_Social.clickOnPostBtnInAFP();
+			RM_Social.clickOnActivityFeed();
+			Actions.pause(1);
+			//Actions.switchtoFrame(Global.socialCLFrame, "Switch to Social Frame");
+			Actions.verify(ActivityFeed.msgContainer, Utility.getTestData().get("POSTMSG")+time);
+			
+		}
+}

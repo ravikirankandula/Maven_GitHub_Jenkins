@@ -1,0 +1,13 @@
+package objRepository.Social;
+
+import org.openqa.selenium.By;
+
+public class Notifications {
+	
+	
+	public static final	 By myNotifications=By.xpath("//div[@title='My Notifications']");
+	public static final	 By msgContainer=By.xpath("//p[@class='infor-social-feedText m-txt-f5']");
+	
+	
+
+}

@@ -1,0 +1,70 @@
+/**
+ * 
+ */
+package scripts.IFS;
+
+import java.util.HashMap;
+
+import org.openqa.selenium.WebDriver;
+import org.testng.annotations.AfterClass;
+import org.testng.annotations.BeforeClass;
+
+import com.relevantcodes.extentreports.ExtentTest;
+
+import actions.Actions;
+import objRepository.Global;
+import reusableMethods.RM_IFS;
+import utility.Utility;
+
+
+public class Ts_UpdateSecurityRole_13286 {
+	WebDriver driver;
+	ExtentTest logger;
+	Global global;
+	
+	
+	private Utility utl;
+	
+	@BeforeClass
+	public void setup()
+	{
+		 utl=new Utility();
+		 logger=utl.initTest(this.getClass().getName().substring(this.getClass().getName().lastIndexOf(".")+1).trim());
+		 new Actions();
+	
+	}
+	@AfterClass
+	public void tearDown()
+	{
+	
+	Utility.report.endTest(logger);
+	}
+	
+	
+
+	@org.testng.annotations.Test
+	public void test() {
+		 HashMap<String, String> testData=Utility.getTestData();
+		 HashMap<String, String> configData=Utility.getConfigData();
+			
+			//TESTDATA
+			 String userName=configData.get("USER1");	
+		 String pwd=configData.get("PASSWORD");
+		 String emailID=configData.get("USER8");
+		 String securityRole=testData.get("SECURITYROLE");
+		
+		
+		//LOGIN
+		Global.login(userName,pwd);
+		//Actions.pause(2);
+		RM_IFS.update_SecurityRole(userName, securityRole);
+		
+		//LOGOUT
+		Global.logOut();
+		//DRIVER CLOSE
+		Actions.driverClose();
+		
+	}
+	
+
+}

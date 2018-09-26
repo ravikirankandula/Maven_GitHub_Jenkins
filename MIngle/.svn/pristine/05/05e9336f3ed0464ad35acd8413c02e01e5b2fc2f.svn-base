@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+<suite name="suite1">
+<!-- <listeners>
+		<listener class-name="utility.RetryListener" />
+	</listeners> -->
+	<test name="chrome">
+	<parameter name="Browser" value="chrome" />
+		<classes>
+		
+	  
+			 <class name="utility.Utility" />
+			  	<class name="scripts.Streams.Ts_VerifyCreateNewStreamTemplateControl_13252" />
+       			<class name="scripts.Streams.Ts_CancelStream_13249" />
+        		<class name="scripts.Streams.Ts_CompleteStreamInstance_13250" />
+         		<class name="scripts.Streams.Ts_CompleteStreamInstanceWithAllSteps_13255" />
+      			<class name="scripts.Streams.Ts_CreateAndDeleteStreamInstance_13251" />
+      			<class name="scripts.Streams.Ts_CreateStreamWithAllWidgets_13254" />
+      			<class name="scripts.Streams.Ts_CreateTemplate_13244" />
+     			<class name="scripts.Streams.Ts_CreateTemplateWithStreamOwnerAndIP_13247" />
+      			<class name="scripts.Streams.Ts_DisplayTemplateOnStartStreamPage_13246" />
+      			<class name="scripts.Streams.Ts_StartNewStreamInstance_13248" />
+       			<class name="scripts.Streams.Ts_VerifyControlsOnTemplatesPage_13243" />
+      			<class name="scripts.Streams.Ts_VerifyFiltersOnSteramPage_13245" />  
+			   
+		</classes>
+	
+	
+	</test>
+
+
+  
+
+
+</suite>

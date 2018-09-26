@@ -1,0 +1,95 @@
+package scripts.iondesk;
+
+import java.util.HashMap;
+
+import org.sikuli.script.FindFailed;
+import org.sikuli.script.Pattern;
+import org.sikuli.script.Screen;
+import org.testng.annotations.AfterClass;
+import org.testng.annotations.BeforeClass;
+
+import com.relevantcodes.extentreports.ExtentTest;
+
+import actions.Actions;
+import objRepository.Global;
+
+import reusableMethods.RM_IONDESK;
+import utility.Utility;
+
+public class CannotassignTask_OOOUser 
+
+{
+	ExtentTest logger;
+	private Utility utl;
+	 HashMap<String, String> testData=Utility.getTestData();
+	 HashMap<String, String> configData=Utility.getConfigData();
+		
+		//TESTDATA
+		 String userName=configData.get("USER12");
+		 String user14=configData.get("USER14");
+		 String pwd=configData.get("PASSWORD");
+		 String wfname=testData.get("WORKFLOW_NAME");
+		 String wfdesc=testData.get("WORKFLOW_DESC");
+		 String message=testData.get("WORKFLOW_MSG");
+		 String user=testData.get("WORKFLOW_USER11");
+		 String user1=testData.get("WORKFLOW_USER14");
+		 
+	@BeforeClass
+	public void setUp()
+	{
+		 utl=new Utility();
+		 logger=utl.initTest(this.getClass().getName().substring(this.getClass().getName().lastIndexOf(".")+1).trim());
+		 new Actions();
+	
+	}
+	@AfterClass
+	public void tearDown()
+	{
+		Utility.report.endTest(logger);
+		//Actions.driverClose();
+	
+	}
+	
+
+
+	@org.testng.annotations.Test(priority =1)
+	public void create_WorkFlow()
+	 {
+		try {
+			
+	    //login
+		Global.login(userName,pwd);
+		RM_IONDESK.cannotAssignTaskto_OOOUser(user);
+		
+         } catch (Exception e) {
+			
+		}finally
+		{
+			Global.logOut();
+			Actions.driverClose();
+		}
+		
+     }
+	
+	
+	@org.testng.annotations.Test(priority =2)
+	public void create_WorkFlowuser14()
+	 {
+		try {
+			
+	    //login
+		Global.login(user14,pwd);
+		//RM_IONDESK.cannotAssignTaskto_OOOUser(user1);
+		RM_IONDESK.completetask_TasksWindow(wfname);
+		RM_IONDESK.verify_OOOmessage(wfname);
+		 
+         } catch (Exception e) {
+			
+		}finally
+		{
+			Global.logOut();
+			Actions.driverClose();
+		}
+		
+     }
+}

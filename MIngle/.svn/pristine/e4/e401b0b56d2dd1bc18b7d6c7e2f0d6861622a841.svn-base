@@ -1,0 +1,79 @@
+package scripts.ActivityFeed;
+
+import org.apache.commons.lang3.RandomStringUtils;
+import org.testng.annotations.AfterClass;
+import org.testng.annotations.AfterMethod;
+import org.testng.annotations.BeforeClass;
+import org.testng.annotations.Test;
+
+import actions.Actions;
+import objRepository.Global;
+import objRepository.Social.ActivityFeed;
+import objRepository.Social.Directory;
+import reusableMethods.RM_Social;
+import utility.Utility;
+
+public class Ts_ConnectedUsersProfilePage_PostMessage_13274 {
+	
+	
+	private Utility utl;
+	//ExtentTest logger;
+
+		@BeforeClass
+		public void setUp()
+		{
+			 utl=new Utility();
+			 //logger=
+			 utl.initTest(this.getClass().getName().substring(this.getClass().getName().lastIndexOf(".")+1).trim());
+			 new Actions();
+		
+		}
+		@AfterMethod
+		public void logOutAndBrowserClose()
+		{
+			Actions.logOutAndBrowserCloseMU();
+		}
+		@AfterClass
+		public void endReport() throws Exception
+		{
+			Actions.endScriptReportMU();
+			
+			
+		}
+		String time=RandomStringUtils.randomNumeric(4);
+		@Test
+		public void postMsg()
+		{
+		
+			Global.login(Utility.getConfigData().get("USER7"), Utility.getConfigData().get("PASSWORD"));
+			//Actions.pause(3);
+			RM_Social.navigateToActivityPage();
+			RM_Social.navigateToDirectoryPage();
+			RM_Social.filterByStatus(Directory.filterByConnected);
+			RM_Social.filterBySort(Directory.sortByFirstName);
+			RM_Social.filterByAlphabet('Q');
+			//RM_Social.navigateToUsersProfilePage("QAAuto Test12");
+			RM_Social.navigateToUserProfile("QAAuto Test12");
+			RM_Social.typeMessageInGroupProfilePage(Utility.getTestData().get("POSTMSG")+time);
+			RM_Social.clickOnPostBtnInAFP();
+			RM_Social.verifyMessage(Utility.getTestData().get("POSTMSG")+time);
+			//Actions.pause(2);
+			//Actions.switchtoFrame(Global.socialCLFrame, "Switch to Social Frame");
+			//Actions.verify(ActivityFeed.msgContainer, Utility.getTestData().get("POSTMSG")+time);
+			
+		}
+		@Test(dependsOnMethods={"postMsg"})
+		public void verifyMsg()
+		{
+			
+				
+				Global.login(Utility.getConfigData().get("USER12"),Utility.getConfigData().get("PASSWORD"));
+				RM_Social.navigateToActivityPage();
+				Actions.pause(2);
+				Actions.verify(ActivityFeed.msgContainer, Utility.getTestData().get("POSTMSG")+time);
+				
+		
+		}
+	
+
+}

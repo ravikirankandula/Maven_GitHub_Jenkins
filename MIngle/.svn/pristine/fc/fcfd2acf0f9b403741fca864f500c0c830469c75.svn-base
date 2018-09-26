@@ -1,0 +1,69 @@
+/**
+ * 
+ */
+package scripts.Admin;
+
+import java.util.HashMap;
+
+import org.testng.annotations.AfterClass;
+import org.testng.annotations.BeforeClass;
+
+import com.relevantcodes.extentreports.ExtentTest;
+
+import actions.Actions;
+import objRepository.Global;
+import reusableMethods.RM_Admin;
+import utility.Utility;
+
+public class Ts_UpdateUserSettingsProfileInfo_13380 {
+	ExtentTest logger;
+	private Utility utl;
+	 HashMap<String, String> testData=Utility.getTestData();
+	 HashMap<String, String> configData=Utility.getConfigData();
+		
+		//TESTDATA
+		 String userName=configData.get("USER1");
+		 String pwd=configData.get("PASSWORD");
+		 String office=testData.get("PROFILEINFO_OFFICE");
+		 String mobile=testData.get("PROFILEINFO_MOBILE");
+		 String nickName=testData.get("PROFILEINFO_NICKNAME");
+		 String location=testData.get("PROFILEINFO_LOCATION");
+		
+			
+	
+			@BeforeClass
+			public void setUp()
+			{
+				 utl=new Utility();
+				 logger=utl.initTest(this.getClass().getName().substring(this.getClass().getName().lastIndexOf(".")+1).trim());
+				 new Actions();
+			
+			}
+			@AfterClass
+			public void tearDown()
+			{
+				Utility.report.endTest(logger);
+				//Actions.driverClose();
+			
+			}
+			
+
+
+			@org.testng.annotations.Test(priority =1)
+			public void update_ProfileInfor(){
+				try {
+					
+					//LOGIN
+					Global.login(userName,pwd);
+					RM_Admin.update_ProfileInfo(office, mobile, nickName, location);
+					
+				} catch (Exception e) {
+					
+				}finally
+				{
+					Global.logOut();
+					Actions.driverClose();
+					
+				}
+			}
+}

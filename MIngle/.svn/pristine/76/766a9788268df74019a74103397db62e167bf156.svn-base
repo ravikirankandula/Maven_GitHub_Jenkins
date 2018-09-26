@@ -1,0 +1,18 @@
+package objRepository.Social;
+
+import org.openqa.selenium.By;
+
+public class ManageBookMarks {
+	
+	public static final By deleteIcon=By.className("trash-icn");
+	public static final By deleteIcon2=By.xpath("//button[contains(@data-ng-click,'mngBmarkDelete')]");
+	public static final By bookMarkstitle=By.xpath("//span[text()='Bookmarks']");
+	public static final By hoverOverBookmarks=By.xpath("//span[text()='Bookmarks']/../following::div/span[2]");//div[@class='mng-bmark-sect-hdr']");
+	public static final By editIcon2=By.xpath("//button[contains(@data-ng-click,'editBookmarkName')]");
+	public static final By outSideEdit=By.xpath("//span[@data-infor-translate='Bookmarks']");
+	public static final By editTextBox=By.xpath("//input[@data-ng-show='displayEdit']");
+	public static final By editIcon=By.className("edit-icn");
+	
+	
+
+}

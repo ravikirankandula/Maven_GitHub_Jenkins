@@ -1,0 +1,102 @@
+/**
+ * 
+ */
+package scripts.Admin;
+
+import java.util.HashMap;
+
+import org.apache.commons.lang3.RandomStringUtils;
+import org.testng.annotations.AfterClass;
+import org.testng.annotations.BeforeClass;
+import com.relevantcodes.extentreports.ExtentTest;
+
+import actions.Actions;
+import objRepository.Global;
+import reusableMethods.RM_Admin;
+import utility.Utility;
+
+
+public class Ts_CreateInforNonProvisonedApp_13279 {
+	ExtentTest logger;
+	private Utility utl;
+	 HashMap<String, String> testData=Utility.getTestData();
+		
+	 HashMap<String, String> configData=Utility.getConfigData();
+		
+		//TESTDATA
+		 String userName=configData.get("USER5");	
+		 String pwd=configData.get("PASSWORD");
+		 String appType=testData.get("UTITLITYAPP");
+		 String name=testData.get("UTILITYAPP_NAME");
+		 String desc=testData.get("UTILITYAPP_DESC");
+		 String url=testData.get("UTLITYAPP_URL");
+		 String helpurl=testData.get("UTILTYAPP_HELPURL");
+		 String host=testData.get("APP_HOST");
+		 String logical=testData.get("APP_LOGICAL");
+		 String context=testData.get("APP_CONTEXT");
+		 String tenanat=testData.get("APP_TENANT");
+		 String appName=testData.get("UTILITYAPP_APPNAME");
+		 String user=testData.get("ALTMANAGERDETAILS");
+		 String parameterName=testData.get("PARAMETER_NAME");
+		 String parameterValue=testData.get("PARAMETER_VALUE");
+		 String logicalID=testData.get("LOGICAL_ID");
+		 String deleteApp=testData.get("DELETE_APP");
+		 String selectApp=testData.get("UTILITY_APPSELECTION");
+		 String applicationName=name+RandomStringUtils.randomNumeric(3);
+	@BeforeClass
+	public void setUp()
+	{
+		 utl=new Utility();
+		 logger=utl.initTest(this.getClass().getName().substring(this.getClass().getName().lastIndexOf(".")+1).trim());
+		 new Actions();
+	
+	}
+	@AfterClass
+	public void tearDown()
+	{
+		Utility.report.endTest(logger);
+		//Actions.driverClose();
+		Utility.report.flush();
+	}
+	
+	
+
+
+	@org.testng.annotations.Test(priority =1)
+	public void create_App(){
+		try {
+			
+			//LOGIN
+			Global.login(userName,pwd);
+			RM_Admin.addContextOrUtitlityApp(appType, applicationName, desc, url, helpurl);
+			
+			RM_Admin.create_InforNonPropvisioned(appName, host, logical, context, tenanat,user,applicationName,parameterName,parameterValue,logicalID);
+			
+			//Global.logOut();
+		} catch (Exception e) {
+			
+		}finally
+		{
+			Global.logOut();
+			Actions.driverClose();
+			rb_DeleteApp();
+		}
+	}
+
+	public void rb_DeleteApp()
+	{
+		try {
+			Global.login(userName,pwd);
+			RM_Admin.delete_ContextOrUtitlityApp(applicationName);
+			RM_Admin.delete_Application(deleteApp);
+			//Global.logOut();
+		} catch (Exception e) {
+			
+		}
+		finally
+		{
+			Global.logOut();
+			Actions.driverClose();
+		}
+	}
+}

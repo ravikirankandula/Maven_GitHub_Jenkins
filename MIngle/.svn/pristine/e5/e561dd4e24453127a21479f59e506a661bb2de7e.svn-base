@@ -1,0 +1,26 @@
+package objRepository.Admin;
+
+import org.openqa.selenium.By;
+
+public class Admin_Context {
+	/*
+	 * 
+	 * Objects In Admin_Context  Page.
+	 * 
+	 *
+	 */
+	public static final By manage_Context_UtitlityApp=By.xpath("//a[@data-infor-translate='manage_context_utility_apps']");
+	public static final By add_Context_UtitlityApp=By.xpath("//button[@data-infor-translate='add_context_utility_app']");
+	public static final By add_Context_UtitlityApp_Type=By.xpath("//select[@data-ng-options='item.name for item in DM.contextAppTypes']");
+	public static final By add_Context_UtitlityApp_Name=By.xpath("//input[@data-infor-validator='name']");
+	public static final By add_Context_UtitlityApp_Desc=By.xpath("//textarea[@data-infor-validator='description']");
+	public static final By add_Context_UtitlityApp_URL=By.xpath("//input[@data-ng-model='UI.MC.newContext.URL']");
+	public static final By add_Context_UtitlityApp_HelpURL=By.xpath("//input[@data-infor-validator='help_link_url']");
+	public static final By add_Context_UtitlityApp_Save=By.xpath("//button[@data-ng-click='onSaveAddApp()']");
+	public static final By ok=By.xpath("//button[text()='OK']");
+	public static final By save=By.xpath("//button[@data-ng-click='onSave()']");
+	public static final By done=By.xpath("//button[text()='Done']");
+	public static final By select_UtilityApp=By.xpath("//label[text()='UtilityApp']");
+	public static final By delete_UtilityApp=By.xpath("//button[@data-ng-click='onDelete()']");
+	
+}
