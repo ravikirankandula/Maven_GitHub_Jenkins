@@ -8,10 +8,13 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.sikuli.script.FindFailed;
 import org.sikuli.script.Pattern;
 import org.sikuli.script.Screen;
+import org.testng.annotations.Test;
 
 public class FileUpload_Sikuli {
 
-	public static void main(String[] args) throws Exception {
+	@Test
+	public void testcase_Sikuli()throws Exception
+	{
 		// TODO Auto-generated method stub
 		
 		System.setProperty("webdriver.chrome.driver", "D:\\Automation\\Softwares\\chromebrowser\\chromedriver_win32 (2)\\chromedriver.exe");
@@ -19,7 +22,7 @@ public class FileUpload_Sikuli {
         
         wd.get("file:///C:/Users/rkandula/Desktop/fileupload.html");
         
-       // wd.findElement(By.id("fileupload")).click();
+       wd.findElement(By.id("fileupload")).click();
         
         Screen sikuliscreen=new Screen();
         
@@ -29,11 +32,11 @@ public class FileUpload_Sikuli {
         
         String total=file1+file2;
         
-        wd.findElement(By.id("fileupload")).sendKeys(file1);
+        //wd.findElement(By.id("fileupload")).sendKeys(file1);
         
         Thread.sleep(3000);
         
-        /*System.out.println(total);
+        System.out.println(total);
         
         Pattern window_popup_textbox=new Pattern("C:\\Users\\rkandula\\Desktop\\window_Textbox.png");
         
@@ -49,11 +52,9 @@ public class FileUpload_Sikuli {
         
         wd.close();
         
-        */
         
         
-        
-        
+  
 		
 		
 	}

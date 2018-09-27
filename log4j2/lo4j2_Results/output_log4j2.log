@@ -62,3 +62,8 @@
 26-38-2018 15:38:00.149 [main] INFO  pack1.TestCase_Log1 - info
 26-38-2018 15:38:00.149 [main] ERROR pack1.TestCase_Log1 - error
 26-38-2018 15:38:00.149 [main] FATAL pack1.TestCase_Log1 - fatal
+27-29-2018 14:29:33.865 [main] DEBUG pack2.TestCase_Log2 - Dubug
+27-29-2018 14:29:33.865 [main] INFO  pack2.TestCase_Log2 - info
+27-29-2018 14:29:33.865 [main] ERROR pack2.TestCase_Log2 - error
+27-29-2018 14:29:33.865 [main] FATAL pack2.TestCase_Log2 - fatal
+27-29-2018 14:29:33.865 [main] INFO  pack2.TestCase_Log2 - welcome to log4j
