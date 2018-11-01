@@ -73,7 +73,8 @@ public class TS1_Evoke_ContactUS {
 			new Actions();
 			
 			//Global.login(username,pwd);
-			
+			Actions.explicitWait_VisibilityOfElement(Evoke_ContactUS_Objects.deletecookies);
+			Actions.click(Evoke_ContactUS_Objects.deletecookies, "click on Contact US Link");
 			Actions.click(Evoke_ContactUS_Objects.contactus, "click on Contact US Link");
 			Actions.explicitWait_VisibilityOfElement(Evoke_ContactUS_Objects.email);
 			Actions.type(Evoke_ContactUS_Objects.firstname, firstname, "Enter text in FirstName");

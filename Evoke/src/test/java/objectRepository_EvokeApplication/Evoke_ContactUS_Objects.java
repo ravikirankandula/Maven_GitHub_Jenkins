@@ -3,6 +3,8 @@ package objectRepository_EvokeApplication;
 import org.openqa.selenium.By;
 
 public class Evoke_ContactUS_Objects {
+	
+	public static final By deletecookies=By.xpath("//div[@id='hs-en-cookie-confirmation-buttons-area']/a");
 
 	public static final By contactus=By.partialLinkText("Contact Us");
 	

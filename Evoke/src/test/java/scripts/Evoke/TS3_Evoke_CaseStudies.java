@@ -64,7 +64,8 @@ public class TS3_Evoke_CaseStudies  {
 		try{	
 			//LOGIN
 			//Global.login(username,pwd);
-			
+			Actions.explicitWait_VisibilityOfElement(Evoke_ContactUS_Objects.deletecookies);
+			Actions.click(Evoke_ContactUS_Objects.deletecookies, "click on Contact US Link");
 			Actions.moveTo(Evoke_Insights_Objects.Insights, "Move to Insights");
 			
 			Actions.pause(1);
