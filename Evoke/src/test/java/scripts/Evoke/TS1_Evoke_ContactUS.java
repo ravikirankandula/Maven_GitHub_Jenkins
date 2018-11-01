@@ -98,6 +98,7 @@ public class TS1_Evoke_ContactUS {
 					//Global.login(username,pwd);
 					logger=utl.initTest(clName+Thread.currentThread().getStackTrace()[1].getMethodName().toString());
 					new Actions();
+					
 					Actions.moveTo(Evoke_Insights_Objects.Insights, "Move to Insights");
 					
 					Actions.pause(1);

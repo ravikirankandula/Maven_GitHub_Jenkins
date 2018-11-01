@@ -22,7 +22,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 
 import com.google.common.base.Function;
-import com.relevantcodes.extentreports.ExtentReports;
+//import com.relevantcodes.extentreports.ExtentReports;
 import com.relevantcodes.extentreports.ExtentTest;
 import com.relevantcodes.extentreports.LogStatus;
 
@@ -31,7 +31,7 @@ import utility.Utility;
 public  class Actions extends Utility{
 	
 	public static ExtentTest logger;
-	 public static ExtentReports report=Utility.report;
+	// public static ExtentReports report=Utility.report;
 	 public static Utility utility;
 	 static WebElement locator,source,destination;
 	 public static boolean makeConnection=false,AcceptConnection=false,postMessage;

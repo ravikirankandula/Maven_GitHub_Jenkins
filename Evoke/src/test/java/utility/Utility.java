@@ -113,7 +113,7 @@ public class Utility {
 			e.printStackTrace();
 		}
 
-		//Utility.execute("./logReport.zip");
+		Utility.execute("./logReport.zip");
 
 
 	}
@@ -323,8 +323,7 @@ public class Utility {
 		HashMap<String, String> propvals = new HashMap<String, String>();
 		try {
 
-			/* input = Utility.class
-			 .getResourceAsStream(RpPath+"testdata.properties");*/
+			
 			FileInputStream fis = new FileInputStream(new File(RpPath+"\\config.properties"));   
 			prop.load(fis);
 			Set<String> propertyNames = prop.stringPropertyNames();
@@ -409,8 +408,11 @@ public class Utility {
 		Properties props = new Properties();
 		//props.put("mail.smtp.auth", "true");
 		// props.put("mail.smtp.starttls.enable", "true");
-		props.put("mail.smtp.host", "smtp-relay.infor.com");
-		props.put("mail.smtp.port", "25");
+		props.put("mail.smtp.host", "smtp.gmail.com");    
+        props.put("mail.smtp.socketFactory.port", "465");    
+        props.put("mail.smtp.socketFactory.class","javax.net.ssl.SSLSocketFactory");    
+        props.put("mail.smtp.auth", "true");    
+        props.put("mail.smtp.port", "465");    
 		Session session = Session.getDefaultInstance(props);
 		/*  Session session = Session.getInstance(props,
  	          new javax.mail.Authenticator() {

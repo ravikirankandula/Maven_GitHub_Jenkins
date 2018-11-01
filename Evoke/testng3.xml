@@ -12,7 +12,7 @@
 			  <!-- Tests --> 
 			
 			 
-			  <class name="scripts.Evoke.TS2_Evoke_Insights" />
+			  <class name="scripts.Evoke.TS2_Evoke_Insights" /> 
 			  
 			  
 		</classes>

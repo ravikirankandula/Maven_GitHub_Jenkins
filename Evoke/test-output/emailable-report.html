@@ -9,11 +9,21 @@
 <table>
 <tr><th>Test</th><th># Passed</th><th># Skipped</th><th># Failed</th><th>Time (ms)</th><th>Included Groups</th><th>Excluded Groups</th></tr>
 <tr><th colspan="7">suite1</th></tr>
-<tr><td><a href="#t0">EVOKE TEST </a></td><td class="num">2</td><td class="num">0</td><td class="num">0</td><td class="num">30,460</td><td></td><td></td></tr>
+<tr><td><a href="#t0">EVOKE TEST </a></td><td class="num">0</td><td class="num">0</td><td class="num">0</td><td class="num">9</td><td></td><td></td></tr>
 </table>
-<table id='summary'><thead><tr><th>Class</th><th>Method</th><th>Start</th><th>Time (ms)</th></tr></thead><tbody><tr><th colspan="4">suite1</th></tr></tbody><tbody id="t0"><tr><th colspan="4">EVOKE TEST  &#8212; passed</th></tr><tr class="passedeven"><td rowspan="2">scripts.Evoke.TS1_Evoke_ContactUS</td><td><a href="#m0">testscript1</a></td><td rowspan="1">1530538131000</td><td rowspan="1">25095</td></tr><tr class="passedeven"><td><a href="#m1">testscript2</a></td><td rowspan="1">1530538156439</td><td rowspan="1">4906</td></tr></tbody>
+<table id='summary'><thead><tr><th>Class</th><th>Method</th><th>Start</th><th>Time (ms)</th></tr></thead><tbody><tr><th colspan="4">suite1</th></tr></tbody><tbody id="t0"><tr><th colspan="4">EVOKE TEST  &#8212; failed (configuration methods)</th></tr><tr class="failedeven"><td rowspan="1">utility.Utility</td><td><a href="#m0">endReport</a></td><td rowspan="1">1539329329505</td><td rowspan="1">14601</td></tr></tbody>
 </table>
-<h2>EVOKE TEST </h2><h3 id="m0">scripts.Evoke.TS1_Evoke_ContactUS#testscript1</h3><table class="result"><tr><th class="invisible"/></tr></table><p class="totop"><a href="#summary">back to summary</a></p>
-<h3 id="m1">scripts.Evoke.TS1_Evoke_ContactUS#testscript2</h3><table class="result"><tr><th class="invisible"/></tr></table><p class="totop"><a href="#summary">back to summary</a></p>
+<h2>EVOKE TEST </h2><h3 id="m0">utility.Utility#endReport</h3><table class="result"><tr><th>Exception</th></tr><tr><td><div class="stacktrace">java.lang.RuntimeException: javax.mail.AuthenticationFailedException
+	at utility.Utility.execute(Utility.java:504)
+	at utility.Utility.endReport(Utility.java:116)
+Caused by: javax.mail.AuthenticationFailedException
+	at javax.mail.Service.connect(Service.java:306)
+	at javax.mail.Service.connect(Service.java:156)
+	at javax.mail.Service.connect(Service.java:105)
+	at javax.mail.Transport.send0(Transport.java:168)
+	at javax.mail.Transport.send(Transport.java:98)
+	at utility.Utility.execute(Utility.java:498)
+	... 21 more
+... Removed 20 stack frames</div></td></tr></table><p class="totop"><a href="#summary">back to summary</a></p>
 </body>
 </html>

@@ -30,7 +30,7 @@ public class TS2_Evoke_Insights  {
 	@BeforeMethod
 	public void setup()
 	{
-		System.out.println("2nd test case");
+		
 		utl=new Utility();
 		logger=utl.initTest(this.getClass().getName().substring(this.getClass().getName().lastIndexOf(".")+1).trim());
 		new Actions();
