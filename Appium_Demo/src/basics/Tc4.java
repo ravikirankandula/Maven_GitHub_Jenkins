@@ -36,6 +36,8 @@ public class Tc4 extends Base {
 			driver.findElementByAndroidUIAutomator("text(\"2. Inline\")").click();
 			
 			driver.findElement(By.xpath("//*[@content-desc='9']")).click();
+			
+		driver.getContext();
 	
 			
 			WebElement we1= driver.findElement(By.xpath("//*[@content-desc='15']"));

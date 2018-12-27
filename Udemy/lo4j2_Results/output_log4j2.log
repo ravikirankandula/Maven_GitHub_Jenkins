@@ -1,0 +1,109 @@
+01-23-2018 20:23:07.205 [main] INFO   - Intialized driver
+01-23-2018 20:23:11.480 [main] INFO   - Navigated to url
+01-23-2018 20:23:18.226 [main] INFO   - Clicked on Log in button
+01-23-2018 20:23:22.380 [main] INFO   - Username entered
+01-23-2018 20:23:22.455 [main] INFO   - Password entered
+01-23-2018 20:23:24.520 [main] INFO   - click on Submit button
+01-23-2018 20:23:28.651 [main] INFO   - Username entered
+01-23-2018 20:23:28.743 [main] INFO   - Password entered
+01-23-2018 20:23:28.862 [main] INFO   - click on Submit button
+01-23-2018 20:23:44.981 [main] INFO   - validation  message successfully verified
+01-23-2018 20:23:45.093 [main] INFO   - cotact tab is displayed
+01-32-2018 20:32:10.496 [main] INFO   - Intialized driver
+01-32-2018 20:32:14.621 [main] INFO   - Navigated to url
+01-32-2018 20:32:21.352 [main] INFO   - Clicked on Log in button
+01-32-2018 20:32:25.502 [main] INFO   - Username entered
+01-32-2018 20:32:25.597 [main] INFO   - Password entered
+01-32-2018 20:32:27.549 [main] INFO   - click on Submit button
+01-32-2018 20:32:31.684 [main] INFO   - Username entered
+01-32-2018 20:32:31.767 [main] INFO   - Password entered
+01-32-2018 20:32:31.843 [main] INFO   - click on Submit button
+01-32-2018 20:32:48.056 [main] INFO   - validation  message successfully verified
+01-32-2018 20:32:48.121 [main] INFO   - cotact tab is displayed
+01-35-2018 20:35:54.311 [main] ERROR  - test case failedExpected condition failed: waiting for presence of element located by: By.xpath: .//*[@class='sumome-react-wysiwyg-move-handle']/div/button[contains(text(), 'NO THANKS1')] (tried for 20 second(s) with 500 milliseconds interval)
+01-38-2018 20:38:40.019 [main] INFO   - Intialized driver
+01-38-2018 20:38:44.307 [main] INFO   - Navigated to url
+01-38-2018 20:38:52.035 [main] INFO   - Clicked on Log in button
+01-38-2018 20:38:56.159 [main] INFO   - Username entered
+01-38-2018 20:38:56.237 [main] INFO   - Password entered
+01-38-2018 20:38:58.219 [main] INFO   - click on Submit button
+01-39-2018 20:39:02.350 [main] INFO   - Username entered
+01-39-2018 20:39:02.432 [main] INFO   - Password entered
+01-39-2018 20:39:02.512 [main] INFO   - click on Submit button
+01-39-2018 20:39:19.401 [main] INFO   - validation  message successfully verified
+01-39-2018 20:39:19.470 [main] INFO   - cotact tab is displayed
+01-39-2018 20:39:56.597 [main] ERROR  - test case failedExpected condition failed: waiting for presence of element located by: By.xpath: .//*[@class='sumome-react-wysiwyg-move-handle']/div/button[contains(text(), 'NO THANKS1')] (tried for 20 second(s) with 500 milliseconds interval)
+05-58-2018 19:58:54.018 [main] ERROR  - seleniumlearning.TestCase1:Entered text in searchbox
+05-01-2018 20:01:51.862 [main] ERROR  - seleniumlearning.TestCase1:Entered text in searchbox
+05-03-2018 20:03:34.676 [main] INFO   - seleniumlearning.TestCase1:Entered text in searchbox
+05-03-2018 20:03:36.776 [main] INFO   - seleniumlearning.TestCase1:click on googlesearchbutton
+05-08-2018 20:08:18.845 [main] INFO   - seleniumlearning.TestCase1:Entered text in searchbox
+05-08-2018 20:08:21.328 [main] INFO   - seleniumlearning.TestCase1:click on googlesearchbutton
+05-17-2018 20:17:13.825 [main] INFO   - seleniumlearning.TestCase1:Entered text in searchbox
+05-17-2018 20:17:16.401 [main] INFO   - seleniumlearning.TestCase1:click on googlesearchbutton
+05-20-2018 20:20:47.027 [main] INFO   - seleniumlearning.TestCase1:Entered text in searchbox
+05-20-2018 20:20:49.329 [main] INFO   - seleniumlearning.TestCase1:click on googlesearchbutton
+05-20-2018 20:20:49.504 [main] INFO   - seleniumlearning.TestCase1:Entered text in searchbox
+05-20-2018 20:20:49.586 [main] ERROR  - seleniumlearning.TestCase1:click on googlesearchbutton
+05-21-2018 20:21:39.864 [main] INFO   - seleniumlearning.TestCase1:Entered text in searchbox
+05-21-2018 20:21:42.114 [main] INFO   - seleniumlearning.TestCase1:click on googlesearchbutton
+05-21-2018 20:21:42.258 [main] INFO   - seleniumlearning.TestCase1:Entered text in searchbox
+05-21-2018 20:21:42.323 [main] ERROR  - seleniumlearning.TestCase1:click on googlesearchbutton
+05-23-2018 20:23:56.892 [main] INFO   - seleniumlearning.TestCase1:Entered text in searchbox
+05-23-2018 20:23:59.273 [main] INFO   - seleniumlearning.TestCase1:click on googlesearchbutton
+05-23-2018 20:23:59.436 [main] INFO   - seleniumlearning.TestCase1:Entered text in searchbox
+05-23-2018 20:23:59.505 [main] ERROR  - seleniumlearning.TestCase1:click on googlesearchbutton
+05-24-2018 20:24:00.233 [main] ERROR  - seleniumlearning.TestCase2:Entered text in searchbox
+05-24-2018 20:24:00.243 [main] ERROR  - seleniumlearning.TestCase2:Entered text in searchbox
+05-27-2018 20:27:49.990 [main] INFO   - seleniumlearning.TestCase1:Entered text in searchbox
+05-27-2018 20:27:52.188 [main] INFO   - seleniumlearning.TestCase1:click on googlesearchbutton
+05-27-2018 20:27:52.710 [main] INFO   - seleniumlearning.TestCase1:Entered text in searchbox
+05-27-2018 20:27:52.787 [main] ERROR  - seleniumlearning.TestCase1:click on googlesearchbutton
+05-27-2018 20:27:53.654 [main] ERROR  - seleniumlearning.TestCase2:Entered text in searchbox
+05-27-2018 20:27:53.666 [main] ERROR  - seleniumlearning.TestCase2:Entered text in searchbox
+05-31-2018 20:31:22.815 [main] INFO   - seleniumlearning.TestCase1:Entered text in searchbox
+05-31-2018 20:31:24.921 [main] INFO   - seleniumlearning.TestCase1:click on googlesearchbutton
+05-31-2018 20:31:25.376 [main] INFO   - seleniumlearning.TestCase1:Entered text in searchbox
+05-31-2018 20:31:25.435 [main] ERROR  - seleniumlearning.TestCase1:click on googlesearchbutton
+05-31-2018 20:31:26.257 [main] ERROR  - seleniumlearning.TestCase2:Entered text in searchbox
+05-31-2018 20:31:26.257 [main] ERROR  - seleniumlearning.TestCase2:Entered text in searchbox
+05-32-2018 20:32:22.684 [main] INFO   - seleniumlearning.TestCase1:Entered text in searchbox
+05-32-2018 20:32:27.403 [main] INFO   - seleniumlearning.TestCase1:click on googlesearchbutton
+05-32-2018 20:32:27.811 [main] INFO   - seleniumlearning.TestCase1:Entered text in searchbox
+05-32-2018 20:32:27.903 [main] ERROR  - seleniumlearning.TestCase1:click on googlesearchbutton
+05-32-2018 20:32:28.845 [main] ERROR  - seleniumlearning.TestCase2:Entered text in searchbox
+05-32-2018 20:32:28.855 [main] ERROR  - seleniumlearning.TestCase2:Entered text in searchbox
+05-52-2018 20:52:35.433 [main] ERROR  - seleniumlearning.TestCase1:Entered text in searchbox
+05-52-2018 20:52:35.733 [main] ERROR  - seleniumlearning.TestCase1:Entered text in searchbox
+05-52-2018 20:52:35.808 [main] ERROR  - seleniumlearning.TestCase2:Entered text in searchbox
+05-52-2018 20:52:35.816 [main] ERROR  - seleniumlearning.TestCase2:Entered text in searchbox
+05-54-2018 20:54:44.211 [main] INFO   - seleniumlearning.TestCase1:Entered text in searchbox
+05-54-2018 20:54:46.507 [main] INFO   - seleniumlearning.TestCase1:click on googlesearchbutton
+05-54-2018 20:54:46.998 [main] INFO   - seleniumlearning.TestCase1:Entered text in searchbox
+05-54-2018 20:54:47.053 [main] ERROR  - seleniumlearning.TestCase1:click on googlesearchbutton
+05-54-2018 20:54:47.884 [main] ERROR  - seleniumlearning.TestCase2:Entered text in searchbox
+05-54-2018 20:54:47.891 [main] ERROR  - seleniumlearning.TestCase2:Entered text in searchbox
+05-56-2018 20:56:03.714 [main] INFO   - seleniumlearning.TestCase1:Entered text in searchbox
+05-56-2018 20:56:06.051 [main] INFO   - seleniumlearning.TestCase1:click on googlesearchbutton
+05-56-2018 20:56:06.257 [main] INFO   - seleniumlearning.TestCase1:Entered text in searchbox
+05-56-2018 20:56:06.343 [main] ERROR  - seleniumlearning.TestCase1:click on googlesearchbutton
+05-56-2018 20:56:13.386 [main] INFO   - seleniumlearning.TestCase2:Entered text in searchbox
+05-56-2018 20:56:15.718 [main] INFO   - seleniumlearning.TestCase2:click on googlesearchbutton
+05-56-2018 20:56:15.947 [main] INFO   - seleniumlearning.TestCase2:Entered text in searchbox
+05-56-2018 20:56:16.024 [main] ERROR  - seleniumlearning.TestCase2:click on googlesearchbutton
+05-57-2018 20:57:46.205 [main] INFO   - seleniumlearning.TestCase1:Entered text in searchbox
+05-57-2018 20:57:48.447 [main] INFO   - seleniumlearning.TestCase1:click on googlesearchbutton
+05-57-2018 20:57:48.837 [main] INFO   - seleniumlearning.TestCase1:Entered text in searchbox
+05-57-2018 20:57:48.894 [main] ERROR  - seleniumlearning.TestCase1:click on googlesearchbutton
+05-57-2018 20:57:55.844 [main] INFO   - seleniumlearning.TestCase2:Entered text in searchbox
+05-57-2018 20:57:58.007 [main] INFO   - seleniumlearning.TestCase2:click on googlesearchbutton
+05-57-2018 20:57:58.262 [main] INFO   - seleniumlearning.TestCase2:Entered text in searchbox
+05-57-2018 20:57:58.330 [main] ERROR  - seleniumlearning.TestCase2:click on googlesearchbutton
+11-20-2018 16:20:01.506 [main] INFO   - seleniumlearning.TestCase1:Entered text in searchbox
+11-20-2018 16:20:04.359 [main] INFO   - seleniumlearning.TestCase1:click on googlesearchbutton
+11-20-2018 16:20:05.796 [main] INFO   - seleniumlearning.TestCase1:Entered text in searchbox
+11-20-2018 16:20:05.950 [main] ERROR  - seleniumlearning.TestCase1:click on googlesearchbutton
+11-20-2018 16:20:13.525 [main] INFO   - seleniumlearning.TestCase2:Entered text in searchbox
+11-20-2018 16:20:15.997 [main] INFO   - seleniumlearning.TestCase2:click on googlesearchbutton
+11-20-2018 16:20:16.241 [main] INFO   - seleniumlearning.TestCase2:Entered text in searchbox
+11-20-2018 16:20:16.344 [main] ERROR  - seleniumlearning.TestCase2:click on googlesearchbutton

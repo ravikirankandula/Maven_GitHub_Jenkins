@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testng-results skipped="2" failed="0" total="2" passed="0">
+  <reporter-output>
+  </reporter-output>
+  <suite name="Default suite" duration-ms="168" started-at="2017-04-14T12:24:44Z" finished-at="2017-04-14T12:24:44Z">
+    <groups>
+    </groups>
+    <test name="Default test" duration-ms="168" started-at="2017-04-14T12:24:44Z" finished-at="2017-04-14T12:24:44Z">
+      <class name="aws_social.social.TS10_Comments_13507_13508_13509">
+        <test-method status="FAIL" signature="setUpAppium()[pri:0, instance:aws_social.social.TS10_Comments_13507_13508_13509@2286778]" name="setUpAppium" is-config="true" duration-ms="0" started-at="2017-04-14T17:53:40Z" finished-at="2017-04-14T17:53:40Z">
+          <exception class="org.openqa.selenium.SessionNotCreatedException">
+            <message>
+              <![CDATA[A new session could not be created. (WARNING: The server did not provide any stacktrace information)
+Command duration or timeout: 59.79 seconds
+Build info: version: '2.48.2', revision: '41bccdd10cf2c0560f637404c2d96164b67d9d67', time: '2015-10-09 13:08:06'
+System info: host: 'RKANDULA-L-1071', ip: '192.168.56.1', os.name: 'Windows 7', os.arch: 'amd64', os.version: '6.1', java.version: '1.8.0_121'
+Driver info: io.appium.java_client.android.AndroidDriver]]>
+            </message>
+            <full-stacktrace>
+              <![CDATA[org.openqa.selenium.SessionNotCreatedException: A new session could not be created. (WARNING: The server did not provide any stacktrace information)
+Command duration or timeout: 59.79 seconds
+Build info: version: '2.48.2', revision: '41bccdd10cf2c0560f637404c2d96164b67d9d67', time: '2015-10-09 13:08:06'
+System info: host: 'RKANDULA-L-1071', ip: '192.168.56.1', os.name: 'Windows 7', os.arch: 'amd64', os.version: '6.1', java.version: '1.8.0_121'
+Driver info: io.appium.java_client.android.AndroidDriver
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method)
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance(Unknown Source)
+	at sun.reflect.DelegatingConstructorAccessorImpl.newInstance(Unknown Source)
+	at java.lang.reflect.Constructor.newInstance(Unknown Source)
+	at org.openqa.selenium.remote.ErrorHandler.createThrowable(ErrorHandler.java:206)
+	at org.openqa.selenium.remote.ErrorHandler.throwIfResponseFailed(ErrorHandler.java:158)
+	at org.openqa.selenium.remote.RemoteWebDriver.execute(RemoteWebDriver.java:647)
+	at io.appium.java_client.DefaultGenericMobileDriver.execute(DefaultGenericMobileDriver.java:43)
+	at io.appium.java_client.AppiumDriver.execute(AppiumDriver.java:1)
+	at io.appium.java_client.android.AndroidDriver.execute(AndroidDriver.java:1)
+	at org.openqa.selenium.remote.RemoteWebDriver.startSession(RemoteWebDriver.java:247)
+	at org.openqa.selenium.remote.RemoteWebDriver.<init>(RemoteWebDriver.java:129)
+	at org.openqa.selenium.remote.RemoteWebDriver.<init>(RemoteWebDriver.java:142)
+	at io.appium.java_client.DefaultGenericMobileDriver.<init>(DefaultGenericMobileDriver.java:39)
+	at io.appium.java_client.AppiumDriver.<init>(AppiumDriver.java:69)
+	at io.appium.java_client.AppiumDriver.<init>(AppiumDriver.java:78)
+	at io.appium.java_client.android.AndroidDriver.<init>(AndroidDriver.java:67)
+	at utility.Utility.setUpAppium(Utility.java:57)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(Unknown Source)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(Unknown Source)
+	at java.lang.reflect.Method.invoke(Unknown Source)
+	at org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:86)
+	at org.testng.internal.Invoker.invokeConfigurationMethod(Invoker.java:514)
+	at org.testng.internal.Invoker.invokeConfigurations(Invoker.java:215)
+	at org.testng.internal.Invoker.invokeConfigurations(Invoker.java:142)
+	at org.testng.SuiteRunner.privateRun(SuiteRunner.java:305)
+	at org.testng.SuiteRunner.run(SuiteRunner.java:268)
+	at org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:52)
+	at org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:86)
+	at org.testng.TestNG.runSuitesSequentially(TestNG.java:1244)
+	at org.testng.TestNG.runSuitesLocally(TestNG.java:1169)
+	at org.testng.TestNG.run(TestNG.java:1064)
+	at org.testng.remote.AbstractRemoteTestNG.run(AbstractRemoteTestNG.java:132)
+	at org.testng.remote.RemoteTestNG.initAndRun(RemoteTestNG.java:230)
+	at org.testng.remote.RemoteTestNG.main(RemoteTestNG.java:76)
+]]>
+            </full-stacktrace>
+          </exception> <!-- org.openqa.selenium.SessionNotCreatedException -->
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- setUpAppium -->
+        <test-method status="SKIP" signature="MQRcode()[pri:0, instance:aws_social.social.TS10_Comments_13507_13508_13509@2286778]" name="MQRcode" is-config="true" duration-ms="0" started-at="2017-04-14T17:54:44Z" finished-at="2017-04-14T17:54:44Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- MQRcode -->
+        <test-method status="SKIP" signature="AddComment()[pri:0, instance:aws_social.social.TS10_Comments_13507_13508_13509@2286778]" name="AddComment" duration-ms="3" started-at="2017-04-14T17:54:44Z" finished-at="2017-04-14T17:54:44Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- AddComment -->
+        <test-method status="SKIP" signature="Comments_TaggedUser()[pri:0, instance:aws_social.social.TS10_Comments_13507_13508_13509@2286778]" name="Comments_TaggedUser" duration-ms="0" started-at="2017-04-14T17:54:44Z" depends-on-methods="aws_social.social.TS10_Comments_13507_13508_13509.AddComment" finished-at="2017-04-14T17:54:44Z">
+          <exception class="java.lang.Throwable">
+            <message>
+              <![CDATA[Method TS10_Comments_13507_13508_13509.Comments_TaggedUser()[pri:0, instance:aws_social.social.TS10_Comments_13507_13508_13509@2286778] depends on not successfully finished methods]]>
+            </message>
+            <full-stacktrace>
+              <![CDATA[java.lang.Throwable: Method TS10_Comments_13507_13508_13509.Comments_TaggedUser()[pri:0, instance:aws_social.social.TS10_Comments_13507_13508_13509@2286778] depends on not successfully finished methods
+	at org.testng.internal.Invoker.invokeTestMethods(Invoker.java:1037)
+	at org.testng.internal.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:129)
+	at org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:112)
+	at org.testng.TestRunner.privateRun(TestRunner.java:782)
+	at org.testng.TestRunner.run(TestRunner.java:632)
+	at org.testng.SuiteRunner.runTest(SuiteRunner.java:366)
+	at org.testng.SuiteRunner.runSequentially(SuiteRunner.java:361)
+	at org.testng.SuiteRunner.privateRun(SuiteRunner.java:319)
+	at org.testng.SuiteRunner.run(SuiteRunner.java:268)
+	at org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:52)
+	at org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:86)
+	at org.testng.TestNG.runSuitesSequentially(TestNG.java:1244)
+	at org.testng.TestNG.runSuitesLocally(TestNG.java:1169)
+	at org.testng.TestNG.run(TestNG.java:1064)
+	at org.testng.remote.AbstractRemoteTestNG.run(AbstractRemoteTestNG.java:132)
+	at org.testng.remote.RemoteTestNG.initAndRun(RemoteTestNG.java:230)
+	at org.testng.remote.RemoteTestNG.main(RemoteTestNG.java:76)
+]]>
+            </full-stacktrace>
+          </exception> <!-- java.lang.Throwable -->
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- Comments_TaggedUser -->
+        <test-method status="SKIP" signature="restartApp()[pri:0, instance:aws_social.social.TS10_Comments_13507_13508_13509@2286778]" name="restartApp" is-config="true" duration-ms="0" started-at="2017-04-14T17:54:44Z" finished-at="2017-04-14T17:54:44Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- restartApp -->
+        <test-method status="SKIP" signature="tearDownAppium()[pri:0, instance:aws_social.social.TS10_Comments_13507_13508_13509@2286778]" name="tearDownAppium" is-config="true" duration-ms="0" started-at="2017-04-14T17:54:44Z" finished-at="2017-04-14T17:54:44Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- tearDownAppium -->
+      </class> <!-- aws_social.social.TS10_Comments_13507_13508_13509 -->
+    </test> <!-- Default test -->
+  </suite> <!-- Default suite -->
+</testng-results>
